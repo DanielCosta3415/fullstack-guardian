@@ -1,0 +1,15 @@
+{
+  "version": "2.0",
+  "scale": "0=baixo, 1=moderado, 2=alto, 3=muito alto",
+  "fields": {
+    "functional_complexity": {"label":"Complexidade funcional", "weight":1.0},
+    "business_criticality": {"label":"Criticidade do negócio", "weight":1.5},
+    "data_integrity": {"label":"Dados e transações", "weight":1.4},
+    "external_integrations": {"label":"Integrações externas", "weight":1.0},
+    "performance_demand": {"label":"Carga e desempenho", "weight":1.1},
+    "availability_recovery": {"label":"Disponibilidade e recuperação", "weight":1.4},
+    "security_compliance": {"label":"Segurança e conformidade", "weight":1.4},
+    "evolution_operations": {"label":"Evolução e operação", "weight":0.8}
+  },
+  "principles": ["Classificar criticidade separada de complexidade de topologia.", "Controles críticos não são dispensados por pontuação média baixa.", "A abordagem default é a menor arquitetura capaz de satisfazer requisitos verificados.", "Sem evidência suficiente, o resultado To-Be deve continuar indeterminado."]
+}

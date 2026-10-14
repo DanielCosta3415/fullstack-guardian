@@ -1,0 +1,29 @@
+{
+  "name": "fullstack-guardian",
+  "version": "2.1.0",
+  "description": "29 especialistas e configuração global preservadora para engenharia no Codex.",
+  "author": {
+    "name": "Daniel Lopes da Costa"
+  },
+  "skills": "./skills/",
+  "extensions": {
+    "com.openai": {
+      "requires_local_executor": true,
+      "onboardingSkill": "./skills/setup/SKILL.md"
+    }
+  },
+  "interface": {
+    "displayName": "Full-Stack Guardian",
+    "shortDescription": "Coordenação adaptativa com 29 especialistas",
+    "longDescription": "Configuração guiada para instalar 29 agentes, oito skills e 132 capacidades no Codex local, preservando personalizações.",
+    "developerName": "Daniel Lopes da Costa",
+    "category": "Developer Tools",
+    "websiteURL": "https://github.com/DanielCosta3415/fullstack-guardian",
+    "brandColor": "#25B7A5",
+    "logo": "./assets/logo.svg",
+    "composerIcon": "./assets/logo.svg",
+    "defaultPrompt": [
+      "Configure o Full-Stack Guardian globalmente e valide a instalação."
+    ]
+  }
+}

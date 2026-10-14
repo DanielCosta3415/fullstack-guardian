@@ -1,0 +1,6 @@
+# Additive recommended Codex project configuration. Merge with existing .codex/config.toml, do not overwrite.
+[agents]
+enabled = true
+max_concurrent_threads_per_session = 4
+# Do not force models; inherit valid provider/model for current installation.
+# Sandbox and approval policy remain under operator control.

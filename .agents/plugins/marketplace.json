@@ -1,0 +1,20 @@
+{
+  "name": "guardian-marketplace",
+  "interface": {
+    "displayName": "Guardian Marketplace"
+  },
+  "plugins": [
+    {
+      "name": "fullstack-guardian",
+      "source": {
+        "source": "local",
+        "path": "./"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}

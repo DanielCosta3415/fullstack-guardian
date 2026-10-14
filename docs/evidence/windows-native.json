@@ -1,0 +1,203 @@
+{
+  "historical_29_profile_test": {
+    "date": "2026-10-14",
+    "system": "Windows x64",
+    "codex_desktop": "26.1007.71326",
+    "codex_cli": "0.162.0-alpha.17.2",
+    "source": "2.0 with local corrections",
+    "expected": 29,
+    "executed": 29,
+    "native_types": [
+      {
+        "id": "A00",
+        "name": "guardian_engineering_orchestrator",
+        "completed": true,
+        "command_recorded": true
+      },
+      {
+        "id": "S01",
+        "name": "guardian_product_discovery",
+        "completed": true,
+        "command_recorded": true
+      },
+      {
+        "id": "S02",
+        "name": "guardian_requirements_engineer",
+        "completed": true,
+        "command_recorded": true
+      },
+      {
+        "id": "S03",
+        "name": "guardian_solutions_architect",
+        "completed": true,
+        "command_recorded": true
+      },
+      {
+        "id": "S04",
+        "name": "guardian_frontend_architect",
+        "completed": true,
+        "command_recorded": true
+      },
+      {
+        "id": "S05",
+        "name": "guardian_frontend_engineer",
+        "completed": true,
+        "command_recorded": true
+      },
+      {
+        "id": "S06",
+        "name": "guardian_ux_accessibility",
+        "completed": true,
+        "command_recorded": true
+      },
+      {
+        "id": "S07",
+        "name": "guardian_web_performance",
+        "completed": true,
+        "command_recorded": true
+      },
+      {
+        "id": "S08",
+        "name": "guardian_backend_domain",
+        "completed": true,
+        "command_recorded": true
+      },
+      {
+        "id": "S09",
+        "name": "guardian_api_integration",
+        "completed": true,
+        "command_recorded": true
+      },
+      {
+        "id": "S10",
+        "name": "guardian_distributed_concurrency",
+        "completed": true,
+        "command_recorded": true
+      },
+      {
+        "id": "S11",
+        "name": "guardian_database_transactions",
+        "completed": true,
+        "command_recorded": true
+      },
+      {
+        "id": "S12",
+        "name": "guardian_data_governance",
+        "completed": true,
+        "command_recorded": true
+      },
+      {
+        "id": "S13",
+        "name": "guardian_appsec",
+        "completed": true,
+        "command_recorded": true
+      },
+      {
+        "id": "S14",
+        "name": "guardian_iam_privacy",
+        "completed": true,
+        "command_recorded": true
+      },
+      {
+        "id": "S15",
+        "name": "guardian_cloud_supply_security",
+        "completed": true,
+        "command_recorded": true
+      },
+      {
+        "id": "S16",
+        "name": "guardian_quality_architect",
+        "completed": true,
+        "command_recorded": true
+      },
+      {
+        "id": "S17",
+        "name": "guardian_frontend_qa",
+        "completed": true,
+        "command_recorded": true
+      },
+      {
+        "id": "S18",
+        "name": "guardian_backend_qa",
+        "completed": true,
+        "command_recorded": true
+      },
+      {
+        "id": "S19",
+        "name": "guardian_performance_capacity",
+        "completed": true,
+        "command_recorded": true
+      },
+      {
+        "id": "S20",
+        "name": "guardian_sre_resilience",
+        "completed": true,
+        "command_recorded": true
+      },
+      {
+        "id": "S21",
+        "name": "guardian_observability",
+        "completed": true,
+        "command_recorded": true
+      },
+      {
+        "id": "S22",
+        "name": "guardian_cloud_platform",
+        "completed": true,
+        "command_recorded": true
+      },
+      {
+        "id": "S23",
+        "name": "guardian_devsecops",
+        "completed": true,
+        "command_recorded": true
+      },
+      {
+        "id": "S24",
+        "name": "guardian_maintainability",
+        "completed": true,
+        "command_recorded": true
+      },
+      {
+        "id": "S25",
+        "name": "guardian_governance_finops",
+        "completed": true,
+        "command_recorded": true
+      },
+      {
+        "id": "S26",
+        "name": "guardian_ai_assurance",
+        "completed": true,
+        "command_recorded": true
+      },
+      {
+        "id": "G01",
+        "name": "guardian_independent_auditor",
+        "completed": true,
+        "command_recorded": true
+      },
+      {
+        "id": "G02",
+        "name": "guardian_release_auditor",
+        "completed": true,
+        "command_recorded": true
+      }
+    ],
+    "scope": "one controlled specialty case per profile; not exhaustive capability validation"
+  },
+  "v2_1_native_smoke": {
+    "expected": 4,
+    "verified": 4,
+    "missing": [],
+    "exit_code": 0,
+    "elapsed_seconds": 94.12,
+    "types": [
+      "guardian_engineering_orchestrator",
+      "guardian_iam_privacy",
+      "guardian_independent_auditor",
+      "guardian_release_auditor"
+    ],
+    "scope": "fresh isolated project installation from 2.1.0 package; native roles and command execution"
+  },
+  "privacy": "Machine paths, session identifiers and raw account logs are intentionally omitted from public evidence."
+}

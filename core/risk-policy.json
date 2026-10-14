@@ -1,0 +1,29 @@
+{
+  "version": "2.0",
+  "risk_levels": [
+    "low",
+    "medium",
+    "high",
+    "critical"
+  ],
+  "architecture_levels": [
+    "simple",
+    "intermediate",
+    "robust"
+  ],
+  "strict_approval_actions": [
+    "production_deploy",
+    "delete_or_migrate_production_data",
+    "rotate_production_secrets",
+    "unbounded_security_testing",
+    "external_publication",
+    "billing_or_financial_change"
+  ],
+  "audit_evidence_status": [
+    "verified",
+    "partial",
+    "not_verified",
+    "not_applicable"
+  ],
+  "rule": "No risk average overrides critical failures or mandatory approvals. Not automatic permission elevation."
+}

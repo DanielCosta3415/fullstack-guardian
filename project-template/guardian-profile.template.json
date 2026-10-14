@@ -1,0 +1,19 @@
+{
+  "project": "PREENCHER COM O NOME DO PROJETO",
+  "schema_version": "2.0",
+  "evidence_date": null,
+  "dimensions": {
+    "functional_complexity": {"score": null, "evidence": null},
+    "business_criticality": {"score": null, "evidence": null},
+    "data_integrity": {"score": null, "evidence": null},
+    "external_integrations": {"score": null, "evidence": null},
+    "performance_demand": {"score": null, "evidence": null},
+    "availability_recovery": {"score": null, "evidence": null},
+    "security_compliance": {"score": null, "evidence": null},
+    "evolution_operations": {"score": null, "evidence": null}
+  },
+  "mandatory_controls": [],
+  "known_constraints": [],
+  "authorized_environments": ["local"],
+  "notes": "Preencha a partir de requisitos e evidências verificáveis; não presuma valores."
+}

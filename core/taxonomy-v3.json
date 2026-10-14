@@ -1,0 +1,2565 @@
+{
+  "taxonomy": "Full-Stack Engineering Reference v3.0",
+  "date": "2026-10-14",
+  "note": "Taxonomia autoral, não norma oficial; critérios devem ser perfilados por projeto.",
+  "domains": {
+    "01": {
+      "name": "Estratégia e valor",
+      "count": 8
+    },
+    "02": {
+      "name": "Requisitos e especificação",
+      "count": 9
+    },
+    "03": {
+      "name": "Arquitetura e design",
+      "count": 12
+    },
+    "04": {
+      "name": "Desenvolvimento e código",
+      "count": 25
+    },
+    "05": {
+      "name": "Qualidade e testes",
+      "count": 10
+    },
+    "06": {
+      "name": "Segurança e privacidade",
+      "count": 12
+    },
+    "07": {
+      "name": "Engenharia de dados e transações",
+      "count": 12
+    },
+    "08": {
+      "name": "Desempenho, escalabilidade e confiabilidade",
+      "count": 10
+    },
+    "09": {
+      "name": "Entrega, infraestrutura e operações",
+      "count": 10
+    },
+    "10": {
+      "name": "Experiência do usuário e acessibilidade",
+      "count": 8
+    },
+    "11": {
+      "name": "Governança, responsabilidade e sustentabilidade",
+      "count": 8
+    },
+    "12": {
+      "name": "Evolução, manutenção e ciclo de vida",
+      "count": 8
+    }
+  },
+  "capabilities": [
+    {
+      "id": "1.1",
+      "domain": "01",
+      "domain_name": "Estratégia e valor",
+      "title": "Visão e propósito do produto",
+      "primary": "S01",
+      "reviewers": [
+        "S02",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "1.2",
+      "domain": "01",
+      "domain_name": "Estratégia e valor",
+      "title": "Identificação de stakeholders",
+      "primary": "S01",
+      "reviewers": [
+        "S02",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "1.3",
+      "domain": "01",
+      "domain_name": "Estratégia e valor",
+      "title": "Descoberta e validação do problema",
+      "primary": "S01",
+      "reviewers": [
+        "S02",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "1.4",
+      "domain": "01",
+      "domain_name": "Estratégia e valor",
+      "title": "Validação de hipóteses",
+      "primary": "S01",
+      "reviewers": [
+        "S02",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "1.5",
+      "domain": "01",
+      "domain_name": "Estratégia e valor",
+      "title": "Priorização e definição de escopo",
+      "primary": "S01",
+      "reviewers": [
+        "S02",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "1.6",
+      "domain": "01",
+      "domain_name": "Estratégia e valor",
+      "title": "Indicadores de valor",
+      "primary": "S01",
+      "reviewers": [
+        "S02",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "1.7",
+      "domain": "01",
+      "domain_name": "Estratégia e valor",
+      "title": "Planejamento de produto e comunicação",
+      "primary": "S01",
+      "reviewers": [
+        "S02",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "1.8",
+      "domain": "01",
+      "domain_name": "Estratégia e valor",
+      "title": "Viabilidade e restrições",
+      "primary": "S01",
+      "reviewers": [
+        "S02",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "2.1",
+      "domain": "02",
+      "domain_name": "Requisitos e especificação",
+      "title": "Elicitação de requisitos",
+      "primary": "S02",
+      "reviewers": [
+        "S03",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "2.2",
+      "domain": "02",
+      "domain_name": "Requisitos e especificação",
+      "title": "Requisitos funcionais",
+      "primary": "S02",
+      "reviewers": [
+        "S03",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "2.3",
+      "domain": "02",
+      "domain_name": "Requisitos e especificação",
+      "title": "Requisitos não funcionais",
+      "primary": "S02",
+      "reviewers": [
+        "S03",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "2.4",
+      "domain": "02",
+      "domain_name": "Requisitos e especificação",
+      "title": "Regras de negócio e invariantes",
+      "primary": "S02",
+      "reviewers": [
+        "S03",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "2.5",
+      "domain": "02",
+      "domain_name": "Requisitos e especificação",
+      "title": "Casos de uso e jornadas",
+      "primary": "S02",
+      "reviewers": [
+        "S03",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "2.6",
+      "domain": "02",
+      "domain_name": "Requisitos e especificação",
+      "title": "Critérios de aceitação",
+      "primary": "S02",
+      "reviewers": [
+        "S03",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "2.7",
+      "domain": "02",
+      "domain_name": "Requisitos e especificação",
+      "title": "Contratos de dados e integração",
+      "primary": "S02",
+      "reviewers": [
+        "S03",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "2.8",
+      "domain": "02",
+      "domain_name": "Requisitos e especificação",
+      "title": "Rastreabilidade e controle de mudanças",
+      "primary": "S02",
+      "reviewers": [
+        "S03",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "2.9",
+      "domain": "02",
+      "domain_name": "Requisitos e especificação",
+      "title": "Análise e validação de requisitos",
+      "primary": "S02",
+      "reviewers": [
+        "S03",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "3.1",
+      "domain": "03",
+      "domain_name": "Arquitetura e design",
+      "title": "Decomposição e delimitação de responsabilidades",
+      "primary": "S03",
+      "reviewers": [
+        "S04",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "3.2",
+      "domain": "03",
+      "domain_name": "Arquitetura e design",
+      "title": "Estilos arquiteturais",
+      "primary": "S03",
+      "reviewers": [
+        "S04",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "3.3",
+      "domain": "03",
+      "domain_name": "Arquitetura e design",
+      "title": "Separação de responsabilidades",
+      "primary": "S03",
+      "reviewers": [
+        "S04",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "3.4",
+      "domain": "03",
+      "domain_name": "Arquitetura e design",
+      "title": "Comunicação e integração",
+      "primary": "S03",
+      "reviewers": [
+        "S04",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "3.5",
+      "domain": "03",
+      "domain_name": "Arquitetura e design",
+      "title": "Documentação arquitetural",
+      "primary": "S03",
+      "reviewers": [
+        "S04",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "3.6",
+      "domain": "03",
+      "domain_name": "Arquitetura e design",
+      "title": "Acoplamento, coesão e dependências",
+      "primary": "S03",
+      "reviewers": [
+        "S04",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "3.7",
+      "domain": "03",
+      "domain_name": "Arquitetura e design",
+      "title": "Design orientado a contratos",
+      "primary": "S03",
+      "reviewers": [
+        "S04",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "3.8",
+      "domain": "03",
+      "domain_name": "Arquitetura e design",
+      "title": "Consistência entre componentes",
+      "primary": "S03",
+      "reviewers": [
+        "S04",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "3.9",
+      "domain": "03",
+      "domain_name": "Arquitetura e design",
+      "title": "Arquitetura orientada a riscos",
+      "primary": "S03",
+      "reviewers": [
+        "S04",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "3.10",
+      "domain": "03",
+      "domain_name": "Arquitetura e design",
+      "title": "Design para falhas",
+      "primary": "S03",
+      "reviewers": [
+        "S04",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "3.11",
+      "domain": "03",
+      "domain_name": "Arquitetura e design",
+      "title": "Arquitetura de apresentação",
+      "primary": "S03",
+      "reviewers": [
+        "S04",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "3.12",
+      "domain": "03",
+      "domain_name": "Arquitetura e design",
+      "title": "Evolutividade e portabilidade",
+      "primary": "S03",
+      "reviewers": [
+        "S04",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "4.1",
+      "domain": "04",
+      "domain_name": "Desenvolvimento e código",
+      "title": "Fundamentos da plataforma web",
+      "primary": "S05",
+      "reviewers": [
+        "S04",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "4.2",
+      "domain": "04",
+      "domain_name": "Desenvolvimento e código",
+      "title": "Linguagens e sistemas de tipos",
+      "primary": "S05",
+      "reviewers": [
+        "S04",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "4.3",
+      "domain": "04",
+      "domain_name": "Desenvolvimento e código",
+      "title": "Componentização e reutilização",
+      "primary": "S05",
+      "reviewers": [
+        "S04",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "4.4",
+      "domain": "04",
+      "domain_name": "Desenvolvimento e código",
+      "title": "Gerenciamento de estado",
+      "primary": "S05",
+      "reviewers": [
+        "S04",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "4.5",
+      "domain": "04",
+      "domain_name": "Desenvolvimento e código",
+      "title": "Roteamento e navegação",
+      "primary": "S05",
+      "reviewers": [
+        "S04",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "4.6",
+      "domain": "04",
+      "domain_name": "Desenvolvimento e código",
+      "title": "Formulários e validação",
+      "primary": "S05",
+      "reviewers": [
+        "S04",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "4.7",
+      "domain": "04",
+      "domain_name": "Desenvolvimento e código",
+      "title": "Estratégias de renderização",
+      "primary": "S05",
+      "reviewers": [
+        "S04",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "4.8",
+      "domain": "04",
+      "domain_name": "Desenvolvimento e código",
+      "title": "Consumo de APIs e sincronização",
+      "primary": "S05",
+      "reviewers": [
+        "S04",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "4.9",
+      "domain": "04",
+      "domain_name": "Desenvolvimento e código",
+      "title": "Layouts e estilos",
+      "primary": "S05",
+      "reviewers": [
+        "S04",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "4.10",
+      "domain": "04",
+      "domain_name": "Desenvolvimento e código",
+      "title": "Otimização de recursos",
+      "primary": "S05",
+      "reviewers": [
+        "S04",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "4.11",
+      "domain": "04",
+      "domain_name": "Desenvolvimento e código",
+      "title": "Compatibilidade e aprimoramento progressivo",
+      "primary": "S05",
+      "reviewers": [
+        "S04",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "4.12",
+      "domain": "04",
+      "domain_name": "Desenvolvimento e código",
+      "title": "Funcionalidades offline e PWA",
+      "primary": "S05",
+      "reviewers": [
+        "S04",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "4.13",
+      "domain": "04",
+      "domain_name": "Desenvolvimento e código",
+      "title": "Ciclo de vida e tratamento de falhas",
+      "primary": "S05",
+      "reviewers": [
+        "S04",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "4.14",
+      "domain": "04",
+      "domain_name": "Desenvolvimento e código",
+      "title": "Plataformas e execução de serviços",
+      "primary": "S08",
+      "reviewers": [
+        "S16",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "4.15",
+      "domain": "04",
+      "domain_name": "Desenvolvimento e código",
+      "title": "Modelagem e implementação do domínio",
+      "primary": "S08",
+      "reviewers": [
+        "S16",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "4.16",
+      "domain": "04",
+      "domain_name": "Desenvolvimento e código",
+      "title": "Engenharia de endpoints e contratos",
+      "primary": "S09",
+      "reviewers": [
+        "S18",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "4.17",
+      "domain": "04",
+      "domain_name": "Desenvolvimento e código",
+      "title": "Protocolos e estilos de comunicação",
+      "primary": "S09",
+      "reviewers": [
+        "S18",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "4.18",
+      "domain": "04",
+      "domain_name": "Desenvolvimento e código",
+      "title": "Aplicação de identidade e permissões",
+      "primary": "S14",
+      "reviewers": [
+        "S16",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "4.19",
+      "domain": "04",
+      "domain_name": "Desenvolvimento e código",
+      "title": "Orquestração de serviços",
+      "primary": "S08",
+      "reviewers": [
+        "S16",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "4.20",
+      "domain": "04",
+      "domain_name": "Desenvolvimento e código",
+      "title": "Persistência e acesso a dados",
+      "primary": "S11",
+      "reviewers": [
+        "S16",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "4.21",
+      "domain": "04",
+      "domain_name": "Desenvolvimento e código",
+      "title": "Transações e idempotência",
+      "primary": "S11",
+      "reviewers": [
+        "S16",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "4.22",
+      "domain": "04",
+      "domain_name": "Desenvolvimento e código",
+      "title": "Processamento assíncrono e eventos",
+      "primary": "S10",
+      "reviewers": [
+        "S16",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "4.23",
+      "domain": "04",
+      "domain_name": "Desenvolvimento e código",
+      "title": "Estratégias de cache",
+      "primary": "S10",
+      "reviewers": [
+        "S16",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "4.24",
+      "domain": "04",
+      "domain_name": "Desenvolvimento e código",
+      "title": "Coordenação de concorrência",
+      "primary": "S10",
+      "reviewers": [
+        "S16",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "4.25",
+      "domain": "04",
+      "domain_name": "Desenvolvimento e código",
+      "title": "Processamento em segundo plano",
+      "primary": "S10",
+      "reviewers": [
+        "S16",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "5.1",
+      "domain": "05",
+      "domain_name": "Qualidade e testes",
+      "title": "Estratégia de testes",
+      "primary": "S16",
+      "reviewers": [
+        "S17",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "5.2",
+      "domain": "05",
+      "domain_name": "Qualidade e testes",
+      "title": "Testes unitários",
+      "primary": "S18",
+      "reviewers": [
+        "S16",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "5.3",
+      "domain": "05",
+      "domain_name": "Qualidade e testes",
+      "title": "Testes de integração",
+      "primary": "S18",
+      "reviewers": [
+        "S16",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "5.4",
+      "domain": "05",
+      "domain_name": "Qualidade e testes",
+      "title": "Testes de contrato",
+      "primary": "S18",
+      "reviewers": [
+        "S16",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "5.5",
+      "domain": "05",
+      "domain_name": "Qualidade e testes",
+      "title": "Testes end-to-end",
+      "primary": "S17",
+      "reviewers": [
+        "S16",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "5.6",
+      "domain": "05",
+      "domain_name": "Qualidade e testes",
+      "title": "Testes de interface e acessibilidade",
+      "primary": "S17",
+      "reviewers": [
+        "S16",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "5.7",
+      "domain": "05",
+      "domain_name": "Qualidade e testes",
+      "title": "Testes não funcionais",
+      "primary": "S19",
+      "reviewers": [
+        "S16",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "5.8",
+      "domain": "05",
+      "domain_name": "Qualidade e testes",
+      "title": "Testes de robustez e recuperação",
+      "primary": "S20",
+      "reviewers": [
+        "S16",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "5.9",
+      "domain": "05",
+      "domain_name": "Qualidade e testes",
+      "title": "Engenharia de dados e ambientes de teste",
+      "primary": "S16",
+      "reviewers": [
+        "S17",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "5.10",
+      "domain": "05",
+      "domain_name": "Qualidade e testes",
+      "title": "Garantia contínua da qualidade",
+      "primary": "S16",
+      "reviewers": [
+        "S17",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "6.1",
+      "domain": "06",
+      "domain_name": "Segurança e privacidade",
+      "title": "Modelagem de ameaças",
+      "primary": "S13",
+      "reviewers": [
+        "S14",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "6.2",
+      "domain": "06",
+      "domain_name": "Segurança e privacidade",
+      "title": "Desenvolvimento seguro por concepção",
+      "primary": "S13",
+      "reviewers": [
+        "S14",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "6.3",
+      "domain": "06",
+      "domain_name": "Segurança e privacidade",
+      "title": "Identidade e autenticação",
+      "primary": "S14",
+      "reviewers": [
+        "S13",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "6.4",
+      "domain": "06",
+      "domain_name": "Segurança e privacidade",
+      "title": "Autorização e menor privilégio",
+      "primary": "S14",
+      "reviewers": [
+        "S13",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "6.5",
+      "domain": "06",
+      "domain_name": "Segurança e privacidade",
+      "title": "Segurança de sessões e tokens",
+      "primary": "S14",
+      "reviewers": [
+        "S13",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "6.6",
+      "domain": "06",
+      "domain_name": "Segurança e privacidade",
+      "title": "Validação e tratamento seguro de dados",
+      "primary": "S13",
+      "reviewers": [
+        "S14",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "6.7",
+      "domain": "06",
+      "domain_name": "Segurança e privacidade",
+      "title": "Segurança específica de Front-End",
+      "primary": "S13",
+      "reviewers": [
+        "S14",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "6.8",
+      "domain": "06",
+      "domain_name": "Segurança e privacidade",
+      "title": "Segurança de APIs e serviços",
+      "primary": "S13",
+      "reviewers": [
+        "S14",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "6.9",
+      "domain": "06",
+      "domain_name": "Segurança e privacidade",
+      "title": "Criptografia e gerenciamento de segredos",
+      "primary": "S15",
+      "reviewers": [
+        "S13",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "6.10",
+      "domain": "06",
+      "domain_name": "Segurança e privacidade",
+      "title": "Segurança de infraestrutura e persistência",
+      "primary": "S15",
+      "reviewers": [
+        "S13",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "6.11",
+      "domain": "06",
+      "domain_name": "Segurança e privacidade",
+      "title": "Segurança da cadeia de suprimentos",
+      "primary": "S15",
+      "reviewers": [
+        "S13",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "6.12",
+      "domain": "06",
+      "domain_name": "Segurança e privacidade",
+      "title": "Proteção de dados e segurança operacional",
+      "primary": "S14",
+      "reviewers": [
+        "S13",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "7.1",
+      "domain": "07",
+      "domain_name": "Engenharia de dados e transações",
+      "title": "Arquitetura e ciclo de vida dos dados",
+      "primary": "S12",
+      "reviewers": [
+        "S10",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "7.2",
+      "domain": "07",
+      "domain_name": "Engenharia de dados e transações",
+      "title": "Modelagem relacional",
+      "primary": "S11",
+      "reviewers": [
+        "S10",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "7.3",
+      "domain": "07",
+      "domain_name": "Engenharia de dados e transações",
+      "title": "Modelagem não relacional",
+      "primary": "S11",
+      "reviewers": [
+        "S10",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "7.4",
+      "domain": "07",
+      "domain_name": "Engenharia de dados e transações",
+      "title": "Schemas e evolução estrutural",
+      "primary": "S11",
+      "reviewers": [
+        "S10",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "7.5",
+      "domain": "07",
+      "domain_name": "Engenharia de dados e transações",
+      "title": "Consultas e otimização",
+      "primary": "S11",
+      "reviewers": [
+        "S10",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "7.6",
+      "domain": "07",
+      "domain_name": "Engenharia de dados e transações",
+      "title": "Integridade transacional",
+      "primary": "S11",
+      "reviewers": [
+        "S10",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "7.7",
+      "domain": "07",
+      "domain_name": "Engenharia de dados e transações",
+      "title": "Consistência distribuída",
+      "primary": "S10",
+      "reviewers": [
+        "S11",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "7.8",
+      "domain": "07",
+      "domain_name": "Engenharia de dados e transações",
+      "title": "Idempotência e eventos confiáveis",
+      "primary": "S10",
+      "reviewers": [
+        "S11",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "7.9",
+      "domain": "07",
+      "domain_name": "Engenharia de dados e transações",
+      "title": "Backup e restauração",
+      "primary": "S12",
+      "reviewers": [
+        "S10",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "7.10",
+      "domain": "07",
+      "domain_name": "Engenharia de dados e transações",
+      "title": "Replicação e continuidade dos dados",
+      "primary": "S12",
+      "reviewers": [
+        "S10",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "7.11",
+      "domain": "07",
+      "domain_name": "Engenharia de dados e transações",
+      "title": "Qualidade, linhagem e auditoria",
+      "primary": "S12",
+      "reviewers": [
+        "S10",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "7.12",
+      "domain": "07",
+      "domain_name": "Engenharia de dados e transações",
+      "title": "Governança e descarte de dados",
+      "primary": "S12",
+      "reviewers": [
+        "S10",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "8.1",
+      "domain": "08",
+      "domain_name": "Desempenho, escalabilidade e confiabilidade",
+      "title": "Engenharia de desempenho",
+      "primary": "S19",
+      "reviewers": [
+        "S10",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "8.2",
+      "domain": "08",
+      "domain_name": "Desempenho, escalabilidade e confiabilidade",
+      "title": "Capacidade e dimensionamento",
+      "primary": "S19",
+      "reviewers": [
+        "S10",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "8.3",
+      "domain": "08",
+      "domain_name": "Desempenho, escalabilidade e confiabilidade",
+      "title": "Escalabilidade",
+      "primary": "S19",
+      "reviewers": [
+        "S10",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "8.4",
+      "domain": "08",
+      "domain_name": "Desempenho, escalabilidade e confiabilidade",
+      "title": "Disponibilidade",
+      "primary": "S20",
+      "reviewers": [
+        "S10",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "8.5",
+      "domain": "08",
+      "domain_name": "Desempenho, escalabilidade e confiabilidade",
+      "title": "Resiliência",
+      "primary": "S20",
+      "reviewers": [
+        "S10",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "8.6",
+      "domain": "08",
+      "domain_name": "Desempenho, escalabilidade e confiabilidade",
+      "title": "Isolamento de falhas",
+      "primary": "S20",
+      "reviewers": [
+        "S10",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "8.7",
+      "domain": "08",
+      "domain_name": "Desempenho, escalabilidade e confiabilidade",
+      "title": "Engenharia de níveis de serviço",
+      "primary": "S20",
+      "reviewers": [
+        "S10",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "8.8",
+      "domain": "08",
+      "domain_name": "Desempenho, escalabilidade e confiabilidade",
+      "title": "Verificação sob carga",
+      "primary": "S19",
+      "reviewers": [
+        "S10",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "8.9",
+      "domain": "08",
+      "domain_name": "Desempenho, escalabilidade e confiabilidade",
+      "title": "Recuperabilidade operacional",
+      "primary": "S20",
+      "reviewers": [
+        "S10",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "8.10",
+      "domain": "08",
+      "domain_name": "Desempenho, escalabilidade e confiabilidade",
+      "title": "Segurança funcional e comportamento seguro sob falhas",
+      "primary": "S20",
+      "reviewers": [
+        "S10",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "9.1",
+      "domain": "09",
+      "domain_name": "Entrega, infraestrutura e operações",
+      "title": "Controle de versão e colaboração",
+      "primary": "S23",
+      "reviewers": [
+        "S15",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "9.2",
+      "domain": "09",
+      "domain_name": "Entrega, infraestrutura e operações",
+      "title": "Integração contínua",
+      "primary": "S23",
+      "reviewers": [
+        "S15",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "9.3",
+      "domain": "09",
+      "domain_name": "Entrega, infraestrutura e operações",
+      "title": "Entrega e implantação contínuas",
+      "primary": "S23",
+      "reviewers": [
+        "S15",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "9.4",
+      "domain": "09",
+      "domain_name": "Entrega, infraestrutura e operações",
+      "title": "Infraestrutura como código",
+      "primary": "S22",
+      "reviewers": [
+        "S15",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "9.5",
+      "domain": "09",
+      "domain_name": "Entrega, infraestrutura e operações",
+      "title": "Engenharia de ambientes",
+      "primary": "S22",
+      "reviewers": [
+        "S15",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "9.6",
+      "domain": "09",
+      "domain_name": "Entrega, infraestrutura e operações",
+      "title": "Empacotamento e implantação",
+      "primary": "S22",
+      "reviewers": [
+        "S15",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "9.7",
+      "domain": "09",
+      "domain_name": "Entrega, infraestrutura e operações",
+      "title": "Observabilidade",
+      "primary": "S21",
+      "reviewers": [
+        "S15",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "9.8",
+      "domain": "09",
+      "domain_name": "Entrega, infraestrutura e operações",
+      "title": "Monitoramento e alertas",
+      "primary": "S21",
+      "reviewers": [
+        "S15",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "9.9",
+      "domain": "09",
+      "domain_name": "Entrega, infraestrutura e operações",
+      "title": "Gerenciamento de incidentes",
+      "primary": "S21",
+      "reviewers": [
+        "S15",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "9.10",
+      "domain": "09",
+      "domain_name": "Entrega, infraestrutura e operações",
+      "title": "Operação e melhoria contínua",
+      "primary": "S20",
+      "reviewers": [
+        "S15",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "10.1",
+      "domain": "10",
+      "domain_name": "Experiência do usuário e acessibilidade",
+      "title": "Pesquisa e experiência do usuário",
+      "primary": "S06",
+      "reviewers": [
+        "S04",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "10.2",
+      "domain": "10",
+      "domain_name": "Experiência do usuário e acessibilidade",
+      "title": "Arquitetura da informação",
+      "primary": "S06",
+      "reviewers": [
+        "S04",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "10.3",
+      "domain": "10",
+      "domain_name": "Experiência do usuário e acessibilidade",
+      "title": "Design de interação",
+      "primary": "S06",
+      "reviewers": [
+        "S04",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "10.4",
+      "domain": "10",
+      "domain_name": "Experiência do usuário e acessibilidade",
+      "title": "Sistemas de design",
+      "primary": "S06",
+      "reviewers": [
+        "S04",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "10.5",
+      "domain": "10",
+      "domain_name": "Experiência do usuário e acessibilidade",
+      "title": "Acessibilidade digital",
+      "primary": "S06",
+      "reviewers": [
+        "S04",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "10.6",
+      "domain": "10",
+      "domain_name": "Experiência do usuário e acessibilidade",
+      "title": "Internacionalização e localização",
+      "primary": "S07",
+      "reviewers": [
+        "S04",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "10.7",
+      "domain": "10",
+      "domain_name": "Experiência do usuário e acessibilidade",
+      "title": "Desempenho percebido",
+      "primary": "S07",
+      "reviewers": [
+        "S04",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "10.8",
+      "domain": "10",
+      "domain_name": "Experiência do usuário e acessibilidade",
+      "title": "Avaliação contínua da experiência",
+      "primary": "S06",
+      "reviewers": [
+        "S04",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "11.1",
+      "domain": "11",
+      "domain_name": "Governança, responsabilidade e sustentabilidade",
+      "title": "Governança de engenharia",
+      "primary": "S25",
+      "reviewers": [
+        "S12",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "11.2",
+      "domain": "11",
+      "domain_name": "Governança, responsabilidade e sustentabilidade",
+      "title": "Gestão de riscos e conformidade",
+      "primary": "S25",
+      "reviewers": [
+        "S12",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "11.3",
+      "domain": "11",
+      "domain_name": "Governança, responsabilidade e sustentabilidade",
+      "title": "Privacidade e responsabilidade tecnológica",
+      "primary": "S14",
+      "reviewers": [
+        "S12",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "11.4",
+      "domain": "11",
+      "domain_name": "Governança, responsabilidade e sustentabilidade",
+      "title": "Documentação e rastreabilidade organizacional",
+      "primary": "S25",
+      "reviewers": [
+        "S12",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "11.5",
+      "domain": "11",
+      "domain_name": "Governança, responsabilidade e sustentabilidade",
+      "title": "Gestão econômica e FinOps",
+      "primary": "S25",
+      "reviewers": [
+        "S12",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "11.6",
+      "domain": "11",
+      "domain_name": "Governança, responsabilidade e sustentabilidade",
+      "title": "Sustentabilidade tecnológica e ambiental",
+      "primary": "S25",
+      "reviewers": [
+        "S12",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "11.7",
+      "domain": "11",
+      "domain_name": "Governança, responsabilidade e sustentabilidade",
+      "title": "Governança de IA e automação",
+      "primary": "S26",
+      "reviewers": [
+        "S12",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "11.8",
+      "domain": "11",
+      "domain_name": "Governança, responsabilidade e sustentabilidade",
+      "title": "Gestão de fornecedores e propriedade intelectual",
+      "primary": "S25",
+      "reviewers": [
+        "S12",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "12.1",
+      "domain": "12",
+      "domain_name": "Evolução, manutenção e ciclo de vida",
+      "title": "Manutenção de software",
+      "primary": "S24",
+      "reviewers": [
+        "S03",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "12.2",
+      "domain": "12",
+      "domain_name": "Evolução, manutenção e ciclo de vida",
+      "title": "Gestão de mudanças",
+      "primary": "S24",
+      "reviewers": [
+        "S03",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "12.3",
+      "domain": "12",
+      "domain_name": "Evolução, manutenção e ciclo de vida",
+      "title": "Compatibilidade retroativa",
+      "primary": "S24",
+      "reviewers": [
+        "S03",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "12.4",
+      "domain": "12",
+      "domain_name": "Evolução, manutenção e ciclo de vida",
+      "title": "Gestão de dívida técnica",
+      "primary": "S24",
+      "reviewers": [
+        "S03",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "12.5",
+      "domain": "12",
+      "domain_name": "Evolução, manutenção e ciclo de vida",
+      "title": "Migração e modernização",
+      "primary": "S24",
+      "reviewers": [
+        "S03",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "12.6",
+      "domain": "12",
+      "domain_name": "Evolução, manutenção e ciclo de vida",
+      "title": "Atualização tecnológica",
+      "primary": "S24",
+      "reviewers": [
+        "S03",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "12.7",
+      "domain": "12",
+      "domain_name": "Evolução, manutenção e ciclo de vida",
+      "title": "Reutilização e portabilidade",
+      "primary": "S24",
+      "reviewers": [
+        "S03",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    },
+    {
+      "id": "12.8",
+      "domain": "12",
+      "domain_name": "Evolução, manutenção e ciclo de vida",
+      "title": "Descontinuação e descomissionamento",
+      "primary": "S24",
+      "reviewers": [
+        "S03",
+        "G01"
+      ],
+      "status_allowed": [
+        "atendido",
+        "parcial",
+        "nao_atendido",
+        "nao_aplicavel",
+        "nao_verificado"
+      ],
+      "evidence_required": true
+    }
+  ]
+}

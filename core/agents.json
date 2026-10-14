@@ -1,0 +1,571 @@
+{
+  "schema_version": "2.0",
+  "date": "2026-10-14",
+  "agents": [
+    {
+      "id": "A00",
+      "name": "guardian_engineering_orchestrator",
+      "title": "Principal Software Engineering Architect & Multi-Agent Orchestrator",
+      "description": "Coordenação, triagem de demandas, seleção dinâmica de especialistas, minimização de custo e consolidação de evidências",
+      "group": "orchestration",
+      "scope": "all",
+      "keywords": [],
+      "file": "global/agents/engineering_orchestrator.toml",
+      "activation": "by-risk-and-task"
+    },
+    {
+      "id": "S01",
+      "name": "guardian_product_discovery",
+      "title": "Senior Product Manager & Product Discovery Specialist",
+      "description": "Estratégia de produto, usuários, hipóteses, escopo, priorização e indicadores de valor",
+      "group": "strategy",
+      "scope": "transversal",
+      "keywords": [
+        "produto",
+        "product",
+        "mvp",
+        "roadmap",
+        "persona",
+        "usuario alvo",
+        "mercado"
+      ],
+      "file": "global/agents/product_discovery.toml",
+      "activation": "by-risk-and-task"
+    },
+    {
+      "id": "S02",
+      "name": "guardian_requirements_engineer",
+      "title": "Senior Business Analyst & Requirements Engineer",
+      "description": "Requisitos, critérios de aceitação, invariantes, rastreabilidade e lacunas de especificação",
+      "group": "requirements",
+      "scope": "fullstack",
+      "keywords": [
+        "requisito",
+        "especifica",
+        "critério de aceitação",
+        "acceptance criteria",
+        "regra de negocio",
+        "user story"
+      ],
+      "file": "global/agents/requirements_engineer.toml",
+      "activation": "by-risk-and-task"
+    },
+    {
+      "id": "S03",
+      "name": "guardian_solutions_architect",
+      "title": "Principal Software & Solutions Architect",
+      "description": "Decisões de arquitetura, limites de domínio, diagramas, ADRs e simplicidade suficiente",
+      "group": "architecture",
+      "scope": "fullstack",
+      "keywords": [
+        "arquitetura",
+        "architecture",
+        "microservi",
+        "monolito",
+        "ddd",
+        "design de solucao",
+        "refatoração arquitetural"
+      ],
+      "file": "global/agents/solutions_architect.toml",
+      "activation": "by-risk-and-task"
+    },
+    {
+      "id": "S04",
+      "name": "guardian_frontend_architect",
+      "title": "Senior Front-End Architect",
+      "description": "Componentização, estado, roteamento, renderização e evolução do Front-End",
+      "group": "frontend",
+      "scope": "frontend",
+      "keywords": [
+        "frontend architecture",
+        "arquitetura de frontend",
+        "componentiz",
+        "estado global",
+        "react architecture",
+        "angular architecture"
+      ],
+      "file": "global/agents/frontend_architect.toml",
+      "activation": "by-risk-and-task"
+    },
+    {
+      "id": "S05",
+      "name": "guardian_frontend_engineer",
+      "title": "Senior Front-End Software Engineer",
+      "description": "Implementação de interfaces, estado, formulários, consumo de API e tratamento de falhas",
+      "group": "frontend",
+      "scope": "frontend",
+      "keywords": [
+        "frontend",
+        "front-end",
+        "interface",
+        "página",
+        "tela",
+        "formulário",
+        "react",
+        "angular",
+        "vue",
+        "razor",
+        "css",
+        "html"
+      ],
+      "file": "global/agents/frontend_engineer.toml",
+      "activation": "by-risk-and-task"
+    },
+    {
+      "id": "S06",
+      "name": "guardian_ux_accessibility",
+      "title": "Senior UX/UI, Design Systems & Accessibility Engineer",
+      "description": "Acessibilidade WCAG, experiência do usuário, design systems e navegação",
+      "group": "frontend",
+      "scope": "frontend",
+      "keywords": [
+        "acessibil",
+        "wcag",
+        "design system",
+        "ux",
+        "ui design",
+        "usabilidade",
+        "contraste",
+        "responsiv"
+      ],
+      "file": "global/agents/ux_accessibility.toml",
+      "activation": "by-risk-and-task"
+    },
+    {
+      "id": "S07",
+      "name": "guardian_web_performance",
+      "title": "Senior Web Performance & Browser Platform Engineer",
+      "description": "Core Web Vitals, browser, SSR/CSR, PWA, offline e compatibilidade",
+      "group": "frontend",
+      "scope": "frontend",
+      "keywords": [
+        "lcp",
+        "inp",
+        "cls",
+        "web vitals",
+        "browser",
+        "navegador",
+        "pwa",
+        "ssr",
+        "hidratação",
+        "seo"
+      ],
+      "file": "global/agents/web_performance.toml",
+      "activation": "by-risk-and-task"
+    },
+    {
+      "id": "S08",
+      "name": "guardian_backend_domain",
+      "title": "Principal Back-End & Domain Engineer",
+      "description": "Regra de negócio, serviços, casos de uso, validações e implementação do Back-End",
+      "group": "backend",
+      "scope": "backend",
+      "keywords": [
+        "backend",
+        "back-end",
+        "api",
+        "endpoint",
+        "controller",
+        "service",
+        "regra de negócio",
+        ".net",
+        "asp.net",
+        "c#",
+        "java",
+        "spring"
+      ],
+      "file": "global/agents/backend_domain.toml",
+      "activation": "by-risk-and-task"
+    },
+    {
+      "id": "S09",
+      "name": "guardian_api_integration",
+      "title": "Senior API & Systems Integration Architect",
+      "description": "Contratos REST/gRPC, versionamento, gateways, webhooks e interoperabilidade",
+      "group": "integration",
+      "scope": "fullstack",
+      "keywords": [
+        "api",
+        "gateway",
+        "webhook",
+        "openapi",
+        "swagger",
+        "integração",
+        "integration",
+        "grpc",
+        "contract",
+        "contrato"
+      ],
+      "file": "global/agents/api_integration.toml",
+      "activation": "by-risk-and-task"
+    },
+    {
+      "id": "S10",
+      "name": "guardian_distributed_concurrency",
+      "title": "Principal Distributed Systems & Concurrency Engineer",
+      "description": "Concorrência, filas, idempotência, consistência distribuída e falhas parciais",
+      "group": "backend",
+      "scope": "backend",
+      "keywords": [
+        "concorrência",
+        "concurrency",
+        "simultâne",
+        "race condition",
+        "idempoten",
+        "mensageria",
+        "fila",
+        "queue",
+        "evento",
+        "consistencia distribuida"
+      ],
+      "file": "global/agents/distributed_concurrency.toml",
+      "activation": "by-risk-and-task"
+    },
+    {
+      "id": "S11",
+      "name": "guardian_database_transactions",
+      "title": "Senior Database Architect & Transaction Engineer",
+      "description": "Bancos SQL/NoSQL, modelagem, índices, migrations e integridade transacional",
+      "group": "data",
+      "scope": "backend",
+      "keywords": [
+        "banco de dados",
+        "database",
+        "sql",
+        "mongodb",
+        "postgres",
+        "migration",
+        "transação",
+        "transaction",
+        "índice",
+        "query"
+      ],
+      "file": "global/agents/database_transactions.toml",
+      "activation": "by-risk-and-task"
+    },
+    {
+      "id": "S12",
+      "name": "guardian_data_governance",
+      "title": "Senior Data Reliability & Governance Engineer",
+      "description": "Ciclo de vida de dados, qualidade, linhagem, retenção, backup e restauração",
+      "group": "data",
+      "scope": "transversal",
+      "keywords": [
+        "backup",
+        "restaura",
+        "recuperar dados",
+        "retenção",
+        "data governance",
+        "linhagem",
+        "qualidade de dados"
+      ],
+      "file": "global/agents/data_governance.toml",
+      "activation": "by-risk-and-task"
+    },
+    {
+      "id": "S13",
+      "name": "guardian_appsec",
+      "title": "Principal Application Security & Threat Modeling Engineer",
+      "description": "Modelagem de ameaças, AppSec, vulnerabilidades e fluxos de confiança",
+      "group": "security",
+      "scope": "fullstack",
+      "keywords": [
+        "segurança",
+        "security",
+        "vulnerabil",
+        "owasp",
+        "xss",
+        "csrf",
+        "ssrf",
+        "pentest",
+        "ameaça"
+      ],
+      "file": "global/agents/appsec.toml",
+      "activation": "by-risk-and-task"
+    },
+    {
+      "id": "S14",
+      "name": "guardian_iam_privacy",
+      "title": "Senior IAM, Authorization & Privacy Engineer",
+      "description": "Autenticação, autorização, IAM, OIDC, OAuth, sessões, LGPD e privacidade",
+      "group": "security",
+      "scope": "fullstack",
+      "keywords": [
+        "autentica",
+        "autoriz",
+        "oauth",
+        "oidc",
+        "jwt",
+        "rbac",
+        "abac",
+        "lgpd",
+        "privacy",
+        "privacidade",
+        "token",
+        "sessão"
+      ],
+      "file": "global/agents/iam_privacy.toml",
+      "activation": "by-risk-and-task"
+    },
+    {
+      "id": "S15",
+      "name": "guardian_cloud_supply_security",
+      "title": "Senior Cloud & Software Supply Chain Security Engineer",
+      "description": "Segurança de cloud, dependências, pipelines, contêineres, SBOM e segredos",
+      "group": "security",
+      "scope": "transversal",
+      "keywords": [
+        "dependência vulnerável",
+        "supply chain",
+        "sbom",
+        "secreto",
+        "secret",
+        "container security",
+        "sast",
+        "sca"
+      ],
+      "file": "global/agents/cloud_supply_security.toml",
+      "activation": "by-risk-and-task"
+    },
+    {
+      "id": "S16",
+      "name": "guardian_quality_architect",
+      "title": "Principal Software Quality & Test Architect",
+      "description": "Estratégia de testes, critérios de cobertura, qualidade e verificações rastreáveis",
+      "group": "quality",
+      "scope": "fullstack",
+      "keywords": [
+        "teste",
+        "test",
+        "qualidade",
+        "coverage",
+        "cobertura",
+        "qa",
+        "regressão"
+      ],
+      "file": "global/agents/quality_architect.toml",
+      "activation": "by-risk-and-task"
+    },
+    {
+      "id": "S17",
+      "name": "guardian_frontend_qa",
+      "title": "Senior Front-End QA & E2E Automation Engineer",
+      "description": "Testes de interface, componentes, acessibilidade, navegador e jornada E2E",
+      "group": "quality",
+      "scope": "frontend",
+      "keywords": [
+        "e2e",
+        "playwright",
+        "cypress",
+        "vitest",
+        "jest",
+        "teste visual",
+        "navegador teste"
+      ],
+      "file": "global/agents/frontend_qa.toml",
+      "activation": "by-risk-and-task"
+    },
+    {
+      "id": "S18",
+      "name": "guardian_backend_qa",
+      "title": "Senior Back-End QA, API & Contract Test Engineer",
+      "description": "Testes de API, contratos, persistência, regressões e cenários negativos",
+      "group": "quality",
+      "scope": "backend",
+      "keywords": [
+        "teste de api",
+        "xunit",
+        "nunit",
+        "contract test",
+        "integration test",
+        "teste de integração"
+      ],
+      "file": "global/agents/backend_qa.toml",
+      "activation": "by-risk-and-task"
+    },
+    {
+      "id": "S19",
+      "name": "guardian_performance_capacity",
+      "title": "Principal Performance, Scalability & Capacity Engineer",
+      "description": "Testes de carga, latência, capacidade, gargalos e planejamento de escala",
+      "group": "reliability",
+      "scope": "fullstack",
+      "keywords": [
+        "performance",
+        "desempenho",
+        "lentid",
+        "carga",
+        "load",
+        "escalabilidade",
+        "latência",
+        "throughput",
+        "gargalo"
+      ],
+      "file": "global/agents/performance_capacity.toml",
+      "activation": "by-risk-and-task"
+    },
+    {
+      "id": "S20",
+      "name": "guardian_sre_resilience",
+      "title": "Principal Site Reliability & Resilience Engineer",
+      "description": "SLO, SLA, RTO, RPO, disponibilidade, resiliência e continuidade",
+      "group": "reliability",
+      "scope": "transversal",
+      "keywords": [
+        "disponibil",
+        "resiliên",
+        "sre",
+        "rto",
+        "rpo",
+        "sla",
+        "slo",
+        "disaster",
+        "failover"
+      ],
+      "file": "global/agents/sre_resilience.toml",
+      "activation": "by-risk-and-task"
+    },
+    {
+      "id": "S21",
+      "name": "guardian_observability",
+      "title": "Senior Observability & Incident Response Engineer",
+      "description": "Logs, traces, métricas, alertas, diagnóstico e incidentes",
+      "group": "operations",
+      "scope": "transversal",
+      "keywords": [
+        "observab",
+        "logs",
+        "tracing",
+        "opentelemetry",
+        "splunk",
+        "opensearch",
+        "monitoramento",
+        "alerta",
+        "incidente"
+      ],
+      "file": "global/agents/observability.toml",
+      "activation": "by-risk-and-task"
+    },
+    {
+      "id": "S22",
+      "name": "guardian_cloud_platform",
+      "title": "Principal Cloud, Platform & Infrastructure Engineer",
+      "description": "Infraestrutura, IaC, cloud, ambientes, containers, rede e provisionamento",
+      "group": "platform",
+      "scope": "transversal",
+      "keywords": [
+        "aws",
+        "azure",
+        "gcp",
+        "terraform",
+        "kubernetes",
+        "k8s",
+        "cloud",
+        "infraestrutura",
+        "docker",
+        "iac"
+      ],
+      "file": "global/agents/cloud_platform.toml",
+      "activation": "by-risk-and-task"
+    },
+    {
+      "id": "S23",
+      "name": "guardian_devsecops",
+      "title": "Senior DevSecOps, CI/CD & Release Engineer",
+      "description": "CI/CD, build, testes em pipeline, entrega, implantação e rollback",
+      "group": "platform",
+      "scope": "transversal",
+      "keywords": [
+        "pipeline",
+        "ci/cd",
+        "deploy",
+        "release",
+        "github actions",
+        "jenkins",
+        "build",
+        "entrega contínua"
+      ],
+      "file": "global/agents/devsecops.toml",
+      "activation": "by-risk-and-task"
+    },
+    {
+      "id": "S24",
+      "name": "guardian_maintainability",
+      "title": "Principal Software Maintainability & Evolution Engineer",
+      "description": "Dívida técnica, refatoração, manutenção, versões, migração e descomissionamento",
+      "group": "evolution",
+      "scope": "fullstack",
+      "keywords": [
+        "refator",
+        "manuten",
+        "dívida técnica",
+        "legado",
+        "migration plan",
+        "moderniza",
+        "descontinua"
+      ],
+      "file": "global/agents/maintainability.toml",
+      "activation": "by-risk-and-task"
+    },
+    {
+      "id": "S25",
+      "name": "guardian_governance_finops",
+      "title": "Senior Engineering Governance, FinOps & Sustainability Specialist",
+      "description": "Gestão de riscos, conformidade, custos, fornecedores e sustentabilidade",
+      "group": "governance",
+      "scope": "transversal",
+      "keywords": [
+        "governança",
+        "finops",
+        "custo",
+        "licença",
+        "compliance",
+        "sustentabil",
+        "budget"
+      ],
+      "file": "global/agents/governance_finops.toml",
+      "activation": "by-risk-and-task"
+    },
+    {
+      "id": "S26",
+      "name": "guardian_ai_assurance",
+      "title": "Senior AI Engineering & AI Assurance Specialist",
+      "description": "Qualidade de produtos com IA, avaliações, riscos e mitigação de resultados",
+      "group": "governance",
+      "scope": "conditional",
+      "keywords": [
+        "ia generativa",
+        "llm",
+        "rag",
+        "prompt injection",
+        "modelo de ia",
+        "ai feature",
+        "inteligência artificial no produto"
+      ],
+      "file": "global/agents/ai_assurance.toml",
+      "activation": "conditional"
+    },
+    {
+      "id": "G01",
+      "name": "guardian_independent_auditor",
+      "title": "Principal Independent Software Engineering Auditor",
+      "description": "Auditoria independente orientada a evidências, defeitos e cobertura da taxonomia",
+      "group": "assurance",
+      "scope": "all",
+      "keywords": [],
+      "file": "global/agents/independent_auditor.toml",
+      "activation": "by-risk-and-task"
+    },
+    {
+      "id": "G02",
+      "name": "guardian_release_auditor",
+      "title": "Principal Production Readiness & Release Assurance Auditor",
+      "description": "Gate de prontidão para produção, riscos, operação e recomendações de liberação",
+      "group": "assurance",
+      "scope": "all",
+      "keywords": [],
+      "file": "global/agents/release_auditor.toml",
+      "activation": "by-risk-and-task"
+    }
+  ]
+}
