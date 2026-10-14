@@ -22,3 +22,8 @@ jobs:
       - run: python tools/guardian.py validate
       - run: python tools/guardian.py eval
       - run: python tools/build_release.py
+      - if: runner.os != 'Windows'
+        run: bash install.sh --help
+      - if: runner.os == 'Windows'
+        shell: pwsh
+        run: powershell -File installer/Install.ps1 --help

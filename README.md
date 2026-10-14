@@ -26,6 +26,8 @@ Depois abra o Codex e peça a configuração inicial do plugin. Esse fluxo foi s
 
 Baixe o ZIP em [Releases](https://github.com/DanielCosta3415/fullstack-guardian/releases/latest), confira o SHA-256 publicado, extraia e abra um terminal na pasta extraída. Requer **Python 3.11+** já instalado e Codex com suporte a agentes personalizados e delegação.
 
+Na configuração guiada, o Codex também pode localizar seu próprio Python incluído no aplicativo, quando esse recurso estiver disponível. A alternativa pelo terminal usa o Python já acessível no seu ambiente.
+
 ```sh
 python install.py --user
 python install.py --user --apply
@@ -63,6 +65,8 @@ python tools/guardian.py validate
 python tools/guardian.py eval
 python -m unittest discover -s tests -v
 ```
+
+Dentro de um sandbox Codex com restrições em TEMP/TMP, use `python tools/run_tests.py`, que limita os temporários a `work/guardian-test-temp` no workspace. O runner não altera variáveis globais do sistema.
 
 Esses comandos validam arquivos, roteamento e instalador; não executam o modelo. Em um **novo chat**, peça: “Faça uma revisão controlada de um pequeno módulo, selecione um especialista adequado e apresente evidências de execução e revisão.” A execução nativa depende das ferramentas, permissões e quota da sua conta.
 
