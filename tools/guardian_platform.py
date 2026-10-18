@@ -15,8 +15,12 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
-from guardian import inspect_project, route
-from guardian_registry import RegistryError, discover
+try:
+    from .guardian import inspect_project, route
+    from .guardian_registry import RegistryError, discover
+except ImportError:  # direct invocation: python tools/guardian_platform.py
+    from guardian import inspect_project, route
+    from guardian_registry import RegistryError, discover
 
 ROOT = Path(__file__).resolve().parent.parent
 STAGES = (
