@@ -9,7 +9,7 @@ import zipfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-DIRECTORIES = {'global', 'core', 'tools', 'tests', 'docs', 'project-template', 'skills', '.agents', '.codex-plugin', 'assets', 'installer', '.github'}
+DIRECTORIES = {'global', 'core', 'tools', 'tests', 'docs', 'packs', 'project-template', 'skills', '.agents', '.codex-plugin', 'assets', 'installer', '.github'}
 FILES = {'README.md', 'RELEASE_NOTES.md', 'LICENSE', 'VERSION', 'install.py', 'install.sh', 'plugin.json', '.gitignore', '.gitattributes', 'SECURITY.md'}
 EXCLUDED = {'__pycache__', '.git', 'dist', '.pytest_cache'}
 
