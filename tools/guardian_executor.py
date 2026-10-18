@@ -334,6 +334,8 @@ def execute(home: Path, *, apply: bool = False, codex_binary: str | None = None,
             try:
                 message = _prompt(task, plan) + "\n\nAuthorized task brief:\n" + briefs[ident]
                 if native_subagents:
+                    message = message.replace("No delegated child agents: this is a bounded CLI turn and not native subagent verification.",
+                                              "Delegate to exactly one native Codex specialist and wait for completion.")
                     message += ("\n\nNative delegation verification required: use the Codex collaboration.spawn_agent tool "
                                 "with agent_type EXACTLY " + task["agent_type"] + ". "
                                 "Assign this bounded task to that child, await its completion, and do not substitute "
