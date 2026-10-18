@@ -25,6 +25,22 @@ class ReleaseTests(unittest.TestCase):
                     data=z.read('fullstack-guardian-'+first['version']+'/'+entry['path'])
                     self.assertEqual(hashlib.sha256(data).hexdigest(),entry['sha256'])
                 self.assertFalse(any('__pycache__' in x or '/.git/' in x for x in z.namelist()))
+    def test_platform_preview_is_not_mislabeled_stable_release(self):
+        version=(BASE/'VERSION').read_text(encoding='utf8').strip()
+        self.assertNotEqual(version,'2.1.0','Experimental platform must not reuse stable release version')
+        self.assertIn('-dev.',version)
+        manifest=json.loads((BASE/'plugin.json').read_text(encoding='utf8'))
+        self.assertEqual(manifest['version'],version)
+
+    def test_release_attestation_is_pinned_and_fail_closed(self):
+        workflow=(BASE/'.github/workflows/release.yml').read_text(encoding='utf8')
+        self.assertIn('id-token: write',workflow)
+        self.assertIn('attestations: write',workflow)
+        self.assertRegex(workflow,r'actions/attest-build-provenance@[0-9a-f]{40}')
+        self.assertIn('gh attestation verify',workflow)
+        self.assertLess(workflow.index('gh attestation verify'),
+                        workflow.index('actions/upload-artifact'))
+
     def test_portability_no_personal_home_in_distribution(self):
         for p in builder.source_files():
             if p.suffix in ('.md','.py','.json','.toml','.ps1','.sh','.yml'):
