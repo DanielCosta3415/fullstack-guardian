@@ -208,8 +208,55 @@ def _process(codex: str, worktree: Path, prompt: str, timeout: int, logs: Path, 
     return code, event == "turn.completed", result_id
 
 
+def verify_native_child(root_session: str | None, expected_type: str,
+                        sessions_root: Path | None = None) -> bool:
+    """Corroborate child delegation from Codex session metadata, not model text.
+
+    Session JSONL formats vary by Codex release; unknown layouts fail closed.
+    Do not log session contents or identifiers in public reports.
+    """
+    if not isinstance(root_session, str) or not root_session:
+        return False
+    sessions = Path(sessions_root) if sessions_root else Path(os.environ.get("CODEX_HOME", str(Path.home() / ".codex"))) / "sessions"
+    if not sessions.is_dir():
+        return False
+    checked = 0
+    try:
+        paths = sessions.rglob("*.jsonl")
+        for path in paths:
+            checked += 1
+            if checked > 10000:
+                return False
+            # Skip links and oversized session logs; trust native metadata only.
+            if path.is_symlink() or path.stat().st_size > 20_000_000:
+                continue
+            try:
+                with path.open(encoding="utf-8") as f:
+                    meta = json.loads(f.readline()).get("payload", {})
+                    source = meta.get("source", {})
+                    spawn = source.get("subagent", {}).get("thread_spawn", {}) if isinstance(source, dict) else {}
+                    if spawn.get("parent_thread_id") != root_session:
+                        continue
+                    role = meta.get("agent_role") or spawn.get("agent_role")
+                    if role != expected_type:
+                        continue
+                    for line in f:
+                        try:
+                            item = json.loads(line)
+                        except ValueError:
+                            continue
+                        if item.get("type") == "event_msg" and item.get("payload", {}).get("type") == "task_complete":
+                            return True
+            except (OSError, ValueError, TypeError, AttributeError):
+                continue
+    except (OSError, ValueError):
+        return False
+    return False
+
+
 def execute(home: Path, *, apply: bool = False, codex_binary: str | None = None,
-            timeout: int = 1200, retry_failed: bool = False, max_tasks: int = 29) -> dict:
+            timeout: int = 1200, retry_failed: bool = False, max_tasks: int = 29,
+            native_subagents: bool = False) -> dict:
     home = safe(home)
     state, plan = _load(home)
     if not apply:
@@ -285,12 +332,20 @@ def execute(home: Path, *, apply: bool = False, codex_binary: str | None = None,
             atomic_json(home / "state.json", state)
             log = safe(home / "events" / (ident + f"-attempt-{record['attempts']}.jsonl"))
             try:
-                code, completed, thread = _process(codex, slot, _prompt(task, plan) + "\n\nAuthorized task brief:\n" + briefs[ident], timeout, log, state["mode"])
+                message = _prompt(task, plan) + "\n\nAuthorized task brief:\n" + briefs[ident]
+                if native_subagents:
+                    message += ("\n\nNative delegation verification required: use the Codex collaboration.spawn_agent tool "
+                                "with agent_type EXACTLY " + task["agent_type"] + ". "
+                                "Assign this bounded task to that child, await its completion, and do not substitute "
+                                "a persona, simulated specialist or generic agent. The root should coordinate and report only.")
+                code, completed, thread = _process(codex, slot, message, timeout, log, state["mode"])
+                proven = verify_native_child(thread, task["agent_type"]) if native_subagents else False
+                record["native_child_verified"] = proven
                 record["exit_code"], record["completed_event"] = code, completed
                 record["thread_id"] = thread
                 record["events_sha256"] = hashlib.sha256(log.read_bytes()).hexdigest()
-                record["state"] = "completed" if code == 0 and completed else "failed"
-                record["error_code"] = None if record["state"] == "completed" else "codex_failed_or_no_completed_event"
+                record["state"] = "completed" if code == 0 and completed and (not native_subagents or proven) else "failed"
+                record["error_code"] = None if record["state"] == "completed" else ("native_child_not_verified" if native_subagents and not proven else "codex_failed_or_no_completed_event")
             except (OSError, subprocess.SubprocessError):
                 record["state"] = "failed"
                 record["error_code"] = "codex_start_or_runtime_error"
@@ -304,10 +359,13 @@ def execute(home: Path, *, apply: bool = False, codex_binary: str | None = None,
         atomic_json(home / "state.json", state)
     finally:
         lock.unlink(missing_ok=True)
+    state["native_subagents_verified"] = bool(native_subagents and all(
+        t.get("native_child_verified") is True for t in state["tasks"].values()))
+    atomic_json(home / "state.json", state)
     return {"overall": state["overall"], "executed_this_run": executed,
             "completed": sum(t["state"] == "completed" for t in state["tasks"].values()),
             "total": len(state["tasks"]), "sandbox": sandbox,
-            "native_subagents_verified": False,
+            "native_subagents_verified": state["native_subagents_verified"],
             "deployment_authorized": False,
             "notice": "Completed means a Codex CLI turn ended; code correctness, security and worktree changes require separate review."}
 
@@ -376,6 +434,7 @@ def main(argv: list[str] | None = None) -> int:
             x.add_argument("--timeout", type=int, default=1200)
             x.add_argument("--max-tasks", type=int, default=29)
             x.add_argument("--retry-failed", action="store_true", help="Deprecated safety flag; failed or interrupted executions require a new reviewed run")
+            x.add_argument("--native-subagents", action="store_true", help="Require native Codex subagent session evidence for every task")
     a = p.parse_args(argv)
     try:
         if a.command == "init":
@@ -387,7 +446,8 @@ def main(argv: list[str] | None = None) -> int:
             result = review(a.home)
         else:
             result = execute(a.home, apply=a.apply, timeout=a.timeout,
-                             max_tasks=a.max_tasks, retry_failed=a.retry_failed)
+                             max_tasks=a.max_tasks, retry_failed=a.retry_failed,
+                             native_subagents=a.native_subagents)
         print(json.dumps(result, ensure_ascii=False, indent=2))
         return 0 if result.get("overall") != "blocked" else 1
     except (OSError, ValueError, subprocess.SubprocessError, json.JSONDecodeError, PlatformError) as exc:
