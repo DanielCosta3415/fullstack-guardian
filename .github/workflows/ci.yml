@@ -32,3 +32,6 @@ jobs:
       - if: runner.os == 'Windows'
         shell: pwsh
         run: powershell -File installer/Install.ps1 --help
+      - if: runner.os == 'Windows'
+        shell: pwsh
+        run: powershell -File scripts/Validate-WindowsCodex.ps1
