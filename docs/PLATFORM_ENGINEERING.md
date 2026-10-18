@@ -89,6 +89,8 @@ python tools/guardian_executor.py status --home PATH_TO_NEW_ISOLATED_STATE
 python tools/guardian_executor.py review --home PATH_TO_NEW_ISOLATED_STATE
 ```
 
+To require native Codex delegation and fail closed unless session metadata proves the exact specialist was spawned, add `--native-subagents` to the `run --apply` command. This requires compatible Codex collaboration tools and local session logs; absence of evidence is a failure, not a fallback to a simulated persona.
+
 The dry-run does not call Codex. `--apply` invokes the local authenticated CLI and consumes account quota. Failed/interrupted worktree mutations require operator inspection and a new run, rather than an unsafe automatic retry. The source repository stays untouched. The worktree's changes are not automatically merged.
 
 ## Opt-in paired Codex CLI benchmark runs
