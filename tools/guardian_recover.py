@@ -78,6 +78,8 @@ def inspect(home: Path, backup_id: str, mode: str) -> dict:
         target = safe(Path(entry["path"]))
         if not any(within(target, base) for base in allowed):
             raise RecoveryError("Transaction attempts to change path outside owner scope")
+        if within(target, safe(home / "guardian-backups")) or target == safe(home / "guardian-install.json"):
+            raise RecoveryError("Transaction attempts to modify recovery evidence or ownership receipt")
         filename = entry["before"]
         if filename is not None and filename != str(index) + ".bin":
             raise RecoveryError("Backup file index invalid")
