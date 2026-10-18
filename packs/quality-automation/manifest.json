@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "name": "quality-automation",
+  "description": "API/contract and regression test automation (opt-in, uninstalled by default)",
+  "agents": [
+    {
+      "name": "guardian_contract_test_specialist",
+      "file": "agents/guardian_contract_test_specialist.toml"
+    }
+  ]
+}
