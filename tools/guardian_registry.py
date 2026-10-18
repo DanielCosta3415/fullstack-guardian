@@ -104,7 +104,7 @@ def discover(root: Path = ROOT) -> dict:
                 name, relative = entry.get("name"), entry.get("file")
                 if not isinstance(name, str) or not IDENTIFIER.fullmatch(name) or name in names:
                     raise RegistryError(f"Duplicate or invalid specialist: {name}")
-                if not isinstance(relative, str) or not re.fullmatch(r"agents/[a-z][a-z0-9_-]*\\.toml", relative):
+                if not isinstance(relative, str) or not re.fullmatch(r"agents/[a-z][a-z0-9_-]*\.toml", relative):
                     raise RegistryError(f"Invalid pack agent file: {name}")
                 path = _contained(folder / relative, folder)
                 try:
