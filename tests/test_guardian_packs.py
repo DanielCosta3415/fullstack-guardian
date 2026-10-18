@@ -12,7 +12,7 @@ class PackLifecycleTests(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
         self.addCleanup(self.tmp.cleanup)
-        self.codex = Path(self.tmp.name) / ".codex"
+        self.codex = Path(self.tmp.name).resolve() / ".codex"
 
     def test_dry_run_does_not_create_files(self):
         result = operation("dotnet", self.codex, ROOT)
