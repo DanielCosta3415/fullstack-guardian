@@ -8,6 +8,8 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
+import stat
 import re
 import sys
 import tomllib
@@ -34,19 +36,31 @@ def _json_file(path: Path) -> dict:
 
 def _contained(path: Path, root: Path) -> Path:
     """Reject symlinks and paths outside the declared package directory."""
-    anchor = root.absolute()
-    target = path.absolute()
+    # PurePath.absolute() does not normalize '..'. Reject traversal before
+    # checking containment, including when a core manifest is untrusted.
+    if ".." in path.parts:
+        raise RegistryError("Traversal path component forbidden")
+    anchor = Path(os.path.normpath(os.path.abspath(root)))
+    target = Path(os.path.normpath(os.path.abspath(path)))
     try:
         parts = target.relative_to(anchor).parts
     except ValueError as exc:
         raise RegistryError("Path escapes registry root") from exc
+
+    def unsafe(candidate: Path) -> bool:
+        if not candidate.exists() and not candidate.is_symlink():
+            return False
+        attrs = getattr(candidate.lstat(), "st_file_attributes", 0)
+        return candidate.is_symlink() or bool(attrs & getattr(stat, "FILE_ATTRIBUTE_REPARSE_POINT", 0x400))
+
+    # Inspect the *actual* path components, including Windows junctions.
     current = anchor
-    if current.is_symlink():
-        raise RegistryError("Registry root is a symlink")
+    if unsafe(current):
+        raise RegistryError("Registry root is a symlink/reparse point")
     for part in parts:
         current = current / part
-        if current.is_symlink():
-            raise RegistryError(f"Symlink forbidden: {current.name}")
+        if unsafe(current):
+            raise RegistryError(f"Symlink/reparse point forbidden: {current.name}")
     return target
 
 
@@ -69,7 +83,7 @@ def discover(root: Path = ROOT) -> dict:
         if name in names or aid in ids:
             raise RegistryError(f"Duplicate agent: {name}")
         file = agent.get("file")
-        if not isinstance(file, str) or not file.startswith("global/agents/"):
+        if not isinstance(file, str) or not re.fullmatch(r"global/agents/[a-z][a-z0-9_-]*\.toml", file):
             raise RegistryError(f"Invalid agent file: {name}")
         path = _contained(root / file, root)
         try:
