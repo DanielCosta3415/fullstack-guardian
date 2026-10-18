@@ -99,6 +99,7 @@ def operation(pack: str, codex_home: Path, root: Path = ROOT,
         for agent in matches[0]["agents"]:
             source = _safe(Path(root) / agent["file"])
             desired[agent["name"] + ".toml"] = source.read_bytes()
+    receipt_original = _read(receipt_path)
     receipt = _receipt(receipt_path)
     existing = receipt["packs"].get(pack)
     if action == "install" and existing:
@@ -137,12 +138,12 @@ def operation(pack: str, codex_home: Path, root: Path = ROOT,
     except FileExistsError as exc:
         raise PackInstallError("Another pack operation is in progress") from exc
     originals = {}
-    prior_receipt = _read(receipt_path)
+    prior_receipt = receipt_original
     try:
         with os.fdopen(handle, "w") as f:
             f.write("Guardian pack maintenance lock; remove only after investigating interrupted operation.\n")
         # Recheck current state under lock, before changing any file.
-        if _read(receipt_path) != prior_receipt:
+        if _read(receipt_path) != receipt_original:
             raise PackInstallError("Concurrent receipt change")
         for dest in changes:
             current = _read(dest)
