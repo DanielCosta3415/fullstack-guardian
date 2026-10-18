@@ -37,6 +37,8 @@ def _parse(payload: dict, expected_group: str) -> dict:
             raise BenchmarkError("passed must be actual bool")
         for metric in ("duration_seconds", "token_count"):
             value = row.get(metric)
+            if metric == "token_count" and value is None:
+                continue  # CLI may omit token accounting; never fabricate zero usage.
             if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value) or value < 0:
                 raise BenchmarkError("Invalid or missing metric: " + metric)
         samples[key] = row
@@ -54,7 +56,8 @@ def compare(baseline: dict, candidate: dict) -> dict:
     base = [a["samples"][key] for key in keys]
     trial = [b["samples"][key] for key in keys]
     def average(items, metric):
-        return round(statistics.mean(x[metric] for x in items), 4)
+        values = [x.get(metric) for x in items]
+        return round(statistics.mean(values), 4) if all(x is not None for x in values) else None
     base_success = sum(x["passed"] for x in base)
     trial_success = sum(x["passed"] for x in trial)
     gains = sum(not x["passed"] and y["passed"] for x, y in zip(base, trial))
@@ -68,6 +71,7 @@ def compare(baseline: dict, candidate: dict) -> dict:
         "paired_improvements": gains,
         "paired_regressions": losses,
         "pass_rate_delta": round((trial_success-base_success)/n, 4),
+        "token_usage_complete": all(x.get("token_count") is not None for x in base + trial),
         "sufficient_for_general_claim": False,
         "limits": "Descriptive paired statistics only: no causal, statistical-significance, or security claims. Dataset, repeatability, graders, CI evidence and human review required.",
     }
