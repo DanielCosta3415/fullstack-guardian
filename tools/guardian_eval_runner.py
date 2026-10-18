@@ -131,6 +131,8 @@ def run(dataset: dict, project: Path, checker: Path, output: Path,
         raise EvalError("Project and trusted checker must exist")
     if project == output or project in output.parents or output in project.parents:
         raise EvalError("Results must be in a separate directory")
+    if checker == project or project in checker.parents or checker == output or output in checker.parents:
+        raise EvalError("Trusted checker must be outside model workspaces and results")
     root = safe(Path(_git(project, "rev-parse", "--show-toplevel")).resolve())
     if project != root or _git(root, "status", "--porcelain", "--untracked-files=all"):
         raise EvalError("Project must be a clean git repository root")
@@ -170,7 +172,7 @@ def run(dataset: dict, project: Path, checker: Path, output: Path,
                 passed = rc == 0 and completed and grade(checker, case["case_id"], target, case["checks"], timeout=min(120, timeout))
                 # Token accounting is optional; omit comparisons if native usage is missing.
                 reports[group]["samples"].append({"case_id": case["case_id"], "repeat": repeat,
-                    "passed": bool(passed), "duration_seconds": elapsed, "token_count": tokens if tokens is not None else 0,
+                    "passed": bool(passed), "duration_seconds": elapsed, "token_count": tokens,
                     "token_count_verified": tokens is not None, "turn_completed": completed,
                     "exit_code": rc, "event_sha256": _sha(events)})
                 # Do not merge code into the base repository.
