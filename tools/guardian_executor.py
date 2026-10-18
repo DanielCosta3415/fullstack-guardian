@@ -203,7 +203,7 @@ def execute(home: Path, *, apply: bool = False, codex_binary: str | None = None,
     home = safe(home)
     state, plan = _load(home)
     if not apply:
-        return {"dry_run": True, "tasks": len(state["tasks"]), "remaining": sum(t["state"] != "completed" for t in state["tasks"]),
+        return {"dry_run": True, "tasks": len(state["tasks"]), "remaining": sum(t["state"] != "completed" for t in state["tasks"].values()),
                 "codex_quota_used": False}
     if type(timeout) is not int or not 5 <= timeout <= 7200 or type(max_tasks) is not int or not 1 <= max_tasks <= 29:
         raise ExecutionError("Invalid execution bounds")
