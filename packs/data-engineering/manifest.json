@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "name": "data-engineering",
+  "description": "Data evolution and migration safety (opt-in, uninstalled by default)",
+  "agents": [
+    {
+      "name": "guardian_data_migration_specialist",
+      "file": "agents/guardian_data_migration_specialist.toml"
+    }
+  ]
+}
