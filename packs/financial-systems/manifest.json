@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "name": "financial-systems",
+  "description": "Payment integration and transactional integrity (opt-in, uninstalled by default)",
+  "agents": [
+    {
+      "name": "guardian_payment_reliability_specialist",
+      "file": "agents/guardian_payment_reliability_specialist.toml"
+    }
+  ]
+}
