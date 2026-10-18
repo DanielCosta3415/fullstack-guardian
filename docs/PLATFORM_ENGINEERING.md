@@ -76,42 +76,42 @@ The comparison is descriptive and paired, not a statistical-significance claim. 
 
 ## Opt-in Codex CLI execution with durable worktree state
 
-The external \`guardian_executor.py\` is a **sequential CLI task executor**, not a native Codex multi-agent API. For safety it refuses risky plans, requires a clean Git repository, creates an isolated worktree outside it, does not merge changes and requires a separate explicit task brief per planned agent. A Codex turn completing does **not** mean the task is correct.
+The external `guardian_executor.py` is a **sequential CLI task executor**, not a native Codex multi-agent API. For safety it refuses risky plans, requires a clean Git repository, creates an isolated worktree outside it, does not merge changes and requires a separate explicit task brief per planned agent. A Codex turn completing does **not** mean the task is correct.
 
-Create a planning JSON file by redirecting the output of \`guardian_platform.py plan\`. Review its scope and agents. For each \`task-sXX\` in the plan, author an explicit brief containing the exact desired change, authorized files/behavior, acceptance tests and prohibitions. Store the mapping as a local JSON object and do not put secrets in it.
+Create a planning JSON file by redirecting the output of `guardian_platform.py plan`. Review its scope and agents. For each `task-sXX` in the plan, author an explicit brief containing the exact desired change, authorized files/behavior, acceptance tests and prohibitions. Store the mapping as a local JSON object and do not put secrets in it.
 
-\`\`\`sh
+```sh
 python tools/guardian_platform.py plan --stage development --mode build --prompt "Improve API input validation" > plan.json
 python tools/guardian_executor.py init --plan plan.json --briefs approved-briefs.json --project PATH_TO_CLEAN_GIT_REPO --home PATH_TO_NEW_ISOLATED_STATE
 python tools/guardian_executor.py run --home PATH_TO_NEW_ISOLATED_STATE
 python tools/guardian_executor.py run --home PATH_TO_NEW_ISOLATED_STATE --apply --max-tasks 1
 python tools/guardian_executor.py status --home PATH_TO_NEW_ISOLATED_STATE
 python tools/guardian_executor.py review --home PATH_TO_NEW_ISOLATED_STATE
-\`\`\`
+```
 
-The dry-run does not call Codex. \`--apply\` invokes the local authenticated CLI and consumes account quota. Failed/interrupted worktree mutations require operator inspection and a new run, rather than an unsafe automatic retry. The source repository stays untouched. The worktree's changes are not automatically merged.
+The dry-run does not call Codex. `--apply` invokes the local authenticated CLI and consumes account quota. Failed/interrupted worktree mutations require operator inspection and a new run, rather than an unsafe automatic retry. The source repository stays untouched. The worktree's changes are not automatically merged.
 
 ## Opt-in paired Codex CLI benchmark runs
 
-The A/B evaluator runs both prompt variants sequentially from the same clean Git source revision, with identical explicit model, effort, sandbox and grader. Provide the checker **outside the repository** as a trusted Python script accepting \`--workspace\`, \`--case\` and \`--checks\`; the checker must independently validate required behavior. The checker cannot be modified from inside the Codex worktree.
+The A/B evaluator runs both prompt variants sequentially from the same clean Git source revision, with identical explicit model, effort, sandbox and grader. Provide the checker **outside the repository** as a trusted Python script accepting `--workspace`, `--case` and `--checks`; the checker must independently validate required behavior. The checker cannot be modified from inside the Codex worktree.
 
-\`\`\`sh
+```sh
 python tools/guardian_eval_runner.py --dataset data/benchmark-cases.json --project PATH_TO_CLEAN_GIT_REPO --checker PATH_TO_TRUSTED_EXTERNAL_CHECKER.py --out PATH_TO_EMPTY_RESULTS --model MODEL --effort medium --repeats 3
 python tools/guardian_eval_runner.py --dataset data/benchmark-cases.json --project PATH_TO_CLEAN_GIT_REPO --checker PATH_TO_TRUSTED_EXTERNAL_CHECKER.py --out PATH_TO_EMPTY_RESULTS --model MODEL --effort medium --repeats 3 --run
-\`\`\`
+```
 
-If the Codex CLI does not report usage, the token metric is \`null\` and cannot be used for comparisons. The A/B test remains confounded by global Codex configuration and prompt differences; it does not establish that Guardian has better reasoning or code quality in general. Evaluation runs consume quota and should be explicitly budgeted.
+If the Codex CLI does not report usage, the token metric is `null` and cannot be used for comparisons. The A/B test remains confounded by global Codex configuration and prompt differences; it does not establish that Guardian has better reasoning or code quality in general. Evaluation runs consume quota and should be explicitly budgeted.
 
 ## Interrupted installer recovery
 
 The original installer creates transaction backups before writing managed files. The additive recovery utility can inspect and recover **interrupted** transactions only when all target files still match before/after fingerprints and the original receipt is unchanged.
 
-\`\`\`sh
+```sh
 python tools/guardian_recover.py --home PATH_TO_CODEX_HOME --backup-id EXACT_32_CHAR_HEX_ID --mode user
 python tools/guardian_recover.py --home PATH_TO_CODEX_HOME --backup-id EXACT_32_CHAR_HEX_ID --mode user --apply
-\`\`\`
+```
 
-Use \`--mode project\` for a project-local installation. First inspect dry-run and backups. This command is not for removing a successful updated installation or overwriting local user modifications. It is not a replacement for OS filesystem journaling, signed packages or externally verified disaster recovery.
+Use `--mode project` for a project-local installation. First inspect dry-run and backups. This command is not for removing a successful updated installation or overwriting local user modifications. It is not a replacement for OS filesystem journaling, signed packages or externally verified disaster recovery.
 
 
 ## Remaining implementation gaps
