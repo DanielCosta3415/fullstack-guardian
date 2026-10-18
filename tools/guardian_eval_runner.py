@@ -116,7 +116,8 @@ def grade(checker: Path, case_id: str, worktree: Path, checks: list[str], timeou
 
 def run(dataset: dict, project: Path, checker: Path, output: Path,
         model: str, effort: str, repeats: int, timeout: int,
-        *, apply: bool = False, codex_binary: str | None = None) -> dict:
+        *, apply: bool = False, codex_binary: str | None = None,
+        candidate_guidance: str | None = None) -> dict:
     dataset = fixture(dataset)
     if not isinstance(model, str) or not model or not isinstance(effort, str) or effort not in ("low", "medium", "high", "xhigh"):
         raise EvalError("Model and effort required")
@@ -142,6 +143,10 @@ def run(dataset: dict, project: Path, checker: Path, output: Path,
     if not apply:
         return {"dry_run": True, "experiments": total, "model": model, "effort": effort,
                 "checker_sha256": checksum, "codex_quota_used": False}
+    if not isinstance(candidate_guidance, str) or not candidate_guidance.strip():
+        raise EvalError("A/B candidate requires explicit reviewed Guardian guidance for live runs")
+    _safe_summary(candidate_guidance)
+    guidance_hash = hashlib.sha256(candidate_guidance.encode("utf-8")).hexdigest()
     codex = codex_binary or shutil.which("codex")
     if not codex or not Path(codex).is_file():
         raise EvalError("Authenticated local Codex CLI is required")
@@ -159,7 +164,8 @@ def run(dataset: dict, project: Path, checker: Path, output: Path,
                 _git(root, "worktree", "add", "--detach", str(target), base)
                 prompt = case["prompt"]
                 if group == "candidate":
-                    prompt += "\nApply project-local Guardian instructions and available specialist workflows if present. Do not claim unavailable agents were spawned."
+                    prompt += "\nReviewed Guardian policy for this experiment:\n" + candidate_guidance
+                    prompt += "\nOnly use agents actually available, never simulate delegation."
                 else:
                     prompt += "\nSolve directly with normal Codex behavior. Do not explicitly invoke Guardian workflows."
                 prompt += "\nLocal-only workspace. Do not deploy, fetch network data, change global settings or alter test harness. Show evidence."
@@ -183,6 +189,8 @@ def run(dataset: dict, project: Path, checker: Path, output: Path,
     analyzed["native_codex_run"] = True
     analyzed["test_checker_hash"] = checksum
     analyzed["all_token_counts_verified"] = all(x["token_count_verified"] for r in reports.values() for x in r["samples"])
+    analyzed["candidate_guidance_sha256"] = guidance_hash
+    analyzed["candidate_guidance_length"] = len(candidate_guidance)
     analyzed["experiment_confounded"] = True
     analyzed["warning"] = ("Global Codex setup, prompt variants and harness environment can differ; "
                           "this A/B report is not a controlled proof that Guardian improves outcomes.")
@@ -200,12 +208,14 @@ def main() -> int:
     p.add_argument("--effort", choices=("low", "medium", "high", "xhigh"), default="medium")
     p.add_argument("--repeats", type=int, default=3)
     p.add_argument("--timeout", type=int, default=1200)
+    p.add_argument("--candidate-guide", type=Path, help="Reviewed Guardian guidance file used ONLY in the candidate prompt; mandatory for --run")
     p.add_argument("--run", action="store_true", help="Explicitly consume Codex quota")
     a = p.parse_args()
     try:
         outcome = run(json.loads(safe(a.dataset).read_text(encoding="utf-8")),
                       a.project, a.checker, a.out, a.model, a.effort,
-                      a.repeats, a.timeout, apply=a.run)
+                      a.repeats, a.timeout, apply=a.run,
+                      candidate_guidance=safe(a.candidate_guide).read_text(encoding="utf-8") if a.candidate_guide else None)
         print(json.dumps(outcome, ensure_ascii=False, indent=2))
         return 0
     except (EvalError, ExecutionError, OSError, ValueError, subprocess.SubprocessError) as exc:
