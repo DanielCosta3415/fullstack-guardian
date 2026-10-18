@@ -1,39 +1,32 @@
-# Fullstack Guardian — platform evolution roadmap
+# Fullstack Guardian — engineering platform roadmap
 
-Status: **incremental development**, not a completed platform or certified security system.
+**Development preview — not a completed, certified or production-ready platform.**
+Current stable baseline: v2.1.0 (29 core agents, 8 skills, 132 engineering capabilities).
 
-## Baseline
+## Implemented in the development PR
 
-v2.1.0: 29 core profiles, eight skills, 132 capability checks, heuristic router, local installer and opt-in Codex native smoke tests.
+- All 29 core specialists have targeted discipline-specific verification playbooks in `core/specialist-playbooks-v1.json`, attached to task plans on demand.
+- Twelve lifecycle stage contracts in `core/lifecycle-v1.json` and twelve additional skills (`lifecycle-*`). Static stage checks do not represent completed work.
+- Ten optional specialization packs: .NET, APIs, financial reliability, cloud, data, application security, front-end accessibility, Windows, AI and test engineering. The packs are not activated until the user explicitly installs them.
+- `tools/guardian_registry.py` validates agent manifests, TOML identities, scope and collisions.
+- `tools/guardian_packs.py` handles pack dry-run, managed installation, update and uninstall without silently overwriting user-owned agents.
+- `tools/guardian_platform.py` creates bounded proposal-only task DAGs, performs risk-aware routing and checks evidence fields; **it does not spawn agents**.
+- `tools/guardian_benchmark.py` compares paired samples and refuses unmatched model/test settings.
+- `tools/guardian_trace.py` maintains an optional local hash-linked event journal. Checksums are not authentication.
+- The existing installer and deterministic release builder include optional packs; CI includes lifecycle, registry, security-lint and installation dry-run checks.
 
-## Platform foundation: current development branch
+## Not yet implemented or independently proven
 
-- A read-only extension registry validates existing core agent definitions and optional specialization packages.
-- Pack manifests are versioned and must refer to bounded paths inside each pack.
-- Model and sandbox settings are intentionally inherited rather than overridden by add-on packages.
-- Pack discovery does **not** install plugins or change Codex configuration.
-- Initial dotnet pack provides one specialist. Tests use isolated Python fixtures.
+1. Native scheduler/dispatcher that consumes DAG tasks and controls agent execution, cancellation, retries and worktree merge automatically. It must use supported Codex native APIs and cannot bypass permissions.
+2. Transactional multi-file installer durability across power loss, signed release attestations, robust cross-process lock recovery and formal security review.
+3. Full real-app benchmark suite with repeated runs, independent graders, regression thresholds, quota/time measurement and statistically defensible reporting.
+4. Live cloud/production integration and validation, incident recovery, human approval interface and any entitlement-dependent feature.
+5. Demonstrated correctness of every lifecycle skill across applications, frameworks and environments; formal certification is outside scope.
+6. Model/effort routing justified by actual measurements and documented API availability, not guessed quota counters.
+7. Verified native Codex Desktop activation on the user's Windows machine; requires user-environment tests.
 
-Commands from repository root:
+## Release criteria
 
-```sh
-python tools/guardian_registry.py validate
-python tools/guardian_registry.py list
-python -m unittest tests.test_guardian_registry -v
-```
+No merge/release until all required CI jobs succeed, installer update/uninstall/rollback paths are exercised, security findings are resolved or explicitly accepted, and the change set is reviewed. Treat native Codex tests as opt-in because they consume account quota. Do not claim `main` has these features while this PR remains unmerged.
 
-## Roadmap / not yet implemented
-
-1. v2.2 hardening: more installer adversarial tests, transactional write recovery, platform-specific path tests, supply-chain verification.
-2. v2.3 specialization: deepen all core profiles, metadata and migration contracts, optional specialization packs.
-3. v3.0 orchestration: bounded task-DAG plans, execution ledger and evidence schema, cancellations and independent audits.
-4. v3.0 engineering lifecycle: discovery through decommission workflows, explicit acceptance criteria, verification gates.
-5. v3.1 observability and benchmark suite: A/B comparisons with identical models and test cases, native execution and transparent quota costs.
-
-## Non-negotiable invariants
-
-- Never claim a static validation is proof of native Codex execution.
-- Never change live production, credentials, model selection, sandbox or user config as a side effect of catalog discovery.
-- Guard supply-chain trust: review external prompts/scripts and user-granted permissions independently.
-- Preserve dry-run, conflict detection, backup and rollback in the current installer.
-- Require measurable regression and integration evidence before claiming better quality or readiness.
+See `docs/PLATFORM_ENGINEERING.md` for CLI usage and trust boundaries.
