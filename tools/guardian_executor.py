@@ -20,9 +20,9 @@ import time
 from pathlib import Path
 
 try:
-    from .guardian_platform import validate_plan, PlatformError
+    from .guardian_platform import validate_plan, PlatformError, _safe_summary
 except ImportError:
-    from guardian_platform import validate_plan, PlatformError
+    from guardian_platform import validate_plan, PlatformError, _safe_summary
 
 STATES = ("pending", "running", "completed", "failed", "blocked", "interrupted")
 BLOCK_WORDS = ("deploy", "production", "prod", "secret", "credential", "delete", "drop")
@@ -90,11 +90,18 @@ def _plan_hash(plan: dict) -> str:
     return hashlib.sha256(json.dumps(plan, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
 
 
-def initialize(plan: dict, project: Path, state_home: Path) -> dict:
+def initialize(plan: dict, project: Path, state_home: Path, briefs: dict | None = None) -> dict:
     validate_plan(plan)
     if plan.get("human_authorization_required"):
         raise ExecutionError("Risky plans require separate human review: no unattended execution")
     info = preflight(project, state_home)
+    if briefs is not None:
+        if not isinstance(briefs, dict) or set(briefs) != {t["id"] for t in plan["tasks"]}:
+            raise ExecutionError("Task briefs must exactly match all planned task IDs")
+        for item in briefs.values():
+            if not isinstance(item, str) or len(item.strip()) < 30:
+                raise ExecutionError("Each task needs a meaningful explicit brief (at least 30 characters)")
+            _safe_summary(item)
     home = safe(state_home)
     if home.exists() and any(home.iterdir()):
         raise ExecutionError("Use a new empty execution directory")
@@ -103,12 +110,15 @@ def initialize(plan: dict, project: Path, state_home: Path) -> dict:
         "schema_version": VERSION, "kind": "codex_cli_worktree_run", "plan_hash": _plan_hash(plan),
         "base_commit": info["base_commit"], "project": info["project"], "state_home": str(home),
         "execution_authorized": False, "mode": plan["mode"], "stage": plan["stage"],
+        "task_briefs_sha256": _plan_hash(briefs) if briefs is not None else None,
         "tasks": {task["id"]: {"state": "pending", "attempts": 0, "agent_type": task["agent_type"], "depends_on": task["depends_on"], "wave": task["wave"], "worktree": None, "exit_code": None, "completed_event": False, "error_code": None} for task in plan["tasks"]},
         "overall": "initialized", "native_subagents_verified": False,
         "warning": "This orchestrator invokes separate CLI turns and DOES NOT verify native Codex subagent types.",
     }
     atomic_json(home / "state.json", state)
     atomic_json(home / "plan.json", plan)
+    if briefs is not None:
+        atomic_json(home / "briefs.json", briefs)
     return state
 
 
@@ -205,6 +215,12 @@ def execute(home: Path, *, apply: bool = False, codex_binary: str | None = None,
     if not apply:
         return {"dry_run": True, "tasks": len(state["tasks"]), "remaining": sum(t["state"] != "completed" for t in state["tasks"].values()),
                 "codex_quota_used": False}
+    if state.get("task_briefs_sha256") is None:
+        raise ExecutionError("No authorized task briefs; re-initialize with --briefs before execution")
+    brief_path = safe(home / "briefs.json")
+    briefs = json.loads(brief_path.read_text(encoding="utf-8"))
+    if not isinstance(briefs, dict) or _plan_hash(briefs) != state["task_briefs_sha256"] or set(briefs) != set(state["tasks"]):
+        raise ExecutionError("Task briefs were modified or removed")
     if type(timeout) is not int or not 5 <= timeout <= 7200 or type(max_tasks) is not int or not 1 <= max_tasks <= 29:
         raise ExecutionError("Invalid execution bounds")
     codex = codex_binary or shutil.which("codex")
@@ -264,7 +280,7 @@ def execute(home: Path, *, apply: bool = False, codex_binary: str | None = None,
             atomic_json(home / "state.json", state)
             log = safe(home / "events" / (ident + f"-attempt-{record['attempts']}.jsonl"))
             try:
-                code, completed, thread = _process(codex, slot, _prompt(task, plan), timeout, log, state["mode"])
+                code, completed, thread = _process(codex, slot, _prompt(task, plan) + "\n\nAuthorized task brief:\n" + briefs[ident], timeout, log, state["mode"])
                 record["exit_code"], record["completed_event"] = code, completed
                 record["thread_id"] = thread
                 record["events_sha256"] = hashlib.sha256(log.read_bytes()).hexdigest()
@@ -307,6 +323,7 @@ def main(argv: list[str] | None = None) -> int:
         if command == "init":
             x.add_argument("--plan", type=Path, required=True)
             x.add_argument("--project", type=Path, required=True)
+            x.add_argument("--briefs", type=Path, help="JSON map task-ID to explicit authorized scope; required for --apply")
         if command == "run":
             x.add_argument("--apply", action="store_true")
             x.add_argument("--timeout", type=int, default=1200)
@@ -315,7 +332,8 @@ def main(argv: list[str] | None = None) -> int:
     a = p.parse_args(argv)
     try:
         if a.command == "init":
-            result = initialize(json.loads(safe(a.plan).read_text(encoding="utf-8")), a.project, a.home)
+            result = initialize(json.loads(safe(a.plan).read_text(encoding="utf-8")), a.project, a.home,
+                                json.loads(safe(a.briefs).read_text(encoding="utf-8")) if a.briefs else None)
         elif a.command == "status":
             result = status(a.home)
         else:
