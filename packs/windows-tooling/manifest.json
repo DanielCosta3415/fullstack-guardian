@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "name": "windows-tooling",
+  "description": "Windows engineering, diagnostics and PowerShell (opt-in, uninstalled by default)",
+  "agents": [
+    {
+      "name": "guardian_windows_powershell_specialist",
+      "file": "agents/guardian_windows_powershell_specialist.toml"
+    }
+  ]
+}
