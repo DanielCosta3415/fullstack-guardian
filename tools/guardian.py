@@ -191,6 +191,26 @@ def validate():
             doc=tomllib.loads(f.read_text(encoding='utf8'))
             if any(not doc.get(key) for key in ('name','description','developer_instructions')) or doc['name']!=a['name']:errors.append('Campos incorretos '+str(f))
         except Exception as exc:errors.append('TOML inválido '+str(exc))
+    try:
+        playbooks=load('specialist-playbooks-v1.json')
+        if playbooks.get('schema_version')!=1 or set(playbooks.get('agents',{}))!=ids:
+            errors.append('Playbooks não cobrem exatamente os agentes principais')
+        else:
+            for a in r:
+                item=playbooks['agents'][a['id']]
+                if item.get('name')!=a['name'] or not isinstance(item.get('checkpoints'),list) or len(item['checkpoints'])<3:
+                    errors.append('Playbook incompleto '+a['id'])
+        lifecycle=load('lifecycle-v1.json')
+        stages=['discovery','requirements','architecture','experience','development','integration','data','verification','delivery','operations','evolution','decommission']
+        phases=lifecycle.get('phases',[])
+        if lifecycle.get('schema_version')!=1 or [p.get('id') for p in phases]!=stages:
+            errors.append('Ciclo de vida inválido')
+        else:
+            for phase in phases:
+                if not phase.get('criteria') or not set(phase.get('responsible',[]))<=ids:
+                    errors.append('Critérios de ciclo de vida inválidos '+phase['id'])
+    except (OSError,ValueError,KeyError,TypeError) as exc:
+        errors.append('Metadados de plataforma inválidos '+str(exc))
     skills=list((ROOT/'global'/'skills').glob('*/SKILL.md'))
     if len(skills)<8:errors.append('Conjunto mínimo de oito skills ausente')
     if len({p.parent.name for p in skills})!=len(skills):errors.append('Skills duplicadas')
