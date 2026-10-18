@@ -248,8 +248,13 @@ def execute(home: Path, *, apply: bool = False, codex_binary: str | None = None,
             if record["state"] == "completed":
                 continue
             if record["state"] == "running":
-                record["state"] = "interrupted"  # recovery requires explicit --retry-failed.
-            if record["state"] in ("failed", "interrupted") and not retry_failed:
+                # The previous process might have changed files before crashing.
+                # Automatically resubmitting could duplicate irreversible effects.
+                record["state"] = "interrupted"
+                record["error_code"] = "manual_worktree_review_required"
+                state["overall"] = "blocked"
+                break
+            if record["state"] in ("failed", "interrupted"):
                 state["overall"] = "blocked"
                 break
             if executed >= max_tasks:
@@ -328,7 +333,7 @@ def main(argv: list[str] | None = None) -> int:
             x.add_argument("--apply", action="store_true")
             x.add_argument("--timeout", type=int, default=1200)
             x.add_argument("--max-tasks", type=int, default=29)
-            x.add_argument("--retry-failed", action="store_true")
+            x.add_argument("--retry-failed", action="store_true", help="Deprecated safety flag; failed or interrupted executions require a new reviewed run")
     a = p.parse_args(argv)
     try:
         if a.command == "init":
