@@ -63,7 +63,7 @@ def proposal(mode, dest):
     for f in SOURCE.rglob('*'):
         rel = f.relative_to(SOURCE)
         if f.is_file() and not any(x in rel.parts for x in ('__pycache__', '.git')) and f.suffix != '.pyc':
-            if rel.parts[0] in ('global', 'core', 'tools', 'tests', 'project-template', 'docs', 'packs') or rel.name in ('install.py', 'README.md', 'RELEASE_NOTES.md', 'VERSION', 'LICENSE'):
+            if rel.parts[0] in ('global', 'core', 'tools', 'tests', 'project-template', 'docs', 'packs', 'scripts') or rel.name in ('install.py', 'README.md', 'RELEASE_NOTES.md', 'VERSION', 'LICENSE'):
                 safe(f)
                 jobs.append((f, safe(runtime / rel)))
     for f in (SOURCE / 'global' / 'agents').glob('*.toml'):
