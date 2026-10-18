@@ -62,6 +62,8 @@ Each experiment is a JSON object with `schema_version: 1`, `group: "baseline" | 
 python tools/guardian_benchmark.py --baseline baseline.json --candidate candidate.json
 ```
 
+The generated fixture covers three deliberately flawed Python modules and provides an independent grader that lives outside the Codex workspace. It is a smoke benchmark, not a comprehensive .NET, financial or cloud benchmark. The candidate uses the EXACT reviewed content of `--candidate-guide`, whose SHA-256 is reported; this verifies the prompt variant but does not certify Guardian activation or native delegation.
+
 The comparison is descriptive and paired, not a statistical-significance claim. Real multi-run Codex evaluations, independent graders and public CI evidence remain future work.
 
 ## Security and trust boundaries
@@ -110,8 +112,10 @@ python tools/guardian_integrate.py --home PATH_TO_COMPLETED_STATE --apply --conf
 The A/B evaluator runs both prompt variants sequentially from the same clean Git source revision, with identical explicit model, effort, sandbox and grader. Provide the checker **outside the repository** as a trusted Python script accepting `--workspace`, `--case` and `--checks`; the checker must independently validate required behavior. The checker cannot be modified from inside the Codex worktree.
 
 ```sh
-python tools/guardian_eval_runner.py --dataset data/benchmark-cases.json --project PATH_TO_CLEAN_GIT_REPO --checker PATH_TO_TRUSTED_EXTERNAL_CHECKER.py --out PATH_TO_EMPTY_RESULTS --model MODEL --effort medium --repeats 3
-python tools/guardian_eval_runner.py --dataset data/benchmark-cases.json --project PATH_TO_CLEAN_GIT_REPO --checker PATH_TO_TRUSTED_EXTERNAL_CHECKER.py --out PATH_TO_EMPTY_RESULTS --model MODEL --effort medium --repeats 3 --run
+python tools/guardian_benchmark_fixture.py --out NEW_EVALUATION_FOLDER
+python tools/guardian_eval_runner.py --dataset NEW_EVALUATION_FOLDER/dataset.json --project NEW_EVALUATION_FOLDER/project --checker NEW_EVALUATION_FOLDER/trusted_checker.py --candidate-guide NEW_EVALUATION_FOLDER/guardian_guidance.md --out NEW_EVALUATION_FOLDER/results --model ACTUAL_AVAILABLE_MODEL --effort medium --repeats 3
+# Explicit quota-consuming run after reviewing the generated fixture and grader:
+python tools/guardian_eval_runner.py --dataset NEW_EVALUATION_FOLDER/dataset.json --project NEW_EVALUATION_FOLDER/project --checker NEW_EVALUATION_FOLDER/trusted_checker.py --candidate-guide NEW_EVALUATION_FOLDER/guardian_guidance.md --out NEW_EVALUATION_FOLDER/results --model ACTUAL_AVAILABLE_MODEL --effort medium --repeats 3 --run
 ```
 
 If the Codex CLI does not report usage, the token metric is `null` and cannot be used for comparisons. The A/B test remains confounded by global Codex configuration and prompt differences; it does not establish that Guardian has better reasoning or code quality in general. Evaluation runs consume quota and should be explicitly budgeted.
