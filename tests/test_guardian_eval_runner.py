@@ -57,14 +57,22 @@ class NativeBenchmarkTests(unittest.TestCase):
             return 0, True, None
         with patch("tools.guardian_eval_runner._codex", side_effect=fake):
             result = run(self.dataset, self.project, self.checker, self.output,
-                         "test-model", "medium", 1, 120, apply=True, codex_binary=sys.executable)
+                         "test-model", "medium", 1, 120, apply=True, codex_binary=sys.executable,
+                         candidate_guidance="Guardian: verify contract invariants and error paths with actual tests.")
         self.assertEqual(len(calls), 2)
         self.assertEqual(result["paired_samples"], 1)
         self.assertTrue(result["native_codex_run"])
+        self.assertRegex(result["candidate_guidance_sha256"],r"^[0-9a-f]{64}$")
         self.assertFalse(result["all_token_counts_verified"])
         self.assertIsNone(result["baseline"]["mean_token_count"])
         self.assertFalse(result["sufficient_for_general_claim"])
         self.assertEqual((self.project / "answer.txt").read_text(), "bad\n")
+
+    def test_missing_guardian_guidance_blocks_live_run(self):
+        with self.assertRaises(EvalError):
+            run(self.dataset, self.project, self.checker, self.output,
+                "test-model", "medium", 1, 120, apply=True,
+                codex_binary=sys.executable)
 
     def test_checker_inside_repo_rejected(self):
         unsafe = self.project / "checker.py"
