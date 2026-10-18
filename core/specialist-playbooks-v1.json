@@ -1,0 +1,238 @@
+{
+  "schema_version": 1,
+  "description": "Context-loaded, non-executable discipline-specific validation playbooks, for native delegation by Codex",
+  "agents": {
+    "A00": {
+      "name": "guardian_engineering_orchestrator",
+      "checkpoints": [
+        "Decompose intent into a minimal acyclic task plan with explicit stop conditions.",
+        "Separate known facts, assumptions, constraints and human approval gates.",
+        "Keep one owner for each write-critical scope; record all blocked or unverified work."
+      ]
+    },
+    "S01": {
+      "name": "guardian_product_discovery",
+      "checkpoints": [
+        "Validate the user problem with stakeholders and observable evidence.",
+        "Prioritize outcomes, cost of delay, competing hypotheses and narrow MVP scope.",
+        "Define metrics and acceptance owners; avoid invented market validation."
+      ]
+    },
+    "S02": {
+      "name": "guardian_requirements_engineer",
+      "checkpoints": [
+        "Trace functional and nonfunctional requirements to acceptance cases.",
+        "Specify positive, negative, edge and unauthorized user journeys.",
+        "Identify ambiguous business rules and invariants before coding."
+      ]
+    },
+    "S03": {
+      "name": "guardian_solutions_architect",
+      "checkpoints": [
+        "Map as-is components, trust boundaries, data flows and third-party dependencies.",
+        "Compare architecture alternatives via explicit ADR and failure assumptions.",
+        "Validate compatibility, criticality, reliability, operating cost and reversibility."
+      ]
+    },
+    "S04": {
+      "name": "guardian_frontend_architect",
+      "checkpoints": [
+        "Inspect actual component boundaries, state ownership and rendering pipeline.",
+        "Evaluate route transitions, error states, caching and shared UI contracts.",
+        "Check accessibility and behavior in relevant browsers before broad refactoring."
+      ]
+    },
+    "S05": {
+      "name": "guardian_frontend_engineer",
+      "checkpoints": [
+        "Implement narrowly scoped responsive UI behavior preserving design and state boundaries.",
+        "Test keyboard, loading, validation, empty and error paths.",
+        "Keep API assumptions and component interface compatibility explicit."
+      ]
+    },
+    "S06": {
+      "name": "guardian_ux_accessibility",
+      "checkpoints": [
+        "Audit semantics, labels, focus order, keyboard access and screen-reader context.",
+        "Validate contrast, responsive layouts and error announcements against applicable WCAG criteria.",
+        "Distinguish static findings from tests requiring assistive technology."
+      ]
+    },
+    "S07": {
+      "name": "guardian_web_performance",
+      "checkpoints": [
+        "Measure LCP, INP, CLS and resource waterfalls before optimization.",
+        "Check hydration, caching, SSR/CSR behavior and browser compatibility.",
+        "Report reproducible before/after metrics and test configuration."
+      ]
+    },
+    "S08": {
+      "name": "guardian_backend_domain",
+      "checkpoints": [
+        "Trace request execution, domain invariants, side effects and exception boundaries.",
+        "Preserve transaction semantics, nullability, async cancellation and DI lifetimes.",
+        "Verify normal, negative and integration boundary behavior."
+      ]
+    },
+    "S09": {
+      "name": "guardian_api_integration",
+      "checkpoints": [
+        "Map producers, consumers, versions, authentication and error contracts.",
+        "Check OpenAPI drift, pagination, rate limits, retries and webhook integrity.",
+        "Prove compatible or intentionally versioned changes using contract tests."
+      ]
+    },
+    "S10": {
+      "name": "guardian_distributed_concurrency",
+      "checkpoints": [
+        "Analyze atomicity, event ordering, deduplication, concurrency and failure windows.",
+        "Review idempotency, outbox/inbox, saga and reconciliation patterns only when justified.",
+        "Test race conditions, message redelivery and partial failure recovery."
+      ]
+    },
+    "S11": {
+      "name": "guardian_database_transactions",
+      "checkpoints": [
+        "Validate schema, constraints, isolation, indexes and query plans in context.",
+        "Simulate expand/migrate/contract upgrades and rollback limitations.",
+        "Check integrity invariants and operational migration risk."
+      ]
+    },
+    "S12": {
+      "name": "guardian_data_governance",
+      "checkpoints": [
+        "Map lineage, data owners, quality checks, retention and classification.",
+        "Verify backup and restore assumptions with actual evidence.",
+        "Flag privacy, disposal and access-control omissions."
+      ]
+    },
+    "S13": {
+      "name": "guardian_appsec",
+      "checkpoints": [
+        "Derive threat model from assets, actors, entry points and trust boundaries.",
+        "Verify OWASP-relevant vulnerabilities and mitigation effectiveness safely.",
+        "Prioritize reproducible security findings with exploit preconditions and residual risk."
+      ]
+    },
+    "S14": {
+      "name": "guardian_iam_privacy",
+      "checkpoints": [
+        "Trace identities, grants, audience/scopes, session lifecycle and tenant boundaries.",
+        "Test access-denied flows, OIDC/JWT validation and authorization enforcement.",
+        "Evaluate LGPD-impacting data flows and never request credentials."
+      ]
+    },
+    "S15": {
+      "name": "guardian_cloud_supply_security",
+      "checkpoints": [
+        "Assess supply chain provenance, SBOM, locked dependencies and secrets exposure.",
+        "Review container, cloud and pipeline permission boundaries.",
+        "Require independent verification before high-risk security claims."
+      ]
+    },
+    "S16": {
+      "name": "guardian_quality_architect",
+      "checkpoints": [
+        "Choose test pyramid and risk-based coverage based on changed behavior.",
+        "Identify oracle quality, mock limitations and missing negative tests.",
+        "Record coverage evidence while avoiding numeric confidence claims unsupported by data."
+      ]
+    },
+    "S17": {
+      "name": "guardian_frontend_qa",
+      "checkpoints": [
+        "Test UI journeys through supported browser automation with explicit constraints.",
+        "Check accessibility, flaky selectors, race conditions and visual regressions.",
+        "Keep screenshots and snapshots sanitized."
+      ]
+    },
+    "S18": {
+      "name": "guardian_backend_qa",
+      "checkpoints": [
+        "Validate API status/error contracts, persistence, transactional side effects and authorization.",
+        "Use consumer/provider contracts and representative fixture data.",
+        "Report exact commands, tests, failures and unverified environment cases."
+      ]
+    },
+    "S19": {
+      "name": "guardian_performance_capacity",
+      "checkpoints": [
+        "Establish reproducible baselines for latency, throughput, resource use and saturation.",
+        "Run bounded load or profile only in authorized environments.",
+        "Correlate bottlenecks with traces and report confidence and tradeoffs."
+      ]
+    },
+    "S20": {
+      "name": "guardian_sre_resilience",
+      "checkpoints": [
+        "Define SLO/SLI, failure budgets, alert strategy and dependency health.",
+        "Review RTO/RPO and actual recovery procedures without assuming successful restores.",
+        "Escalate production operational actions for authorization."
+      ]
+    },
+    "S21": {
+      "name": "guardian_observability",
+      "checkpoints": [
+        "Correlate logs, traces, metrics and deployment changes; preserve timestamps.",
+        "Check cardinality, personally identifiable data and secret leakage in telemetry.",
+        "Separate hypotheses and verified incident timeline."
+      ]
+    },
+    "S22": {
+      "name": "guardian_cloud_platform",
+      "checkpoints": [
+        "Inspect cloud/IaC plan, IAM, networking, region constraints and service quotas.",
+        "Assess drift, multi-zone failures, costs and rollback before recommending infrastructure.",
+        "Never apply Terraform/cloud changes without explicit approval."
+      ]
+    },
+    "S23": {
+      "name": "guardian_devsecops",
+      "checkpoints": [
+        "Validate build provenance, reproducibility, CI permissions and artifact integrity.",
+        "Design gated rollout, smoke tests and rollback criteria.",
+        "Never conflate pipeline success with production authorization."
+      ]
+    },
+    "S24": {
+      "name": "guardian_maintainability",
+      "checkpoints": [
+        "Assess existing callers, contracts, migration paths and debt impact.",
+        "Prefer incremental strangler/refactor approaches with measurable rollback.",
+        "Prove behavior preservation with regression tests."
+      ]
+    },
+    "S25": {
+      "name": "guardian_governance_finops",
+      "checkpoints": [
+        "Measure material FinOps drivers and assess compliance/policy tradeoffs.",
+        "Document risk owners, approvals and sustainable operational cost.",
+        "Separate observed bills from estimates and avoid blanket certification."
+      ]
+    },
+    "S26": {
+      "name": "guardian_ai_assurance",
+      "checkpoints": [
+        "Map AI input, retrieval, tools, evaluation criteria and adversarial failure modes.",
+        "Test prompt-injection defenses, provenance, tenant isolation and escalation.",
+        "Separate model quality metrics from product correctness and safety."
+      ]
+    },
+    "G01": {
+      "name": "guardian_independent_auditor",
+      "checkpoints": [
+        "Independently reproduce material issues, not just restate implementer conclusions.",
+        "Verify evidence provenance, defects, severity and coverage limitations.",
+        "Do not modify assessed source or approve own changes."
+      ]
+    },
+    "G02": {
+      "name": "guardian_release_auditor",
+      "checkpoints": [
+        "Evaluate immutable artifacts, migration readiness, rollback, recovery, monitors and access.",
+        "Classify READY, CONDITIONAL, BLOCKED or UNKNOWN with explicit evidence.",
+        "This opinion never grants production release authorization."
+      ]
+    }
+  }
+}

@@ -9,7 +9,7 @@ import zipfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-DIRECTORIES = {'global', 'core', 'tools', 'tests', 'docs', 'project-template', 'skills', '.agents', '.codex-plugin', 'assets', 'installer', '.github'}
+DIRECTORIES = {'global', 'core', 'tools', 'tests', 'docs', 'packs', 'scripts', 'project-template', 'skills', '.agents', '.codex-plugin', 'assets', 'installer', '.github'}
 FILES = {'README.md', 'RELEASE_NOTES.md', 'LICENSE', 'VERSION', 'install.py', 'install.sh', 'plugin.json', '.gitignore', '.gitattributes', 'SECURITY.md'}
 EXCLUDED = {'__pycache__', '.git', 'dist', '.pytest_cache'}
 
@@ -35,7 +35,7 @@ def source_files(root=ROOT):
 def build(destination, root=ROOT):
     version = (root / 'VERSION').read_text(encoding='utf8').strip()
     import re
-    if not re.fullmatch(r'\d+\.\d+\.\d+', version):
+    if not re.fullmatch(r'\d+\.\d+\.\d+(?:-(?:dev|rc)\.\d+)?', version):
         raise ValueError('Invalid stable VERSION')
     files = source_files(root)
     paths = {p.relative_to(root).as_posix() for p in files}

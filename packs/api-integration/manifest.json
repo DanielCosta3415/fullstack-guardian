@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "name": "api-integration",
+  "description": "API contract evolution and interoperability (opt-in, uninstalled by default)",
+  "agents": [
+    {
+      "name": "guardian_api_contract_specialist",
+      "file": "agents/guardian_api_contract_specialist.toml"
+    }
+  ]
+}

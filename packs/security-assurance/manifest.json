@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "name": "security-assurance",
+  "description": "Threat modeling and application security (opt-in, uninstalled by default)",
+  "agents": [
+    {
+      "name": "guardian_threat_model_specialist",
+      "file": "agents/guardian_threat_model_specialist.toml"
+    }
+  ]
+}

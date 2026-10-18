@@ -5,6 +5,8 @@ on:
     tags: ['v*']
 permissions:
   contents: read
+  id-token: write
+  attestations: write
 jobs:
   package:
     runs-on: ubuntu-latest
@@ -17,6 +19,15 @@ jobs:
       - run: python tools/guardian.py validate
       - run: python tools/guardian.py eval
       - run: python tools/build_release.py
+      # Trusted provenance is created by GitHub Actions OIDC, never by a repository secret.
+      # Signing requires GitHub attestation support for this repository.
+      - uses: actions/attest-build-provenance@977bb373ede98d70efdf65b84cb5f73e068dcc2a # v3 pinned
+        with:
+          subject-path: dist/fullstack-guardian-*.zip
+      - name: Verify signed provenance for built archive
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh attestation verify dist/fullstack-guardian-*.zip --repo "${{ github.repository }}"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: guardian-release

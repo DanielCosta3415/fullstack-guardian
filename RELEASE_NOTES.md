@@ -1,5 +1,14 @@
 # Notas da release
 
+## v2.2.0-dev.1 — Prévia de desenvolvimento (não publicada)
+
+- **Não é a versão estável 2.1.0 nem uma release de produção.**
+- Acrescenta skills por etapa do ciclo de vida, playbooks especializados, dez packs opcionais, orquestração CLI supervisionada, avaliação local opt-in e recuperação do instalador.
+- Os testes da CI verificam o código em ambientes isolados; a execução nativa no Windows autenticado ainda requer validação separada.
+- O PR em rascunho preserva `main`. O uso da prévia requer escolha explícita e revisão de segurança.
+
+# Notas da release
+
 ## v2.1.0 — 2026-10-14
 
 Primeira distribuição pública preparada para instalação global preservadora, com marketplace e configuração guiada.

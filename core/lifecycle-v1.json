@@ -1,0 +1,164 @@
+{
+  "schema_version": 1,
+  "description": "Lifecycle contract and evidence checklist; phase criteria do not imply execution",
+  "phases": [
+    {
+      "id": "discovery",
+      "purpose": "Understand problem, users and viability",
+      "responsible": [
+        "S01",
+        "S02"
+      ],
+      "criteria": [
+        "Stakeholders and problem evidence recorded",
+        "Hypotheses and alternatives documented",
+        "Uncertainties and acceptance owner identified"
+      ]
+    },
+    {
+      "id": "requirements",
+      "purpose": "Specify verifiable functional and non-functional needs",
+      "responsible": [
+        "S02",
+        "S03"
+      ],
+      "criteria": [
+        "User-visible behavior and failure paths specified",
+        "Acceptance criteria traceable to requirements",
+        "Security, reliability and privacy constraints considered"
+      ]
+    },
+    {
+      "id": "architecture",
+      "purpose": "Make justified and reversible technical decisions",
+      "responsible": [
+        "S03",
+        "S09"
+      ],
+      "criteria": [
+        "As-Is boundaries and relevant integration contracts mapped",
+        "ADR with alternatives and tradeoffs reviewed",
+        "To-Be justified with constraints, risks and rollback"
+      ]
+    },
+    {
+      "id": "experience",
+      "purpose": "Design usable and accessible user interactions",
+      "responsible": [
+        "S04",
+        "S06"
+      ],
+      "criteria": [
+        "Target user journeys and interaction failures assessed",
+        "Accessibility requirements and keyboard interaction checked",
+        "Responsive behavior and error states validated"
+      ]
+    },
+    {
+      "id": "development",
+      "purpose": "Implement smallest safe change",
+      "responsible": [
+        "S08",
+        "S05"
+      ],
+      "criteria": [
+        "Affected execution boundaries enumerated",
+        "Positive and negative paths verified",
+        "Changes limited to authorized scope"
+      ]
+    },
+    {
+      "id": "integration",
+      "purpose": "Preserve contracts across system boundaries",
+      "responsible": [
+        "S09",
+        "S10"
+      ],
+      "criteria": [
+        "Contract/version compatibility assessed",
+        "Timeout, retry and idempotency behavior evaluated",
+        "Authentication and failure paths verified"
+      ]
+    },
+    {
+      "id": "data",
+      "purpose": "Protect integrity and lifecycle of information",
+      "responsible": [
+        "S11",
+        "S12"
+      ],
+      "criteria": [
+        "Data invariants and migration impact reviewed",
+        "Backup, retention and rollback documented",
+        "Sensitive fields and access boundaries evaluated"
+      ]
+    },
+    {
+      "id": "verification",
+      "purpose": "Assess correctness and residual risks",
+      "responsible": [
+        "S16",
+        "S18",
+        "G01"
+      ],
+      "criteria": [
+        "Appropriate tests actually executed",
+        "Independent review findings disposition recorded",
+        "Unverified behavior and residual risks stated"
+      ]
+    },
+    {
+      "id": "delivery",
+      "purpose": "Prepare traceable deployment or release proposal",
+      "responsible": [
+        "S23",
+        "G02"
+      ],
+      "criteria": [
+        "Build and immutable artifact identified",
+        "Rollout, rollback and security gates documented",
+        "Authorized human release decision recorded separately"
+      ]
+    },
+    {
+      "id": "operations",
+      "purpose": "Observe and recover service safely",
+      "responsible": [
+        "S20",
+        "S21"
+      ],
+      "criteria": [
+        "SLO and alert thresholds documented where applicable",
+        "Incident runbook and escalation owners identified",
+        "Restore/recovery exercise results or limitations recorded"
+      ]
+    },
+    {
+      "id": "evolution",
+      "purpose": "Modernize safely without silent regressions",
+      "responsible": [
+        "S24",
+        "S25"
+      ],
+      "criteria": [
+        "Backward compatibility and consumers assessed",
+        "Regression results available",
+        "Deprecation and cost tradeoffs documented"
+      ]
+    },
+    {
+      "id": "decommission",
+      "purpose": "Retire safely and accountably",
+      "responsible": [
+        "S24",
+        "S12",
+        "G02"
+      ],
+      "criteria": [
+        "Consumers and dependent integrations notified",
+        "Retention, export and disposal requirements recorded",
+        "Authorized retirement and recovery plan documented"
+      ]
+    }
+  ]
+}
