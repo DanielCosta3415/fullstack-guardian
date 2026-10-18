@@ -30,9 +30,25 @@ class ExecutorTests(unittest.TestCase):
         git(self.repo, "add", "example.txt")
         git(self.repo, "-c", "user.name=CI Test", "-c", "user.email=test@example.invalid", "commit", "-q", "-m", "test base")
         self.plan = create_plan("Corrigir service ASP.NET Core do backend")
+        self.briefs = {t["id"]: "Review the ASP.NET Core service test boundary and implement a minimal testable change." for t in self.plan["tasks"]}
+
+    def test_execution_requires_explicit_briefs(self):
+        initialize(self.plan, self.repo, self.home)
+        with self.assertRaises(ExecutionError):
+            execute(self.home, apply=True, codex_binary=sys.executable)
+
+    def test_brief_tampering_is_rejected(self):
+        initialize(self.plan, self.repo, self.home, briefs=self.briefs)
+        path = self.home / "briefs.json"
+        content = json.loads(path.read_text())
+        key = next(iter(content))
+        content[key] = "A different request with no authorization and too much scope"
+        path.write_text(json.dumps(content))
+        with self.assertRaises(ExecutionError):
+            execute(self.home, apply=True, codex_binary=sys.executable)
 
     def test_init_creates_state_but_not_git_worktree(self):
-        result = initialize(self.plan, self.repo, self.home)
+        result = initialize(self.plan, self.repo, self.home, briefs=self.briefs)
         self.assertEqual(result["overall"], "initialized")
         self.assertFalse((self.home / "worktree").exists())
         self.assertTrue((self.home / "state.json").exists())
