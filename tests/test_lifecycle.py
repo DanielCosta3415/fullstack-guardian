@@ -109,12 +109,12 @@ class LifecycleTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as t:
             home=Path(t).resolve(); c=home/'.codex'; c.mkdir()
             original=b'Existing personal instructions\n'; (c/'AGENTS.md').write_bytes(original)
-            write=Path.write_bytes
+            atomic=inst.atomic_write
             def fail_policy(path,data):
-                if path==c/'AGENTS.md' and data!=original:
+                if Path(path)==c/'AGENTS.md' and data!=original:
                     raise OSError('injected controlled write failure')
-                return write(path,data)
-            with patch.object(Path,'write_bytes',fail_policy):
+                return atomic(path,data)
+            with patch.object(inst,'atomic_write',fail_policy):
                 with self.assertRaises(OSError): inst.lifecycle('user',home,apply=True)
             self.assertEqual((c/'AGENTS.md').read_bytes(),original)
             self.assertFalse((c/'guardian-install.json').exists())
