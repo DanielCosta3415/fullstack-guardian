@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "name": "frontend-experience",
+  "description": "Browser behavior and accessible interaction (opt-in, uninstalled by default)",
+  "agents": [
+    {
+      "name": "guardian_browser_accessibility_specialist",
+      "file": "agents/guardian_browser_accessibility_specialist.toml"
+    }
+  ]
+}
