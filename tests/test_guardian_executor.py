@@ -71,7 +71,7 @@ class ExecutorTests(unittest.TestCase):
         self.assertFalse(self.home.exists())
 
     def test_successful_mock_codex_turns_share_isolated_worktree(self):
-        initialize(self.plan, self.repo, self.home)
+        initialize(self.plan, self.repo, self.home, briefs=self.briefs)
         seen = []
         def fake_process(codex, worktree, prompt, timeout, logs, mode):
             seen.append(worktree)
@@ -89,7 +89,7 @@ class ExecutorTests(unittest.TestCase):
         self.assertFalse(status(self.home)["native_subagents_verified"])
 
     def test_missing_completed_event_is_failure_and_resume_is_explicit(self):
-        initialize(self.plan, self.repo, self.home)
+        initialize(self.plan, self.repo, self.home, briefs=self.briefs)
         def bad(codex, worktree, prompt, timeout, logs, mode):
             logs.parent.mkdir(parents=True, exist_ok=True)
             logs.write_text('{"type":"turn.failed"}\n')
