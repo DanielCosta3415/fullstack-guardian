@@ -8,7 +8,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 from tools.guardian_executor import (
-    ExecutionError, execute, initialize, preflight, safe, status,
+    ExecutionError, execute, initialize, preflight, safe, status, review,
 )
 from tools.guardian_platform import create_plan
 
@@ -87,6 +87,10 @@ class ExecutorTests(unittest.TestCase):
         self.assertEqual((self.repo / "example.txt").read_text(), "baseline\n")
         self.assertIn("synthetic changed", (self.home / "worktree" / "example.txt").read_text())
         self.assertFalse(status(self.home)["native_subagents_verified"])
+        summary = review(self.home)
+        self.assertEqual(summary["changed_files"], 1)
+        self.assertFalse(summary["merged"])
+        self.assertTrue(summary["diff_check_passed"])
 
     def test_missing_completed_event_is_failure_and_resume_is_explicit(self):
         initialize(self.plan, self.repo, self.home, briefs=self.briefs)
