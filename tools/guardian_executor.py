@@ -243,14 +243,19 @@ def execute(home: Path, *, apply: bool = False, codex_binary: str | None = None,
                 record["state"] = "blocked"
                 state["overall"] = "blocked"
                 break
-            slot = safe(home / "worktrees" / ident)
+            # One run-level worktree: sequential DAG tasks see earlier completed edits.
+            # No automatic merge into the original repository.
+            slot = safe(home / "worktree")
             if record["worktree"] is not None and record["worktree"] != str(slot):
                 raise ExecutionError("Unexpected worktree path in state")
             if record["worktree"] is None:
                 slot.parent.mkdir(parents=True, exist_ok=True)
                 if slot.exists():
-                    raise ExecutionError("Untracked worktree already exists")
-                _git(root, "worktree", "add", "--detach", str(slot), state["base_commit"])
+                    # Valid only if an earlier task in this SAME run owns the worktree.
+                    if not any(other["worktree"] == str(slot) and other["state"] == "completed" for other in state["tasks"].values()):
+                        raise ExecutionError("Untracked worktree already exists")
+                else:
+                    _git(root, "worktree", "add", "--detach", str(slot), state["base_commit"])
                 record["worktree"] = str(slot)
             elif not slot.is_dir():
                 raise ExecutionError("Worktree lost: operator intervention required")
