@@ -11,7 +11,7 @@ class TraceTests(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
         self.addCleanup(self.tmp.cleanup)
-        self.path = Path(self.tmp.name) / "journal.jsonl"
+        self.path = Path(self.tmp.name).resolve() / "journal.jsonl"
 
     def test_init_append_verify(self):
         self.assertEqual(init(self.path)["events"], 1)
