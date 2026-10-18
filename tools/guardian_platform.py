@@ -80,6 +80,9 @@ def create_plan(prompt: str, project: Path | None = None, mode: str = "build",
     workflows = load_workflows(root)
     catalog = discover(root)
     known = {entry["id"]: entry["name"] for entry in catalog["core"]}
+    playbooks = json.loads((Path(root) / "core" / "specialist-playbooks-v1.json").read_text(encoding="utf-8"))
+    if playbooks.get("schema_version") != 1 or set(playbooks.get("agents", {})) != set(known):
+        raise PlatformError("Core specialist playbook coverage incomplete")
     inventory = inspect_project(str(project)) if project is not None else None
     result = route(prompt, inventory=inventory, mode=mode)
     selected = result["agents"]
@@ -111,6 +114,7 @@ def create_plan(prompt: str, project: Path | None = None, mode: str = "build",
                 "scope": "to_be_assigned_by_primary",
                 "write_ownership": "unassigned",
                 "evidence_required": ["files_examined", "commands_and_results", "limitations"],
+                "specialist_checkpoints": playbooks["agents"][aid]["checkpoints"],
             })
             wave_ids.append("task-" + aid.lower())
         previous_wave = wave_ids
