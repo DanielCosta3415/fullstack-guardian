@@ -192,7 +192,8 @@ def validate():
             if any(not doc.get(key) for key in ('name','description','developer_instructions')) or doc['name']!=a['name']:errors.append('Campos incorretos '+str(f))
         except Exception as exc:errors.append('TOML inválido '+str(exc))
     skills=list((ROOT/'global'/'skills').glob('*/SKILL.md'))
-    if len(skills)!=8:errors.append('Quantidade de skills divergente')
+    if len(skills)<8:errors.append('Conjunto mínimo de oito skills ausente')
+    if len({p.parent.name for p in skills})!=len(skills):errors.append('Skills duplicadas')
     for p in skills:
         s=p.read_text(encoding='utf8')
         if not s.startswith('---\nname: ') or '\ndescription: ' not in s:errors.append('Frontmatter de skill inválido '+str(p))
