@@ -93,6 +93,18 @@ To require native Codex delegation and fail closed unless session metadata prove
 
 The dry-run does not call Codex. `--apply` invokes the local authenticated CLI and consumes account quota. Failed/interrupted worktree mutations require operator inspection and a new run, rather than an unsafe automatic retry. The source repository stays untouched. The worktree's changes are not automatically merged.
 
+## Explicit worktree patch integration (new, opt-in)
+
+A completed low/medium-risk build/remediate run can produce a Git patch for **human-reviewed integration**. The default command is a read-only preview, including changed files, `git apply --check` and the exact SHA-256 of the patch. It rejects protected files, untracked changes, dirty upstream repositories, failed runs and high-risk approval boundaries.
+
+```sh
+python tools/guardian_integrate.py --home PATH_TO_COMPLETED_STATE
+# After manually inspecting the diff, running trustworthy tests and reviewing risk:
+python tools/guardian_integrate.py --home PATH_TO_COMPLETED_STATE --apply --confirm-sha256 REVIEWED_64_CHAR_PATCH_HASH
+```
+
+`--apply` does not create a commit, push, deploy or claim tests have passed; it applies a reviewed patch into the original working tree as **uncommitted changes**. Any failures, unexpected output or power loss during integration require human intervention. Never use hash confirmation as a substitute for code review.
+
 ## Opt-in paired Codex CLI benchmark runs
 
 The A/B evaluator runs both prompt variants sequentially from the same clean Git source revision, with identical explicit model, effort, sandbox and grader. Provide the checker **outside the repository** as a trusted Python script accepting `--workspace`, `--case` and `--checks`; the checker must independently validate required behavior. The checker cannot be modified from inside the Codex worktree.
