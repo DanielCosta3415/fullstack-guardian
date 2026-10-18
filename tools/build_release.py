@@ -35,7 +35,7 @@ def source_files(root=ROOT):
 def build(destination, root=ROOT):
     version = (root / 'VERSION').read_text(encoding='utf8').strip()
     import re
-    if not re.fullmatch(r'\d+\.\d+\.\d+', version):
+    if not re.fullmatch(r'\d+\.\d+\.\d+(?:-(?:dev|rc)\.\d+)?', version):
         raise ValueError('Invalid stable VERSION')
     files = source_files(root)
     paths = {p.relative_to(root).as_posix() for p in files}
