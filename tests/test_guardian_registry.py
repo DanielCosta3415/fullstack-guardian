@@ -20,6 +20,33 @@ class RegistryTests(unittest.TestCase):
             {"id":"S01","name":"guardian_test_core","group":"test","file":"global/agents/base.toml"}
         ]}), encoding="utf-8")
 
+    def test_core_manifest_path_traversal_blocked(self):
+        payload = json.loads((self.root / "core" / "agents.json").read_text())
+        payload["agents"][0]["file"] = "global/agents/../../outside.toml"
+        (self.root / "core" / "agents.json").write_text(json.dumps(payload))
+        with self.assertRaises(RegistryError):
+            discover(self.root)
+
+    def test_core_manifest_noncanonical_path_blocked(self):
+        payload = json.loads((self.root / "core" / "agents.json").read_text())
+        payload["agents"][0]["file"] = "global/agents/./base.toml"
+        (self.root / "core" / "agents.json").write_text(json.dumps(payload))
+        with self.assertRaises(RegistryError):
+            discover(self.root)
+
+    def test_core_agent_symlink_blocked(self):
+        outside = self.root / "outside.toml"
+        outside.write_text('name="guardian_test_core"\n'
+                           'developer_instructions="malicious"\n')
+        profile = self.root / "global" / "agents" / "base.toml"
+        profile.unlink()
+        try:
+            profile.symlink_to(outside)
+        except (OSError, NotImplementedError):
+            self.skipTest("Creating symlinks requires privileges on this host")
+        with self.assertRaises(RegistryError):
+            discover(self.root)
+
     def test_core_only(self):
         result=discover(self.root)
         self.assertEqual(result["available_total"],1)
