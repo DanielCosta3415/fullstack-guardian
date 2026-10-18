@@ -127,8 +127,8 @@ class ExecutorTests(unittest.TestCase):
         child = sessions / "child.jsonl"
         metadata = {"payload": {"agent_role": "guardian_backend_domain", "source": {
             "subagent": {"thread_spawn": {"parent_thread_id": "thread-test"}}}}}
-        child.write_text(json.dumps(metadata) + "\\n" + json.dumps(
-            {"type": "event_msg", "payload": {"type": "task_complete"}}) + "\\n")
+        child.write_text(json.dumps(metadata) + "\n" + json.dumps(
+            {"type": "event_msg", "payload": {"type": "task_complete"}}) + "\n")
         self.assertTrue(verify_native_child("thread-test", "guardian_backend_domain", sessions))
         self.assertFalse(verify_native_child("thread-test", "guardian_appsec", sessions))
         self.assertFalse(verify_native_child("different-thread", "guardian_backend_domain", sessions))
@@ -138,10 +138,10 @@ class ExecutorTests(unittest.TestCase):
         def fake_process(codex, worktree, prompt, timeout, logs, mode):
             self.assertIn("collaboration.spawn_agent", prompt)
             logs.parent.mkdir(parents=True, exist_ok=True)
-            logs.write_text('{"type":"thread.started","thread_id":"fake-test"}\\n{"type":"turn.completed"}\\n')
+            logs.write_text('{"type":"thread.started","thread_id":"fake-test"}\n{"type":"turn.completed"}\n')
             return 0, True, "fake-test"
-        with patch("tools.guardian_executor._process", side_effect=fake_process), \\
-             patch("tools.guardian_executor.verify_native_child", return_value=False):
+        with (patch("tools.guardian_executor._process", side_effect=fake_process),
+              patch("tools.guardian_executor.verify_native_child", return_value=False)):
             output = execute(self.home, apply=True, codex_binary=sys.executable, native_subagents=True)
         self.assertEqual(output["overall"], "blocked")
         self.assertFalse(output["native_subagents_verified"])
