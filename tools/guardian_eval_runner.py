@@ -104,7 +104,7 @@ def grade(checker: Path, case_id: str, worktree: Path, checks: list[str], timeou
     if not module.isidentifier():
         raise EvalError("Checker module name invalid")
     # Isolate test process from the source tree and disallow external mutation.
-    cmd = [sys.executable, "-I", str(checker), "--workspace", str(worktree),
+    cmd = [sys.executable, "-I", "-B", str(checker), "--workspace", str(worktree),
            "--case", case_id, "--checks", ",".join(checks)]
     try:
         return subprocess.run(cmd, cwd=checker.parent, stdin=subprocess.DEVNULL,
