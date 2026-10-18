@@ -319,10 +319,52 @@ def status(home: Path) -> dict:
             "notice": "Worktree changes are NOT merged; inspect git diffs and tests before integration."}
 
 
+def review(home: Path) -> dict:
+    """Read-only worktree diff manifest for operator review; never merges changes."""
+    state, _ = _load(home)
+    worktree = safe(home / "worktree")
+    if not worktree.is_dir():
+        return {"available": False, "reason": "No worktree created", "merged": False}
+    if safe(Path(_git(worktree, "rev-parse", "--show-toplevel")).resolve()) != worktree:
+        raise ExecutionError("Worktree root mismatch")
+    root = safe(Path(state["project"]))
+    if _git(worktree, "rev-parse", "HEAD") != state["base_commit"]:
+        raise ExecutionError("Worktree commit differs from base; operator must inspect")
+    changed = subprocess.run(["git", "-C", str(worktree), "diff", "--name-only", "-z", "HEAD"],
+                             stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, check=True, timeout=20).stdout
+    untracked = subprocess.run(["git", "-C", str(worktree), "ls-files", "--others", "--exclude-standard", "-z"],
+                               stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, check=True, timeout=20).stdout
+    paths = sorted(set(x.decode("utf-8", errors="surrogateescape") for x in
+                       (changed.split(b"\0") + untracked.split(b"\0")) if x))
+    if len(paths) > 1000:
+        raise ExecutionError("Too many changes for bounded review")
+    findings = []
+    for name in paths:
+        target = safe(worktree / name)
+        if worktree not in target.parents or not target.is_file():
+            if not target.exists():
+                findings.append({"path": name, "status": "deleted"})
+                continue
+            raise ExecutionError("Unsafe or non-file changed path")
+        findings.append({"path": name, "status": "changed",
+                         "sha256": hashlib.sha256(target.read_bytes()).hexdigest(),
+                         "bytes": target.stat().st_size})
+    result = subprocess.run(["git", "-C", str(worktree), "diff", "--check"],
+                            stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, check=False, timeout=20)
+    return {
+        "available": True, "base_commit": state["base_commit"], "changed_files": len(findings),
+        "files": findings, "diff_check_passed": result.returncode == 0,
+        "original_repository_untouched_by_executor": True,
+        "merged": False, "native_agent_identity_proven": False,
+        "release_authorized": False,
+        "notice": "This is a change inventory, not correctness proof. Review tests and security before manually integrating.",
+    }
+
+
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(description=__doc__)
     sub = p.add_subparsers(dest="command", required=True)
-    for command in ("init", "run", "status"):
+    for command in ("init", "run", "status", "review"):
         x = sub.add_parser(command)
         x.add_argument("--home", type=Path, required=True)
         if command == "init":
@@ -341,6 +383,8 @@ def main(argv: list[str] | None = None) -> int:
                                 json.loads(safe(a.briefs).read_text(encoding="utf-8")) if a.briefs else None)
         elif a.command == "status":
             result = status(a.home)
+        elif a.command == "review":
+            result = review(a.home)
         else:
             result = execute(a.home, apply=a.apply, timeout=a.timeout,
                              max_tasks=a.max_tasks, retry_failed=a.retry_failed)
