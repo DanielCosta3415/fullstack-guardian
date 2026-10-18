@@ -8,11 +8,29 @@ import stat
 import sys
 import tomllib
 import uuid
+import tempfile
 from pathlib import Path
 
 SOURCE = Path(__file__).resolve().parent
 START = '<!-- GUARDIAN-V2:START -->'
 END = '<!-- GUARDIAN-V2:END -->'
+
+def atomic_write(path, content):
+    """Replace a managed file atomically after flushing, without following symlinks."""
+    path = safe(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temp = None
+    try:
+        with tempfile.NamedTemporaryFile(prefix='.guardian-write-', dir=path.parent, delete=False) as stream:
+            temp = Path(stream.name)
+            stream.write(content)
+            stream.flush()
+            os.fsync(stream.fileno())
+        os.replace(temp, path)
+    finally:
+        if temp is not None:
+            temp.unlink(missing_ok=True)
+
 
 def sha(path):
     return digest(Path(path).read_bytes())
@@ -264,21 +282,21 @@ def lifecycle(mode, dest, operation='install', apply=False, adopt=False):
                 p.unlink(missing_ok=True)
             else:
                 p.parent.mkdir(parents=True, exist_ok=True)
-                p.write_bytes(data)
+                atomic_write(p, data)
         if next_receipt is None:
             receipt_path.unlink(missing_ok=True)
         else:
-            receipt_path.write_bytes(next_receipt)
+            atomic_write(receipt_path, next_receipt)
     except BaseException:
         for p, data in originals.items():
             if data is None:
                 p.unlink(missing_ok=True)
             else:
-                p.write_bytes(data)
+                atomic_write(p, data)
         if prior_bytes is None:
             receipt_path.unlink(missing_ok=True)
         else:
-            receipt_path.write_bytes(prior_bytes)
+            atomic_write(receipt_path, prior_bytes)
         raise
     return result
 
@@ -298,7 +316,24 @@ def main():
         ap.error('--home requires --user')
     operation = next((a for a in ('update', 'uninstall', 'rollback', 'doctor') if getattr(args, a)), 'install')
     try:
-        print(json.dumps(lifecycle('user' if args.user else 'project', args.home if args.user else args.project, operation, args.apply, args.adopt), indent=2))
+        mode = 'user' if args.user else 'project'
+        destination = args.home if args.user else args.project
+        if args.apply:
+            codex_dir, _, _, _, _ = locations(mode, destination)
+            codex_dir.mkdir(parents=True, exist_ok=True)
+            lock = safe(codex_dir / '.guardian-install.lock')
+            try:
+                handle = os.open(lock, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o600)
+            except FileExistsError as exc:
+                raise ValueError('Another installation or recovery is active; inspect lock before retry') from exc
+            try:
+                os.close(handle)
+                result = lifecycle(mode, destination, operation, True, args.adopt)
+            finally:
+                lock.unlink(missing_ok=True)
+        else:
+            result = lifecycle(mode, destination, operation, False, args.adopt)
+        print(json.dumps(result, indent=2))
         return 0
     except (ValueError, OSError, UnicodeError, KeyError, TypeError, AttributeError) as exc:
         print('BLOCKED: ' + str(exc), file=sys.stderr)
