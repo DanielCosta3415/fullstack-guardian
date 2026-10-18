@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "name": "dotnet",
+  "description": "Optional .NET and ASP.NET Core specialized profiles",
+  "agents": [
+    {
+      "name": "guardian_dotnet_runtime_specialist",
+      "file": "agents/guardian_dotnet_runtime_specialist.toml"
+    }
+  ]
+}
