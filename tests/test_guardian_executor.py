@@ -8,7 +8,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 from tools.guardian_executor import (
-    ExecutionError, execute, initialize, preflight, safe, status, review,
+    ExecutionError, execute, initialize, preflight, safe, status, review, verify_native_child,
 )
 from tools.guardian_platform import create_plan
 
@@ -120,6 +120,33 @@ class ExecutorTests(unittest.TestCase):
         (self.repo / "dirty.txt").write_text("dirty")
         with self.assertRaises(ExecutionError):
             execute(self.home, apply=True, codex_binary=sys.executable)
+
+    def test_native_child_evidence_requires_exact_role_and_completion(self):
+        sessions = self.home.parent / "codex" / "sessions"
+        sessions.mkdir(parents=True)
+        child = sessions / "child.jsonl"
+        metadata = {"payload": {"agent_role": "guardian_backend_domain", "source": {
+            "subagent": {"thread_spawn": {"parent_thread_id": "thread-test"}}}}}
+        child.write_text(json.dumps(metadata) + "\\n" + json.dumps(
+            {"type": "event_msg", "payload": {"type": "task_complete"}}) + "\\n")
+        self.assertTrue(verify_native_child("thread-test", "guardian_backend_domain", sessions))
+        self.assertFalse(verify_native_child("thread-test", "guardian_appsec", sessions))
+        self.assertFalse(verify_native_child("different-thread", "guardian_backend_domain", sessions))
+
+    def test_native_mode_fails_closed_without_child_evidence(self):
+        initialize(self.plan, self.repo, self.home, briefs=self.briefs)
+        def fake_process(codex, worktree, prompt, timeout, logs, mode):
+            self.assertIn("collaboration.spawn_agent", prompt)
+            logs.parent.mkdir(parents=True, exist_ok=True)
+            logs.write_text('{"type":"thread.started","thread_id":"fake-test"}\\n{"type":"turn.completed"}\\n')
+            return 0, True, "fake-test"
+        with patch("tools.guardian_executor._process", side_effect=fake_process), \\
+             patch("tools.guardian_executor.verify_native_child", return_value=False):
+            output = execute(self.home, apply=True, codex_binary=sys.executable, native_subagents=True)
+        self.assertEqual(output["overall"], "blocked")
+        self.assertFalse(output["native_subagents_verified"])
+        self.assertEqual(status(self.home)["tasks"][next(iter(status(self.home)["tasks"]))]["error_code"],
+                         "native_child_not_verified")
 
     def test_unsafe_path_components_rejected(self):
         real = self.home.parent / "actual"
