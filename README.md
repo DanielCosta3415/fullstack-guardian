@@ -58,6 +58,25 @@ No Linux/macOS: `bash install.sh --user`, seguido de `bash install.sh --user --a
 
 Para escopo de projeto: `python install.py --project CAMINHO` e depois o mesmo comando com `--apply`. Prefira um único escopo para evitar perfis duplicados.
 
+## Plataforma de engenharia — prévia da branch de desenvolvimento
+
+A branch de evolução adiciona 12 workflows para etapas do ciclo de vida, 29 playbooks de especialidade, dez especialistas opcionais, um gerenciador conservador de pacotes, planejamento de tarefas por dependências, executor CLI isolado, recuperação de transações interrompidas, diário local de evidências e avaliador A/B de resultados.
+
+**Essas ferramentas não estão disponíveis na release estável 2.1.0 sem instalar explicitamente uma versão de desenvolvimento.** A aprovação de testes unitários ou de CI não significa que o Codex Desktop nativo, integrações de produção ou recursos de aprovação humana tenham sido validados.
+
+Ferramentas importantes (sempre examine `--help`):
+
+```sh
+python tools/guardian_registry.py validate
+python tools/guardian_platform.py stages
+python tools/guardian_platform.py plan --mode audit --stage integration --prompt "Revisar contrato da API"
+python tools/guardian_executor.py --help
+python tools/guardian_eval_runner.py --help
+python tools/guardian_recover.py --help
+```
+
+O executor, os benchmarks nativos e qualquer atualização da instalação exigem confirmação explícita. Eles não implantam aplicações, não concedem permissões adicionais, não mesclam automaticamente worktrees e não certificam resultados sem evidências. Consulte [guia da plataforma](docs/PLATFORM_ENGINEERING.md) e [pendências e riscos](docs/PLATFORM_ROADMAP.md).
+
 ## Validação e uso
 
 ```sh
