@@ -116,6 +116,18 @@ python tools/guardian_recover.py --home PATH_TO_CODEX_HOME --backup-id EXACT_32_
 Use `--mode project` for a project-local installation. First inspect dry-run and backups. This command is not for removing a successful updated installation or overwriting local user modifications. It is not a replacement for OS filesystem journaling, signed packages or externally verified disaster recovery.
 
 
+## Windows Codex Desktop acceptance
+
+The script `scripts/Validate-WindowsCodex.ps1` checks Python, registry, static security lint and the native-agent test plan without consuming quota by default.
+
+```powershell
+powershell -File scripts/Validate-WindowsCodex.ps1
+# After reviewing the quota impact and in a trusted local Windows Codex installation:
+powershell -File scripts/Validate-WindowsCodex.ps1 -RunNative -Out "C:\\Temp\\guardian-native-validation-new"
+```
+
+The opt-in run uses the authenticated local Codex CLI, creates a synthetic test project and checks all 29 native agent types. It does not certify all 132 criteria or guarantee safe production operation. Review the generated artifacts and do not publish raw session identifiers.
+
 ## Remaining implementation gaps
 
 True native scheduling, worktree conflict integration, recovery of running Codex sessions, cross-provider integrations, model/effort optimization driven by actual quota telemetry, end-to-end app benchmarks, human authorization UI and certification of all SDLC workflows have not been implemented or demonstrated. They cannot responsibly be marked completed on the strength of generated prompts alone.
