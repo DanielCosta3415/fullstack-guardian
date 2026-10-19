@@ -44,6 +44,12 @@ sudo loginctl enable-linger "$(id -un)"
 sudo systemctl restart "user@$(id -u).service"
 export XDG_RUNTIME_DIR="/run/user/$(id -u)"
 export DBUS_SESSION_BUS_ADDRESS="unix:path=$XDG_RUNTIME_DIR/bus"
+# Graders exclusively use --network=none. Do not create a bridge/NAT rules in
+# the rootless namespace; image provisioning uses the daemon's outbound path.
+# This is the dedicated ephemeral daemon, never a user's existing daemon.
+mkdir -p "$HOME/.config/docker"
+[[ ! -e "$HOME/.config/docker/daemon.json" ]] || { echo 'Unexpected existing rootless daemon configuration'; exit 2; }
+printf '{"bridge":"none","iptables":false,"ip6tables":false}\n' > "$HOME/.config/docker/daemon.json"
 dockerd-rootless-setuptool.sh install --force
 systemctl --user start docker
 export DOCKER_HOST="unix://$XDG_RUNTIME_DIR/docker.sock"
