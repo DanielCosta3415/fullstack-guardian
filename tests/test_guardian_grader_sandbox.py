@@ -110,17 +110,29 @@ class GraderBoundaryTests(unittest.TestCase):
             self.skipTest("NOT VERIFIED: requires digest-pinned image and rootless Docker")
         import uuid
         with tempfile.TemporaryDirectory() as temp:
-            root = Path(temp)
-            name = "guardian-grade-probe-" + uuid.uuid4().hex
-            command = container_command(backend["binary"], backend["image"], name, root)
-            try:
-                result = subprocess.run(command + ["-I", "-B", "-c",
-                    "from pathlib import Path; Path('/workspace/escaped').touch()"],
-                    capture_output=True, timeout=5)
-                self.assertNotEqual(result.returncode, 0)
-                self.assertFalse((root / "escaped").exists())
-            finally:
-                subprocess.run([backend["binary"], "rm", "--force", name], capture_output=True, timeout=10)
+            import os
+            root = Path(temp) / 'input'; root.mkdir(); os.chmod(root,0o777)
+            (root/'marker').write_text('readable')
+            # The private RW control proves this uid can actually traverse and
+            # write the fixture; EACCES must never masquerade as a readonly mount.
+            for readonly in (False,True):
+                name = "guardian-grade-probe-" + uuid.uuid4().hex
+                command = container_command(backend["binary"], backend["image"], name, root)
+                if not readonly:
+                    index=command.index('--mount')+1
+                    command[index]=command[index].removesuffix(',readonly')
+                source="from pathlib import Path\nimport errno\nassert Path('/workspace/marker').read_text()=='readable'\n"
+                if readonly:
+                    source+="try:\n Path('/workspace/escaped').touch()\nexcept OSError as exc:\n assert exc.errno==errno.EROFS\nelse:\n raise AssertionError('Writable mount')\n"
+                else:
+                    source+="Path('/workspace/escaped').touch()\n"
+                try:
+                    result=subprocess.run(command+['-I','-B','-c',source],capture_output=True,timeout=10)
+                    self.assertEqual(result.returncode,0,result.stderr)
+                    self.assertEqual((root/'escaped').exists(),not readonly)
+                    if not readonly: (root/'escaped').unlink()
+                finally:
+                    subprocess.run([backend['binary'],'rm','--force',name],capture_output=True,timeout=10)
 
     def test_real_backend_timeout_cleans_container(self):
         backend = probe()

@@ -88,7 +88,7 @@ def probe(image: str | None = None) -> dict:
         return result
 
 
-PREFLIGHT = r'''import os, json
+PREFLIGHT = r'''import os, json, errno
 from pathlib import Path
 assert os.getuid() == 65534
 assert os.getpid() == 1  # Docker's default private PID namespace, no --init.
@@ -103,9 +103,9 @@ quota, period = (cg/"cpu.max").read_text().split()
 assert quota != "max" and int(quota)/int(period) <= .5
 assert set(Path("/sys/class/net").iterdir()) == {Path("/sys/class/net/lo")}
 try:
-    Path("/escape-test").write_text("forbidden")
-except OSError:
-    pass
+    Path("/var/tmp/guardian-root-readonly-probe").write_text("forbidden")
+except OSError as exc:
+    assert exc.errno == errno.EROFS
 else:
     raise RuntimeError("Writable root filesystem")
 try:
