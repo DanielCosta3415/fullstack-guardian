@@ -172,8 +172,23 @@ class MaintenanceTests(unittest.TestCase):
                 trace.append(path, 'verification', {'comment': content})
         summary = trace.public_summary(path)
         self.assertFalse(summary['raw_events_included'])
-        self.assertFalse(summary['host_acl_verified'])
+        observed_acl = trace.privacy_acl(path)
+        self.assertEqual(summary['host_acl_verified'], observed_acl['verified'])
+        self.assertEqual(summary['acl'], observed_acl)
         self.assertEqual(summary['events'], 1)
+
+    @unittest.skipUnless(os.name != 'nt', 'POSIX owner/mode observation required')
+    def test_world_readable_posix_journal_does_not_verify_privacy(self):
+        path = self.base / 'events.jsonl'
+        trace.init(path)
+        path.chmod(0o600)
+        self.assertTrue(trace.privacy_acl(path)['verified'])
+        path.chmod(0o644)
+        acl = trace.privacy_acl(path)
+        self.assertFalse(acl['verified'])
+        self.assertEqual(acl['mechanism'], 'posix_owner_mode')
+        self.assertFalse(acl['authenticated'])
+        self.assertFalse(trace.public_summary(path)['host_acl_verified'])
 
     def test_exit_zero_is_never_correctness_proof(self):
         path = self.base / 'events.jsonl'

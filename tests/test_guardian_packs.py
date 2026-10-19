@@ -66,7 +66,7 @@ class PackLifecycleTests(unittest.TestCase):
         profile=self.codex/'agents/guardian_dotnet_runtime_specialist.toml'
         original=profile.read_bytes()
         prior=json.loads((self.codex/'guardian-packs.json').read_text())
-        source=Path(self.tmp.name)/'source'
+        source=Path(self.tmp.name).resolve()/'source'
         shutil.copytree(ROOT/'global',source/'global');shutil.copytree(ROOT/'core',source/'core');shutil.copytree(ROOT/'packs',source/'packs')
         changed=source/'packs/dotnet/agents/guardian_dotnet_runtime_specialist.toml'
         changed.write_bytes(changed.read_bytes()+b'\n# reviewed synthetic update\n')

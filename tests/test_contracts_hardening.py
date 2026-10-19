@@ -236,7 +236,7 @@ class CanonicalGenerationTests(unittest.TestCase):
         for record in doc['records']:
             self.assertEqual(tomllib.loads((ROOT/record['file']).read_text(encoding='utf8')),record['profile'])
         with tempfile.TemporaryDirectory() as t:
-            root=Path(t)
+            root=Path(t).resolve()
             for name in ('core','packs','global'):shutil.copytree(ROOT/name,root/name)
             target=root/doc['records'][0]['file'];original=target.read_bytes()
             doc['records'][0]['profile']['sandbox_mode']='danger-full-access'
@@ -249,7 +249,7 @@ class CanonicalGenerationTests(unittest.TestCase):
         from pathlib import Path
         from tools.guardian_catalog import ROOT,catalog_document,generated_outputs
         with tempfile.TemporaryDirectory() as t:
-            root=Path(t)
+            root=Path(t).resolve()
             for name in ('core','packs','global'):shutil.copytree(ROOT/name,root/name)
             canonical=root/'core/contracts-catalog-v1.json';before=canonical.read_bytes()
             target=root/catalog_document(root)['records'][0]['file'];target.write_bytes(target.read_bytes()+b'\n# local drift\n')

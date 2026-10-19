@@ -67,7 +67,7 @@ class ClientProbeTests(unittest.TestCase):
             def accept(self): raise probe.socket.timeout()
         completed = SimpleNamespace(stdout='', stderr='Restricted read-only access requires the elevated Windows sandbox backend PRIVATE', returncode=1)
         with tempfile.TemporaryDirectory() as temp, patch.object(probe.platform, 'system', return_value='Windows'), patch.object(probe, 'probe_version', return_value='test'), patch.object(probe.socket, 'socket', return_value=Listener()), patch.object(probe.subprocess, 'run', return_value=completed):
-            out = Path(temp) / 'probe'
+            out = Path(temp).resolve() / 'probe'
             report = probe.run(out, 'codex')
             self.assertEqual(report['probe_status'], 'UNSUPPORTED')
             self.assertFalse(report['probe_completed'])

@@ -9,7 +9,7 @@ class RegistryTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
-        self.root = Path(self.temp.name)
+        self.root = Path(self.temp.name).resolve()
         (self.root / "core").mkdir()
         (self.root / "global" / "agents").mkdir(parents=True)
         (self.root / "global" / "agents" / "base.toml").write_text(
