@@ -1,5 +1,6 @@
 name: Isolated grader acceptance
 on:
+  push:
   workflow_dispatch:
 permissions:
   contents: read
