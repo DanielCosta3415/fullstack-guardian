@@ -6,12 +6,14 @@ This is the subsequent implementation of all identified pending areas. It is a d
 
 - All 39 current profile hashes match the immutable native-test snapshot. All 39 roles executed individually in synthetic cases; independent review paired parent/role/completion and check call outputs. This validates those profiles/cases, not the entire final source SHA or all 132 capabilities.
 - Eight executable domain adapters passed 34 checks. .NET, HTTP loopback, SQLite ledger/migration, Chrome DOM/keyboard/accessibility tree and PowerShell WhatIf ran for real. Cloud is offline plan policy; AI is deterministic retrieval/canary handling. Neither is live infrastructure or an external model test.
-- Canonical generation, pack rollback, workflow transitions, retry, retention, native evidence and client probing have targeted regressions. Final complete source/ZIP/installed test counts belong in the delivered evidence record, not inferred here.
+- Canonical generation, pack rollback, workflow transitions, retry, retention, native evidence and client probing have targeted regressions. Completed source and extracted suites ran 296 tests (283 passed, 13 skipped); each installed scope ran 296 (276 passed, 20 skipped) on the recorded earlier snapshot. Later changes have separate directed results; final revision evidence must not be inferred.
 - The Windows CLI probe identified a concrete restricted-read backend limit without changing global settings. Native roles inherit parent sandbox and permissions. Strict unsupported capabilities remain blocked.
 
 ## External and deliberate boundaries
 
 The operator explicitly chose to keep live A/B blocked until isolated authentication exists. No API key was configured or copied. A/B also requires the verified isolated grader backend.
+
+AppArmor is explicitly unsupported by the rootless grading backend; built-in seccomp, no-new-privileges and zero effective capabilities are required and observed by its preflight. Organizations requiring a confined AppArmor boundary must not use this backend.
 
 The hosted rootless grader workflow uses a reviewed digest and an ephemeral Linux VM; it never provisions the user's Windows host. Its configuration is not proof of actual isolation. GitHub runner execution, final OS matrix and emitted provenance must be read from current real runs. A separate authorized human must approve the final release PR; model/G01/G02 opinions cannot fabricate that approval.
 
@@ -30,7 +32,7 @@ Every row is bounded by actual evidence and the limitations above. See the deliv
 | R05 | Recuperação global e por projeto | BOUNDED LOCAL IMPLEMENTATION | Existing implementation and regression surfaces retained; original finite-evidence/OS/trust limits still apply. See baseline row for component detail. |
 | R06 | Lock de manutenção compartilhado | BOUNDED LOCAL IMPLEMENTATION | Existing implementation and regression surfaces retained; original finite-evidence/OS/trust limits still apply. See baseline row for component detail. |
 | R07 | Journal rejeita evento inválido antes de gravar | BOUNDED LOCAL IMPLEMENTATION | Existing implementation and regression surfaces retained; original finite-evidence/OS/trust limits still apply. See baseline row for component detail. |
-| R08 | Suíte utilizável no runtime instalado | IMPLEMENTED / EXECUTION PENDING | Unfiltered suite runner covers extracted ZIP and installed user/project layouts; retain final run outcome. |
+| R08 | Suíte utilizável no runtime instalado | IMPLEMENTED / SNAPSHOT VALIDATED | Unfiltered suites completed in ZIP and installed user/project layouts; recorded snapshot and individual skips remain explicit. |
 | R09 | Plano importado revalida catálogo e gates | BOUNDED LOCAL IMPLEMENTATION | Existing implementation and regression surfaces retained; original finite-evidence/OS/trust limits still apply. See baseline row for component detail. |
 | R10 | Lint distingue política e capacidade efetiva | BOUNDED LOCAL IMPLEMENTATION | Existing implementation and regression surfaces retained; original finite-evidence/OS/trust limits still apply. See baseline row for component detail. |
 | R11 | Uma versão coerente em todos os manifestos | BOUNDED LOCAL IMPLEMENTATION | Existing implementation and regression surfaces retained; original finite-evidence/OS/trust limits still apply. See baseline row for component detail. |

@@ -57,13 +57,14 @@ def probe(image: str | None = None) -> dict:
     image = image or os.environ.get("GUARDIAN_GRADER_IMAGE", "")
     binary = shutil.which("docker")
     result = {"available": False, "status": "NOT VERIFIED", "backend": "rootless-docker",
-              "image": image, "reason": "Requires local digest-pinned image and rootless Docker"}
+              "image": image, "unsupported": ["apparmor"],
+              "reason": "Requires local digest-pinned image, rootless Docker and built-in seccomp"}
     if not binary or image_identity(image) is None:
         return result
     try:
         info = strict_json(subprocess.run([binary, "info", "--format", "{{json .SecurityOptions}}"],
                          capture_output=True, text=True, timeout=10, check=True).stdout)
-        if not isinstance(info, list) or not any("rootless" in x for x in info):
+        if not isinstance(info, list) or "name=rootless" not in info or "name=seccomp,profile=builtin" not in info:
             return result
         inspected = strict_json(subprocess.run([binary, "image", "inspect", image], capture_output=True,
                                     text=True, timeout=10, check=True).stdout)
@@ -91,6 +92,10 @@ PREFLIGHT = r'''import os, json
 from pathlib import Path
 assert os.getuid() == 65534
 assert os.getpid() == 1  # Docker's default private PID namespace, no --init.
+status = dict(line.split(":", 1) for line in Path("/proc/self/status").read_text().splitlines() if ":" in line)
+assert status["Seccomp"].strip() == "2"
+assert status["NoNewPrivs"].strip() == "1"
+assert int(status["CapEff"].strip(), 16) == 0
 cg = Path("/sys/fs/cgroup")
 assert int((cg/"memory.max").read_text()) <= 134217728
 assert int((cg/"pids.max").read_text()) <= 32
@@ -111,7 +116,8 @@ print(json.dumps({"limits_verified":True}))
 def container_command(binary, image, name, workspace=None):
     command = [binary, "run", "--name", name, "--rm", "--pull=never", "--network=none",
                "--log-driver=none", "--ipc=none", "--cgroupns=private",
-               "--read-only", "--cap-drop=ALL", "--security-opt=no-new-privileges", "--user=65534:65534",
+               "--read-only", "--cap-drop=ALL", "--security-opt=no-new-privileges",
+               "--security-opt=apparmor=unconfined", "--user=65534:65534",
                "--pids-limit=32", "--memory=128m", "--memory-swap=128m", "--cpus=0.5",
                "--ulimit", "fsize=1048576:1048576", "--ulimit", "nofile=64:64",
                "--tmpfs", "/tmp:rw,noexec,nosuid,size=8m,mode=1777"]
@@ -245,20 +251,89 @@ def validate_pure_target(path: Path) -> None:
         raise ValueError("Target rejected by bounded pure-function AST validator")
 
 
-def execute_vector(workspace: Path, vector: dict, timeout: int, backend: dict) -> bool:
+def _stage_target(workspace: Path, vector: dict) -> tuple[Path, Path]:
+    """Copy only bounded target bytes into an owned, per-vector bind snapshot.
+
+    Keep the wrapper 0700 on POSIX: other host users cannot traverse it, while
+    the local rootless daemon owner can mount its 0555 child. The container's
+    remapped uid 65534 can then traverse the mount and read its one 0444 file.
+    No permissions of the caller's workspace are changed.
+    """
+    import tempfile
+    module=vector.get('file')
+    if (not isinstance(module,str) or not module.endswith('.py') or not module[:-3].isidentifier()
+        or any(c in module for c in ('/','\\',':','\x00'))):
+        raise ValueError('Target file must be a top-level Python module')
+    workspace=Path(os.path.abspath(workspace))
+    for component in (workspace,*workspace.parents):
+        if component.is_symlink() or (component.exists() and getattr(component.lstat(),'st_file_attributes',0)&0x400):
+            raise ValueError('Linked source workspace forbidden')
+    target=workspace/module
+    if target.is_symlink() or (target.exists() and getattr(target.lstat(),'st_file_attributes',0)&0x400):
+        raise ValueError('Linked source target forbidden')
+    flags=os.O_RDONLY|getattr(os,'O_BINARY',0)|getattr(os,'O_NOFOLLOW',0)|getattr(os,'O_NONBLOCK',0)
+    descriptor=os.open(target,flags)
+    with os.fdopen(descriptor,'rb') as source:
+        metadata=os.fstat(source.fileno())
+        if not stat.S_ISREG(metadata.st_mode) or metadata.st_size>MAX_SOURCE_BYTES:
+            raise ValueError('Pure fixture source must be a regular file <=16384 bytes')
+        data=source.read(MAX_SOURCE_BYTES+1)
+    if len(data)>MAX_SOURCE_BYTES:
+        raise ValueError('Pure fixture source byte budget exceeded')
+    root=Path(tempfile.mkdtemp(prefix='guardian-vector-'))
     try:
-        validate_pure_target(workspace / vector["file"])
+        os.chmod(root,0o700)
+        snapshot=root/'input'; snapshot.mkdir(mode=0o700)
+        copied=snapshot/'target.py'
+        fd=os.open(copied,os.O_WRONLY|os.O_CREAT|os.O_EXCL|getattr(os,'O_BINARY',0),0o600)
+        with os.fdopen(fd,'wb') as stream:
+            stream.write(data); stream.flush(); os.fsync(stream.fileno())
+        os.chmod(copied,0o444); os.chmod(snapshot,0o555)
+        # Parse precisely the file that will be mounted, never reopen original
+        # source after validation or include sibling secrets/oracle expectations.
+        validate_pure_target(copied)
+        return root,snapshot
+    except BaseException:
+        _remove_snapshot(root)
+        raise
+
+
+def _remove_snapshot(root: Path) -> None:
+    """Remove only paths created by _stage_target; never chmod the source tree."""
+    snapshot=root/'input'; target=snapshot/'target.py'
+    if target.exists(): os.chmod(target,0o600)  # Windows read-only unlink compatibility
+    if snapshot.exists(): os.chmod(snapshot,0o700)
+    shutil.rmtree(root)
+
+
+def execute_vector(workspace: Path, vector: dict, timeout: int, backend: dict) -> bool:
+    root=None; custody={'container_may_exist':False,'cleanup_confirmed':False}
+    try:
+        root,snapshot=_stage_target(workspace,vector)
+        if ',' in str(snapshot):
+            raise ValueError('Comma in bind snapshot path is unsupported')
+        return _execute_staged_vector(snapshot,vector,timeout,backend,custody)
     except (OSError, ValueError, SyntaxError):
+        # A failed server-side cleanup must stop evaluation, rather than being
+        # flattened into an ordinary failed vector.
+        if custody['container_may_exist'] and not custody['cleanup_confirmed']:
+            raise SandboxUnavailable('Container cleanup uncertain; private snapshot retained; stop evaluation')
         return False
-    if "," in str(workspace):
-        raise ValueError("Comma in bind path is unsupported")
+    finally:
+        if root is not None and (not custody['container_may_exist'] or custody['cleanup_confirmed']):
+            _remove_snapshot(root)
+
+
+def _execute_staged_vector(snapshot: Path, vector: dict, timeout: int, backend: dict, custody: dict) -> bool:
     name = "guardian-grade-" + uuid.uuid4().hex
-    command = container_command(backend["binary"], backend["image"], name, workspace) + ["-I", "-B", "-c", WORKER]
+    command = container_command(backend["binary"], backend["image"], name, snapshot) + ["-I", "-B", "-c", WORKER]
     request = {k: v for k, v in vector.items() if k != "expected"}
+    request['file']='target.py'
     # A reader caps host storage/memory even if a target floods stdout. Killing
     # only the Docker client is insufficient; the finally clause removes server-side container.
     import threading
     try:
+        custody['container_may_exist']=True
         process = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
         output = bytearray()
         overflow = threading.Event()
@@ -298,6 +373,7 @@ def execute_vector(workspace: Path, vector: dict, timeout: int, backend: dict) -
                                      capture_output=True, text=True, timeout=15, check=False)
             if removed.returncode and "No such container" not in removed.stderr:
                 raise SandboxUnavailable("Container cleanup not confirmed; stop evaluation")
+            custody['cleanup_confirmed']=True
         except (OSError, subprocess.SubprocessError) as exc:
             raise SandboxUnavailable("Container cleanup could not be verified; stop evaluation") from exc
 

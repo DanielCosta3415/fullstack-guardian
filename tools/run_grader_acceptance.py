@@ -8,7 +8,7 @@ def main():
     backend=probe()
     if not backend['available']:raise SystemExit('Verified rootless backend required; skips cannot satisfy acceptance')
     suite=unittest.TestSuite()
-    for name in ('test_guardian_grader_sandbox.py','test_guardian_benchmark_fixture.py'):
+    for name in ('test_guardian_grader_sandbox.py','test_guardian_grader_snapshot.py','test_guardian_benchmark_fixture.py'):
         suite.addTests(unittest.defaultTestLoader.discover('tests',pattern=name))
     result=unittest.TextTestRunner(verbosity=2).run(suite)
     report={'schema_version':1,'revision':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),

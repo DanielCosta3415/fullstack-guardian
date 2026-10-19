@@ -15,26 +15,42 @@ reference (`repository@sha256:<64 hex characters>`). Mutable tags are rejected.
 
 Run `python -c "from tools.guardian_grader_sandbox import probe; print(probe())"`.
 An `available: false` response means **NOT VERIFIED**, not an acceptable fallback.
-The probe checks the daemon's rootless security option, the local image digest,
-and actually runs a restricted preflight container to verify uid 65534,
+The probe requires the daemon's rootless and built-in seccomp security options,
+the local image digest, and runs a restricted preflight container to verify uid 65534,
+PID 1 in its private PID namespace, active seccomp filtering, no-new-privileges,
+zero effective capabilities,
 read-only root filesystem, loopback-only network, memory <=128 MiB, process
 limit <=32 and CPU quota <=0.5 CPU. Cgroup delegation that does not enforce these
-limits blocks evaluation. The environment used for this implementation did not
-have this backend available; native isolation, cancellation and escape tests
-were explicitly skipped rather than reported as passing. AST rejection and
+limits blocks evaluation. A machine without this backend reports native
+isolation and grading tests as skipped; the required hosted acceptance gate
+rejects any skip. Actual revision-specific outcomes belong in the test report. AST rejection and
 container isolation have separate tests: the private native readonly-write probe
 bypasses the public fixture language intentionally to exercise the OS boundary;
 the timeout fixture defines an accepted pure function containing an infinite
 loop, so it reaches container execution instead of stopping at AST rejection.
 
-Each vector starts a fresh container. No host home, credentials, Docker socket
-or network is mounted. Workspace input is read-only, links are rejected, all
+Each vector starts a fresh container. Only a bounded, validated target-file snapshot
+is mounted: a private host wrapper contains an owned 0555 input directory and one
+0444 target.py, readable by the container's uid without changing source permissions.
+Original sibling files and oracle answers are never mounted. If container cleanup
+is uncertain, evaluation stops and retains that private snapshot for operator recovery.
+No host home, credentials, Docker socket
+or network is mounted. Snapshot input is read-only, links are rejected, all
 capabilities are dropped and `no-new-privileges` applies. Writable storage is an
 8 MiB noexec tmpfs; captured output is capped at 64 KiB and elapsed time is
 bounded. Timeout/cancellation forcibly removes the named server-side container;
 failure to confirm removal stops grading. The trusted image and rootless Docker
 implementation remain part of the trust boundary; digest pinning is provenance,
 not proof that an image is safe.
+
+Docker documents AppArmor as unsupported in rootless mode. This backend explicitly
+uses `apparmor=unconfined`; it does not claim an AppArmor security boundary.
+Built-in seccomp is mandatory and is never disabled. The disposable hosted daemon
+does not create a bridge or NAT rules, and every grader still uses `--network=none`.
+If organizational policy requires a confined AppArmor/MAC boundary, this backend
+is unsuitable and evaluation must remain blocked; no host-wide AppArmor setting
+or system profile is changed by the evaluator.
+See the [Docker rootless limitations](https://docs.docker.com/engine/security/rootless/troubleshoot/#known-limitations).
 
 ## Oracle contract and intentionally limited target language
 
@@ -92,7 +108,9 @@ review results before promoting policy changes.
 `eval/domain-fixtures/catalog.json` catalogs .NET, API, financial, data, UI,
 PowerShell, cloud-plan and AI tasks with concrete broken input artifacts and
 independent expected contracts outside the proposed model workspace. The
-financial pure-Python oracle can use the restricted backend above. Native .NET,
-HTTP, browser, PowerShell, SQLite and model adapters are **NOT VERIFIED** and are
-not silently replaced by text matching. No cloud deployment or real financial
+financial pure-Python oracle can use the restricted backend above. Executable .NET,
+HTTP, browser, PowerShell and SQLite fixtures have separate bounded native adapters;
+see [domain acceptance](DOMAIN-ACCEPTANCE.md) and revision-specific test evidence.
+Cloud acceptance is offline policy checking and AI acceptance deterministic retrieval,
+not live provider/model validation. No cloud deployment or real financial
 transaction is authorized by these fixtures.
