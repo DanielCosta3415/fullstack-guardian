@@ -42,6 +42,11 @@ def paired_outcomes(payloads,case):
         call=calls.get(output.get('call_id'),{})
         source=call.get('input',call.get('arguments',''))
         if not isinstance(source,str) or len(source)>64000:continue
+        if call.get('name') in ('exec','functions.exec'):
+            if call.get('type')!='custom_tool_call' or source.lstrip().startswith('{'):continue
+        elif call.get('name') in ('exec_command','functions.exec_command'):
+            if call.get('type')!='function_call' or not source.lstrip().startswith('{'):continue
+        else:continue
         objects=specifications(source)
         specs=[obj.get('cmd')=='python -B check.py' and same_path(obj.get('workdir'),case.get('case_directory')) for obj in objects]
         blocks=output.get('output',[])

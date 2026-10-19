@@ -45,6 +45,8 @@ def extract(root_session, destination, expected):
     return {'expected':len(expected),'verified':len(verified),'missing':sorted(set(expected)-verified)}
 
 def main():
+    revision_start=subprocess.run(['git','-C',str(ROOT),'rev-parse','HEAD'],capture_output=True,text=True,timeout=10)
+    source_revision=revision_start.stdout.strip() if revision_start.returncode==0 else None
     ap=argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--run',action='store_true',help='Explicitly authorize local model runs and quota consumption')
     ap.add_argument('--include-packs',action='store_true',help='Include ten explicitly installed optional profiles in the isolated native test project')
@@ -108,11 +110,12 @@ def main():
     result['protected_fixtures_unchanged']=not changed
     result['fixture_drift']=changed
     revision=subprocess.run(['git','-C',str(ROOT),'rev-parse','HEAD'],capture_output=True,text=True,timeout=10)
-    result['revision']=revision.stdout.strip() if revision.returncode==0 else None
+    result['revision']=source_revision
+    result['source_revision_unchanged']=None if source_revision is None else revision.returncode==0 and revision.stdout.strip()==source_revision
     result.update(acceptance_scope='Native type, parent, completion, recorded check and tool output; not domain certification',exit_code=code,elapsed_seconds=round(time.monotonic()-started,2),root_session=tid)
     (destination/'summary.json').write_text(json.dumps(result,indent=2),encoding='utf8')
     print(json.dumps(result,indent=2))
-    return 0 if code==0 and not result['missing'] and not changed else 1
+    return 0 if code==0 and not result['missing'] and not changed and result['source_revision_unchanged'] is not False else 1
 if __name__=='__main__':
     try:sys.exit(main())
     except (ValueError,OSError,subprocess.SubprocessError) as exc:print(str(exc),file=sys.stderr);sys.exit(2)
