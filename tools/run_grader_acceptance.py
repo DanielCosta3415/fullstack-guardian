@@ -1,7 +1,8 @@
 """A required real grader gate refuses skips and reports exact source identity."""
-import argparse,hashlib,json,subprocess,unittest
+import argparse,hashlib,json,subprocess,unittest,sys
 from pathlib import Path
-from guardian_grader_sandbox import probe
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
+from tools.guardian_grader_sandbox import probe
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--out',type=Path,required=True);args=parser.parse_args()
