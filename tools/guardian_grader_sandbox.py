@@ -16,6 +16,7 @@ import uuid
 import ast
 import sys
 import stat
+import re
 
 MAX_SOURCE_BYTES = 16_384
 MAX_AST_NODES = 4096
@@ -24,6 +25,20 @@ MAX_AST_DEPTH = 64
 
 class SandboxUnavailable(ValueError):
     pass
+
+def image_identity(reference):
+    """Normalize Docker's short RepoDigests spelling without relaxing the pin."""
+    if not isinstance(reference,str):return None
+    match=re.fullmatch(r'([a-z0-9][a-z0-9._:/-]*)@sha256:([a-f0-9]{64})',reference)
+    if not match:return None
+    parts=match[1].split('/')
+    if len(parts)>1 and ('.' in parts[0] or ':' in parts[0] or parts[0]=='localhost'):
+        registry=parts.pop(0)
+    else:registry='docker.io'
+    if registry=='index.docker.io':registry='docker.io'
+    parts[-1]=parts[-1].split(':',1)[0]
+    if registry=='docker.io' and len(parts)==1:parts.insert(0,'library')
+    return registry+'/'+('/'.join(parts))+'@sha256:'+match[2]
 
 
 def strict_json(text):
@@ -43,7 +58,7 @@ def probe(image: str | None = None) -> dict:
     binary = shutil.which("docker")
     result = {"available": False, "status": "NOT VERIFIED", "backend": "rootless-docker",
               "image": image, "reason": "Requires local digest-pinned image and rootless Docker"}
-    if not binary or "@sha256:" not in image or len(image.rsplit("@sha256:", 1)[-1]) != 64:
+    if not binary or image_identity(image) is None:
         return result
     try:
         info = strict_json(subprocess.run([binary, "info", "--format", "{{json .SecurityOptions}}"],
@@ -52,7 +67,7 @@ def probe(image: str | None = None) -> dict:
             return result
         inspected = strict_json(subprocess.run([binary, "image", "inspect", image], capture_output=True,
                                     text=True, timeout=10, check=True).stdout)
-        if not inspected or image not in inspected[0].get("RepoDigests", []):
+        if not inspected or image_identity(image) not in [image_identity(ref) for ref in inspected[0].get("RepoDigests", [])]:
             return result
         if inspected[0].get("Config", {}).get("Volumes"):
             return {**result, "reason": "Image-declared writable volumes are forbidden"}

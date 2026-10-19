@@ -31,8 +31,7 @@ sudo mkdir -p /etc/systemd/system/user@.service.d
 printf '[Service]\nDelegate=cpu cpuset io memory pids\n' | sudo tee /etc/systemd/system/user@.service.d/guardian-delegate.conf >/dev/null
 sudo systemctl daemon-reload
 sudo loginctl enable-linger "$(id -un)"
-sudo systemctl start "user@$(id -u).service"
-sudo systemctl set-property "user@$(id -u).service" 'Delegate=cpu cpuset io memory pids'
+sudo systemctl restart "user@$(id -u).service"
 export XDG_RUNTIME_DIR="/run/user/$(id -u)"
 export DBUS_SESSION_BUS_ADDRESS="unix:path=$XDG_RUNTIME_DIR/bus"
 dockerd-rootless-setuptool.sh install --force
