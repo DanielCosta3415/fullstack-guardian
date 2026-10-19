@@ -3,7 +3,17 @@
 set -euo pipefail
 [[ "${GITHUB_ACTIONS:-}" == true && "${RUNNER_ENVIRONMENT:-}" == github-hosted ]] || { echo 'Disposable GitHub-hosted runner required'; exit 2; }
 [[ $(id -u) != 0 && $(uname -m) == x86_64 ]] || exit 2
-trap 'echo "Hosted grader setup failed at line $LINENO; no fallback to rootful grading" >&2' ERR
+setup_error() {
+  code=$?
+  trap - ERR
+  echo "Hosted grader setup failed at line $1; no fallback to rootful grading" >&2
+  if [[ -n "${XDG_RUNTIME_DIR:-}" ]]; then
+    systemctl --user status docker.service --no-pager || true
+    journalctl --user -n 60 --no-pager --unit docker.service || true
+  fi
+  exit "$code"
+}
+trap 'setup_error "$LINENO"' ERR
 if ! command -v newuidmap >/dev/null || ! command -v newgidmap >/dev/null; then
   # Signed distribution packages, installed only in this disposable machine.
   sudo apt-get update -qq
