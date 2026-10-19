@@ -18,8 +18,10 @@ from pathlib import Path
 
 try:
     from .guardian_registry import ROOT, RegistryError, discover
+    from .guardian_maintenance import maintenance_lock
 except ImportError:
     from guardian_registry import ROOT, RegistryError, discover
+    from guardian_maintenance import maintenance_lock
 
 NAME = re.compile(r"^[a-z][a-z0-9_-]{2,63}$")
 SHA = re.compile(r"^[a-f0-9]{64}$")
@@ -56,6 +58,7 @@ def _write_atomic(path: Path, data: bytes) -> None:
             temp.write(data)
             temp.flush()
             os.fsync(temp.fileno())
+        _safe(path)
         os.replace(temp_name, path)
     finally:
         if temp_name and os.path.exists(temp_name):
@@ -72,10 +75,14 @@ def _receipt(path: Path) -> dict:
         raise PackInstallError("Malformed pack receipt") from exc
     if not isinstance(value, dict) or value.get("schema_version") != 1 or not isinstance(value.get("packs"), dict):
         raise PackInstallError("Invalid pack receipt schema")
+    all_files = set()
     for name, info in value["packs"].items():
         if not NAME.fullmatch(name) or not isinstance(info, dict) or not isinstance(info.get("files"), dict):
             raise PackInstallError("Invalid pack receipt contents")
         for filename, digest in info["files"].items():
+            if filename in all_files:
+                raise PackInstallError("File claimed by multiple packs")
+            all_files.add(filename)
             if not NAME.fullmatch(filename.removesuffix(".toml")) or not filename.endswith(".toml") or not isinstance(digest, str) or not SHA.fullmatch(digest):
                 raise PackInstallError("Unsafe pack receipt file entry")
     return value
@@ -83,6 +90,16 @@ def _receipt(path: Path) -> dict:
 
 def operation(pack: str, codex_home: Path, root: Path = ROOT,
               action: str = "install", apply: bool = False) -> dict:
+    if apply:
+        try:
+            with maintenance_lock(codex_home, "pack-" + action):
+                return _operation(pack, codex_home, root, action, apply)
+        except ValueError as exc:
+            raise PackInstallError(str(exc)) from exc
+    return _operation(pack, codex_home, root, action, apply)
+
+
+def _operation(pack, codex_home, root=ROOT, action="install", apply=False):
     if not isinstance(pack, str) or not NAME.fullmatch(pack):
         raise PackInstallError("Invalid pack identifier")
     if action not in ("install", "update", "uninstall"):
@@ -101,6 +118,11 @@ def operation(pack: str, codex_home: Path, root: Path = ROOT,
             desired[agent["name"] + ".toml"] = source.read_bytes()
     receipt_original = _read(receipt_path)
     receipt = _receipt(receipt_path)
+    # Source catalog defines identities; a receipt cannot authorize arbitrary agent deletion.
+    trusted = {item["name"]: {agent["name"] + ".toml" for agent in item["agents"]} for item in catalog["packs"]}
+    for pack_name, info in receipt["packs"].items():
+        if pack_name not in trusted or set(info["files"]) != trusted[pack_name]:
+            raise PackInstallError("Receipt membership differs from trusted catalog; review migration manually")
     existing = receipt["packs"].get(pack)
     if action == "install" and existing:
         raise PackInstallError("Already installed; use explicit update")
@@ -125,23 +147,18 @@ def operation(pack: str, codex_home: Path, root: Path = ROOT,
     if action == "uninstall":
         del updated["packs"][pack]
     else:
-        updated["packs"][pack] = {"files": {f: _digest(d) for f, d in desired.items()}}
+        updated["packs"][pack] = {"files": {f: _digest(d) for f, d in desired.items()},
+            "provenance": matches[0].get("provenance", {}), "manifest_sha256": matches[0].get("manifest_sha256"),
+            "state": "installed_not_loaded"}
     summary = {"pack": pack, "action": action, "apply": apply, "agent_files": len(desired),
                "changes": len(changes), "managed": True,
                "warning": "Agent configuration takes effect only in a new compatible Codex session; permissions and quotas remain unchanged."}
     if not apply:
         return summary
     home.mkdir(parents=True, exist_ok=True)
-    lock = _safe(home / ".guardian-packs.lock")
-    try:
-        handle = os.open(lock, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
-    except FileExistsError as exc:
-        raise PackInstallError("Another pack operation is in progress") from exc
     originals = {}
     prior_receipt = receipt_original
     try:
-        with os.fdopen(handle, "w") as f:
-            f.write("Guardian pack maintenance lock; remove only after investigating interrupted operation.\n")
         # Recheck current state under lock, before changing any file.
         if _read(receipt_path) != receipt_original:
             raise PackInstallError("Concurrent receipt change")
@@ -159,21 +176,25 @@ def operation(pack: str, codex_home: Path, root: Path = ROOT,
                 _write_atomic(dest, data)
         _write_atomic(receipt_path, (json.dumps(updated, indent=2, sort_keys=True) + "\n").encode("utf-8"))
     except BaseException:
+        rollback_failures = []
         for dest, original in originals.items():
             try:
                 if original is None:
                     dest.unlink(missing_ok=True)
                 else:
                     _write_atomic(dest, original)
-            except OSError:
-                pass  # Preserve the initial failure; operator must inspect.
-        if prior_receipt is None:
-            receipt_path.unlink(missing_ok=True)
-        else:
-            _write_atomic(receipt_path, prior_receipt)
+            except OSError as error:
+                rollback_failures.append(str(error))
+        try:
+            if prior_receipt is None:
+                receipt_path.unlink(missing_ok=True)
+            else:
+                _write_atomic(receipt_path, prior_receipt)
+        except OSError as rollback_error:
+            raise PackInstallError("Pack rollback incomplete; inspect local files and receipt") from rollback_error
+        if rollback_failures:
+            raise PackInstallError("Pack rollback incomplete; inspect local files and receipt")
         raise
-    finally:
-        lock.unlink(missing_ok=True)
     return summary
 
 

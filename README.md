@@ -1,32 +1,12 @@
-# Full-Stack Engineering Guardian System v2.1.0
+# Full-Stack Engineering Guardian — 2.2.0-dev.2
 
-29 especialistas, oito skills e 132 capacidades para coordenar tarefas de engenharia no Codex com roteamento proporcional à complexidade e ao risco.
+Development candidate: 29 core engineering roles, 20 operational skills, 132 taxonomy capabilities and ten optional specialist packs. The public stable release remains v2.1.0 until a separate reviewed release decision.
 
-**Instalação global para a conta; prompts normais depois da configuração.** O agente principal interpreta o pedido e seleciona especialistas quando necessário. Tarefas simples podem ser resolvidas diretamente. Recomendações do roteador são verificadas pelo agente principal; permissões e instruções dos projetos continuam aplicáveis.
+Normal prompts are coordinated by the primary Codex thread. It selects the smallest useful team, checks task risk and uses independent review when required. Simple tasks can be completed directly. Profiles, repository content and generated plans never grant permissions.
 
-## Instalação mais simples: plugin + configuração guiada
+## Install this reviewed checkout
 
-1. No diretório de plugins do seu Codex, adicione o marketplace GitHub `DanielCosta3415/fullstack-guardian` (ou a URL deste repositório).
-2. Instale **Full-Stack Guardian**, da fonte **Guardian Marketplace**.
-3. Execute a configuração inicial do plugin. Se necessário, peça: **“Configure o Full-Stack Guardian globalmente para minha conta, preserve minhas personalizações e valide a instalação.”**
-4. Abra um novo chat no projeto e peça uma tarefa normal.
-
-O plugin contém uma única skill de configuração. Ela instala as oito skills operacionais e os 29 perfis no escopo da conta, evitando duplicação. A instalação do plugin, sozinha, ainda não conclui a integração. Os nomes dos controles podem variar conforme a versão do cliente. Se sua organização restringe marketplaces ou plugins, use o ZIP com autorização local.
-
-Na CLI compatível, os dois primeiros passos também podem ser feitos assim:
-
-```sh
-codex plugin marketplace add DanielCosta3415/fullstack-guardian --ref v2.1.0
-codex plugin add fullstack-guardian@guardian-marketplace
-```
-
-Depois abra o Codex e peça a configuração inicial do plugin. Esse fluxo foi separado da instalação global para permitir revisão e preservação das suas configurações.
-
-## Alternativa sem Git: ZIP da release
-
-Baixe o ZIP em [Releases](https://github.com/DanielCosta3415/fullstack-guardian/releases/latest), confira o SHA-256 publicado, extraia e abra um terminal na pasta extraída. Requer **Python 3.11+** já instalado e Codex com suporte a agentes personalizados e delegação.
-
-Na configuração guiada, o Codex também pode localizar seu próprio Python incluído no aplicativo, quando esse recurso estiver disponível. A alternativa pelo terminal usa o Python já acessível no seu ambiente.
+Python 3.11+ and a compatible local Codex client are required. Installation preserves existing models, providers, permissions, profiles and unrelated instructions.
 
 ```sh
 python install.py --user
@@ -34,92 +14,70 @@ python install.py --user --apply
 python install.py --user --doctor
 ```
 
-O primeiro comando simula. Revise conflitos antes de aplicar. No Windows, se `python` não estiver disponível, use `py -3` ou:
+The first command simulates. Review conflicts before applying. For project scope replace --user with --project PATH. Start a new chat after configuration. Installing plugin setup alone does not activate the global integration. Optional packs are never installed automatically.
+
+Windows launchers reuse an existing compatible Python, trying alternatives if py is broken; they do not download runtimes or alter PATH:
 
 ```powershell
 powershell -File installer/Install.ps1 --user
-powershell -File installer/Install.ps1 --user --apply
+powershell -File scripts/Validate-WindowsCodex.ps1
 ```
 
-No Linux/macOS: `bash install.sh --user`, seguido de `bash install.sh --user --apply`. Os lançadores procuram Python existente; não baixam runtimes, alteram PATH nem pedem privilégios administrativos.
+Linux/macOS: `bash install.sh --user`. Global paths can be adjusted through CODEX_HOME and the installer's --home. Note that guardian_packs --home means the exact Codex directory, unlike install.py --home (account parent).
 
-## O que é instalado
+## What changed
 
-| Componente | Escopo da conta |
-|---|---|
-| 29 perfis de agentes | `~/.codex/agents/` |
-| Oito skills operacionais | `~/.agents/skills/` |
-| Taxonomia, políticas e roteador | `~/.codex/guardian-system/` |
-| Política de coordenação | bloco delimitado em `~/.codex/AGENTS.md` |
-| Registro dos agentes e delegação | integração preservadora em `~/.codex/config.toml` |
-| Recibo e backups | local informado pelo instalador |
+- Closed task, result and finding contracts; imported plans revalidate identity, risk, phase gates, budgets and acceptance.
+- Reviewed canonical catalog and generated documentation; installed/enabled/compatible optional profiles require an explicit current inventory observation.
+- Version-aware unknown capability reporting, inherited model defaults and explicitly authorized overrides.
+- CLI supervision with private Git checkouts, real bounded parallel read-only audits, explicit write authorization, artifact/scope postconditions and reliable Windows descendant cancellation.
+- Produced results remain separate from correctness verification. Strict unsupported read/file/tool restrictions block rather than pretending a profile is a sandbox.
+- Shared maintenance locking across all mutable roots, namespace-limited interrupted recovery, atomic writes, receipts and journal byte bounds.
+- Grading uses declarative independent oracles and a verified rootless Docker backend; no generated target or executable checker runs on host Python.
+- Paired evaluation uses isolated reviewed config, holdout/version/hash controls, balanced ordering and case-cluster intervals.
+- Eight domain observation adapters and sixteen positive/adversarial regressions complement domain-native fixture specifications. A static observation pass is not native application correctness.
+- Native acceptance can cover all 29 core plus ten explicitly installed optional roles in a disposable project; public summaries omit raw sessions/prompts.
+- Pinned upstream reference identities, hashes and notices; no bulk import or auto-sync of the 175 external profiles.
 
-`CODEX_HOME` e `--home` podem alterar a raiz Codex. O instalador preserva configurações, modelos e provedores existentes. Não instala credenciais, não concede permissões e usa apenas a biblioteca padrão do Python. O padrão de quatro subagentes simultâneos só é aplicado quando não existe configuração correspondente.
-
-Para escopo de projeto: `python install.py --project CAMINHO` e depois o mesmo comando com `--apply`. Prefira um único escopo para evitar perfis duplicados.
-
-## Plataforma de engenharia — prévia da branch de desenvolvimento
-
-A branch de evolução adiciona 12 workflows para etapas do ciclo de vida, 29 playbooks de especialidade, dez especialistas opcionais, um gerenciador conservador de pacotes, planejamento de tarefas por dependências, executor CLI isolado, recuperação de transações interrompidas, diário local de evidências e avaliador A/B de resultados.
-
-**Essas ferramentas não estão disponíveis na release estável 2.1.0 sem instalar explicitamente uma versão de desenvolvimento.** A aprovação de testes unitários ou de CI não significa que o Codex Desktop nativo, integrações de produção ou recursos de aprovação humana tenham sido validados.
-
-Ferramentas importantes (sempre examine `--help`):
-
-```sh
-python tools/guardian_registry.py validate
-python tools/guardian_platform.py stages
-python tools/guardian_platform.py plan --mode audit --stage integration --prompt "Revisar contrato da API"
-python tools/guardian_executor.py --help
-python tools/guardian_eval_runner.py --help
-python tools/guardian_recover.py --help
-```
-
-O executor, os benchmarks nativos e qualquer atualização da instalação exigem confirmação explícita. Eles não implantam aplicações, não concedem permissões adicionais, não mesclam automaticamente worktrees e não certificam resultados sem evidências. Consulte [guia da plataforma](docs/PLATFORM_ENGINEERING.md) e [pendências e riscos](docs/PLATFORM_ROADMAP.md).
-
-## Validação e uso
+## Inspect and validate
 
 ```sh
 python tools/guardian.py validate
 python tools/guardian.py eval
-python -m unittest discover -s tests -v
+python tools/guardian_registry.py validate
+python tools/guardian_catalog.py
+python tools/guardian_capabilities.py --probe
+python tools/guardian_platform.py plan --mode audit --stage integration --prompt "Review API compatibility"
+python tools/guardian_domain_checks.py --self-test
+python tools/run_tests.py
+python tools/verify_distribution.py
 ```
 
-Dentro de um sandbox Codex com restrições em TEMP/TMP, use `python tools/run_tests.py`, que limita os temporários a `work/guardian-test-temp` no workspace. O runner não altera variáveis globais do sistema.
+On Windows, pass --temp-dir SHORT_WRITABLE_DIRECTORY to test/distribution runners if deep temporary paths exceed OS limits. No OS security or long-path setting is changed.
 
-Esses comandos validam arquivos, roteamento e instalador; não executam o modelo. Em um **novo chat**, peça: “Faça uma revisão controlada de um pequeno módulo, selecione um especialista adequado e apresente evidências de execução e revisão.” A execução nativa depende das ferramentas, permissões e quota da sua conta.
-
-Uma suíte nativa portátil está disponível, por adesão explícita:
+Native tests are opt-in and consume account quota:
 
 ```sh
-python tools/test_native_agents.py
-python tools/test_native_agents.py --run --out DIRETORIO_NOVO_DE_EVIDENCIAS
-python tools/test_native_agents.py --run --all --out OUTRO_DIRETORIO_NOVO
+python tools/test_native_agents.py --all --include-packs
+python tools/test_native_agents.py --run --all --include-packs --out NEW_EVIDENCE_DIRECTORY
 ```
 
-O primeiro comando somente mostra o plano. `--run` usa sua conta autenticada e quota do Codex. O teste padrão executa A00, IAM, G01 e G02; `--all` exige os 29 tipos individualmente. Tudo ocorre em um projeto sintético isolado, com evidências locais. Essas evidências podem conter caminhos e IDs de sessão; revise antes de compartilhá-las.
+The preview does not call a model. The run requires a compatible authenticated Codex and applicable permission review. Recorded role, parent, completion and checks validate controlled cases, not all 132 capabilities. Do not publish raw session logs.
 
-O roteador usa heurísticas locais e não envia o prompt para uma API. Use resumos sem segredos. Tarefas de alto risco devem envolver revisão independente G01; avaliação de produção usa G02. O sistema não substitui autorização para produção, operações destrutivas ou ações privilegiadas.
+## Safety and operating limits
 
-## Atualização, remoção e recuperação
+The CLI backend requests Codex sandboxing but does not prove per-file/read/network or CPU/memory isolation. Restrictive contracts need verified capabilities and fail closed otherwise. Writes are sequential with postcondition enforcement and reviewed integration. Workspaces are private checkouts, not OS sandboxes. Neither a prompt nor a local hash authenticates execution or human authorization.
 
-```sh
-python install.py --user --update
-python install.py --user --update --apply
-python install.py --user --uninstall
-python install.py --user --uninstall --apply
-python install.py --user --rollback
-python install.py --user --rollback --apply
-```
+Real grading additionally requires administrator-provisioned rootless Docker, cgroup v2 limits and an already reviewed local Python image pinned by digest. Missing prerequisites block grading; there is no unsafe host fallback. General application code is outside the pure-function oracle's supported subset. See [evaluation security](docs/EVALUATION-SAFETY.md).
 
-Todas as operações simulam por padrão. Arquivos modificados posteriormente são tratados como conflitos; não use sobrescrita forçada. `--adopt` é somente para adoção explícita de arquivos legados idênticos, após revisão do dry-run. Remover o plugin não remove automaticamente a integração global: use a desinstalação acima.
+Maintenance simulates by default: --update, --uninstall and --rollback, then --apply only after reviewing conflicts. Modified user-owned files are preserved. Do not delete active/stale locks blindly. See [support](SUPPORT.md), [security boundaries](SECURITY.md) and [implementation status](docs/IMPLEMENTATION-STATUS.md).
 
-## Estado de compatibilidade
+## Review and release
 
-Os 29 papéis foram executados individualmente em ambiente Windows com Codex desktop 26.1007.71326 e CLI 0.162 alpha. Isso valida casos controlados, não todas as capacidades nem todos os ambientes. A release adiciona testes de instalação isolada e CI para Windows, Linux e macOS com Python 3.11–3.13. Consulte os resultados reais no GitHub e [VALIDATION](docs/VALIDATION.md); não considere uma matriz configurada como uma matriz aprovada.
+CI validates source and extracted-distribution lifecycle on the configured OS/Python matrix. Native and isolated-grader acceptance workflows are manual, operator-provisioned gates. Signed artifact provenance is created and checked by the release preparation workflow; its configuration alone is not an issued attestation.
 
-[Distribuição e manutenção](docs/DISTRIBUTION.md) · [Notas da release](RELEASE_NOTES.md) · [Documentação técnica](docs/) · [Issues](https://github.com/DanielCosta3415/fullstack-guardian/issues)
+The release verifier can check actual CI/native/grader runs, the reviewed revision and signed ZIP provenance through explicit read-only network verification. It never publishes or treats local JSON approval as authority. A stable release requires real evidence, G01/G02 and the release decision appropriate to that action. See --help of tools/guardian_release_gate.py.
 
-MIT © Daniel Lopes da Costa. Projeto independente; sem afiliação oficial com a OpenAI.
+[Generated 39-role catalog](docs/CATALOG.md) · [Platform operations](docs/PLATFORM_ENGINEERING.md) · [Third-party notices](THIRD_PARTY_NOTICES.md)
 
-English: Local, customization-preserving Codex setup for 29 specialist roles, eight skills and 132 capabilities. Install the plugin and run onboarding, or use the release ZIP. Python 3.11+ required; native delegation depends on your Codex client, permissions and quota.
+MIT. Independent project; not affiliated with OpenAI. Compatibility and risk are versioned, not universal guarantees.

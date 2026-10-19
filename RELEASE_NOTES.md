@@ -1,3 +1,9 @@
+# 2.2.0-dev.2 — hardening candidate
+
+Implements typed contracts, phase/risk gates, explicit eligibility and current inventory checks, capability/policy integration, safe process supervision, private Git checkouts, read-only parallel audits, guarded integration, namespace recovery, shared-root locking, bounded journals, isolated declarative grading, paired evaluations, domain observation contracts, distribution regressions and explicit release gates.
+
+This candidate has not been promoted to stable. Consult docs/IMPLEMENTATION-STATUS.md for actual evidence and limitations. Native acceptance and Docker-backed isolation are not inferred from file presence or a unit test. Existing global installations are not changed by this source update.
+
 # Notas da release
 
 ## v2.2.0-dev.1 — Prévia de desenvolvimento (não publicada)

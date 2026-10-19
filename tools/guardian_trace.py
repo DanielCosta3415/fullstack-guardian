@@ -12,6 +12,7 @@ import json
 import os
 import re
 import stat
+import math
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -19,7 +20,9 @@ from pathlib import Path
 EVENTS = frozenset(("plan", "delegate", "tool_result", "verification", "approval_requested", "approval_recorded", "blocked", "finish"))
 SENSITIVE_KEY = re.compile(r"(?i)(password|secret|api.?key|authorization|access.?token|refresh.?token|private.?key|credential|session.?id)")
 SENSITIVE_VAL = re.compile(r"(?i)(bearer\s+\S+|-----BEGIN.*PRIVATE KEY|(?:password|api_key|secret)\s*[:=]\s*\S+)")
+PERSONAL_VAL = re.compile(r"(?i)([a-z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-z0-9-]+(?:\.[a-z0-9-]+)+|(?:C:|/home|/Users)[\\/](?:Users[\\/])?[^\\/\s]+)")
 ZERO = "0" * 64
+MAX_EVENT_BYTES = 16000
 
 
 class TraceError(ValueError):
@@ -51,9 +54,11 @@ def _clean(payload: object, depth: int = 0) -> object:
             raise TraceError("Payload list too large")
         return [_clean(x, depth+1) for x in payload]
     if isinstance(payload, str):
-        if len(payload) > 2000 or SENSITIVE_VAL.search(payload):
+        if len(payload) > 2000 or SENSITIVE_VAL.search(payload) or PERSONAL_VAL.search(payload):
             raise TraceError("Potentially sensitive or oversized event payload")
         return payload
+    if type(payload) is float and not math.isfinite(payload):
+        raise TraceError("Non-finite numeric payload")
     if payload is None or type(payload) in (bool, int, float):
         return payload
     raise TraceError("Unsupported payload type")
@@ -73,7 +78,10 @@ def _line(seq: int, event: str, data: dict, prev: str) -> str:
     envelope = {"schema_version": 1, "sequence": seq, "timestamp_utc": datetime.now(timezone.utc).isoformat(),
                 "event": event, "data": clean, "previous": prev}
     envelope["checksum"] = _hash(envelope)
-    return json.dumps(envelope, ensure_ascii=False, sort_keys=True, allow_nan=False) + "\n"
+    line = json.dumps(envelope, ensure_ascii=False, sort_keys=True, allow_nan=False) + "\n"
+    if len(line.encode("utf-8")) > MAX_EVENT_BYTES:
+        raise TraceError("Serialized event exceeds byte limit")
+    return line
 
 
 def verify(path: Path) -> dict:
@@ -84,7 +92,7 @@ def verify(path: Path) -> dict:
     count = 0
     with path.open("r", encoding="utf-8") as file:
         for raw in file:
-            if not raw.endswith("\n") or len(raw) > 16000:
+            if not raw.endswith("\n") or len(raw.encode("utf-8")) > MAX_EVENT_BYTES:
                 raise TraceError("Truncated or oversized event")
             try:
                 event = json.loads(raw)
@@ -102,7 +110,7 @@ def verify(path: Path) -> dict:
             checksum = data.pop("checksum")
             if checksum != _hash(data):
                 raise TraceError("Event content altered")
-            if _clean(event["data"]) != event["data"]:
+            if not isinstance(event["data"], dict) or _clean(event["data"]) != event["data"]:
                 raise TraceError("Invalid payload")
             previous = checksum
             count += 1
@@ -116,7 +124,8 @@ def init(path: Path) -> dict:
     path = _guard(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     try:
-        with path.open("x", encoding="utf-8") as out:
+        descriptor = os.open(path, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o600)
+        with os.fdopen(descriptor, "w", encoding="utf-8", newline="\n") as out:
             out.write(_line(0, "plan", {"status": "created", "execution": "not_started"}, ZERO))
             out.flush()
             os.fsync(out.fileno())
@@ -136,13 +145,45 @@ def append(path: Path, event: str, data: dict) -> dict:
         os.close(fd)
         valid = verify(path)
         entry = _line(valid["events"], event, data, valid["last_checksum"])
-        with path.open("a", encoding="utf-8") as out:
-            out.write(entry)
-            out.flush()
-            os.fsync(out.fileno())
+        # A same-directory replacement leaves the original valid chain intact if writing fails.
+        try:
+            from .guardian_maintenance import atomic_write
+        except ImportError:
+            from guardian_maintenance import atomic_write
+        atomic_write(path, path.read_bytes() + entry.encode("utf-8"))
         return verify(path)
     finally:
         lock.unlink(missing_ok=True)
+
+
+def record_process_result(path: Path, *, check_id: str, tool: str,
+                          tool_version: str, exit_code: int | None,
+                          artifact_sha256: str | None = None) -> dict:
+    """Persist minimal supervisor observations, never model text or raw output.
+
+    A successful process exit is not test correctness or release authorization.
+    Callers must supply actual observations; this local API does not authenticate
+    who called it. Windows ACL enforcement depends on the host and is NOT VERIFIED.
+    """
+    for value in (check_id, tool, tool_version):
+        if not isinstance(value, str) or not value or len(value) > 100:
+            raise TraceError("Invalid observation identifier/version")
+    if exit_code is not None and type(exit_code) is not int:
+        raise TraceError("Invalid process exit code")
+    if artifact_sha256 is not None and (not isinstance(artifact_sha256, str) or not re.fullmatch('[a-f0-9]{64}', artifact_sha256)):
+        raise TraceError("Invalid artifact digest")
+    return append(path, "tool_result", {"evidence_kind": "supervisor_process_observation",
+        "check_id": check_id, "tool": tool, "tool_version": tool_version,
+        "exit_code": exit_code, "artifact_sha256": artifact_sha256,
+        "execution_status": "NOT_VERIFIED" if exit_code is None else "EXIT_ZERO" if exit_code == 0 else "EXIT_NONZERO",
+        "correctness_status": "NOT_VERIFIED", "authenticated": False})
+
+
+def public_summary(path: Path) -> dict:
+    """Return counts and integrity only; never publish raw event payloads."""
+    result = verify(path)
+    return {**result, "raw_events_included": False, "retention": "operator_managed",
+            "host_acl_verified": False}
 
 
 def main() -> int:

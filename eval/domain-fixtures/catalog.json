@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "purpose": "Domain-specific adversarial fixtures with independent oracle contracts; native domain execution requires a separately reviewed sandbox adapter.",
+  "native_execution_status": "NOT VERIFIED",
+  "domains": [
+    {
+      "id": "dotnet",
+      "path": "dotnet",
+      "runtime": "dotnet",
+      "oracle": "oracle.json",
+      "status": "NOT VERIFIED"
+    },
+    {
+      "id": "api",
+      "path": "api",
+      "runtime": "http-server",
+      "oracle": "oracle.json",
+      "status": "NOT VERIFIED"
+    },
+    {
+      "id": "financial",
+      "path": "financial",
+      "runtime": "python-oracle-v2",
+      "oracle": "oracle.json",
+      "status": "NOT VERIFIED"
+    },
+    {
+      "id": "data",
+      "path": "data",
+      "runtime": "sqlite",
+      "oracle": "oracle.json",
+      "status": "NOT VERIFIED"
+    },
+    {
+      "id": "ui",
+      "path": "ui",
+      "runtime": "browser-and-accessibility-tree",
+      "oracle": "oracle.json",
+      "status": "NOT VERIFIED"
+    },
+    {
+      "id": "powershell",
+      "path": "powershell",
+      "runtime": "pwsh",
+      "oracle": "oracle.json",
+      "status": "NOT VERIFIED"
+    },
+    {
+      "id": "cloudplan",
+      "path": "cloudplan",
+      "runtime": "json-policy-oracle",
+      "oracle": "oracle.json",
+      "status": "NOT VERIFIED"
+    },
+    {
+      "id": "ai",
+      "path": "ai",
+      "runtime": "model-eval-opt-in",
+      "oracle": "oracle.json",
+      "status": "NOT VERIFIED"
+    }
+  ]
+}

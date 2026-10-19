@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "expected_contract": {
+    "label": "Email",
+    "input_type": "email",
+    "keyboard_submit": true,
+    "invalid_announced": true
+  },
+  "runtime": "browser-and-accessibility-tree",
+  "status": "NOT VERIFIED",
+  "reason": "Native adapter/environment required; this specification is not a passed test."
+}

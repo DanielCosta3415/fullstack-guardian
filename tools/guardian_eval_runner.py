@@ -11,6 +11,7 @@ import argparse
 import hashlib
 import json
 import math
+import random
 import os
 import shutil
 import subprocess
@@ -20,12 +21,14 @@ import time
 from pathlib import Path
 
 try:
+    from .guardian_grader_sandbox import grade_oracle, probe, validate_oracle, strict_json
     from .guardian_benchmark import compare
-    from .guardian_executor import safe, _git, ExecutionError
+    from .guardian_executor import safe, _git, ExecutionError, terminate_tree
     from .guardian_platform import _safe_summary
 except ImportError:
+    from guardian_grader_sandbox import grade_oracle, probe, validate_oracle, strict_json
     from guardian_benchmark import compare
-    from guardian_executor import safe, _git, ExecutionError
+    from guardian_executor import safe, _git, ExecutionError, terminate_tree
     from guardian_platform import _safe_summary
 
 
@@ -36,6 +39,8 @@ class EvalError(ValueError):
 def fixture(payload: dict) -> dict:
     if not isinstance(payload, dict) or payload.get("schema_version") != 1:
         raise EvalError("Invalid dataset schema")
+    if set(payload) - {"schema_version", "cases", "dataset_version", "split"}:
+        raise EvalError("Unknown dataset fields")
     cases = payload.get("cases")
     if not isinstance(cases, list) or not cases or len(cases) > 30:
         raise EvalError("Dataset must contain 1-30 cases")
@@ -59,7 +64,7 @@ def _sha(path: Path) -> str:
 
 
 def _codex(codex: str, project: Path, prompt: str, model: str, effort: str,
-           timeout: int, event_path: Path) -> tuple[int | str, bool, int | None]:
+           timeout: int, event_path: Path, config_home: Path | None = None) -> tuple[int | str, bool, int | None]:
     cmd = [codex, "exec", "--json", "--sandbox", "workspace-write",
            "-C", str(project), "--model", model,
            "-c", "model_reasoning_effort=" + json.dumps(effort), "-"]
@@ -67,15 +72,33 @@ def _codex(codex: str, project: Path, prompt: str, model: str, effort: str,
     with event_path.open("x", encoding="utf-8") as out:
         os.chmod(event_path, 0o600)
         p = subprocess.Popen(cmd, cwd=project, stdin=subprocess.PIPE, stdout=out,
-                             stderr=subprocess.DEVNULL, text=True)
+                             stderr=subprocess.DEVNULL, text=True,
+                             start_new_session=os.name != "nt",
+                             creationflags=subprocess.CREATE_NEW_PROCESS_GROUP if os.name == "nt" else 0,
+                             env={**{k:v for k,v in os.environ.items() if k.upper() in ("PATH", "SYSTEMROOT", "WINDIR", "TEMP", "TMP", "OPENAI_API_KEY")},
+                                  "CODEX_HOME": str(config_home), "HOME": str(config_home.parent),
+                                  "USERPROFILE": str(config_home.parent)} if config_home else None)
         try:
-            p.communicate(prompt, timeout=timeout)
-            rc = p.returncode
-        except subprocess.TimeoutExpired:
-            p.kill()
-            p.communicate()
-            rc = "timeout"
+            deadline = time.monotonic() + timeout
+            pending = prompt
+            while True:
+                if time.monotonic() >= deadline or event_path.stat().st_size > 1_048_576:
+                    terminate_tree(p)
+                    rc = "timeout_or_output_budget"
+                    break
+                try:
+                    p.communicate(pending, timeout=0.2)
+                    rc = p.returncode
+                    break
+                except subprocess.TimeoutExpired:
+                    pending = None
+        except BaseException:
+            terminate_tree(p)
+            raise
+    if event_path.stat().st_size > 1_048_576:
+        return "output_budget", False, None
     success, tokens = False, None
+    completions, failed = 0, False
     with event_path.open(encoding="utf-8") as f:
         for line in f:
             try:
@@ -83,6 +106,7 @@ def _codex(codex: str, project: Path, prompt: str, model: str, effort: str,
             except ValueError:
                 continue
             if item.get("type") == "turn.completed":
+                completions += 1
                 success = True
                 usage = item.get("usage") or item.get("turn", {}).get("usage") or {}
                 if isinstance(usage, dict):
@@ -90,35 +114,28 @@ def _codex(codex: str, project: Path, prompt: str, model: str, effort: str,
                     output_tokens = usage.get("output_tokens")
                     if all(type(x) is int and x >= 0 for x in (input_tokens, output_tokens)):
                         tokens = input_tokens + output_tokens
-            if item.get("type") == "turn.failed":
-                success = False
-    return rc, success, tokens
+            if item.get("type") in ("turn.failed", "error"):
+                failed = True
+    return rc, success and completions == 1 and not failed, tokens
 
 
 def grade(checker: Path, case_id: str, worktree: Path, checks: list[str], timeout: int) -> bool:
-    """Invoke a trusted external test module with the workspace path as DATA."""
-    checker = safe(checker)
-    if not checker.is_file():
-        raise EvalError("Checker module missing")
-    module = checker.stem
-    if not module.isidentifier():
-        raise EvalError("Checker module name invalid")
-    # Isolate test process from the source tree and disallow external mutation.
-    cmd = [sys.executable, "-I", "-B", str(checker), "--workspace", str(worktree),
-           "--case", case_id, "--checks", ",".join(checks)]
+    """Grade only inside a verified OS sandbox with independent JSON oracle."""
     try:
-        return subprocess.run(cmd, cwd=checker.parent, stdin=subprocess.DEVNULL,
-                              stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
-                              timeout=timeout, check=False).returncode == 0
-    except subprocess.TimeoutExpired:
-        return False
+        return grade_oracle(safe(checker), case_id, safe(worktree), checks, timeout)["passed"]
+    except ValueError as exc:
+        raise EvalError(str(exc)) from exc
+
 
 
 def run(dataset: dict, project: Path, checker: Path, output: Path,
         model: str, effort: str, repeats: int, timeout: int,
         *, apply: bool = False, codex_binary: str | None = None,
-        candidate_guidance: str | None = None) -> dict:
+        candidate_guidance: str | None = None, seed: int = 0,
+        isolated_config: Path | None = None) -> dict:
     dataset = fixture(dataset)
+    if type(seed) is not int or not 0 <= seed <= 2**32-1:
+        raise EvalError("Seed must be an unsigned 32-bit integer")
     if not isinstance(model, str) or not model or not isinstance(effort, str) or effort not in ("low", "medium", "high", "xhigh"):
         raise EvalError("Model and effort required")
     if type(repeats) is not int or not 1 <= repeats <= 10:
@@ -137,12 +154,30 @@ def run(dataset: dict, project: Path, checker: Path, output: Path,
     root = safe(Path(_git(project, "rev-parse", "--show-toplevel")).resolve())
     if project != root or _git(root, "status", "--porcelain", "--untracked-files=all"):
         raise EvalError("Project must be a clean git repository root")
+    if any(p.name in ("AGENTS.md", ".agents", ".codex") for p in root.rglob("*") if ".git" not in p.parts):
+        raise EvalError("Controlled fixture must exclude inherited project policies, agents and skills")
     base = _git(root, "rev-parse", "HEAD")
     checksum = _sha(checker)
     total = len(dataset["cases"]) * repeats * 2
     if not apply:
         return {"dry_run": True, "experiments": total, "model": model, "effort": effort,
-                "checker_sha256": checksum, "codex_quota_used": False}
+                "checker_sha256": checksum, "codex_quota_used": False,
+                "grader_backend": probe(), "seed": seed, "live_config_required": True}
+    if dataset.get("split") != "holdout" or not isinstance(dataset.get("dataset_version"), str) or not dataset["dataset_version"]:
+        raise EvalError("Live comparisons require an explicit versioned holdout dataset")
+    try:
+        validate_oracle(strict_json(checker.read_text(encoding="utf-8")))
+    except ValueError as exc:
+        raise EvalError(str(exc)) from exc
+    if not probe()["available"]:
+        raise EvalError("Verified rootless grading backend unavailable; NOT VERIFIED, no Codex quota consumed")
+    if isolated_config is None:
+        raise EvalError("Live evaluation requires an explicit isolated Codex config directory")
+    isolated_config = safe(isolated_config)
+    if not isolated_config.is_dir() or not (isolated_config / "config.toml").is_file():
+        raise EvalError("Isolated config directory and config.toml required")
+    if any(p.name in ("AGENTS.md", "agents", "skills", "auth.json") for p in isolated_config.iterdir()):
+        raise EvalError("Evaluation config must exclude global policies, agents, skills and copied credentials")
     if not isinstance(candidate_guidance, str) or not candidate_guidance.strip():
         raise EvalError("A/B candidate requires explicit reviewed Guardian guidance for live runs")
     _safe_summary(candidate_guidance)
@@ -154,35 +189,51 @@ def run(dataset: dict, project: Path, checker: Path, output: Path,
         raise EvalError("Use a fresh empty output directory")
     output.mkdir(parents=True, exist_ok=True)
     template = {"model": model, "effort": effort, "sandbox": "workspace-write",
-                "machine_class": os.name, "dataset_version": hashlib.sha256(json.dumps(dataset,sort_keys=True).encode()).hexdigest()}
+                "machine_class": os.name, "seed": seed,
+                "config_sha256": _sha(isolated_config / "config.toml"),
+                "model_version": model, "model_version_verified": False, "dataset_label": dataset.get("dataset_version"),
+                "split": dataset.get("split"), "checker_sha256": checksum, "dataset_version": hashlib.sha256(json.dumps(dataset,sort_keys=True).encode()).hexdigest()}
     reports = {k: {"schema_version": 1, "group": k, "environment": template.copy(), "samples": []} for k in ("baseline", "candidate")}
-    for case in dataset["cases"]:
+    cases = list(dataset["cases"])
+    random.Random(seed).shuffle(cases)
+    sequence = 0
+    for case in cases:
         for repeat in range(repeats):
-            for group in ("baseline", "candidate"):
+            order = ("baseline", "candidate") if (sequence + seed) % 2 == 0 else ("candidate", "baseline")
+            sequence += 1
+            for group in order:
                 target = safe(output / "worktrees" / f"{group}-{case['case_id']}-{repeat}")
                 target.parent.mkdir(parents=True, exist_ok=True)
                 _git(root, "worktree", "add", "--detach", str(target), base)
-                prompt = case["prompt"]
-                if group == "candidate":
-                    prompt += "\nReviewed Guardian policy for this experiment:\n" + candidate_guidance
-                    prompt += "\nOnly use agents actually available, never simulate delegation."
-                else:
-                    prompt += "\nSolve directly with normal Codex behavior. Do not explicitly invoke Guardian workflows."
-                prompt += "\nLocal-only workspace. Do not deploy, fetch network data, change global settings or alter test harness. Show evidence."
-                start = time.monotonic()
-                events = safe(output / "events" / f"{group}-{case['case_id']}-{repeat}.jsonl")
-                rc, completed, tokens = _codex(codex, target, prompt, model, effort, timeout, events)
-                elapsed = round(time.monotonic() - start, 4)
-                if _sha(checker) != checksum:
-                    raise EvalError("Trusted checker changed during experiments")
-                passed = rc == 0 and completed and grade(checker, case["case_id"], target, case["checks"], timeout=min(120, timeout))
-                # Token accounting is optional; omit comparisons if native usage is missing.
-                reports[group]["samples"].append({"case_id": case["case_id"], "repeat": repeat,
-                    "passed": bool(passed), "duration_seconds": elapsed, "token_count": tokens,
-                    "token_count_verified": tokens is not None, "turn_completed": completed,
-                    "exit_code": rc, "event_sha256": _sha(events)})
-                # Do not merge code into the base repository.
-                _git(root, "worktree", "remove", "--force", str(target))
+                try:
+                    prompt = case["prompt"]
+                    if group == "candidate":
+                        prompt += "\nReviewed Guardian policy for this experiment:\n" + candidate_guidance
+                        prompt += "\nOnly use agents actually available, never simulate delegation."
+                    else:
+                        prompt += "\nSolve directly with normal Codex behavior. Do not explicitly invoke Guardian workflows."
+                    prompt += "\nLocal-only workspace. Do not deploy, fetch network data, change global settings or alter test harness. Show evidence."
+                    start = time.monotonic()
+                    events = safe(output / "events" / f"{group}-{case['case_id']}-{repeat}.jsonl")
+                    config_run = output / "configurations" / f"{group}-{case['case_id']}-{repeat}" / ".codex"
+                    config_run.mkdir(parents=True)
+                    shutil.copyfile(isolated_config / "config.toml", config_run / "config.toml")
+                    if _sha(config_run / "config.toml") != template["config_sha256"]:
+                        raise EvalError("Reviewed configuration changed during experiment")
+                    rc, completed, tokens = _codex(codex, target, prompt, model, effort, timeout, events, config_run)
+                    elapsed = round(time.monotonic() - start, 4)
+                    if _sha(checker) != checksum:
+                        raise EvalError("Trusted checker changed during experiments")
+                    grading = ({"passed":False,"status":"NOT EXECUTED","checks":[]} if rc != 0 or not completed else
+                               grade_oracle(checker, case["case_id"], target, case["checks"], timeout=min(120, timeout)))
+                    passed = grading["passed"]
+                    # Token accounting is optional; omit comparisons if native usage is missing.
+                    reports[group]["samples"].append({"case_id": case["case_id"], "repeat": repeat,
+                        "passed": bool(passed), "duration_seconds": elapsed, "token_count": tokens,
+                        "token_count_verified": tokens is not None, "turn_completed": completed,
+                        "exit_code": rc, "event_sha256": _sha(events), "grading": grading})
+                finally:
+                    _git(root, "worktree", "remove", "--force", str(target))
     for group, report in reports.items():
         (output / f"{group}.json").write_text(json.dumps(report, indent=2))
     analyzed = compare(reports["baseline"], reports["candidate"])
@@ -192,6 +243,11 @@ def run(dataset: dict, project: Path, checker: Path, output: Path,
     analyzed["candidate_guidance_sha256"] = guidance_hash
     analyzed["candidate_guidance_length"] = len(candidate_guidance)
     analyzed["experiment_confounded"] = True
+    analyzed["order"] = "seeded cases, counterbalanced AB/BA pairs"
+    analyzed["seed"] = seed
+    analyzed["config_isolated"] = True
+    analyzed["model_version_verified"] = False
+    analyzed["monetary_cost_verified"] = False
     analyzed["warning"] = ("Global Codex setup, prompt variants and harness environment can differ; "
                           "this A/B report is not a controlled proof that Guardian improves outcomes.")
     (output / "comparison.json").write_text(json.dumps(analyzed, indent=2))
@@ -209,12 +265,15 @@ def main() -> int:
     p.add_argument("--repeats", type=int, default=3)
     p.add_argument("--timeout", type=int, default=1200)
     p.add_argument("--candidate-guide", type=Path, help="Reviewed Guardian guidance file used ONLY in the candidate prompt; mandatory for --run")
+    p.add_argument("--seed", type=int, default=0)
+    p.add_argument("--isolated-config", type=Path)
     p.add_argument("--run", action="store_true", help="Explicitly consume Codex quota")
     a = p.parse_args()
     try:
         outcome = run(json.loads(safe(a.dataset).read_text(encoding="utf-8")),
                       a.project, a.checker, a.out, a.model, a.effort,
                       a.repeats, a.timeout, apply=a.run,
+                      seed=a.seed, isolated_config=a.isolated_config,
                       candidate_guidance=safe(a.candidate_guide).read_text(encoding="utf-8") if a.candidate_guide else None)
         print(json.dumps(outcome, ensure_ascii=False, indent=2))
         return 0

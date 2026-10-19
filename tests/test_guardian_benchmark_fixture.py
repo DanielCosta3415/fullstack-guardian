@@ -2,6 +2,7 @@
 import json
 import tempfile
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 
 from tools.guardian_benchmark_fixture import create
@@ -22,8 +23,12 @@ class BenchmarkFixtureTests(unittest.TestCase):
         self.assertNotIn(project, checker.parents)
         cases = fixture(json.loads(Path(result["dataset"]).read_text(encoding="utf-8")))
         self.assertEqual(len(cases["cases"]), 3)
-        for case in cases["cases"]:
-            self.assertFalse(grade(checker, case["case_id"], project, case["checks"], 10))
+        from tools.guardian_grader_sandbox import validate_oracle
+        self.assertEqual(len(validate_oracle(json.loads(checker.read_text()))["cases"]), 3)
+        with patch("tools.guardian_grader_sandbox.probe", return_value={"available":False,"reason":"No backend"}):
+            for case in cases["cases"]:
+                with self.assertRaises(ValueError):
+                    grade(checker, case["case_id"], project, case["checks"], 10)
         preview = run(cases, project, checker, self.path / "results",
                       "placeholder-model", "medium", 2, 60,
                       candidate_guidance=Path(result["candidate_guide"]).read_text())
@@ -44,6 +49,9 @@ class BenchmarkFixtureTests(unittest.TestCase):
             "    if type(amount) is not int or type(fee) is not int: raise TypeError()\n"
             "    if amount < 0 or fee < 0: raise ValueError()\n"
             "    return amount + fee\n", encoding="utf-8")
+        from tools.guardian_grader_sandbox import probe
+        if not probe()["available"]:
+            self.skipTest("Real sandbox backend unavailable: native grading NOT VERIFIED")
         self.assertTrue(grade(Path(result["checker"]), "money", project, ["main"], 10))
 
 

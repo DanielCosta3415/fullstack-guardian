@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "guardian/task-contract-v1",
+  "title": "Task contract; semantic authority and path checks enforced by guardian_contracts.py",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "acceptance",
+    "allowed_paths",
+    "authorization",
+    "budget",
+    "checks",
+    "goal",
+    "idempotent",
+    "operation",
+    "prohibited_effects",
+    "read_paths",
+    "retry",
+    "tool_requirements"
+  ],
+  "properties": {
+    "acceptance": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "allowed_paths": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "authorization": {
+      "type": "null"
+    },
+    "budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "timeout_seconds",
+        "max_output_bytes"
+      ],
+      "properties": {
+        "timeout_seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3600
+        },
+        "max_output_bytes": {
+          "type": "integer",
+          "minimum": 1024,
+          "maximum": 16777216
+        }
+      }
+    },
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "minItems": 1,
+        "items": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "goal": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 8000
+    },
+    "idempotent": {
+      "type": "boolean"
+    },
+    "operation": {
+      "enum": [
+        "read",
+        "write"
+      ]
+    },
+    "prohibited_effects": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "read_paths": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "retry": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 2
+    },
+    "tool_requirements": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

@@ -27,6 +27,8 @@ class IntegrationTests(unittest.TestCase):
         git("add", ".")
         git("-c", "user.name=Guardian Tests", "-c", "user.email=ci@example.invalid", "commit", "-q", "-m", "Base")
         self.plan = create_plan("Implement safe ASP.NET Core validation in service")
+        for task in self.plan["tasks"]:
+            task["contract"].update(operation="write", allowed_paths=["service.py", "AGENTS.md", "new-unknown.txt"], checks=[[sys.executable, "-V"]], idempotent=False)
         self.briefs = {task["id"]: "Apply only a minimal mock service change to the tracked test file, with no other modifications." for task in self.plan["tasks"]}
         initialize(self.plan, self.repo, self.home, briefs=self.briefs)
 
@@ -42,8 +44,8 @@ class IntegrationTests(unittest.TestCase):
                 (worktree / "service.py").write_text("BASELINE = False\n")
             return 0, True, "mock"
         with patch("tools.guardian_executor._process", side_effect=mock_run):
-            result = execute(self.home, apply=True, codex_binary=sys.executable)
-        self.assertEqual(result["overall"], "completed")
+            result = execute(self.home, apply=True, codex_binary=sys.executable, authorize_writes=True)
+        self.assertEqual(result["overall"], "blocked" if protected else "produced")
 
     def test_preview_cannot_touch_base_repository(self):
         self.finish()
@@ -75,6 +77,28 @@ class IntegrationTests(unittest.TestCase):
         self.finish(protected=True)
         with self.assertRaises(IntegrationError):
             integrate(self.home)
+
+    def test_worktree_drift_after_execution_invalidates_review(self):
+        self.finish()
+        (self.home/'worktree'/'service.py').write_text('UNREVIEWED = True\n')
+        with self.assertRaisesRegex(IntegrationError,'changed after'):
+            integrate(self.home)
+
+    def test_protected_source_rename_cannot_hide_behind_safe_destination(self):
+        import json
+        from tools.guardian_executor import _plan_hash
+        from tools.guardian_runtime import inventory
+        self.finish()
+        worktree=self.home/'worktree'
+        subprocess.run(['git','-C',str(worktree),'mv','AGENTS.md','ordinary.txt'],check=True,capture_output=True)
+        # Refresh only the artifact seal to isolate the protected-path check;
+        # a normal post-run modification is already rejected by the drift gate.
+        path=self.home/'state.json'; state=json.loads(path.read_text())
+        last=max(state['tasks'].values(),key=lambda r:r['started_at_ns'])
+        last['artifact_sha256']=_plan_hash(inventory(worktree));path.write_text(json.dumps(state))
+        with self.assertRaisesRegex(IntegrationError,'Protected'):
+            integrate(self.home)
+
 
 
 if __name__ == "__main__":

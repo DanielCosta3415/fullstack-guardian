@@ -1,0 +1,1235 @@
+{
+  "schema_version": 1,
+  "source": "https://github.com/VoltAgent/awesome-codex-subagents",
+  "commit": "16f880a2a0486f880da75d2baffcd68af4cc4811",
+  "license": "MIT",
+  "copyright": "Copyright (c) 2026 VoltAgent",
+  "purpose": "Reviewed reference catalog; no remote sync, installation or execution",
+  "profiles": [
+    {
+      "name": "api-designer",
+      "path": "categories/01-core-development/api-designer.toml",
+      "sha256": "4cd72a1ca8455e0f954d8c6a4ef1c290bab3f5a9355fbf3e135316f5ce3e56a7",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S09 + pack api-integration"
+    },
+    {
+      "name": "backend-developer",
+      "path": "categories/01-core-development/backend-developer.toml",
+      "sha256": "1215d00d8cdb05130e7a8aeaebd7903123542e9244e853ac5daf485fe1ef17df",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S08,S11,S18"
+    },
+    {
+      "name": "code-mapper",
+      "path": "categories/01-core-development/code-mapper.toml",
+      "sha256": "7ce4e51efa81ba6156b4c84e054cdebd143ece873d131048199930740745b86c",
+      "review_decision": "adotar",
+      "guardian_mapping": "S03,S24; explorer disponível"
+    },
+    {
+      "name": "design-bridge",
+      "path": "categories/01-core-development/design-bridge.toml",
+      "sha256": "d083e5d426040f8d083a235940ccde8349caeab8fe95ac5e15e23e2e62658e57",
+      "review_decision": "manter opcional",
+      "guardian_mapping": "S04,S06 parcial"
+    },
+    {
+      "name": "electron-pro",
+      "path": "categories/01-core-development/electron-pro.toml",
+      "sha256": "7e46e73e66bf682471a30bba3f4f79513eead48c4ecdf0898dce1b4b275528c0",
+      "review_decision": "manter opcional",
+      "guardian_mapping": "S04,S05,S13 parcial"
+    },
+    {
+      "name": "frontend-developer",
+      "path": "categories/01-core-development/frontend-developer.toml",
+      "sha256": "e74480d0e445deffe6254c75b7da952565f69d732d921262c41bfc8e82472894",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S05,S17"
+    },
+    {
+      "name": "fullstack-developer",
+      "path": "categories/01-core-development/fullstack-developer.toml",
+      "sha256": "b7bcf331d6f40b36335aae14971167acd39b25c88c53985361a65d9b789ad1ce",
+      "review_decision": "adaptar",
+      "guardian_mapping": "A00,S05,S08,S09"
+    },
+    {
+      "name": "graphql-architect",
+      "path": "categories/01-core-development/graphql-architect.toml",
+      "sha256": "1f0f02e317697faeb4e3e0c166f6f19e9c6d86faf181728231339e20dbbcb3f5",
+      "review_decision": "manter opcional",
+      "guardian_mapping": "S09,S10,S13,S19 parcial"
+    },
+    {
+      "name": "microservices-architect",
+      "path": "categories/01-core-development/microservices-architect.toml",
+      "sha256": "e979ab4f6b1aeeac5527b1be180d7fffa85343b178fe75d8305032cc709f9e50",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S03,S10"
+    },
+    {
+      "name": "mobile-developer",
+      "path": "categories/01-core-development/mobile-developer.toml",
+      "sha256": "21baa358f19140f98bf5f1827e8dcedad72083d010f3f21e10dafea2f6ac561d",
+      "review_decision": "manter opcional",
+      "guardian_mapping": "S04,S05,S06 parcial"
+    },
+    {
+      "name": "ui-designer",
+      "path": "categories/01-core-development/ui-designer.toml",
+      "sha256": "f5352db2f9edb6b973d319e9c85b6085fc6b6f2df27da6d036f5a634e7012fe1",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S06,S04"
+    },
+    {
+      "name": "ui-fixer",
+      "path": "categories/01-core-development/ui-fixer.toml",
+      "sha256": "7b1470ee84b1206072db39eeb3d4684cde15f004469ef2c19b6ad79efd0c773c",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S05,S17"
+    },
+    {
+      "name": "websocket-engineer",
+      "path": "categories/01-core-development/websocket-engineer.toml",
+      "sha256": "5a9035279edd69e2dc9a38b92f5cd91985b37a73c16d401a623fdf0b62cef5f5",
+      "review_decision": "manter opcional",
+      "guardian_mapping": "S09,S10 parcial"
+    },
+    {
+      "name": "angular-architect",
+      "path": "categories/02-language-specialists/angular-architect.toml",
+      "sha256": "9574c1f5f4747f5b17d3c124527fa074971ab7ecba4a346a1bae8a0ae3bb0550",
+      "review_decision": "manter opcional",
+      "guardian_mapping": "S04,S05 parcial"
+    },
+    {
+      "name": "cpp-pro",
+      "path": "categories/02-language-specialists/cpp-pro.toml",
+      "sha256": "8a99af767aec151bb688f8c251738b88c8e5d437eed02fbe9048b21fb79bf474",
+      "review_decision": "manter opcional",
+      "guardian_mapping": "S08,S10,S19 parcial"
+    },
+    {
+      "name": "csharp-developer",
+      "path": "categories/02-language-specialists/csharp-developer.toml",
+      "sha256": "6970b4f7b63b65a5ed84f9f8a1002bb4c9b92fbb79ab98075cb3b622e81f0bbd",
+      "review_decision": "adaptar",
+      "guardian_mapping": "pack dotnet +S08"
+    },
+    {
+      "name": "django-developer",
+      "path": "categories/02-language-specialists/django-developer.toml",
+      "sha256": "028c8ac04a05c26c4a8586eec46b4528e28c5a070791989421fdd98e52e41f28",
+      "review_decision": "manter opcional",
+      "guardian_mapping": "S08,S11,S14 parcial"
+    },
+    {
+      "name": "dotnet-core-expert",
+      "path": "categories/02-language-specialists/dotnet-core-expert.toml",
+      "sha256": "c82c0bc2951cd230c6003fd951448de2a94b97dd8026ebdf5964d67ac7beb83e",
+      "review_decision": "adaptar",
+      "guardian_mapping": "pack dotnet"
+    },
+    {
+      "name": "dotnet-framework-4.8-expert",
+      "path": "categories/02-language-specialists/dotnet-framework-4.8-expert.toml",
+      "sha256": "1cb85fdc646188d6b9246d17b8536f8a3833fc75e5fb5d46e96dd1e306709cc3",
+      "review_decision": "manter opcional",
+      "guardian_mapping": "pack dotnet parcial"
+    },
+    {
+      "name": "elixir-expert",
+      "path": "categories/02-language-specialists/elixir-expert.toml",
+      "sha256": "a32c3ffcfa775f207d2d60f41195edccf20f11616365ffe50942bf598ed90b37",
+      "review_decision": "manter opcional",
+      "guardian_mapping": "S08,S10 parcial"
+    },
+    {
+      "name": "erlang-expert",
+      "path": "categories/02-language-specialists/erlang-expert.toml",
+      "sha256": "1d7f87fe0bb6a793239feb061df671f6fbbcf3e4ff86af9abc8618a08dad45d8",
+      "review_decision": "manter opcional",
+      "guardian_mapping": "S08,S10 parcial"
+    },
+    {
+      "name": "expo-react-native-expert",
+      "path": "categories/02-language-specialists/expo-react-native-expert.toml",
+      "sha256": "0c448458b90b5d4391ae92d2f95653427e3a342460c5592f6bf16f6f4b0d332e",
+      "review_decision": "manter opcional",
+      "guardian_mapping": "S05,S06 parcial"
+    },
+    {
+      "name": "fastapi-developer",
+      "path": "categories/02-language-specialists/fastapi-developer.toml",
+      "sha256": "79a7dc58cb1541c20d599ba7203b5dc971aea6b2608797092743ff95d9d02c10",
+      "review_decision": "manter opcional",
+      "guardian_mapping": "S08,S09,S11 parcial"
+    },
+    {
+      "name": "flutter-expert",
+      "path": "categories/02-language-specialists/flutter-expert.toml",
+      "sha256": "9bbe9bdb029b70dcf73b8368a6431d5570aa3a470d91d8e7dab7190f563351e1",
+      "review_decision": "manter opcional",
+      "guardian_mapping": "S05,S06 parcial"
+    },
+    {
+      "name": "golang-pro",
+      "path": "categories/02-language-specialists/golang-pro.toml",
+      "sha256": "f5ddcbf7833250c1c931974b798408b10118e625ce95828c033ab2e6accc2036",
+      "review_decision": "manter opcional",
+      "guardian_mapping": "S08,S10 parcial"
+    },
+    {
+      "name": "java-architect",
+      "path": "categories/02-language-specialists/java-architect.toml",
+      "sha256": "166e63cddb4890e80f039b2e0bf1ad9eb243f69486448e38d1f204263189c1fe",
+      "review_decision": "manter opcional",
+      "guardian_mapping": "S03,S08,S10 parcial"
+    },
+    {
+      "name": "javascript-pro",
+      "path": "categories/02-language-specialists/javascript-pro.toml",
+      "sha256": "ad91f395ebcacb7de1475527250fd7407e01f040dbbcf1ce606fec3dc1261c6e",
+      "review_decision": "manter opcional",
+      "guardian_mapping": "S05,S08 parcial"
+    },
+    {
+      "name": "kotlin-specialist",
+      "path": "categories/02-language-specialists/kotlin-specialist.toml",
+      "sha256": "ba0a8b0965ea60e75e2cdea26a47caf017cd78d8f743e8c613ed2a23e4edf8d9",
+      "review_decision": "manter opcional",
+      "guardian_mapping": "S05,S08,S10 parcial"
+    },
+    {
+      "name": "laravel-specialist",
+      "path": "categories/02-language-specialists/laravel-specialist.toml",
+      "sha256": "7958f3e93fd72c9b8269c6f64d2e1211635d7c18301b351d5f186c8bf3fc1c03",
+      "review_decision": "manter opcional",
+      "guardian_mapping": "S08,S11,S14 parcial"
+    },
+    {
+      "name": "nextjs-developer",
+      "path": "categories/02-language-specialists/nextjs-developer.toml",
+      "sha256": "2c19a3ccfe250daeeb20f66276ab48822edc41a76ed7168e25df9b9faddaafea",
+      "review_decision": "manter opcional",
+      "guardian_mapping": "S04,S05,S07 parcial"
+    },
+    {
+      "name": "node-specialist",
+      "path": "categories/02-language-specialists/node-specialist.toml",
+      "sha256": "de286beb92406e325b6156d64f9284e0e4fbd7028a9d78147dc2ac3c894824a2",
+      "review_decision": "manter opcional",
+      "guardian_mapping": "S08,S10,S21 parcial"
+    },
+    {
+      "name": "php-pro",
+      "path": "categories/02-language-specialists/php-pro.toml",
+      "sha256": "e7e8a867f1dc8a6e4d30e6c5c65c7f8f30d3966769ab8e0087ed02a62abb2e80",
+      "review_decision": "manter opcional",
+      "guardian_mapping": "S08,S11 parcial"
+    },
+    {
+      "name": "powershell-5.1-expert",
+      "path": "categories/02-language-specialists/powershell-5.1-expert.toml",
+      "sha256": "10cab4d6e6c52bb604b63d146dff71d1c384df2e5d3f39894f3d15ac7b5d99ad",
+      "review_decision": "adaptar",
+      "guardian_mapping": "pack windows-tooling parcial"
+    },
+    {
+      "name": "powershell-7-expert",
+      "path": "categories/02-language-specialists/powershell-7-expert.toml",
+      "sha256": "902594746dc734b767a46c98fbb2aa3326f86967c2eb2415169c2a8f56084d98",
+      "review_decision": "adaptar",
+      "guardian_mapping": "pack windows-tooling parcial"
+    },
+    {
+      "name": "python-pro",
+      "path": "categories/02-language-specialists/python-pro.toml",
+      "sha256": "2936afb8501815c8216a3f93f56614175b346c9594c515f6cf7db1566de7e5d2",
+      "review_decision": "manter opcional",
+      "guardian_mapping": "S08,S24 parcial"
+    },
+    {
+      "name": "rails-expert",
+      "path": "categories/02-language-specialists/rails-expert.toml",
+      "sha256": "68796d2e1e658889555f6e03e4abc1537aeb7337a6c29d143745b0a0ef4bc6e7",
+      "review_decision": "manter opcional",
+      "guardian_mapping": "S08,S11 parcial"
+    },
+    {
+      "name": "react-specialist",
+      "path": "categories/02-language-specialists/react-specialist.toml",
+      "sha256": "11fc0f3a3a6b7a8544e47b9c2cedab7782f99311d0bbcf4c571cccfc7addd192",
+      "review_decision": "manter opcional",
+      "guardian_mapping": "S04,S05 parcial"
+    },
+    {
+      "name": "rust-engineer",
+      "path": "categories/02-language-specialists/rust-engineer.toml",
+      "sha256": "5eee2ffa5aa84325dcba042eff572bec18d5a71aee0017b15ebd19a47cbd8c9c",
+      "review_decision": "manter opcional",
+      "guardian_mapping": "S08,S10,S19 parcial"
+    },
+    {
+      "name": "spring-boot-engineer",
+      "path": "categories/02-language-specialists/spring-boot-engineer.toml",
+      "sha256": "bef158f06f0be63a2dbb0c15c9176ee770a05555de9efe46bbf599745f161412",
+      "review_decision": "manter opcional",
+      "guardian_mapping": "S08,S11,S14 parcial"
+    },
+    {
+      "name": "sql-pro",
+      "path": "categories/02-language-specialists/sql-pro.toml",
+      "sha256": "2359753efb0a7b644f8a6c52606aa8a789970b14c000859ba60555c80450197a",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S11,S12 +pack data-engineering"
+    },
+    {
+      "name": "swift-expert",
+      "path": "categories/02-language-specialists/swift-expert.toml",
+      "sha256": "6cbb303a78bfd61c561e261b19dbb76733ddc0748ed2c42e57ab2de66b12db1d",
+      "review_decision": "manter opcional",
+      "guardian_mapping": "S05,S10 parcial"
+    },
+    {
+      "name": "symfony-specialist",
+      "path": "categories/02-language-specialists/symfony-specialist.toml",
+      "sha256": "3699d0a0ec6b6d0b36a8537cbb3e3b00a75c3f3679b9da87d92e7d21a4d22751",
+      "review_decision": "manter opcional",
+      "guardian_mapping": "S08,S11,S14 parcial"
+    },
+    {
+      "name": "typescript-pro",
+      "path": "categories/02-language-specialists/typescript-pro.toml",
+      "sha256": "12715df3e43e50810a0d3bb2d25c26440b61e8cd225f28b1c4c9d2373e882345",
+      "review_decision": "manter opcional",
+      "guardian_mapping": "S05,S08 parcial"
+    },
+    {
+      "name": "vue-expert",
+      "path": "categories/02-language-specialists/vue-expert.toml",
+      "sha256": "d24841b5176cd0c713c39fce8e50d4ddf2cecd9e4ad6231f0c68edaa69eab504",
+      "review_decision": "manter opcional",
+      "guardian_mapping": "S04,S05 parcial"
+    },
+    {
+      "name": "azure-infra-engineer",
+      "path": "categories/03-infrastructure/azure-infra-engineer.toml",
+      "sha256": "260805ef8e0a70daed85840c6ee5210f1bfb6888c6a6ddd4bd03bca5ba6912cf",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S22,S14,S20 +pack cloud-platform"
+    },
+    {
+      "name": "cloud-architect",
+      "path": "categories/03-infrastructure/cloud-architect.toml",
+      "sha256": "7798c9c3df1283c62e93ed83b96115ac594d6593c36107f2f4dc7a2a286a1d7c",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S03,S20,S22,S25"
+    },
+    {
+      "name": "database-administrator",
+      "path": "categories/03-infrastructure/database-administrator.toml",
+      "sha256": "14ffa75ad55db6e2553b44afdc58d0f4ce81ec0485922bcd954b05998cedd147",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S11,S12,S20"
+    },
+    {
+      "name": "deployment-engineer",
+      "path": "categories/03-infrastructure/deployment-engineer.toml",
+      "sha256": "590d6df73275a9827a03d56bc187b284f719b1de5117043ae68f5900650e341d",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S23,G02"
+    },
+    {
+      "name": "devops-engineer",
+      "path": "categories/03-infrastructure/devops-engineer.toml",
+      "sha256": "e7f04e61c015bbfaf9a8e43158ae9fb78b64af16d042a296f459340a6e4b191d",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S23,S15"
+    },
+    {
+      "name": "devops-incident-responder",
+      "path": "categories/03-infrastructure/devops-incident-responder.toml",
+      "sha256": "df1f77b0137967855b8a7e87b19bd719281b93ecd2bce0d8fef8958b10c0ab68",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S20,S21,S23"
+    },
+    {
+      "name": "docker-expert",
+      "path": "categories/03-infrastructure/docker-expert.toml",
+      "sha256": "d623e20882bb4cf930ba3c7a360a46129092efb39a7f38627d6b40afdcea5df9",
+      "review_decision": "manter opcional",
+      "guardian_mapping": "S15,S22,S23 parcial"
+    },
+    {
+      "name": "incident-responder",
+      "path": "categories/03-infrastructure/incident-responder.toml",
+      "sha256": "88a6214cc430cf2dfc54d4fda6543ce9843ed170ad4e881be8f23fd9e9f890cd",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S20,S21"
+    },
+    {
+      "name": "kubernetes-specialist",
+      "path": "categories/03-infrastructure/kubernetes-specialist.toml",
+      "sha256": "d707c51fa5310f8510a66f5f62b8ef458e30b74ecb710c0a478046e7daa61ef6",
+      "review_decision": "manter opcional",
+      "guardian_mapping": "S22,S20,S14 parcial"
+    },
+    {
+      "name": "network-engineer",
+      "path": "categories/03-infrastructure/network-engineer.toml",
+      "sha256": "b5b04ea68089bbf4e85374e1d084eb8bb989ed1ca39fdc52f5b05a00bbc406ea",
+      "review_decision": "manter opcional",
+      "guardian_mapping": "S22,S20 parcial"
+    },
+    {
+      "name": "platform-engineer",
+      "path": "categories/03-infrastructure/platform-engineer.toml",
+      "sha256": "56b894d708ffd406984855c172699898d637ea9098af4bb5453187be8ffe7ca6",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S22,S23,S25"
+    },
+    {
+      "name": "security-engineer",
+      "path": "categories/03-infrastructure/security-engineer.toml",
+      "sha256": "5eba7833cc8ed65af4c6445accce191826cd2258135ca1e9f67fc1344a583d25",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S13,S14,S15"
+    },
+    {
+      "name": "sre-engineer",
+      "path": "categories/03-infrastructure/sre-engineer.toml",
+      "sha256": "15ab092ad54cb770a08fbb2ab5f45f3c77e316ec0cf80a91c27cdb6b697e6e4b",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S20,S21,S19"
+    },
+    {
+      "name": "terraform-engineer",
+      "path": "categories/03-infrastructure/terraform-engineer.toml",
+      "sha256": "9752d15512995a852de1338ca720a93c6986c352723f235566fe41c896e1318d",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S22 +pack cloud-platform"
+    },
+    {
+      "name": "terragrunt-expert",
+      "path": "categories/03-infrastructure/terragrunt-expert.toml",
+      "sha256": "ee55feb3eac0e1a07ef05b793da4443189b2fd1224de2c35f29f6765020c7ba8",
+      "review_decision": "manter opcional",
+      "guardian_mapping": "S22 +pack cloud-platform parcial"
+    },
+    {
+      "name": "windows-infra-admin",
+      "path": "categories/03-infrastructure/windows-infra-admin.toml",
+      "sha256": "ad441005ebe0a8d85d62abff9b21c86d6b1130d1c32e6b7371352ec5c31db8f8",
+      "review_decision": "manter opcional",
+      "guardian_mapping": "S22,S14 +pack windows-tooling parcial"
+    },
+    {
+      "name": "accessibility-tester",
+      "path": "categories/04-quality-security/accessibility-tester.toml",
+      "sha256": "ef4b15acd9ed35c0a08dff0acf2398a83e2c4f4790617085b279bcb4302af90c",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S06,S17,pack frontend-experience"
+    },
+    {
+      "name": "ad-security-reviewer",
+      "path": "categories/04-quality-security/ad-security-reviewer.toml",
+      "sha256": "95e8c5b1b085dc541090ea2b915ccfc750bf09cd71265af7f90cf97fdde3a112",
+      "review_decision": "opcional",
+      "guardian_mapping": "S13,S14,S15 parcial"
+    },
+    {
+      "name": "ai-writing-auditor",
+      "path": "categories/04-quality-security/ai-writing-auditor.toml",
+      "sha256": "ccdafc815286ab2d38cb3c4564e8c5dd7ffa68405696e3b51d7aa0c8afee96d1",
+      "review_decision": "evitar",
+      "guardian_mapping": "S01,S02 parcial"
+    },
+    {
+      "name": "anti-ui-slop-reviewer",
+      "path": "categories/04-quality-security/anti-ui-slop-reviewer.toml",
+      "sha256": "a88336b5b43a16a4742becbc503eed11fa5326cb889463ca3f93a8273da782c5",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S17,S06,S05 parcial"
+    },
+    {
+      "name": "architect-reviewer",
+      "path": "categories/04-quality-security/architect-reviewer.toml",
+      "sha256": "162cb509ff6e318c4094e89720875b26ab7cad5032f7e5d7dae93e3e28a4c83e",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S03,S24,G01"
+    },
+    {
+      "name": "browser-debugger",
+      "path": "categories/04-quality-security/browser-debugger.toml",
+      "sha256": "d65b8fae397fe642b4a2e73aba08d7d1e03759ba6df6a01cd11148aa5071707e",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S17,pack frontend-experience"
+    },
+    {
+      "name": "chaos-engineer",
+      "path": "categories/04-quality-security/chaos-engineer.toml",
+      "sha256": "50c54c754b892b9912678cb277a882147a9e0c677999f08eaa39876ac129048f",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S20,S21"
+    },
+    {
+      "name": "code-reviewer",
+      "path": "categories/04-quality-security/code-reviewer.toml",
+      "sha256": "9894b606c5b26121bbd3e0c1f7a2ac5abed204b3b2e904e4089cbe6d599b238f",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S24,G01"
+    },
+    {
+      "name": "compliance-auditor",
+      "path": "categories/04-quality-security/compliance-auditor.toml",
+      "sha256": "c34332c937e77fbfae2aa48e346507ef854d0738bd6c2e17fb0bad873a42d148",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S25,S12,S14"
+    },
+    {
+      "name": "debugger",
+      "path": "categories/04-quality-security/debugger.toml",
+      "sha256": "418cef7ebb4203ed46846fc302267878828621cb27060a4877d63ec2ab46a254",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S21,S08,S17"
+    },
+    {
+      "name": "error-detective",
+      "path": "categories/04-quality-security/error-detective.toml",
+      "sha256": "069df3b514efa907bae2685d91d23e34af9e0f708c70955e57cb552558e6c091",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S21"
+    },
+    {
+      "name": "gdpr-ccpa-compliance",
+      "path": "categories/04-quality-security/gdpr-ccpa-compliance.toml",
+      "sha256": "29c908181abbbce4cc59ab23e048a7edfd4f480505ea9c2d337fb9083c5d5b9a",
+      "review_decision": "opcional",
+      "guardian_mapping": "S14,S12,S25 parcial"
+    },
+    {
+      "name": "penetration-tester",
+      "path": "categories/04-quality-security/penetration-tester.toml",
+      "sha256": "aed0dd3422f874360ac74752e3e39c1edb32262ba0f8a804b9bfe121770480ee",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S13,pack security-assurance"
+    },
+    {
+      "name": "performance-engineer",
+      "path": "categories/04-quality-security/performance-engineer.toml",
+      "sha256": "4b119bac89c12a83cf782c01e745c9faacbe455f559a68d426df3b0766f50fd2",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S19,S07"
+    },
+    {
+      "name": "powershell-security-hardening",
+      "path": "categories/04-quality-security/powershell-security-hardening.toml",
+      "sha256": "0ede9bb93648d7dc2d18b09e9f7d681813b233cf1142c42bd4c4ca9985ab5b3f",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S13,S15,pack windows-tooling"
+    },
+    {
+      "name": "qa-expert",
+      "path": "categories/04-quality-security/qa-expert.toml",
+      "sha256": "8665fbe1e55b10175cdc33ff67acb387f8f14145290ffbb033e2ffc31cbd25cc",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S16,G02"
+    },
+    {
+      "name": "reviewer",
+      "path": "categories/04-quality-security/reviewer.toml",
+      "sha256": "723c0322ea4ef13576e7c48f437dfe40fd47ab8e18bad68ae73c689e847761b8",
+      "review_decision": "adaptar",
+      "guardian_mapping": "G01,S16"
+    },
+    {
+      "name": "security-auditor",
+      "path": "categories/04-quality-security/security-auditor.toml",
+      "sha256": "c3b65db764f9aa73d884f94c74699bb6b2fe5bec6c6d47abc62f5dfbaef39310",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S13,S15,G01"
+    },
+    {
+      "name": "test-automator",
+      "path": "categories/04-quality-security/test-automator.toml",
+      "sha256": "4e781dcc9cc039206837413b00b827fc3855674cb89a3f1c88d49b73c2fc81aa",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S18,S17,pack quality-automation"
+    },
+    {
+      "name": "ui-ux-tester",
+      "path": "categories/04-quality-security/ui-ux-tester.toml",
+      "sha256": "69eff719139848236e49a6c6913700173fbc9d7b9cd0ea05ccefaa541e7ef10c",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S17,S06"
+    },
+    {
+      "name": "ai-engineer",
+      "path": "categories/05-data-ai/ai-engineer.toml",
+      "sha256": "ec51f9692cb588c767f7326ab480a712c20d506701c5019068be21170d7d476f",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S26,pack ai-systems"
+    },
+    {
+      "name": "azure-databricks-platform-architect",
+      "path": "categories/05-data-ai/azure-databricks-platform-architect.toml",
+      "sha256": "0cd1941663ce548d77bb8602d182002496ed212e83fc28a1e4a926959ef7e4ea",
+      "review_decision": "opcional",
+      "guardian_mapping": "S22,S12,S15 parcial"
+    },
+    {
+      "name": "data-analyst",
+      "path": "categories/05-data-ai/data-analyst.toml",
+      "sha256": "ed3fb5761cfab1566430e10e7272f9483f883061ae9daaf945efb9ec888c68b1",
+      "review_decision": "opcional",
+      "guardian_mapping": "S12,S01 parcial"
+    },
+    {
+      "name": "data-engineer",
+      "path": "categories/05-data-ai/data-engineer.toml",
+      "sha256": "c524656827ba961516137db4df998b2d02f16070013c597478fc4381a37bf525",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S12,S11,pack data-engineering"
+    },
+    {
+      "name": "data-scientist",
+      "path": "categories/05-data-ai/data-scientist.toml",
+      "sha256": "eb9b36013cdec49954bf8a7743b5dc76b538641f02a8317bb34b9f0a8d8d7a74",
+      "review_decision": "opcional",
+      "guardian_mapping": "S26,S12 parcial"
+    },
+    {
+      "name": "database-optimizer",
+      "path": "categories/05-data-ai/database-optimizer.toml",
+      "sha256": "8c3e56e80a12e9aebd72524e1713a2e3ddb1c933282fc6df53be7717ee676807",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S11,S19"
+    },
+    {
+      "name": "llm-architect",
+      "path": "categories/05-data-ai/llm-architect.toml",
+      "sha256": "83bc20530c46d2e72cad2dc30701d866c01ef43c0d20c8ccb7f70197fefada7b",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S26,S03,pack ai-systems"
+    },
+    {
+      "name": "machine-learning-engineer",
+      "path": "categories/05-data-ai/machine-learning-engineer.toml",
+      "sha256": "fdfeb7d39817f2ff75b1506f62cf1171cbf26ea3da2a0f6931601a38fd638de4",
+      "review_decision": "opcional",
+      "guardian_mapping": "S26,pack ai-systems parcial"
+    },
+    {
+      "name": "ml-engineer",
+      "path": "categories/05-data-ai/ml-engineer.toml",
+      "sha256": "f3a1e29231401e802158abd5219bd992f86d1c777d64dfadcde7da220cb55d02",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S26,pack ai-systems parcial"
+    },
+    {
+      "name": "mlops-engineer",
+      "path": "categories/05-data-ai/mlops-engineer.toml",
+      "sha256": "3a7ae3272a3c0dae9ff32100e957d568ef7b786b010b107cb0b52d1cfe7f9720",
+      "review_decision": "opcional",
+      "guardian_mapping": "S23,S21,S26 parcial"
+    },
+    {
+      "name": "nlp-engineer",
+      "path": "categories/05-data-ai/nlp-engineer.toml",
+      "sha256": "3bef3443c98a3c754d0841b9c077841a675aa166c7ccf09d08ce2b8f79d25500",
+      "review_decision": "opcional",
+      "guardian_mapping": "S26,pack ai-systems parcial"
+    },
+    {
+      "name": "postgres-pro",
+      "path": "categories/05-data-ai/postgres-pro.toml",
+      "sha256": "361d2318dd04a634073d80b85300ecadfd9a83a4979816b8a31ef2c15d01fdea",
+      "review_decision": "opcional",
+      "guardian_mapping": "S11,S19 parcial"
+    },
+    {
+      "name": "prompt-engineer",
+      "path": "categories/05-data-ai/prompt-engineer.toml",
+      "sha256": "df8d9a4db458609446a5ed5b0b2b59c0a954067ece9208b4d9e0edc154f4c93c",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S26,pack ai-systems"
+    },
+    {
+      "name": "reinforcement-learning-engineer",
+      "path": "categories/05-data-ai/reinforcement-learning-engineer.toml",
+      "sha256": "067c64023ec33be1b7c34dbc412c1364dd0319dc2d58f48c4709ca7c6aedbc7c",
+      "review_decision": "opcional",
+      "guardian_mapping": "S26 parcial"
+    },
+    {
+      "name": "build-engineer",
+      "path": "categories/06-developer-experience/build-engineer.toml",
+      "sha256": "7a5cbc5d99428888301eb70b01044052c86ebddd24dc9ee36065a8fcb8dd4457",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S23"
+    },
+    {
+      "name": "cli-developer",
+      "path": "categories/06-developer-experience/cli-developer.toml",
+      "sha256": "1c379c8ff2a74e9fcd3c6be087be142fc99eefe71a66f847fe8504654507752a",
+      "review_decision": "opcional",
+      "guardian_mapping": "S08,pack windows-tooling parcial"
+    },
+    {
+      "name": "dependency-manager",
+      "path": "categories/06-developer-experience/dependency-manager.toml",
+      "sha256": "bb233fd78fcbea4cec20a9358a7a2c579efe2ac1b82606f5335a89f0f3adb224",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S15,S23,S24"
+    },
+    {
+      "name": "documentation-engineer",
+      "path": "categories/06-developer-experience/documentation-engineer.toml",
+      "sha256": "03af2c3a4d1a38435712acb5a6ff45bfd10d4c48abcece2eb533af15b7e4eed5",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S02,S24 parcial"
+    },
+    {
+      "name": "dx-optimizer",
+      "path": "categories/06-developer-experience/dx-optimizer.toml",
+      "sha256": "f9e2eb522ebebe99d769046345e5ca4d158675bc631204f2d65718307418f504",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S24,S23 parcial"
+    },
+    {
+      "name": "git-workflow-manager",
+      "path": "categories/06-developer-experience/git-workflow-manager.toml",
+      "sha256": "d29351e2e2afe4396b3fff3021a15a969748dd48d9d6ddb5842920da3e1178bd",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S23,S24"
+    },
+    {
+      "name": "legacy-modernizer",
+      "path": "categories/06-developer-experience/legacy-modernizer.toml",
+      "sha256": "1af55dacf0f4fdd0bd0518e989eb49d8582a971b59cb1914831c936ff25fdeff",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S24,S03"
+    },
+    {
+      "name": "mcp-developer",
+      "path": "categories/06-developer-experience/mcp-developer.toml",
+      "sha256": "eeb85068a6e34b6aadc813e70076231551b3a9f11fd900d93b4ce3645bd04f55",
+      "review_decision": "opcional",
+      "guardian_mapping": "S09,S14,S13 parcial"
+    },
+    {
+      "name": "powershell-module-architect",
+      "path": "categories/06-developer-experience/powershell-module-architect.toml",
+      "sha256": "a44fa437238f48ac1b08b560cd3d68d5218d3f6a789e8dd17a946140da6ef56e",
+      "review_decision": "adaptar",
+      "guardian_mapping": "pack windows-tooling,S24"
+    },
+    {
+      "name": "powershell-ui-architect",
+      "path": "categories/06-developer-experience/powershell-ui-architect.toml",
+      "sha256": "77e853c5586a07f6d6eab55bd729e5bb2d1f2ed5808ff0b03c0612040e41061d",
+      "review_decision": "opcional",
+      "guardian_mapping": "pack windows-tooling,S06 parcial"
+    },
+    {
+      "name": "readme-generator",
+      "path": "categories/06-developer-experience/readme-generator.toml",
+      "sha256": "1e3d5796083bb9f31fd08bc603a53d5aff3f47564da306616e30bbb00f5b733b",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S02,S24 parcial"
+    },
+    {
+      "name": "refactoring-specialist",
+      "path": "categories/06-developer-experience/refactoring-specialist.toml",
+      "sha256": "a09fe2687c75a09ed4f2c7da8836edb1a4cc756afe60aba61a1808c2b464d05d",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S24,S03"
+    },
+    {
+      "name": "slack-expert",
+      "path": "categories/06-developer-experience/slack-expert.toml",
+      "sha256": "244e915640f303d6846b070b04d4538bd54e00bd87142bb16a045f85660c71d1",
+      "review_decision": "opcional",
+      "guardian_mapping": "S09,S14 parcial"
+    },
+    {
+      "name": "tooling-engineer",
+      "path": "categories/06-developer-experience/tooling-engineer.toml",
+      "sha256": "288953e31de980a17f4cacc0a20a5a70eca0921bf9c873ba753ecc3d11a14787",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S23,S24,pack windows-tooling"
+    },
+    {
+      "name": "visual-asset-generator",
+      "path": "categories/06-developer-experience/visual-asset-generator.toml",
+      "sha256": "7f3ac63b9517f6373d427ec0357d868f6674b83c940ffd56bdf2fb4ffe569ac5",
+      "review_decision": "evitar",
+      "guardian_mapping": "S05,S06 parcial"
+    },
+    {
+      "name": "api-documenter",
+      "path": "categories/07-specialized-domains/api-documenter.toml",
+      "sha256": "ff298184516ca9c9a6e261f62861df5b61272d76943c4121d14c4b4ed98096db",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S09,S24; pack api-integration"
+    },
+    {
+      "name": "blockchain-developer",
+      "path": "categories/07-specialized-domains/blockchain-developer.toml",
+      "sha256": "3474c1f3183c130ee9d607f84938a7dc574ef8c9308be827954d1fd388f2ad4c",
+      "review_decision": "opcional",
+      "guardian_mapping": "S10,S11,S13,S14; cobertura blockchain específica ausente"
+    },
+    {
+      "name": "embedded-systems",
+      "path": "categories/07-specialized-domains/embedded-systems.toml",
+      "sha256": "eabdcf351d6557812a431c98d2a03aecba711a589393e51e6d97f7cf5faa07da",
+      "review_decision": "opcional",
+      "guardian_mapping": "S03,S15,S21; firmware específico ausente"
+    },
+    {
+      "name": "fintech-engineer",
+      "path": "categories/07-specialized-domains/fintech-engineer.toml",
+      "sha256": "0e2fd05e2971dfc362f6322ce78fd7bf39d479bc3e466a26384c2e463e6ceb66",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S08,S10,S11,S12,S14; pack financial-systems"
+    },
+    {
+      "name": "game-developer",
+      "path": "categories/07-specialized-domains/game-developer.toml",
+      "sha256": "033ecdcf161522c37ea729513737837eb53266b8a0436d62bcb9ac945c5d3f1f",
+      "review_decision": "opcional",
+      "guardian_mapping": "S05,S15; domínio games ausente"
+    },
+    {
+      "name": "healthcare-admin",
+      "path": "categories/07-specialized-domains/healthcare-admin.toml",
+      "sha256": "056ba3f4bf28595753a77a1f21fc559c755f87152d955066eeaa7650fd65cd6b",
+      "review_decision": "evitar",
+      "guardian_mapping": "S12,S14,S25; administração clínica ausente"
+    },
+    {
+      "name": "hipaa-compliance",
+      "path": "categories/07-specialized-domains/hipaa-compliance.toml",
+      "sha256": "cde39bfd5cd291b94e37ded21250d32bcb9377503edd9fdead879d1bcfe3d8cf",
+      "review_decision": "opcional",
+      "guardian_mapping": "S12,S14,S25"
+    },
+    {
+      "name": "iot-engineer",
+      "path": "categories/07-specialized-domains/iot-engineer.toml",
+      "sha256": "8202991a660547fb126152024965c31979456fe66b242bfab2c60cb85bc543de",
+      "review_decision": "opcional",
+      "guardian_mapping": "S10,S13,S20,S21"
+    },
+    {
+      "name": "m365-admin",
+      "path": "categories/07-specialized-domains/m365-admin.toml",
+      "sha256": "09f6505ba288a11a4dc3ea49e83079a7469b6b4c1ccbf9bbeafb35377c866d2a",
+      "review_decision": "opcional",
+      "guardian_mapping": "S14,S19,S25; tenant M365 específico ausente"
+    },
+    {
+      "name": "mobile-app-developer",
+      "path": "categories/07-specialized-domains/mobile-app-developer.toml",
+      "sha256": "cc9b4fdd78f932f528f355bdb5a65fdc92fecdefa3558e02b1f3da827d721526",
+      "review_decision": "opcional",
+      "guardian_mapping": "S04,S05,S06,S07,S09; runtime móvel específico ausente"
+    },
+    {
+      "name": "payment-integration",
+      "path": "categories/07-specialized-domains/payment-integration.toml",
+      "sha256": "d324eaed7b51e4e135a1316014fe11324aad8963691b4f8d7c27c9b1e5bbad50",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S09,S10,S11,S13,S14; pack financial-systems"
+    },
+    {
+      "name": "quant-analyst",
+      "path": "categories/07-specialized-domains/quant-analyst.toml",
+      "sha256": "ddd3b20092bf863b0c2160b5ffa8d7256942cad0c427ecfbe8210caea3a360d8",
+      "review_decision": "opcional",
+      "guardian_mapping": "S12,S15,S26; análise quantitativa específica parcial"
+    },
+    {
+      "name": "risk-manager",
+      "path": "categories/07-specialized-domains/risk-manager.toml",
+      "sha256": "e381f805b2015424a4e8a4b52a48e3d454d04da353427a94a368c47a38ebcd73",
+      "review_decision": "adaptar",
+      "guardian_mapping": "A00,S03,S25,G01,G02"
+    },
+    {
+      "name": "seo-specialist",
+      "path": "categories/07-specialized-domains/seo-specialist.toml",
+      "sha256": "9bced44b570fb77ce954ab85667a3b1268eeafb0d4e3c19ff250ba509de7ba15",
+      "review_decision": "opcional",
+      "guardian_mapping": "S04,S06,S07,S15"
+    },
+    {
+      "name": "assumption-mapping",
+      "path": "categories/08-business-product/assumption-mapping.toml",
+      "sha256": "7f78dbcddbe0c861456551baed4f370b53687ee938b4621f8888cc63f70e21a3",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S01,S02; lifecycle-discovery"
+    },
+    {
+      "name": "backlog-grooming",
+      "path": "categories/08-business-product/backlog-grooming.toml",
+      "sha256": "64ce368a4ccb18b661859563391994a0fe29adf1389e218e855f4d3ea59958f0",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S01,S02,A00"
+    },
+    {
+      "name": "business-analyst",
+      "path": "categories/08-business-product/business-analyst.toml",
+      "sha256": "e1c4ee4ba0892cca3007a95b9983e54c20eef98a88da22e8045c488adb7cbba9",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S02; lifecycle-requirements"
+    },
+    {
+      "name": "content-marketer",
+      "path": "categories/08-business-product/content-marketer.toml",
+      "sha256": "f32eaed4955ea7761292b28547e4b5531c1febc69158f359947f93aa34f8ec94",
+      "review_decision": "opcional",
+      "guardian_mapping": "S01,S25; marketing específico ausente"
+    },
+    {
+      "name": "content-quality-editor",
+      "path": "categories/08-business-product/content-quality-editor.toml",
+      "sha256": "691042c3b93a8016d85e8c0902dbb54dbce201a0c022a3c2fc91fc77d1b491be",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S24; documentação/estilo transversal"
+    },
+    {
+      "name": "customer-success-manager",
+      "path": "categories/08-business-product/customer-success-manager.toml",
+      "sha256": "584e3c8eec0d976553ba80bf2386821eeca1618932d2e213608616172ec9c639",
+      "review_decision": "opcional",
+      "guardian_mapping": "S01,S02,S20"
+    },
+    {
+      "name": "growth-loops",
+      "path": "categories/08-business-product/growth-loops.toml",
+      "sha256": "cee34ad66321f6771feba5efbf36058f343db44936f07fa3bc1e2b92a434554f",
+      "review_decision": "opcional",
+      "guardian_mapping": "S01; domínio marketing parcial"
+    },
+    {
+      "name": "legal-advisor",
+      "path": "categories/08-business-product/legal-advisor.toml",
+      "sha256": "f648c2375f06f7756860c7fc9bc80c3dafedff4488d7f079b7363703738865f8",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S12,S14,S25"
+    },
+    {
+      "name": "license-engineer",
+      "path": "categories/08-business-product/license-engineer.toml",
+      "sha256": "bf7dc93316ff7d1b45457b4613387845e4ebc854821f94f77d6c89a3809d087f",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S13,S25,G02"
+    },
+    {
+      "name": "product-manager",
+      "path": "categories/08-business-product/product-manager.toml",
+      "sha256": "c3fa3df72e2e05771665de8c338158f77a4b315522eeebfd19caeba7c62b2bb8",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S01,S02"
+    },
+    {
+      "name": "project-manager",
+      "path": "categories/08-business-product/project-manager.toml",
+      "sha256": "ae85f7a515056a4fa312f2881b5684bf55edd2a71f2c8df553de098913860fc5",
+      "review_decision": "adaptar",
+      "guardian_mapping": "A00,S02,S23"
+    },
+    {
+      "name": "resume-refiner",
+      "path": "categories/08-business-product/resume-refiner.toml",
+      "sha256": "88a8b3e573ec331ce44d14c5fc6cce3df30f87844f67b63c2da7378edf93eda2",
+      "review_decision": "evitar",
+      "guardian_mapping": "Fora do escopo core full-stack"
+    },
+    {
+      "name": "sales-engineer",
+      "path": "categories/08-business-product/sales-engineer.toml",
+      "sha256": "c7838e62bece0069219566a8b0712756432055ba87baf03b5e255e57e1f200a9",
+      "review_decision": "opcional",
+      "guardian_mapping": "S01,S03,S25"
+    },
+    {
+      "name": "scrum-master",
+      "path": "categories/08-business-product/scrum-master.toml",
+      "sha256": "b11b1c47e77842917a91b0c50d688c056a5adc1667a7e6ee295d0d5140a76baa",
+      "review_decision": "adaptar",
+      "guardian_mapping": "A00,S01,S02"
+    },
+    {
+      "name": "technical-writer",
+      "path": "categories/08-business-product/technical-writer.toml",
+      "sha256": "14f2609dc7954654c72a7a2dfd6aa45a1987b1c908290d59b420067db60ad629",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S24,S09,G02"
+    },
+    {
+      "name": "ux-researcher",
+      "path": "categories/08-business-product/ux-researcher.toml",
+      "sha256": "f8ecf17a77a81266b0f7a5242983595a58a6f52ce6c66ec0d3fe4b957a38f23d",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S04,S06,S01"
+    },
+    {
+      "name": "wordpress-master",
+      "path": "categories/08-business-product/wordpress-master.toml",
+      "sha256": "6515ab4fc5e1bff0ef93997ddecea73d37c98fee037f088774bfba5137c7fca5",
+      "review_decision": "opcional",
+      "guardian_mapping": "S05,S08,S13; CMS específico ausente"
+    },
+    {
+      "name": "agent-installer",
+      "path": "categories/09-meta-orchestration/agent-installer.toml",
+      "sha256": "50f1712f6398317a6a434ba94a654df98020608487127c8586169f8f67161d12",
+      "review_decision": "adaptar",
+      "guardian_mapping": "Instalador determinístico, A00, setup"
+    },
+    {
+      "name": "agent-organizer",
+      "path": "categories/09-meta-orchestration/agent-organizer.toml",
+      "sha256": "0e4b4f0b33c8b82c5d5699f2785bcec571dfda0be884320eca9d583104bb2b5b",
+      "review_decision": "adaptar",
+      "guardian_mapping": "A00, guardian-routing, planner"
+    },
+    {
+      "name": "codebase-orchestrator",
+      "path": "categories/09-meta-orchestration/codebase-orchestrator.toml",
+      "sha256": "78265a4c4eac31a371d76992d8bb37c2cb31af494889a64e3b8a1200db70cc98",
+      "review_decision": "adaptar",
+      "guardian_mapping": "A00,S03,S24,G01"
+    },
+    {
+      "name": "context-manager",
+      "path": "categories/09-meta-orchestration/context-manager.toml",
+      "sha256": "4b234415f23bc06cd29f902b06b18db7e07c2a064196f81a26e56631c494b28f",
+      "review_decision": "adaptar",
+      "guardian_mapping": "A00, executor briefs"
+    },
+    {
+      "name": "error-coordinator",
+      "path": "categories/09-meta-orchestration/error-coordinator.toml",
+      "sha256": "de4b5faae28dc82e1700327717a483b90ee192269d3d4e07541e95d3ff4a6e96",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S20,S21,S08,A00"
+    },
+    {
+      "name": "it-ops-orchestrator",
+      "path": "categories/09-meta-orchestration/it-ops-orchestrator.toml",
+      "sha256": "fc297203d412819116c81d29db49a9bd1c7395bb10186cecca0437ac617f2a86",
+      "review_decision": "adaptar",
+      "guardian_mapping": "A00,S19,S20,S21,S23"
+    },
+    {
+      "name": "knowledge-synthesizer",
+      "path": "categories/09-meta-orchestration/knowledge-synthesizer.toml",
+      "sha256": "f9c1e230044d5595d00389585f5a3d378f062e16c2223f78d23039b6ad1f6cac",
+      "review_decision": "adaptar",
+      "guardian_mapping": "A00,G01"
+    },
+    {
+      "name": "multi-agent-coordinator",
+      "path": "categories/09-meta-orchestration/multi-agent-coordinator.toml",
+      "sha256": "93272f3bf71cab8c3207c88de5474b1d9521b7cae4720f89ad3183a7ef3d8b61",
+      "review_decision": "adaptar",
+      "guardian_mapping": "A00, planner/executor"
+    },
+    {
+      "name": "performance-monitor",
+      "path": "categories/09-meta-orchestration/performance-monitor.toml",
+      "sha256": "37df98f3b815b2bfcb4baf2fa500b42b8bac56b394599dcf04f053e44032ba2b",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S15,S20"
+    },
+    {
+      "name": "task-distributor",
+      "path": "categories/09-meta-orchestration/task-distributor.toml",
+      "sha256": "5b63d7f007f6aac76425033cef926a426cd7c56e798400757f4c42b5a827b0e1",
+      "review_decision": "adaptar",
+      "guardian_mapping": "A00, planner"
+    },
+    {
+      "name": "workflow-orchestrator",
+      "path": "categories/09-meta-orchestration/workflow-orchestrator.toml",
+      "sha256": "b0d4b51f95892c9de66f9e76dd321b05221221b5e67464b75715b269bf76891a",
+      "review_decision": "adaptar",
+      "guardian_mapping": "A00, lifecycle/planner/executor"
+    },
+    {
+      "name": "ab-test-analysis",
+      "path": "categories/10-research-analysis/ab-test-analysis.toml",
+      "sha256": "447b27304a7896bc94c4ac3e01b31072569ce65f3a21af937b09eb24d16a2517",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S16,S26; benchmark/eval runner"
+    },
+    {
+      "name": "cohort-analysis",
+      "path": "categories/10-research-analysis/cohort-analysis.toml",
+      "sha256": "2736d445531abe59801d4d31d2c345f69f15ea9be2129fcb043a31db7a56722b",
+      "review_decision": "opcional",
+      "guardian_mapping": "S01,S12,S26"
+    },
+    {
+      "name": "competitive-analyst",
+      "path": "categories/10-research-analysis/competitive-analyst.toml",
+      "sha256": "f91cdf9d3aeb120055a290df44b51b1e45d9c6c4089b61606af8e27826061e5f",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S01,S03,S25"
+    },
+    {
+      "name": "data-researcher",
+      "path": "categories/10-research-analysis/data-researcher.toml",
+      "sha256": "5863bb213246762fbb2d6c99ee71ff01133a64bd942ff99342c1cd1dc5880d9f",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S12,S26"
+    },
+    {
+      "name": "docs-researcher",
+      "path": "categories/10-research-analysis/docs-researcher.toml",
+      "sha256": "8514dedd8e3be29eeded6febc753d19dbd93a3e188fe6acb86e7989c1eaba665",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S03,S09; openai-docs já disponível no ambiente"
+    },
+    {
+      "name": "first-principles-thinking",
+      "path": "categories/10-research-analysis/first-principles-thinking.toml",
+      "sha256": "1f750113b0f2c31d5fa3329ce19a72ac9ff7c425f907caa8165a57e98efd962d",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S01,S02,S03"
+    },
+    {
+      "name": "market-researcher",
+      "path": "categories/10-research-analysis/market-researcher.toml",
+      "sha256": "2950ac5542c254794859db67de00017637dcc7216183f13ed264dffe48d57f67",
+      "review_decision": "opcional",
+      "guardian_mapping": "S01,S25"
+    },
+    {
+      "name": "project-idea-validator",
+      "path": "categories/10-research-analysis/project-idea-validator.toml",
+      "sha256": "1b59aa192bdd8a94cd3d6d0774705a26a2269cd9c0d235ed3f2cc9d83dfc13f3",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S01,S02,S03"
+    },
+    {
+      "name": "research-analyst",
+      "path": "categories/10-research-analysis/research-analyst.toml",
+      "sha256": "a169fd52cb6b6ff618ca63e46ef80654a5beae02f5c1941379309feff0a96b1b",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S03,S16,S26,A00"
+    },
+    {
+      "name": "scientific-literature-researcher",
+      "path": "categories/10-research-analysis/scientific-literature-researcher.toml",
+      "sha256": "44a715f2a616c89881160c45f8f5b43da34a856a43fae25d8d7650b29611422e",
+      "review_decision": "opcional",
+      "guardian_mapping": "S16,S26; pesquisa científica parcial"
+    },
+    {
+      "name": "search-specialist",
+      "path": "categories/10-research-analysis/search-specialist.toml",
+      "sha256": "a3d931baf9a0a4301a384f61ed4ffe09451e4c4dc15139c320bfcdf421ec4094",
+      "review_decision": "adaptar",
+      "guardian_mapping": "A00 e ferramenta de busca/explorer do runtime"
+    },
+    {
+      "name": "trend-analyst",
+      "path": "categories/10-research-analysis/trend-analyst.toml",
+      "sha256": "866a8dc6293671e0401b4bf680971f9faa7524e2683ac832b50e03ca4ffd70d5",
+      "review_decision": "opcional",
+      "guardian_mapping": "S01,S03,S25"
+    },
+    {
+      "name": "ai-governance-auditor",
+      "path": "categories/11-ai-governance-safety/ai-governance-auditor.toml",
+      "sha256": "0cfd34e51d7abf325de9d2ad315f6547ecee273f79e9be1b25f22f4642aba089",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S26, S25, S14, G01, G02"
+    },
+    {
+      "name": "model-risk-manager",
+      "path": "categories/11-ai-governance-safety/model-risk-manager.toml",
+      "sha256": "b3010de917ba7b0a72c9396b5a59ae37c6c7a4a70ece5568b669ed06448baf92",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S26, S13, S20"
+    },
+    {
+      "name": "policy-guardrail-designer",
+      "path": "categories/11-ai-governance-safety/policy-guardrail-designer.toml",
+      "sha256": "e4825452f1f516ce22cf6a6b4d193f61b415df7702444bf8bfafaeb1a950c609",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S26, S13, S14, G01"
+    },
+    {
+      "name": "responsible-ai-reviewer",
+      "path": "categories/11-ai-governance-safety/responsible-ai-reviewer.toml",
+      "sha256": "b022414e1bafe317d8a8de93e2be62ff9fdefaa55c38de9b9ed4ffb3f9dba2f2",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S26, S06, S14, S25"
+    },
+    {
+      "name": "backstage-specialist",
+      "path": "categories/12-platform-engineering-idp/backstage-specialist.toml",
+      "sha256": "6f186078a1a112212c11dacef7d415723f24fc3f06299693fb9d7a147b8bec64",
+      "review_decision": "opcional",
+      "guardian_mapping": "S22, S03, S01, S24"
+    },
+    {
+      "name": "golden-path-designer",
+      "path": "categories/12-platform-engineering-idp/golden-path-designer.toml",
+      "sha256": "6d99ca472cc544f61a4cf96916b9d326d0c5b26d06073b156864d674824e2fc4",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S22, S23, S02, S24"
+    },
+    {
+      "name": "idp-architect",
+      "path": "categories/12-platform-engineering-idp/idp-architect.toml",
+      "sha256": "9ab4110f914a1773a9db51dad301ab133bd342a1e90cb2f802340a08a7e6665a",
+      "review_decision": "opcional",
+      "guardian_mapping": "S03, S22, S14, S20"
+    },
+    {
+      "name": "platform-product-manager",
+      "path": "categories/12-platform-engineering-idp/platform-product-manager.toml",
+      "sha256": "16f3914522377385f5123ec042903c38e9f72940fa9fd2bdca661987d3c841af",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S01, S02, S25, S24"
+    },
+    {
+      "name": "ai-observability-engineer",
+      "path": "categories/13-llmops-evals-observability/ai-observability-engineer.toml",
+      "sha256": "3bd6fa1a2d1cb1633373cb1f76a938166bfe0be5f1bb1be1f85515047a24d28d",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S21, S26, S14"
+    },
+    {
+      "name": "eval-engineer",
+      "path": "categories/13-llmops-evals-observability/eval-engineer.toml",
+      "sha256": "99b73d5919607f4e5a0382fde5e92418ce0f5b1cd0ec5308f6f4f489fac183f6",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S26, S16, S18, G01"
+    },
+    {
+      "name": "hallucination-investigator",
+      "path": "categories/13-llmops-evals-observability/hallucination-investigator.toml",
+      "sha256": "279b6b50f0e0116d9d559c1ab0f060078353a5e4c769e867146de87c048f827e",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S26, S21, S12"
+    },
+    {
+      "name": "prompt-regression-tester",
+      "path": "categories/13-llmops-evals-observability/prompt-regression-tester.toml",
+      "sha256": "43bf84e0ac2650423eb3f42158c757dc7a5d63423086df8f23eb6809b8c803d1",
+      "review_decision": "adaptar",
+      "guardian_mapping": "S26, S16, S18"
+    }
+  ]
+}

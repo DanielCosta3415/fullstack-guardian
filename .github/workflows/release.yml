@@ -18,6 +18,9 @@ jobs:
       - run: python -m unittest discover -s tests -v
       - run: python tools/guardian.py validate
       - run: python tools/guardian.py eval
+      - run: python tools/guardian_catalog.py
+      - run: python tools/verify_distribution.py
+      - run: python tools/guardian_release_gate.py
       - run: python tools/build_release.py
       # Trusted provenance is created by GitHub Actions OIDC, never by a repository secret.
       # Signing requires GitHub attestation support for this repository.

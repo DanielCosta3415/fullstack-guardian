@@ -15,6 +15,10 @@ import stat
 import sys
 import tempfile
 from pathlib import Path
+try:
+    from .guardian_maintenance import maintenance_locks, owned_target
+except ImportError:
+    from guardian_maintenance import maintenance_locks, owned_target
 
 BACKUP_ID = re.compile(r"^[0-9a-f]{32}$")
 
@@ -48,7 +52,7 @@ def within(target: Path, root: Path) -> bool:
     return target == root or root in target.parents
 
 
-def inspect(home: Path, backup_id: str, mode: str) -> dict:
+def inspect(home: Path, backup_id: str, mode: str, *, skills_root: Path | None = None) -> dict:
     home = safe(home)
     if mode not in ("user", "project") or not BACKUP_ID.fullmatch(backup_id):
         raise RecoveryError("Invalid recovery scope or backup id")
@@ -68,15 +72,38 @@ def inspect(home: Path, backup_id: str, mode: str) -> dict:
     current_receipt = read(receipt_path)
     if current_receipt != before_receipt:
         raise RecoveryError("Ownership receipt no longer matches original transaction; refuse rollback")
-    allowed = [home, safe(home.parent / ".agents" / "skills")]
-    if mode == "project":
-        allowed.append(safe(home.parent / "AGENTS.md"))
+    source = Path(__file__).resolve().parent.parent
+    runtime = safe(home / "guardian-system" if mode == "user" else home.parent / ".guardian")
+    skills = safe(skills_root or (home.parent / ".agents" / "skills"))
+    instruction = safe(home / "AGENTS.md" if mode == "user" else home.parent / "AGENTS.md")
+    identity = {"codex": str(home), "skills": str(skills), "runtime": str(runtime), "instruction": str(instruction)}
+    if "identity" in manifest and (manifest.get("identity") != identity or manifest.get("mode") != mode):
+        raise RecoveryError("Transaction installation identity does not match explicit recovery scope")
+    agent_names = {p.name for p in (source / "global" / "agents").glob("*.toml")}
+    skill_names = {p.parent.name for p in (source / "global" / "skills").glob("*/SKILL.md")}
+    def owned(target):
+        return owned_target(target, codex=home, skills=skills, runtime=runtime, instruction=instruction,
+                            agent_names=agent_names, skill_names=skill_names)
+    if before_receipt is not None:
+        try:
+            prior = json.loads(before_receipt)
+            if not isinstance(prior, dict) or prior.get("schema") != 1 or prior.get("mode") != mode or prior.get("identity") != identity or not isinstance(prior.get("files"), list):
+                raise RecoveryError("Invalid original ownership receipt")
+            paths = []
+            for entry in prior["files"]:
+                if not isinstance(entry, dict) or not isinstance(entry.get("path"), str) or not owned(safe(entry["path"])) or not isinstance(entry.get("hash"), str) or not re.fullmatch("[a-f0-9]{64}", entry["hash"]):
+                    raise RecoveryError("Unsafe original receipt contents")
+                paths.append(str(safe(entry["path"])))
+            if not paths or len(paths) != len(set(paths)):
+                raise RecoveryError("Invalid original ownership file list")
+        except (ValueError, TypeError) as exc:
+            raise RecoveryError("Invalid original ownership receipt") from exc
     planned = []
     for index, entry in enumerate(changes):
-        if not isinstance(entry, dict) or set(entry) != {"path", "before", "after"}:
+        if not isinstance(entry, dict) or set(entry) not in ({"path", "before", "after"}, {"path", "before", "after", "before_sha256"}):
             raise RecoveryError("Invalid transaction entry")
         target = safe(Path(entry["path"]))
-        if not any(within(target, base) for base in allowed):
+        if not owned(target):
             raise RecoveryError("Transaction attempts to change path outside owner scope")
         if within(target, safe(home / "guardian-backups")) or target == safe(home / "guardian-install.json"):
             raise RecoveryError("Transaction attempts to modify recovery evidence or ownership receipt")
@@ -86,6 +113,10 @@ def inspect(home: Path, backup_id: str, mode: str) -> dict:
         old = read(backup / filename) if filename else None
         if filename and old is None:
             raise RecoveryError("Missing backup contents")
+        if manifest.get("schema_version") == 2 and "before_sha256" not in entry:
+            raise RecoveryError("Missing backup digest")
+        if "before_sha256" in entry and entry["before_sha256"] != sha(old):
+            raise RecoveryError("Backup digest mismatch")
         after = entry["after"]
         if after is not None and (not isinstance(after, str) or not re.fullmatch(r"[a-f0-9]{64}", after)):
             raise RecoveryError("Invalid after digest")
@@ -117,27 +148,39 @@ def _atomic(path: Path, content: bytes) -> None:
             stream.write(content)
             stream.flush()
             os.fsync(stream.fileno())
+        safe(path)
         os.replace(name, path)
     finally:
         if name is not None:
             name.unlink(missing_ok=True)
 
 
-def restore(home: Path, backup_id: str, mode: str, *, apply: bool = False) -> dict:
-    plan = inspect(home, backup_id, mode)
+def restore(home: Path, backup_id: str, mode: str, *, apply: bool = False, skills_root: Path | None = None) -> dict:
+    if apply:
+        try:
+            root = safe(home)
+            if mode not in ("user", "project"):
+                raise RecoveryError("Invalid recovery mode")
+            instruction = root if mode == "user" else root.parent
+            skills = skills_root or (root.parent / ".agents" / "skills")
+            # c/project policy-parent also covers its nested runtime; do not
+            # materialize an empty runtime just to acquire a redundant lock.
+            with maintenance_locks((root, skills, instruction), "recover"):
+                return _restore(home, backup_id, mode, apply=True, skills_root=skills_root)
+        except ValueError as exc:
+            raise RecoveryError(str(exc)) from exc
+    return _restore(home, backup_id, mode, skills_root=skills_root)
+
+
+def _restore(home, backup_id, mode, *, apply=False, skills_root=None):
+    plan = inspect(home, backup_id, mode, skills_root=skills_root)
     public = {"dry_run": not apply, "files_examined": len(plan["entries"]),
               "files_to_restore": plan["restore_count"], "receipt_verified": True}
     if not apply:
         return public
     root = safe(home)
-    lock = safe(root / ".guardian-recovery.lock")
     try:
-        fd = os.open(lock, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o600)
-        os.close(fd)
-    except FileExistsError as exc:
-        raise RecoveryError("Recovery already in progress") from exc
-    try:
-        current = inspect(home, backup_id, mode)
+        current = inspect(home, backup_id, mode, skills_root=skills_root)
         if current != plan:
             raise RecoveryError("Recovery state changed; review again")
         for entry in plan["entries"]:
@@ -152,11 +195,11 @@ def restore(home: Path, backup_id: str, mode: str, *, apply: bool = False) -> di
                 if original is None or sha(original) != entry["before_hash"]:
                     raise RecoveryError("Backup file changed during recovery")
                 _atomic(target, original)
-        after = inspect(home, backup_id, mode)
+        after = inspect(home, backup_id, mode, skills_root=skills_root)
         if after["restore_count"]:
             raise RecoveryError("Incomplete recovery; inspect all files")
     finally:
-        lock.unlink(missing_ok=True)
+        pass  # Shared maintenance lock is owned by restore().
     return {"dry_run": False, "files_examined": len(plan["entries"]),
             "files_restored": plan["restore_count"], "restored_to_pre_transaction": True}
 
@@ -165,11 +208,12 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--home", required=True, type=Path, help="Exact Codex home with guardian-backups/")
     ap.add_argument("--backup-id", required=True)
+    ap.add_argument("--skills-root", type=Path, help="Explicit skills directory for nonstandard CODEX_HOME layouts")
     ap.add_argument("--mode", required=True, choices=("user", "project"))
     ap.add_argument("--apply", action="store_true", help="Explicitly restore files; default is dry-run")
     args = ap.parse_args()
     try:
-        result = restore(args.home, args.backup_id, args.mode, apply=args.apply)
+        result = restore(args.home, args.backup_id, args.mode, apply=args.apply, skills_root=args.skills_root)
         print(json.dumps(result, indent=2))
         return 0
     except (OSError, ValueError, TypeError) as exc:

@@ -1,0 +1,23 @@
+name: Explicit native acceptance
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  native:
+    # Operator-configured authenticated machine; never runs automatically on PRs.
+    runs-on: [self-hosted, Windows, guardian-native]
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Run explicitly requested synthetic 39-role acceptance
+        shell: powershell
+        run: powershell -NoProfile -File scripts/Validate-WindowsCodex.ps1 -RunNative -IncludePacks -Out "${{ runner.temp }}/guardian-native-${{ github.run_id }}"
+      - name: Export private-safe counters
+        shell: powershell
+        run: python tools/native_public_summary.py "${{ runner.temp }}/guardian-native-${{ github.run_id }}/summary.json" --out native-public-summary.json
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: native-public-summary
+          path: native-public-summary.json
+          if-no-files-found: error

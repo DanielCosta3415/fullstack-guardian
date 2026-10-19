@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "expected_contract": {
+    "large": [
+      1152921504606846976,
+      1152921504606846976,
+      2305843009213693952
+    ],
+    "bool": [
+      true,
+      2,
+      "TypeError"
+    ]
+  },
+  "runtime": "python-oracle-v2",
+  "status": "NOT VERIFIED",
+  "reason": "Native adapter/environment required; this specification is not a passed test."
+}

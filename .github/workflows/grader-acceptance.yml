@@ -1,0 +1,17 @@
+name: Isolated grader acceptance
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  isolated:
+    runs-on: [self-hosted, Linux, guardian-grader]
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      # Administrator configures only a reviewed local image digest and rootless
+      # daemon; workflow never installs Docker or pulls an image implicitly.
+      - name: Require actually verified isolated backend
+        run: python -c "from tools.guardian_grader_sandbox import probe; p=probe(); print(p); assert p['available'], 'Isolation unavailable; no skipped release gate'"
+      - name: Native isolation, cancellation and adversarial grading regressions
+        run: python -m unittest discover -s tests -p test_guardian_grader_sandbox.py -v

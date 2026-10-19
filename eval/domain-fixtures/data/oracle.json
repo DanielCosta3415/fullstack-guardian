@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "expected_contract": {
+    "reruns": 2,
+    "rows_retained": true,
+    "duplicate_normalized_email": "constraint violation"
+  },
+  "runtime": "sqlite",
+  "status": "NOT VERIFIED",
+  "reason": "Native adapter/environment required; this specification is not a passed test."
+}

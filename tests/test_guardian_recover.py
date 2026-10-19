@@ -17,7 +17,7 @@ class RecoveryTests(unittest.TestCase):
         self.backup_id = "a" * 32
         self.backup = self.home / "guardian-backups" / self.backup_id
         self.backup.mkdir(parents=True)
-        self.target = self.home / "agents" / "test.toml"
+        self.target = self.home / "agents" / "engineering_orchestrator.toml"
         self.target.parent.mkdir()
         self.before = b"preexisting-agent\n"
         self.after = b"guardian-installed-agent\n"

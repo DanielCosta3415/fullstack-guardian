@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "expected_contract": {
+    "valid": {
+      "request": {
+        "name": " Ada "
+      },
+      "status": 200,
+      "body": {
+        "name": "Ada"
+      }
+    },
+    "invalid": {
+      "request": {
+        "name": " "
+      },
+      "status": 422
+    }
+  },
+  "runtime": "http-server",
+  "status": "NOT VERIFIED",
+  "reason": "Native adapter/environment required; this specification is not a passed test."
+}

@@ -24,3 +24,24 @@ class NativeHarnessTests(unittest.TestCase):
             auth=next(c for c in cases if c['id']=='S14')
             failed=subprocess.run([sys.executable,'-B',str(Path(auth['case_directory'])/'check.py')],cwd=auth['case_directory'],capture_output=True,text=True)
             self.assertEqual(failed.returncode,1);self.assertIn('Bob accessed Alice',failed.stderr)
+
+
+class OptionalNativeHarnessTests(unittest.TestCase):
+    def test_optional_plan_has_39_unique_roles_and_no_quota(self):
+        p=subprocess.run([sys.executable,'-B',str(BASE/'tools/test_native_agents.py'),'--all','--include-packs'],capture_output=True,text=True,encoding='utf8')
+        self.assertEqual(p.returncode,0,p.stderr)
+        result=json.loads(p.stdout)
+        self.assertFalse(result['quota_consumed'])
+        self.assertEqual(len(set(result['native_types'])),39)
+
+    def test_optional_cases_are_seeded_readonly_domain_checks(self):
+        from tools.native_pack_cases import create
+        with tempfile.TemporaryDirectory() as t:
+            project=Path(t).resolve()
+            cases=create(project,BASE/'packs')
+            self.assertEqual(len(cases),10)
+            for c in cases:
+                self.assertEqual(c['mode'],'AUDIT')
+                p=subprocess.run([sys.executable,'-B',str(Path(c['case_directory'])/'check.py')],capture_output=True,text=True)
+                self.assertEqual(p.returncode,1,(c['id'],p.stdout,p.stderr))
+                self.assertIn('AssertionError',p.stderr)
