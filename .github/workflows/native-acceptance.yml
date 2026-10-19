@@ -15,7 +15,7 @@ jobs:
         run: powershell -NoProfile -File scripts/Validate-WindowsCodex.ps1 -RunNative -IncludePacks -Out "${{ runner.temp }}/guardian-native-${{ github.run_id }}"
       - name: Export private-safe counters
         shell: powershell
-        run: python tools/native_public_summary.py "${{ runner.temp }}/guardian-native-${{ github.run_id }}/summary.json" --out native-public-summary.json
+        run: python tools/native_public_summary.py "${{ runner.temp }}/guardian-native-${{ github.run_id }}/summary.json" --require-count 39 --out native-public-summary.json
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: native-public-summary

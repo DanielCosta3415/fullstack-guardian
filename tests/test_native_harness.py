@@ -3,6 +3,15 @@ from pathlib import Path
 BASE=Path(__file__).resolve().parents[1]
 
 class NativeHarnessTests(unittest.TestCase):
+    def test_empty_native_inventory_and_boolean_exit_cannot_pass(self):
+        from tools.native_public_summary import public_summary
+        with tempfile.TemporaryDirectory() as t:
+            p=Path(t)/'summary.json'
+            p.write_text(json.dumps({'expected':0,'verified':0,'exit_code':0,'protected_fixtures_unchanged':True}))
+            with self.assertRaises(ValueError):public_summary(p)
+            p.write_text(json.dumps({'expected':39,'verified':39,'exit_code':False,'protected_fixtures_unchanged':True}))
+            self.assertFalse(public_summary(p,39)['all_native_roles_verified'])
+            with self.assertRaises(ValueError):public_summary(p,29)
     def test_default_is_quota_free_plan(self):
         p=subprocess.run([sys.executable,str(BASE/'tools/test_native_agents.py')],capture_output=True,text=True,encoding='utf8')
         self.assertEqual(p.returncode,0,p.stderr)

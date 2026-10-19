@@ -5,13 +5,18 @@ permissions:
   contents: read
 jobs:
   isolated:
-    runs-on: [self-hosted, Linux, guardian-grader]
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
-      # Administrator configures only a reviewed local image digest and rootless
-      # daemon; workflow never installs Docker or pulls an image implicitly.
+      - name: Provision disposable rootless backend with reviewed image digest
+        run: bash scripts/Setup-HostedGrader.sh
       - name: Require actually verified isolated backend
         run: python -c "from tools.guardian_grader_sandbox import probe; p=probe(); print(p); assert p['available'], 'Isolation unavailable; no skipped release gate'"
       - name: Native isolation, cancellation and adversarial grading regressions
-        run: python -m unittest discover -s tests -p test_guardian_grader_sandbox.py -v
+        run: python tools/run_grader_acceptance.py --out grader-acceptance.json
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: grader-acceptance
+          path: grader-acceptance.json
+          if-no-files-found: error
