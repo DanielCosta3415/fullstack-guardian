@@ -45,6 +45,8 @@ class GraderBoundaryTests(unittest.TestCase):
             self.assertIn(flag, command)
         self.assertIn("/tmp:rw,noexec,nosuid,size=8m,mode=1777", command)
         self.assertIn("type=bind,src=" + str(Path("/workspace")) + ",dst=/workspace,readonly", command)
+        # Docker rejects --pid=private; its default is an isolated namespace.
+        self.assertFalse(any(value.startswith("--pid=") for value in command))
 
     def test_unsafe_oracle_paths_blocked(self):
         payload = oracle()

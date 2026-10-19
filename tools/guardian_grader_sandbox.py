@@ -90,6 +90,7 @@ def probe(image: str | None = None) -> dict:
 PREFLIGHT = r'''import os, json
 from pathlib import Path
 assert os.getuid() == 65534
+assert os.getpid() == 1  # Docker's default private PID namespace, no --init.
 cg = Path("/sys/fs/cgroup")
 assert int((cg/"memory.max").read_text()) <= 134217728
 assert int((cg/"pids.max").read_text()) <= 32
@@ -109,7 +110,7 @@ print(json.dumps({"limits_verified":True}))
 
 def container_command(binary, image, name, workspace=None):
     command = [binary, "run", "--name", name, "--rm", "--pull=never", "--network=none",
-               "--log-driver=none", "--ipc=none", "--cgroupns=private", "--pid=private",
+               "--log-driver=none", "--ipc=none", "--cgroupns=private",
                "--read-only", "--cap-drop=ALL", "--security-opt=no-new-privileges", "--user=65534:65534",
                "--pids-limit=32", "--memory=128m", "--memory-swap=128m", "--cpus=0.5",
                "--ulimit", "fsize=1048576:1048576", "--ulimit", "nofile=64:64",
