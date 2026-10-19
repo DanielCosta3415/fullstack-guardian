@@ -3,6 +3,14 @@ from pathlib import Path
 BASE=Path(__file__).resolve().parents[1]
 
 class NativeHarnessTests(unittest.TestCase):
+    def test_check_instruction_is_carried_by_each_forwarded_case_task(self):
+        from tools.test_native_agents import with_check_instruction
+        from tools.native_check_evidence import specifications
+        original={'id':'A00','task':'Read the case','case_directory':'C:/controlled/A00'}
+        case=with_check_instruction(original)
+        code=case['task'].split('standalone source: ',1)[1].split(' Use separate',1)[0]
+        self.assertEqual(specifications(code),[{'cmd':'python -B check.py','workdir':'C:/controlled/A00','max_output_tokens':2000}])
+        self.assertEqual(original['task'],'Read the case')
     def test_empty_native_inventory_and_boolean_exit_cannot_pass(self):
         from tools.native_public_summary import public_summary
         with tempfile.TemporaryDirectory() as t:

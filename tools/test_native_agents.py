@@ -6,6 +6,13 @@ ROOT=Path(__file__).resolve().parents[1]
 try:from .native_check_evidence import paired_outcomes,fixture_passed
 except ImportError:from native_check_evidence import paired_outcomes,fixture_passed
 
+def with_check_instruction(case):
+    case=dict(case)
+    command={'cmd':'python -B check.py','workdir':str(case['case_directory']).replace('\\','/'),'max_output_tokens':2000}
+    code='text(await tools.exec_command('+json.dumps(command,separators=(',',':'))+'));'
+    case['task']+=' Mandatory check evidence: for EACH required before/after check invoke the exec code tool with EXACTLY this standalone source: '+code+' Use separate tool calls for reads/edits; never chain commands, capture/override exit codes or batch checks.'
+    return case
+
 def extract(root_session, destination, expected):
     cases=json.loads((destination/'project/selected-cases.json').read_text(encoding='utf8'))
     criteria={r['id']:r for r in json.loads((destination/'all-agents-criteria.json').read_text(encoding='utf8'))}
@@ -84,7 +91,7 @@ def main():
         for a in chosen:
             if a.get('pack'):
                 subprocess.run([sys.executable,'-B',str(ROOT/'tools/guardian_packs.py'),'install','--pack',a['pack'],'--project',str(project),'--apply'],check=True)
-    plan=[c for c in plan if c['id'] in {a['id'] for a in chosen}]
+    plan=[with_check_instruction(c) for c in plan if c['id'] in {a['id'] for a in chosen}]
     (project/'selected-cases.json').write_text(json.dumps(plan,indent=2),encoding='utf8')
     prompt='''Authorized bounded local validation. Read selected-cases.json. For EACH case invoke native collaboration.spawn_agent with agent_type exactly equal to its agent_type. The primary does not count. Every chosen profile must execute individually. At most three active children; A00 first. Close each completed native child before opening another if the session thread limit requires it. Each child must read only its case_directory inputs, execute python -B check.py from that directory, and provide actual output, diagnosis or authorized fix, file evidence and limitations. No child may delegate further. P01-P10 are AUDIT-only optional roles: reproduce their seeded assertion and report domain limitations; never claim framework/browser/cloud execution. AUDIT cases do not edit files; S05 may edit only index.html, S08/S24 only domain.py in their own directory and must rerun unchanged check.py before/after. A00 must additionally run the project-installed router at the absolute runtime path shown below; other findings are synthetic and intentionally fail in AUDIT. Do not deploy, use external connectors/network, read credentials, modify global configuration, install dependencies or create other sessions. The test is explicitly authorized, so no redundant approval question. Wait until ALL selected native children finish, do not substitute copied personas or generic types. Return compact results.'''
     prompt+='\nMANDATORY evidence shape: every check must be a separate tools.exec_command call with cmd exactly python -B check.py and workdir exactly the absolute case_directory. Do not chain reads, other commands, exit manipulation or batch check calls; use separate calls for those actions.'
