@@ -108,7 +108,11 @@ except OSError:
     pass
 else:
     raise RuntimeError("Writable root filesystem")
-assert not Path("/root/.codex").exists()
+try:
+    host_credentials_visible = Path("/root/.codex").exists()
+except PermissionError:
+    host_credentials_visible = False  # uid 65534 cannot traverse image /root.
+assert not host_credentials_visible
 print(json.dumps({"limits_verified":True}))
 '''
 
