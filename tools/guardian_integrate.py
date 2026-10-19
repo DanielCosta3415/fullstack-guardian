@@ -42,6 +42,13 @@ def inspect(home: Path) -> tuple[dict, bytes]:
     """Check trust boundary, reviewed state, patch and target applicability."""
     home = safe(home)
     state, plan = _load(home)
+    if (home / 'workflow.json').exists():
+        try:
+            from .guardian_workflow import inspect as workflow_inspect
+        except ImportError:
+            from guardian_workflow import inspect as workflow_inspect
+        if workflow_inspect(home)['state'] != 'verified':
+            raise IntegrationError('Supervisor workflow must pass checks and independent review before integration')
     if state.get("overall") not in ("produced", "verified") or state.get("mode") not in ("build", "remediate"):
         raise IntegrationError("Only completed build/remediation runs may be integrated")
     if plan.get("human_authorization_required") or plan.get("risk") in ("high", "critical"):
@@ -155,6 +162,11 @@ def integrate(home: Path, *, apply: bool = False, confirm_sha256: str | None = N
             "schema_version": 1, "patch_sha256": confirm_sha256,
             "base_revision": report["base_revision"], "state": "applied_uncommitted",
         })
+        try:
+            from .guardian_workflow import record_integrated
+        except ImportError:
+            from guardian_workflow import record_integrated
+        record_integrated(home, confirm_sha256)
     finally:
         lock.unlink(missing_ok=True)
         execution_lock.unlink(missing_ok=True)

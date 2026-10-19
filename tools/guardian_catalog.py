@@ -7,9 +7,9 @@ try:
 except ImportError:
     from guardian_registry import discover, _contained
 ROOT=Path(__file__).resolve().parent.parent
-FIELDS={'id','name','aliases','kind','file','sha256','competencies','modes','tool_requirements','model_policy','reviewer','source','license'}
+FIELDS={'id','name','aliases','kind','file','sha256','competencies','modes','tool_requirements','model_policy','reviewer','source','license','profile'}
 def normalize(value):return unicodedata.normalize('NFKC',value).casefold().replace('-','_')
-def catalog_document(root=ROOT):
+def observed_catalog_document(root=ROOT):
     root=Path(root).absolute()
     # Validate every declared profile and namespace before catalog hashing. In
     # particular a manifest must never turn a catalog check into an outside read.
@@ -35,7 +35,7 @@ def catalog_document(root=ROOT):
     return {'schema_version':1,'records':records}
 def validate_catalog(root=ROOT):
     root=Path(root).absolute();doc=json.loads(_contained(root/'core/contracts-catalog-v1.json',root).read_text(encoding='utf-8'))
-    if not isinstance(doc,dict) or set(doc)!={'schema_version','records'} or doc['schema_version']!=1 or not isinstance(doc['records'],list):raise ValueError('Invalid canonical catalog')
+    if not isinstance(doc,dict) or set(doc)!={'schema_version','records','metadata_documents'} or doc['schema_version']!=1 or not isinstance(doc['records'],list):raise ValueError('Invalid canonical catalog')
     ids=set();names=set()
     for r in doc['records']:
         if not isinstance(r,dict) or set(r)!=FIELDS:raise ValueError('Unknown/missing catalog contract field')
@@ -46,13 +46,72 @@ def validate_catalog(root=ROOT):
             if key in names:raise ValueError('Normalized alias/name collision')
             names.add(key)
         if r['model_policy']!='inherit' or r['reviewer']==r['id']:raise ValueError('Invalid inherited policy/reviewer')
-    if doc!=catalog_document(root):raise ValueError('Canonical catalog drift: regenerate only after reviewed profile change')
+    generated_outputs(root, check=True)
+    expected=observed_catalog_document(root)
+    for record in expected['records']:record['profile']=next(r['profile'] for r in doc['records'] if r['id']==record['id'])
+    expected['metadata_documents']=doc['metadata_documents']
+    if doc!=expected:raise ValueError('Canonical catalog metadata drift')
     return {'valid':True,'profiles':len(doc['records']),'source':'core/contracts-catalog-v1.json'}
+def catalog_document(root=ROOT):
+    """Reviewed source of truth. Editing generated profiles cannot update it."""
+    root=Path(root).absolute()
+    discover(root)  # Reject unsafe generated manifest paths before accessing catalog.
+    return json.loads(_contained(root/'core/contracts-catalog-v1.json',root).read_text(encoding='utf8'))
+
+
+def generated_outputs(root=ROOT, check=True):
+    """Generate ONLY known profile/metadata paths; never config, model or permissions."""
+    import tomllib
+    root=Path(root).absolute();doc=catalog_document(root);outputs={}
+    if set(doc)!={'schema_version','records','metadata_documents'} or doc['schema_version']!=1:raise ValueError('Invalid canonical schema')
+    if not isinstance(doc.get('records'),list) or not doc['records']:raise ValueError('Expected reviewed profiles')
+    for record in doc['records']:
+        if not isinstance(record,dict) or set(record)!=FIELDS or record.get('model_policy')!='inherit':raise ValueError('Unknown canonical field or model override')
+        profile=record.get('profile')
+        if not isinstance(profile,dict) or set(profile)!={'name','description','developer_instructions'} or any(not isinstance(v,str) for v in profile.values()):
+            raise ValueError('Canonical profile permits only name, description and instructions')
+        if profile['name']!=record['name']:raise ValueError('Canonical profile identity mismatch')
+        rel=record['file']
+        if not isinstance(rel,str) or not re.fullmatch(r'(?:global/agents/[a-z][a-z0-9_]*|packs/[a-z][a-z0-9_-]*/agents/[a-z][a-z0-9_]*)\.toml',rel):raise ValueError('Invalid generated profile path')
+        text=''.join(key+' = '+json.dumps(profile[key],ensure_ascii=False)+'\n' for key in ('name','description','developer_instructions'))
+        if tomllib.loads(text)!=profile:raise ValueError('Profile serialization mismatch')
+        outputs[rel]=text.encode('utf8')
+        if hashlib.sha256(outputs[rel]).hexdigest()!=record['sha256']:raise ValueError('Canonical generated profile hash mismatch')
+    metadata=doc.get('metadata_documents')
+    if not isinstance(metadata,dict) or 'core/agents.json' not in metadata:raise ValueError('Missing canonical metadata')
+    expected_metadata={'core/agents.json'}|{'/'.join(r['file'].split('/')[:2])+'/manifest.json' for r in doc['records'] if r['kind']=='optional'}
+    if set(metadata)!=expected_metadata:raise ValueError('Canonical metadata membership mismatch')
+    for rel,value in metadata.items():
+        if not isinstance(value,dict) or not isinstance(value.get('agents'),list):raise ValueError('Invalid canonical metadata entries')
+        if rel=='core/agents.json':
+            actual={(e.get('id'),e.get('name'),e.get('file')) for e in value['agents'] if isinstance(e,dict)}
+            expected={(r['id'],r['name'],r['file']) for r in doc['records'] if r['kind']=='core'}
+        else:
+            prefix=rel.rsplit('/',1)[0]
+            if value.get('name')!=prefix.split('/')[-1]:raise ValueError('Canonical pack name mismatch')
+            actual={(e.get('name'),prefix+'/'+str(e.get('file'))) for e in value['agents'] if isinstance(e,dict)}
+            expected={(r['name'],r['file']) for r in doc['records'] if r['file'].startswith(prefix+'/')}
+        if actual!=expected or len(actual)!=len(value['agents']):raise ValueError('Canonical profile/metadata identity mismatch')
+        if rel!='core/agents.json' and not re.fullmatch(r'packs/[a-z][a-z0-9_-]*/manifest\.json',rel):raise ValueError('Invalid generated metadata path')
+        outputs[rel]=(json.dumps(value,ensure_ascii=False,indent=2)+'\n').encode('utf8')
+    if len(outputs)!=len(doc['records'])+len(metadata):raise ValueError('Duplicate generated path')
+    # Preflight every target before any write; output never includes user configuration.
+    paths={rel:_contained(root/rel,root) for rel in outputs}
+    if check:
+        for rel,path in paths.items():
+            # Cross-platform checkout newlines do not change TOML semantics.
+            if not path.is_file() or path.read_bytes().replace(b'\r\n',b'\n')!=outputs[rel]:raise ValueError('Generated catalog drift: '+rel)
+    else:
+        for rel,path in paths.items():path.write_bytes(outputs[rel])
+    return {'valid':True,'generated':len(outputs),'permissions_granted':False}
+
+
 if __name__=='__main__':
     import argparse
-    p=argparse.ArgumentParser();p.add_argument('--write',action='store_true');a=p.parse_args()
-    if a.write:_contained(ROOT/'core/contracts-catalog-v1.json',ROOT).write_text(json.dumps(catalog_document(),ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    p=argparse.ArgumentParser();p.add_argument('--write',action='store_true',help='Generate reviewed canonical outputs; never import local profile edits');a=p.parse_args()
+    if a.write:generated_outputs(check=False)
     print(json.dumps(validate_catalog()))
+
 
 def eligible_pack_profiles(root=ROOT, codex_home=None, available_roles=None, capabilities=None):
     """Read actual receipt/config/bytes before optional selection.

@@ -174,7 +174,12 @@ class CatalogContainmentTests(unittest.TestCase):
         self.pack_profile.write_text('name="guardian_test_extra"\ndescription="synthetic"\ndeveloper_instructions="test"\n',encoding='utf-8')
         self.pack_manifest={'schema_version':1,'name':'extra','agents':[{'name':'guardian_test_extra','file':'agents/guardian_test_extra.toml'}]}
         (self.pack/'manifest.json').write_text(json.dumps(self.pack_manifest),encoding='utf-8')
-        (self.root/'core/contracts-catalog-v1.json').write_text(json.dumps(catalog_document(self.root)),encoding='utf-8')
+        from tools.guardian_catalog import observed_catalog_document
+        import tomllib
+        doc=observed_catalog_document(self.root)
+        for r in doc['records']:r['profile']=tomllib.loads((self.root/r['file']).read_text(encoding='utf8'))
+        doc['metadata_documents']={'core/agents.json':self.core_manifest,'packs/extra/manifest.json':self.pack_manifest}
+        (self.root/'core/contracts-catalog-v1.json').write_text(json.dumps(doc),encoding='utf-8')
         self.sentinel=self.base/'OUTSIDE_SYNTHETIC_SENTINEL.toml'
         self.sentinel.write_text('SYNTHETIC_SENTINEL_DO_NOT_READ',encoding='utf-8')
     def assert_no_outside_read(self):
@@ -219,5 +224,38 @@ class CatalogContainmentTests(unittest.TestCase):
         self.link_outside(self.root/'core/contracts-catalog-v1.json')
         from tools.guardian_catalog import validate_catalog
         with self.assertRaises(ValueError):validate_catalog(self.root)
+
+class CanonicalGenerationTests(unittest.TestCase):
+    def test_generated_profiles_match_reviewed_semantics_and_forbid_permission_fields(self):
+        import copy,json,tempfile,shutil,tomllib
+        from pathlib import Path
+        from tools.guardian_catalog import ROOT,catalog_document,generated_outputs
+        doc=catalog_document()
+        self.assertEqual(len(doc['records']),39)
+        self.assertEqual(generated_outputs()['generated'],50)
+        for record in doc['records']:
+            self.assertEqual(tomllib.loads((ROOT/record['file']).read_text(encoding='utf8')),record['profile'])
+        with tempfile.TemporaryDirectory() as t:
+            root=Path(t)
+            for name in ('core','packs','global'):shutil.copytree(ROOT/name,root/name)
+            target=root/doc['records'][0]['file'];original=target.read_bytes()
+            doc['records'][0]['profile']['sandbox_mode']='danger-full-access'
+            (root/'core/contracts-catalog-v1.json').write_text(json.dumps(doc),encoding='utf8')
+            with self.assertRaises(ValueError):generated_outputs(root,check=False)
+            self.assertEqual(target.read_bytes(),original)
+
+    def test_generated_profile_drift_does_not_rebaseline_canonical(self):
+        import tempfile,shutil
+        from pathlib import Path
+        from tools.guardian_catalog import ROOT,catalog_document,generated_outputs
+        with tempfile.TemporaryDirectory() as t:
+            root=Path(t)
+            for name in ('core','packs','global'):shutil.copytree(ROOT/name,root/name)
+            canonical=root/'core/contracts-catalog-v1.json';before=canonical.read_bytes()
+            target=root/catalog_document(root)['records'][0]['file'];target.write_bytes(target.read_bytes()+b'\n# local drift\n')
+            with self.assertRaisesRegex(ValueError,'drift'):generated_outputs(root)
+            generated_outputs(root,check=False)
+            self.assertEqual(canonical.read_bytes(),before)
+            self.assertTrue(generated_outputs(root)['valid'])
 
 if __name__=='__main__':unittest.main()

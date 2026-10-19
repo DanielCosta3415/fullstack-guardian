@@ -1,6 +1,6 @@
 {
   "name": "fullstack-guardian",
-  "version": "2.2.0-dev.2",
+  "version": "2.2.0-dev.3",
   "description": "Prévia de engenharia Guardian: contratos verificáveis, execução supervisionada e instalação preservadora.",
   "author": {
     "name": "Daniel Lopes da Costa"

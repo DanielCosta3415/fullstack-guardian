@@ -1,0 +1,7 @@
+[
+  {"id":"bounded_read_allowed","expected":true,"plan":{"version":1,"statements":[{"effect":"Allow","actions":["storage:GetObject"],"resources":["synthetic-fixture-bucket"],"principal":"synthetic-worker"}]}},
+  {"id":"wildcard_actions_denied","expected":false,"plan":{"version":1,"statements":[{"effect":"Allow","actions":["*"],"resources":["synthetic-fixture-bucket"],"principal":"synthetic-worker"}]}},
+  {"id":"public_principal_denied","expected":false,"plan":{"version":1,"statements":[{"effect":"Allow","actions":["storage:GetObject"],"resources":["synthetic-fixture-bucket"],"principal":"*"}]}},
+  {"id":"destructive_action_denied","expected":false,"plan":{"version":1,"statements":[{"effect":"Allow","actions":["storage:DeleteObject"],"resources":["synthetic-fixture-bucket"],"principal":"synthetic-worker"}]}},
+  {"id":"unknown_fields_denied","expected":false,"plan":{"version":1,"approved":true,"statements":[]}}
+]

@@ -1,4 +1,4 @@
-# Full-Stack Engineering Guardian — 2.2.0-dev.2
+# Full-Stack Engineering Guardian — 2.2.0-dev.3
 
 Development candidate: 29 core engineering roles, 20 operational skills, 132 taxonomy capabilities and ten optional specialist packs. The public stable release remains v2.1.0 until a separate reviewed release decision.
 
@@ -24,6 +24,10 @@ powershell -File scripts/Validate-WindowsCodex.ps1
 ```
 
 Linux/macOS: `bash install.sh --user`. Global paths can be adjusted through CODEX_HOME and the installer's --home. Note that guardian_packs --home means the exact Codex directory, unlike install.py --home (account parent).
+
+## Completion work in dev.3
+
+Canonical metadata now generates the 39 profiles; supervised checks/review/verification are hash-bound to produced artifacts; read retries have bounded backoff; journals have explicit retention and privacy observations; optional packs have rollback; executable domain fixtures and full installed-runtime acceptance are available. See [completion status](docs/COMPLETION-STATUS.md) for actual evidence and blockers.
 
 ## What changed
 

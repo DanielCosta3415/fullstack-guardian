@@ -80,6 +80,7 @@ class ExternalReleaseGateTests(unittest.TestCase):
         from unittest.mock import patch
         import subprocess
         sha='a'*40
+        acceptance={'revision':sha,'expected':39,'verified':39,'all_native_roles_verified':True,'protected_fixtures_unchanged':True,'passed':True,'tests':14,'skipped':0,'failures':0,'errors':0}
         def api(path):
             if '/reviews?per_page=100&page=' in path:
                 return [{'commit_id':sha,'author_association':'MEMBER','user':{'type':'User','login':'human-reviewer'},'state':'APPROVED'}]
@@ -89,7 +90,7 @@ class ExternalReleaseGateTests(unittest.TestCase):
             return {'head_sha':sha,'status':'completed','conclusion':'success','path':'.github/workflows/'+workflow+'.yml'}
         with tempfile.TemporaryDirectory() as t:
             artifact=Path(t)/'artifact.zip';artifact.write_bytes(b'zip')
-            with patch('tools.guardian_release_gate._api',side_effect=api),patch('tools.guardian_release_gate.subprocess.run',return_value=subprocess.CompletedProcess([],0,'[{"verified":true}]','')) as process:
+            with patch('tools.guardian_release_gate._api',side_effect=api),patch('tools.guardian_release_gate.subprocess.run',return_value=subprocess.CompletedProcess([],0,'[{"verified":true}]','')) as process,patch('tools.guardian_release_gate._acceptance_artifact',return_value=acceptance):
                 result=verify_external('owner/repo',sha,artifact,1,2,3,4)
             for reviews in (
                 [{'commit_id':sha,'author_association':'OWNER','user':{'type':'User','login':'pr-author'},'state':'APPROVED'}],
@@ -98,7 +99,7 @@ class ExternalReleaseGateTests(unittest.TestCase):
             ):
                 def rejected_api(path):
                     return reviews if '/reviews?' in path else api(path)
-                with patch('tools.guardian_release_gate._api',side_effect=rejected_api):
+                with patch('tools.guardian_release_gate._api',side_effect=rejected_api),patch('tools.guardian_release_gate._acceptance_artifact',return_value=acceptance):
                     with self.assertRaisesRegex(ValueError,'independent authorized human'):
                         verify_external('owner/repo',sha,artifact,1,2,3,4)
             self.assertTrue(result['external_checks_passed']);self.assertFalse(result['publication_authorized'])

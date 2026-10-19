@@ -3,7 +3,7 @@
 This local gate authenticates no human and never publishes. Stable promotion
 requires actual external evidence and provenance verification, not model claims.
 """
-import argparse,hashlib,json,re,subprocess
+import argparse,hashlib,json,re,subprocess,io,zipfile
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 
@@ -25,6 +25,34 @@ def _api(path):
     p=subprocess.run(['gh','api',path],capture_output=True,text=True,timeout=30)
     if p.returncode or len(p.stdout)>2_000_000:raise ValueError('External GitHub gate unavailable')
     return json.loads(p.stdout)
+
+def _acceptance_artifact(repo,run_id,name,filename,revision):
+    inventory=_api(f'repos/{repo}/actions/runs/{run_id}/artifacts?per_page=100')
+    items=inventory.get('artifacts',[])
+    if inventory.get('total_count',len(items))>100:raise ValueError('Artifact inventory exceeds bound')
+    matches=[a for a in items if a.get('name')==name and a.get('expired') is False]
+    if len(matches)!=1:raise ValueError('Required unique acceptance artifact missing')
+    item=matches[0]
+    if type(item.get('id')) is not int or type(item.get('size_in_bytes')) is not int or not 0<item['size_in_bytes']<1_000_000:
+        raise ValueError('Invalid acceptance artifact identity/size')
+    p=subprocess.run(['gh','api',f'repos/{repo}/actions/artifacts/{item["id"]}/zip'],capture_output=True,timeout=30)
+    if p.returncode or len(p.stdout)>1_000_000:raise ValueError('Acceptance artifact unavailable or oversized')
+    with zipfile.ZipFile(io.BytesIO(p.stdout)) as archive:
+        members=archive.infolist()
+        if len(members)!=1 or members[0].filename!=filename or members[0].file_size>100_000:
+            raise ValueError('Unexpected acceptance artifact content')
+        report=json.loads(archive.read(filename))
+    if report.get('revision')!=revision:raise ValueError('Acceptance summary revision mismatch')
+    return report
+
+def verify_acceptance_reports(native,grader,revision):
+    if any(r.get('revision')!=revision for r in (native,grader)):raise ValueError('Acceptance summary revision mismatch')
+    if not (type(native.get('expected')) is int and native['expected']==39 and type(native.get('verified')) is int and native['verified']==39
+            and native.get('all_native_roles_verified') is True and native.get('protected_fixtures_unchanged') is True):
+        raise ValueError('Individual 39-profile native acceptance not satisfied')
+    if not (grader.get('passed') is True and type(grader.get('tests')) is int and grader['tests']>=14
+            and all(type(grader.get(k)) is int and grader[k]==0 for k in ('skipped','failures','errors'))):
+        raise ValueError('Executed grader gate must pass without skips')
 
 
 def verify_external(repo,revision,artifact,ci_run,native_run,grader_run,pr_number):
@@ -49,6 +77,9 @@ def verify_external(repo,revision,artifact,ci_run,native_run,grader_run,pr_numbe
         jobs=_api(f'repos/{repo}/actions/runs/{run_id}/jobs?per_page=100').get('jobs',[])
         if len(jobs)<minimum or len(jobs)>100 or any(job.get('conclusion')!='success' for job in jobs):
             raise ValueError('Required external jobs missing or failed')
+    native=_acceptance_artifact(repo,native_run,'native-public-summary','native-public-summary.json',revision)
+    grader=_acceptance_artifact(repo,grader_run,'grader-acceptance','grader-acceptance.json',revision)
+    verify_acceptance_reports(native,grader,revision)
     pr=_api(f'repos/{repo}/pulls/{pr_number}')
     if pr.get('head',{}).get('sha')!=revision or pr.get('draft') is not False:
         raise ValueError('Release PR revision/draft gate not satisfied')

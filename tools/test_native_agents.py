@@ -3,8 +3,12 @@
 import argparse, datetime, hashlib, json, os, shutil, subprocess, sys, time
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
+try:from .native_check_evidence import paired_outcomes,fixture_passed
+except ImportError:from native_check_evidence import paired_outcomes,fixture_passed
 
 def extract(root_session, destination, expected):
+    cases=json.loads((destination/'project/selected-cases.json').read_text(encoding='utf8'))
+    criteria={r['id']:r for r in json.loads((destination/'all-agents-criteria.json').read_text(encoding='utf8'))}
     sessions=Path(os.environ.get('CODEX_HOME',str(Path.home()/'.codex'))).expanduser()/'sessions'
     rows=[]
     for index,p in enumerate(sessions.rglob('*.jsonl')):
@@ -17,11 +21,12 @@ def extract(root_session, destination, expected):
         if spawn.get('parent_thread_id')!=root_session:continue
         role=meta.get('agent_role') or spawn.get('agent_role')
         if role not in expected:continue
-        commands=[];finals=[];completed=False; outputs=[]
+        commands=[];finals=[];completed=False; outputs=[];payloads=[]
         for line in p.read_text(encoding='utf8').splitlines():
             try:d=json.loads(line)
             except ValueError:continue
             a=d.get('payload',{})
+            if d.get('type')=='response_item':payloads.append(a)
             if d.get('type')=='response_item' and a.get('type') in ('function_call','custom_tool_call'):
                 code=a.get('arguments',a.get('input',''))
                 if 'check.py' in str(code):commands.append({'name':a.get('name'),'input':code})
@@ -30,10 +35,13 @@ def extract(root_session, destination, expected):
             if d.get('type')=='response_item' and a.get('type')=='message' and a.get('role')=='assistant' and a.get('phase')=='final_answer':
                 finals.append('\n'.join(c.get('text','') for c in a.get('content',[]) if isinstance(c,dict)))
             if d.get('type')=='event_msg' and a.get('type')=='task_complete':completed=True
-        record={'agent_type':role,'session_id':meta.get('id'),'completed':completed,'check_command_recorded':bool(commands),'tool_output_recorded':bool(outputs),'final':finals[-1] if finals else None}
+        case=next(c for c in cases if c['agent_type']==role)
+        outcomes=paired_outcomes(payloads,case)
+        accepted=fixture_passed(outcomes,criteria.get(case['id'],{'build':False,'seeded_failure':True}))
+        record={'agent_type':role,'session_id':meta.get('id'),'completed':completed,'check_command_recorded':bool(commands),'tool_output_recorded':bool(outputs),'paired_check_exit_codes':outcomes,'fixture_outcome_verified':accepted,'final':finals[-1] if finals else None}
         rows.append(record)
     (destination/'native-results.json').write_text(json.dumps(rows,ensure_ascii=False,indent=2),encoding='utf8')
-    verified={r['agent_type'] for r in rows if r['completed'] and r['check_command_recorded'] and r.get('tool_output_recorded') and r['final']}
+    verified={r['agent_type'] for r in rows if r['completed'] and r['check_command_recorded'] and r.get('fixture_outcome_verified') and r['final'] and sum(x['agent_type']==r['agent_type'] for x in rows)==1}
     return {'expected':len(expected),'verified':len(verified),'missing':sorted(set(expected)-verified)}
 
 def main():
@@ -83,6 +91,7 @@ def main():
     cmd=[codex,'exec','--skip-git-repo-check','--sandbox','workspace-write','-c','agents.max_concurrent_threads_per_session=3','-c',trust,'--json','-C',str(project),prompt]
     mutable={'S05/index.html','S08/domain.py','S24/domain.py'}
     protected={str(p.relative_to(project)):hashlib.sha256(p.read_bytes()).hexdigest() for c in plan for p in Path(c['case_directory']).rglob('*') if p.is_file() and str(p.relative_to(project)).replace('\\','/') not in mutable}
+    (destination/'protected-fixtures.json').write_text(json.dumps(protected,sort_keys=True,indent=2),encoding='utf8')
     started=time.monotonic()
     with (destination/'events.jsonl').open('w',encoding='utf8') as output,(destination/'stderr.log').open('w',encoding='utf8') as error:
         p=subprocess.Popen(cmd,stdout=output,stderr=error,stdin=subprocess.DEVNULL,text=True,encoding='utf8')
@@ -97,6 +106,8 @@ def main():
     changed=[rel for rel,digest in protected.items() if not (project/rel).is_file() or hashlib.sha256((project/rel).read_bytes()).hexdigest()!=digest]
     result['protected_fixtures_unchanged']=not changed
     result['fixture_drift']=changed
+    revision=subprocess.run(['git','-C',str(ROOT),'rev-parse','HEAD'],capture_output=True,text=True,timeout=10)
+    result['revision']=revision.stdout.strip() if revision.returncode==0 else None
     result.update(acceptance_scope='Native type, parent, completion, recorded check and tool output; not domain certification',exit_code=code,elapsed_seconds=round(time.monotonic()-started,2),root_session=tid)
     (destination/'summary.json').write_text(json.dumps(result,indent=2),encoding='utf8')
     print(json.dumps(result,indent=2))

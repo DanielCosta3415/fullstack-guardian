@@ -7,6 +7,8 @@ permissions, AGENTS.md or config.toml. Install only from a reviewed source.
 from __future__ import annotations
 
 import argparse
+import base64
+import tomllib
 import hashlib
 import json
 import os
@@ -45,6 +47,8 @@ def _digest(content: bytes) -> str:
 
 def _read(path: Path) -> bytes | None:
     _safe(path)
+    if path.is_file() and path.stat().st_size > 4*1024*1024:
+        raise PackInstallError("Oversized pack managed file")
     return path.read_bytes() if path.is_file() else None
 
 
@@ -66,6 +70,9 @@ def _write_atomic(path: Path, data: bytes) -> None:
 
 
 def _receipt(path: Path) -> dict:
+    _safe(path)
+    if path.is_file() and path.stat().st_size > 4*1024*1024:
+        raise PackInstallError("Oversized pack receipt")
     raw = _read(path)
     if raw is None:
         return {"schema_version": 1, "packs": {}}
@@ -102,7 +109,7 @@ def operation(pack: str, codex_home: Path, root: Path = ROOT,
 def _operation(pack, codex_home, root=ROOT, action="install", apply=False):
     if not isinstance(pack, str) or not NAME.fullmatch(pack):
         raise PackInstallError("Invalid pack identifier")
-    if action not in ("install", "update", "uninstall"):
+    if action not in ("install", "update", "rollback", "uninstall"):
         raise PackInstallError("Invalid operation")
     home = _safe(codex_home)
     receipt_path = _safe(home / "guardian-packs.json")
@@ -112,7 +119,7 @@ def _operation(pack, codex_home, root=ROOT, action="install", apply=False):
     if not matches and action != "uninstall":
         raise PackInstallError("Pack not found in verified source")
     desired = {}
-    if action != "uninstall":
+    if action not in ("uninstall", "rollback"):
         for agent in matches[0]["agents"]:
             source = _safe(Path(root) / agent["file"])
             desired[agent["name"] + ".toml"] = source.read_bytes()
@@ -126,9 +133,26 @@ def _operation(pack, codex_home, root=ROOT, action="install", apply=False):
     existing = receipt["packs"].get(pack)
     if action == "install" and existing:
         raise PackInstallError("Already installed; use explicit update")
-    if action in ("update", "uninstall") and existing is None:
+    if action in ("update", "rollback", "uninstall") and existing is None:
         raise PackInstallError("Pack not managed here")
     owned = (existing or {}).get("files", {})
+    rollback_info = None
+    if action == "rollback":
+        snapshot = existing.get("rollback")
+        if not isinstance(snapshot,dict) or set(snapshot)!={'files','receipt'} or not isinstance(snapshot['files'],dict) or set(snapshot['files'])!=set(owned):
+            raise PackInstallError("No valid managed rollback snapshot")
+        rollback_info = snapshot['receipt']
+        if not isinstance(rollback_info,dict) or set(rollback_info.get('files',{}))!=set(owned) or 'rollback' in rollback_info:
+            raise PackInstallError("Invalid prior pack receipt")
+        for filename, encoded in snapshot['files'].items():
+            if not isinstance(encoded,str) or len(encoded)>1024*1024:raise PackInstallError("Invalid rollback profile size")
+            try:
+                data=base64.b64decode(encoded,validate=True)
+                profile=tomllib.loads(data.decode('utf8'))
+            except (ValueError,UnicodeError) as exc:raise PackInstallError("Invalid rollback profile") from exc
+            if set(profile)!={'name','description','developer_instructions'} or profile['name']!=filename[:-5] or any(not isinstance(v,str) for v in profile.values()) or _digest(data)!=rollback_info['files'][filename]:
+                raise PackInstallError("Rollback profile identity/hash mismatch")
+            desired[filename]=data
     if action == "update" and set(owned) != set(desired):
         raise PackInstallError("Pack membership changed; migrate manually with review")
     changes = {}
@@ -146,10 +170,15 @@ def _operation(pack, codex_home, root=ROOT, action="install", apply=False):
     updated = json.loads(json.dumps(receipt))
     if action == "uninstall":
         del updated["packs"][pack]
+    elif action == "rollback":
+        updated["packs"][pack] = rollback_info
     else:
         updated["packs"][pack] = {"files": {f: _digest(d) for f, d in desired.items()},
             "provenance": matches[0].get("provenance", {}), "manifest_sha256": matches[0].get("manifest_sha256"),
             "state": "installed_not_loaded"}
+    if action == "update":
+        prior_info = {key:value for key,value in existing.items() if key!='rollback'}
+        updated['packs'][pack]['rollback'] = {'receipt':prior_info, 'files':{filename:base64.b64encode(_read(target_dir/filename)).decode('ascii') for filename in owned}}
     summary = {"pack": pack, "action": action, "apply": apply, "agent_files": len(desired),
                "changes": len(changes), "managed": True,
                "warning": "Agent configuration takes effect only in a new compatible Codex session; permissions and quotas remain unchanged."}
@@ -200,7 +229,7 @@ def _operation(pack, codex_home, root=ROOT, action="install", apply=False):
 
 def main() -> int:
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("operation", choices=("install", "update", "uninstall"))
+    p.add_argument("operation", choices=("install", "update", "rollback", "uninstall"))
     p.add_argument("--pack", required=True)
     scope = p.add_mutually_exclusive_group(required=True)
     scope.add_argument("--user", action="store_true")

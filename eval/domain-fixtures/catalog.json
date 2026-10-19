@@ -59,5 +59,12 @@
       "oracle": "oracle.json",
       "status": "NOT VERIFIED"
     }
-  ]
+  ],
+  "functional_acceptance": {
+    "runner": "tools/guardian_domain_native.py",
+    "documentation": "docs/DOMAIN-ACCEPTANCE.md",
+    "status": "RUNTIME_DEPENDENT",
+    "scope": "Reviewed functional fixtures; model-edit oracle tasks remain NOT VERIFIED",
+    "checks": 34
+  }
 }

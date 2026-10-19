@@ -1,8 +1,10 @@
 # Generated catalog
 
-Version: 2.2.0-dev.2
+Version: 2.2.0-dev.3
 
 Availability is not installation, native loading, or correctness. Model policy inherits by default.
+
+Reviewed source of truth: `core/contracts-catalog-v1.json` contains typed instructions and metadata. `python -B tools/guardian_catalog.py --write` generates the 39 TOMLs, core metadata and pack manifests; it never imports profile edits or writes user configuration. Review canonical changes and expected SHA-256 values before generation.
 
 | ID | Role | Kind | Reviewer | Profile SHA-256 |
 |---|---|---|---|---|
@@ -35,16 +37,16 @@ Availability is not installation, native loading, or correctness. Model policy i
 | S26 | guardian_ai_assurance | core | G01 | 02ee03b9a5e17e413e783bcc89f4e4f58b3ccf023a0d0851918777cbf8b2d29a |
 | G01 | guardian_independent_auditor | core | G02 | ac15b1ccc1e532f49135fcc110305bea24bcf35895b7be7403870d40a4e4a541 |
 | G02 | guardian_release_auditor | core | G01 | 2c9dad89fbed5a6fd8d907e694addc5cce6fba8879f664b172fe5aca4bff6a5e |
-| pack:ai-systems:guardian_rag_llm_specialist | guardian_rag_llm_specialist | optional | G01 | 95702f2ee2712a74c87d5035cdd6d087410a5d90dddde2fd18c0ce8fb24ac88d |
-| pack:api-integration:guardian_api_contract_specialist | guardian_api_contract_specialist | optional | G01 | f5affb5b8fed3156bf91b67b54de780cb7f48c2b53d69ce8d19cd7b5e9694636 |
-| pack:cloud-platform:guardian_cloud_infrastructure_specialist | guardian_cloud_infrastructure_specialist | optional | G01 | 1b11ecb08c58c36a4ae6270f2a3bd3dd869fb99fc7c5db5cdfedd4867485d2b2 |
-| pack:data-engineering:guardian_data_migration_specialist | guardian_data_migration_specialist | optional | G01 | 98e150cfd2d60ae05799a376c387641349e61e51b9f15aacfa98fbf285cdcc5d |
-| pack:dotnet:guardian_dotnet_runtime_specialist | guardian_dotnet_runtime_specialist | optional | G01 | 1093932218184c1e32510da5849322b1881b123f1228ee2ed86e92186e878165 |
-| pack:financial-systems:guardian_payment_reliability_specialist | guardian_payment_reliability_specialist | optional | G01 | 1ff4f315ad5fe7a60b954dc4180e89b91e03423b2bb8177c155ed3b1ec873cf7 |
-| pack:frontend-experience:guardian_browser_accessibility_specialist | guardian_browser_accessibility_specialist | optional | G01 | 53eeb042886f0fc48c57849d3decc897284a02e91bd4618a6298d6844914e94a |
-| pack:quality-automation:guardian_contract_test_specialist | guardian_contract_test_specialist | optional | G01 | bdf2097fcb83d9dc82f15573aa4c3642c3268cf3e58fceebb22bf579d8fe952f |
-| pack:security-assurance:guardian_threat_model_specialist | guardian_threat_model_specialist | optional | G01 | f756458c067b4c40f3db19afaa56e1b0ef1b7db16b22065c7111ff845fbc9740 |
-| pack:windows-tooling:guardian_windows_powershell_specialist | guardian_windows_powershell_specialist | optional | G01 | a7c04661c4b338ac46932507138569888c4c9f9967c87e56564f7fa57b848987 |
+| pack:ai-systems:guardian_rag_llm_specialist | guardian_rag_llm_specialist | optional | G01 | 648862c6d6a1db59de6b65ae2716e107197a38b88fcb2c6567693e52cced405a |
+| pack:api-integration:guardian_api_contract_specialist | guardian_api_contract_specialist | optional | G01 | 126df64914054c53333f9a4fde8b21f761cc72ceac124c18d84de45bbf9153d1 |
+| pack:cloud-platform:guardian_cloud_infrastructure_specialist | guardian_cloud_infrastructure_specialist | optional | G01 | 00033c0d7620c1b466f290c2f1eec6c00576fe29ba838d0c39ad1ef1cbb5dea4 |
+| pack:data-engineering:guardian_data_migration_specialist | guardian_data_migration_specialist | optional | G01 | 091da3e6882d70ed92985204bf59fc0e2071d16d3f989f5b625d81176b044284 |
+| pack:dotnet:guardian_dotnet_runtime_specialist | guardian_dotnet_runtime_specialist | optional | G01 | bd84e8c5a72818ed90fd0c42d36758fa5541d7f8394cff62492de411c808a75e |
+| pack:financial-systems:guardian_payment_reliability_specialist | guardian_payment_reliability_specialist | optional | G01 | 35ba4e82b878a019787157952ac159f90bd6a791da93350413c48e9c7ce55cde |
+| pack:frontend-experience:guardian_browser_accessibility_specialist | guardian_browser_accessibility_specialist | optional | G01 | fb92c8895aba4cfff85b138497bf1b7df1b75cc59e65f68a7c5ac9638ac9dab8 |
+| pack:quality-automation:guardian_contract_test_specialist | guardian_contract_test_specialist | optional | G01 | 99cd8bfa2ca6e25b44e0a55b6a6b4d0555cc85ecbe71ad69400a0d087a2a5e84 |
+| pack:security-assurance:guardian_threat_model_specialist | guardian_threat_model_specialist | optional | G01 | e210d30539c716ac4fa15d7bdf4f1f340813a9238b94b1b9a9c8453f1c679807 |
+| pack:windows-tooling:guardian_windows_powershell_specialist | guardian_windows_powershell_specialist | optional | G01 | a58c080a8d84ebe8e42a6bdbc2fd854cf8ee1d2c70ba1586eb710754a66c6419 |
 
 ## Operational skills (20)
 

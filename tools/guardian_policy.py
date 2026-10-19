@@ -3,6 +3,9 @@ from __future__ import annotations
 from dataclasses import dataclass
 from pathlib import Path
 import time
+import math
+
+ACTIONS=frozenset({'read','local_write','local_check','review','external_write','production','privileged','install_dependency'})
 
 @dataclass(frozen=True)
 class Grant:
@@ -12,9 +15,18 @@ class Grant:
     expires_at: float
     source: str
 
+    def __post_init__(self):
+        if (not isinstance(self.project,str) or not Path(self.project).is_absolute()
+            or not isinstance(self.actions,frozenset) or not self.actions or not self.actions<=ACTIONS
+            or not isinstance(self.paths,tuple) or not self.paths
+            or any(not isinstance(p,str) or not Path(p).is_absolute() for p in self.paths)
+            or type(self.expires_at) not in (int,float) or not math.isfinite(self.expires_at)
+            or self.source not in {'human_session','trusted_supervisor'}):
+            raise ValueError('Grant requires explicit absolute project/paths, known actions, finite expiry and trusted source')
+
 def authorize_action(action, project, path=None, grant=None, now=None):
     now=time.time() if now is None else now
-    if action not in {'read','local_write','external_write','production','privileged','install_dependency'}:
+    if action not in ACTIONS:
         return {'allowed':False,'reason':'Unknown action class'}
     if action=='read' and grant is None:
         return {'allowed':True,'reason':'Read subject to inherited sandbox and data policy'}

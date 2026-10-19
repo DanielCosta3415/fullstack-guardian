@@ -1,3 +1,7 @@
+# Historical baseline — dev.2
+
+For the subsequent implementation and validation work, read [dev.3 completion status](COMPLETION-STATUS.md). The dispositions below describe the earlier baseline, not the current candidate.
+
 # Implementation status — 2.2.0-dev.2 development candidate
 
 This is a development candidate, not a stable-release declaration. The public stable version remains v2.1.0. This matrix tracks all 40 proposals from the VoltAgent comparison. It describes implemented controls separately from their acceptance evidence and outstanding work; it does not claim that all 40 proposals or all supported environments are complete.

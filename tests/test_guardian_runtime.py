@@ -61,6 +61,24 @@ class RuntimeTests(unittest.TestCase):
         self.assertEqual(result['overall'],'produced'); self.assertEqual(result['completed'],0)
         self.assertTrue(all(not t['correctness_verified'] for t in status(self.home)['tasks'].values()))
 
+    def test_real_sequential_read_retry_retains_distinct_attempt_logs(self):
+        plan=self.plan()
+        for task in plan['tasks']: task['contract']['retry']=2
+        self.initialize(plan)
+        calls=[]
+        def transient(*args):
+            self.fake(*args); calls.append(args[4])
+            return (1,False,None) if len(calls)<3 else (0,True,None)
+        with patch('tools.guardian_executor._process',side_effect=transient):
+            result=execute(self.home,apply=True,codex_binary=sys.executable,max_tasks=1)
+        self.assertEqual(result['executed_this_run'],1)
+        self.assertEqual(len(calls),3); self.assertEqual(len(set(calls)),3)
+        self.assertTrue(all(path.is_file() for path in calls))
+        produced=[record for record in status(self.home)['tasks'].values() if record['state']=='produced']
+        self.assertEqual(len(produced),1)
+        record=produced[0]
+        self.assertEqual(record['state'],'produced'); self.assertEqual(record['attempts'],3)
+
     def test_readonly_mutation_blocks_even_if_cli_claims_success(self):
         self.initialize(self.plan())
         def mutate(*args):
@@ -109,6 +127,18 @@ class RuntimeTests(unittest.TestCase):
             execute(self.home,apply=True,codex_binary=sys.executable)
         next((self.home/'events').glob('*.jsonl')).write_text('different evidence')
         with self.assertRaisesRegex(ExecutionError,'event evidence'): status(self.home)
+
+    def test_imported_state_cannot_promote_model_correctness_or_rewrite_checkpoint(self):
+        self.initialize(self.plan())
+        with patch('tools.guardian_executor._process',side_effect=self.fake):
+            execute(self.home,apply=True,codex_binary=sys.executable,max_tasks=1)
+        path=self.home/'state.json'; original=path.read_bytes(); state=json.loads(original)
+        produced=next(r for r in state['tasks'].values() if r['state']=='produced')
+        produced['correctness_verified']=True; path.write_text(json.dumps(state))
+        with self.assertRaisesRegex(ExecutionError,'self-assert'): status(self.home)
+        path.write_bytes(original); state=json.loads(original); state['execution_authorized']=False
+        path.write_text(json.dumps(state))
+        with self.assertRaisesRegex(ExecutionError,'checkpoint'): status(self.home)
 
     def test_native_status_reflects_real_verified_records(self):
         self.initialize(self.plan())

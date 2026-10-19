@@ -86,7 +86,7 @@ class IntegrationTests(unittest.TestCase):
 
     def test_protected_source_rename_cannot_hide_behind_safe_destination(self):
         import json
-        from tools.guardian_executor import _plan_hash
+        from tools.guardian_executor import _plan_hash, atomic_json
         from tools.guardian_runtime import inventory
         self.finish()
         worktree=self.home/'worktree'
@@ -95,7 +95,7 @@ class IntegrationTests(unittest.TestCase):
         # a normal post-run modification is already rejected by the drift gate.
         path=self.home/'state.json'; state=json.loads(path.read_text())
         last=max(state['tasks'].values(),key=lambda r:r['started_at_ns'])
-        last['artifact_sha256']=_plan_hash(inventory(worktree));path.write_text(json.dumps(state))
+        last['artifact_sha256']=_plan_hash(inventory(worktree));atomic_json(path,state)
         with self.assertRaisesRegex(IntegrationError,'Protected'):
             integrate(self.home)
 

@@ -41,7 +41,7 @@ except ImportError:
     from guardian_capabilities import capability_report, require_capabilities, model_policy, probe_version, FEATURES
     from guardian_contracts import validate_result
 
-STATES = ("pending", "running", "produced", "verified", "completed", "failed", "blocked", "interrupted")
+STATES = ("pending", "running", "produced", "failed", "blocked", "interrupted")
 BLOCK_WORDS = ("deploy", "production", "prod", "secret", "credential", "delete", "drop")
 VERSION = 1
 _PROCESS_LIMITS = threading.local()
@@ -72,6 +72,20 @@ def atomic_json(path: Path, payload: dict) -> None:
             f.flush()
             os.fsync(f.fileno())
         os.replace(tmp, path)
+        if path.name == 'state.json' and payload.get('kind') == 'codex_cli_worktree_run':
+            try:
+                from .guardian_trace import init as trace_init, append as trace_append
+            except ImportError:
+                from guardian_trace import init as trace_init, append as trace_append
+            journal = path.parent / 'journal.jsonl'
+            if not journal.exists():
+                trace_init(journal)
+            # A persisted checkpoint observation, not a claim of executed tools.
+            # Raw briefs, source paths, thread IDs and model text are excluded.
+            trace_append(journal, 'checkpoint', {'overall': payload['overall'],
+                'tasks': [{'task': ident, 'state': record['state'], 'attempt': record['attempts']}
+                          for ident, record in payload['tasks'].items()],
+                'state_sha256': hashlib.sha256(data).hexdigest(), 'authenticated': False})
     finally:
         if tmp is not None:
             tmp.unlink(missing_ok=True)
@@ -214,12 +228,24 @@ def _load(home: Path) -> tuple[dict, dict]:
         if item.get("agent_type") != task["agent_type"] or item.get("depends_on") != task["depends_on"] or item.get("state") not in STATES:
             raise ExecutionError("State identity mismatch")
         if item.get("state") in ("produced", "verified"):
+            if item.get('correctness_verified') is not False:
+                raise ExecutionError('Model result cannot self-assert correctness; use supervisor workflow')
             if item.get("run_id") != state["run_id"] or not item.get("scope_checked"):
                 raise ExecutionError("Task result has no matching run/scope evidence")
             validate_result(item.get("result"))
             log = safe(home / "events" / (task["id"] + "-attempt-" + str(item.get("attempts")) + ".jsonl"))
             if not log.is_file() or hashlib.sha256(log.read_bytes()).hexdigest() != item.get("events_sha256"):
                 raise ExecutionError("Task event evidence changed or missing")
+    try:
+        from .guardian_trace import verify as trace_verify
+    except ImportError:
+        from guardian_trace import verify as trace_verify
+    journal=safe(home/'journal.jsonl')
+    trace_verify(journal)
+    checkpoints=[json.loads(line)['data'] for line in journal.read_text(encoding='utf-8').splitlines()
+                 if json.loads(line)['event']=='checkpoint']
+    if not checkpoints or checkpoints[-1].get('state_sha256')!=hashlib.sha256((home/'state.json').read_bytes()).hexdigest():
+        raise ExecutionError('State checkpoint changed or missing; fresh reviewed run required')
     return state, plan
 
 
@@ -388,6 +414,18 @@ def _record_result(ident, record, home):
     atomic_json(home / "results" / (ident+".json"), result)
 
 
+def _read_retry_delay(contract, code, completed, attempt):
+    """Retry only a bounded idempotent read with an ordinary process failure.
+
+    Timeouts, missing completion after exit zero and missing native identity are
+    uncertain states, not transient errors. Scope is checked by the caller first.
+    """
+    if (contract['operation'] == 'read' and contract['idempotent'] is True
+        and attempt < contract['retry'] and type(code) is int and code != 0):
+        return min(.25 * (2 ** attempt), 1.0)
+    return None
+
+
 def _parallel_audit(home, state, plan, briefs, codex, timeout, max_tasks, workers, native):
     """Real bounded concurrency; each independent read task gets its own worktree.
 
@@ -464,8 +502,10 @@ def _parallel_audit(home, state, plan, briefs, codex, timeout, max_tasks, worker
                                 "events_sha256":hashlib.sha256(log.read_bytes()).hexdigest(),
                                 "correctness_verified":False, "error_code":None}
                     # A timeout has uncertain descendant effects: never replay.
-                    if code in ("timeout", "output_budget_exceeded"):
+                    delay = _read_retry_delay(contract, code, completed, attempt)
+                    if delay is None:
                         break
+                    time.sleep(delay)
                 return {"state":"failed", "exit_code":code,"completed_event":completed,
                         "native_child_verified":False,"error_code":"audit_failed_no_safe_retry"}
             with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as pool:
@@ -543,7 +583,7 @@ def execute(home: Path, *, apply: bool = False, codex_binary: str | None = None,
         raise ExecutionError("Unsafe mode")
     # --authorize-writes is an explicit operator/supervisor input, never loaded
     # from plan text. A library caller may instead supply a scoped Grant object.
-    if authorize_writes and grant is None:
+    if authorize_writes and grant is None and any(t['contract']['operation']=='write' for t in plan['tasks']):
         granted_paths = tuple(str(root / p.removesuffix("/**")) for t in plan["tasks"] for p in t["contract"]["allowed_paths"])
         grant = Grant(str(root), frozenset({"read", "local_write"}), granted_paths,
                       time.time()+timeout*max_tasks+60, "trusted_supervisor")
@@ -654,7 +694,22 @@ def execute(home: Path, *, apply: bool = False, codex_binary: str | None = None,
                 _PROCESS_LIMITS.model_policy = chosen
                 if contract["operation"] == "write" and any(not authorize_action("local_write", root, root / p.removesuffix("/**"), grant)["allowed"] for p in contract["allowed_paths"]):
                     raise ScopeError("Supervisor write grant expired or out of scope")
-                code, completed, thread = _process(codex, slot, message, min(timeout, contract["budget"]["timeout_seconds"]), log, task_mode)
+                for retry_index in range(contract['retry'] + 1):
+                    if retry_index:
+                        record['attempts'] += 1
+                        log = safe(home / 'events' / (ident + f"-attempt-{record['attempts']}.jsonl"))
+                        atomic_json(home / 'state.json', state)
+                    code, completed, thread = _process(codex, slot, message, min(timeout, contract["budget"]["timeout_seconds"]), log, task_mode)
+                    # A retry is permitted only after unchanged revision and
+                    # complete file inventory prove no local task mutation.
+                    if contract['operation'] == 'read':
+                        if _git(slot, 'rev-parse', 'HEAD') != state['base_commit'] or _git(root, 'rev-parse', 'HEAD') != state['base_commit'] or _git(root, 'status', '--porcelain', '--untracked-files=all'):
+                            raise ScopeError('Read retry changed revision or original checkout')
+                        scope_delta(before, inventory(slot), [], read_only=True)
+                    delay = _read_retry_delay(contract, code, completed, retry_index)
+                    if code == 0 or delay is None:
+                        break
+                    time.sleep(delay)
                 proven = verify_native_child(thread, task["agent_type"], expected_cwd=slot,
                                              started_at_ns=record["started_at_ns"]) if native_subagents else False
                 record["native_child_verified"] = proven
@@ -700,7 +755,15 @@ def execute(home: Path, *, apply: bool = False, codex_binary: str | None = None,
 
 def status(home: Path) -> dict:
     state, _ = _load(home)
+    acceptance='not_checked'
+    if (Path(home)/'workflow.json').exists():
+        try:
+            from .guardian_workflow import inspect as workflow_inspect
+        except ImportError:
+            from guardian_workflow import inspect as workflow_inspect
+        acceptance=workflow_inspect(home)['state']
     return {"overall": state["overall"], "tasks": state["tasks"],
+            'supervisor_acceptance':acceptance,
             "base_commit": state["base_commit"], "native_subagents_verified": bool(state.get("native_subagents_verified")) and all(t.get("native_child_verified") is True for t in state["tasks"].values()),
             "backend": backend_capabilities(),
             "notice": "Worktree changes are NOT merged; inspect git diffs and tests before integration."}
