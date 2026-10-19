@@ -10,7 +10,7 @@ def public_summary(source,required_count=None):
     if required_count is not None and (type(required_count) is not int or required_count<1 or data['expected']!=required_count):raise ValueError('Required profile inventory mismatch')
     return {'schema_version':1,'expected':data['expected'],'verified':data['verified'],
             'revision':data.get('revision') if isinstance(data.get('revision'),str) and re.fullmatch(r'[0-9a-f]{40}',data['revision']) else None,
-            'all_native_roles_verified':type(data.get('exit_code')) is int and data['exit_code']==0 and data['expected']==data['verified'] and data.get('protected_fixtures_unchanged') is True,
+            'all_native_roles_verified':type(data.get('exit_code')) is int and data['exit_code']==0 and data['expected']==data['verified'] and data.get('protected_fixtures_unchanged') is True and data.get('source_revision_unchanged') is not False,
             'protected_fixtures_unchanged':data.get('protected_fixtures_unchanged') is True,
             'acceptance_scope':'Native role execution in synthetic cases; not exhaustive taxonomy or production certification'}
 
