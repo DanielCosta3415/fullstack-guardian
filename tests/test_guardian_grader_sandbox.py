@@ -13,7 +13,7 @@ from tools.guardian_grader_sandbox import (probe, strict_json, validate_oracle,
 class GraderBoundaryTests(unittest.TestCase):
     def test_legacy_python_grader_never_runs_on_host(self):
         with tempfile.TemporaryDirectory() as temp:
-            root = Path(temp)
+            root = Path(temp).resolve()
             sentinel = root / "escaped"
             checker = root / "grader.py"
             checker.write_text("from pathlib import Path\nPath(" + repr(str(sentinel)) + ").touch()\n")
@@ -29,7 +29,7 @@ class GraderBoundaryTests(unittest.TestCase):
 
     def test_no_backend_fails_closed_and_missing_checks_rejected(self):
         with tempfile.TemporaryDirectory() as temp:
-            root = Path(temp)
+            root = Path(temp).resolve()
             checker = root / "oracle.json"
             checker.write_text(json.dumps(oracle()))
             with patch("tools.guardian_grader_sandbox.probe", return_value={"available":False,"reason":"Unavailable"}):
@@ -139,7 +139,7 @@ class GraderBoundaryTests(unittest.TestCase):
         if not backend["available"]:
             self.skipTest("NOT VERIFIED: requires digest-pinned image and rootless Docker")
         with tempfile.TemporaryDirectory() as temp:
-            root = Path(temp)
+            root = Path(temp).resolve()
             (root / "target.py").write_text("def answer():\n    while True: pass\n")
             self.assertFalse(execute_vector(root, oracle()["cases"]["case"]["checks"]["main"][0], 1, backend))
 
@@ -153,7 +153,7 @@ class GraderBoundaryTests(unittest.TestCase):
             def poll(self):
                 return 0
         with tempfile.TemporaryDirectory() as temp:
-            root = Path(temp)
+            root = Path(temp).resolve()
             (root / "target.py").write_text("def answer():\n    return 1\n")
             backend = {"binary":"docker","image":"reviewed@sha256:"+"a"*64}
             with patch("tools.guardian_grader_sandbox.validate_pure_target"), patch("tools.guardian_grader_sandbox.subprocess.Popen", return_value=Process()), patch(
