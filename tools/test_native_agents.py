@@ -43,13 +43,14 @@ def extract(root_session, destination, expected):
                 finals.append('\n'.join(c.get('text','') for c in a.get('content',[]) if isinstance(c,dict)))
             if d.get('type')=='event_msg' and a.get('type')=='task_complete':completed=True
         case=next(c for c in cases if c['agent_type']==role)
-        outcomes=paired_outcomes(payloads,case)
-        accepted=fixture_passed(outcomes,criteria.get(case['id'],{'build':False,'seeded_failure':True}))
-        record={'agent_type':role,'session_id':meta.get('id'),'completed':completed,'check_command_recorded':bool(commands),'tool_output_recorded':bool(outputs),'paired_check_exit_codes':outcomes,'fixture_outcome_verified':accepted,'final':finals[-1] if finals else None}
+        rule=criteria.get(case['id'],case.get('evidence_rule',{}))
+        outcomes=paired_outcomes(payloads,case,details=rule.get('schema_version')==2)
+        accepted=bool(rule) and fixture_passed(outcomes,rule)
+        record={'agent_type':role,'session_id':meta.get('id'),'completed':completed,'check_command_recorded':bool(commands),'tool_output_recorded':bool(outputs),'paired_check_exit_codes':[o['exit_code'] if isinstance(o,dict) else o for o in outcomes],'evidence_schema_version':rule.get('schema_version',1),'evidence_class':'NATIVE_SMOKE_ONLY','professional_qualification':'NOT_EVALUATED','fixture_outcome_verified':accepted,'final':finals[-1] if finals else None}
         rows.append(record)
     (destination/'native-results.json').write_text(json.dumps(rows,ensure_ascii=False,indent=2),encoding='utf8')
     verified={r['agent_type'] for r in rows if r['completed'] and r['check_command_recorded'] and r.get('fixture_outcome_verified') and r['final'] and sum(x['agent_type']==r['agent_type'] for x in rows)==1}
-    return {'expected':len(expected),'verified':len(verified),'missing':sorted(set(expected)-verified)}
+    return {'evidence_class':'NATIVE_SMOKE_ONLY','professional_qualification':'NOT_EVALUATED','expected':len(expected),'verified':len(verified),'missing':sorted(set(expected)-verified)}
 
 def main():
     revision_start=subprocess.run(['git','-C',str(ROOT),'rev-parse','HEAD'],capture_output=True,text=True,timeout=10)

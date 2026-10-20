@@ -1,4 +1,6 @@
-# Arquitetura do Guardian System v2.0
+# Arquitetura do Guardian: base e extensão profissional
+
+A extensão dev.4 mantém os limites desta base e acrescenta contratos profissionais por papel, obrigações do pedido, responsabilidades por fase e verificação de handoffs. Consulte [Professional Assurance](PROFESSIONAL_ASSURANCE.md) e [Hooks](HOOKS.md). O principal continua responsável pela interpretação semântica; classificações determinísticas, perfis e hooks não constituem uma prova de compreensão universal nem substituem permissões efetivas.
 
 ## Finalidade
 

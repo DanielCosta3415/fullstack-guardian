@@ -1,4 +1,8 @@
-# Completion status — 2.2.0-dev.3
+# Completion status — 2.2.0-dev.4
+
+The professional-assurance candidate adds the N01–N18 audit response. See PROFESSIONAL_ASSURANCE.md for the implemented role contracts, planning and result gates, evaluation layers and limits; HOOKS.md for optional registration and independent Codex trust. Current test/native/CI outcomes must be tied to the final revision, not inherited from the historical dev.3 evidence below. Stable promotion and a global upgrade remain separate reviewed operations. Public professional-case observations cannot replace independent SME qualification or a private holdout.
+
+## Historical dev.3 completion record
 
 This is the subsequent implementation of all identified pending areas. It is a development candidate. A safe refusal, unsupported client capability or pending external execution is not reclassified as a passing requirement. The historical dev.2 dispositions are retained in IMPLEMENTATION-STATUS.md.
 

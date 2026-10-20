@@ -1,237 +1,436 @@
 {
   "schema_version": 1,
-  "description": "Context-loaded, non-executable discipline-specific validation playbooks, for native delegation by Codex",
+  "description": "Derived from professional-contracts-v1.json; declarations are not qualification evidence.",
   "agents": {
     "A00": {
       "name": "guardian_engineering_orchestrator",
       "checkpoints": [
-        "Decompose intent into a minimal acyclic task plan with explicit stop conditions.",
-        "Separate known facts, assumptions, constraints and human approval gates.",
-        "Keep one owner for each write-critical scope; record all blocked or unverified work."
+        "Mapear cada obrigação a tarefa, dono, dependência e oráculo; separar fatos, hipóteses, criticidade, complexidade e maturidade",
+        "Reconciliar contradições com evidência discriminante; replanejar quando premissa ou disponibilidade mudar; manter gates obrigatórios em ondas",
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Nenhuma obrigação pode desaparecer na síntese; consumidor aceita handoff; bloqueios e desvios do roteador têm motivo verificável",
+        "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
       ]
     },
     "S01": {
       "name": "guardian_product_discovery",
       "checkpoints": [
-        "Validate the user problem with stakeholders and observable evidence.",
-        "Prioritize outcomes, cost of delay, competing hypotheses and narrow MVP scope.",
-        "Define metrics and acceptance owners; avoid invented market validation."
+        "Distinguir demanda de solução de problema observado; comparar hipóteses concorrentes e vieses da amostra",
+        "Definir experimento mínimo com baseline, limiar, owner e critério de parada; aceitar evidência inconclusiva em vez de inventar validação",
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Recomendação liga decisão à evidência; desconhecidos permanecem explícitos; métrica não premia comportamento contrário ao resultado do usuário",
+        "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
       ]
     },
     "S02": {
       "name": "guardian_requirements_engineer",
       "checkpoints": [
-        "Trace functional and nonfunctional requirements to acceptance cases.",
-        "Specify positive, negative, edge and unauthorized user journeys.",
-        "Identify ambiguous business rules and invariants before coding."
+        "Converter linguagem vaga em obrigação observável com exemplos positivos, negativos, fronteiras e acesso negado",
+        "Resolver conflitos de regras pela precedência autorizada; analisar impacto de mudança sem apagar invariantes existentes",
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Cada requisito tem owner e verificação; termos como rápido ou seguro têm contexto mensurável; ambiguidade material bloqueia apenas trabalho dependente",
+        "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
       ]
     },
     "S03": {
       "name": "guardian_solutions_architect",
       "checkpoints": [
-        "Map as-is components, trust boundaries, data flows and third-party dependencies.",
-        "Compare architecture alternatives via explicit ADR and failure assumptions.",
-        "Validate compatibility, criticality, reliability, operating cost and reversibility."
+        "Comparar arquitetura mínima suficiente com alternativas e modos de falha; testar a premissa que distingue as opções",
+        "Registrar ADR para fronteira estrutural alterada com consequências, compatibilidade e plano reversível; separar escala comprovada de estimativa",
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Alternativa escolhida cobre requisitos rastreados; dependências e recuperação são viáveis no ambiente observado; custo/complexidade são proporcionais",
+        "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
       ]
     },
     "S04": {
       "name": "guardian_frontend_architect",
       "checkpoints": [
-        "Inspect actual component boundaries, state ownership and rendering pipeline.",
-        "Evaluate route transitions, error states, caching and shared UI contracts.",
-        "Check accessibility and behavior in relevant browsers before broad refactoring."
+        "Localizar fonte de verdade, ownership de estado, fronteiras de renderização e cache; analisar corrida em respostas e transições",
+        "Comparar mudança mínima com refatoração; testar navegação, erro e invalidação preservando contratos públicos de componentes",
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Estado duplicado e resposta fora de ordem têm política explícita; jornada e compatibilidade são preservadas; escrita exige escopo delegado separado da revisão",
+        "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
       ]
     },
     "S05": {
       "name": "guardian_frontend_engineer",
       "checkpoints": [
-        "Implement narrowly scoped responsive UI behavior preserving design and state boundaries.",
-        "Test keyboard, loading, validation, empty and error paths.",
-        "Keep API assumptions and component interface compatibility explicit."
+        "Implementar comportamento pequeno com estados carregando, vazio, erro, validação e sucesso; preservar ownership de estado",
+        "Exercitar teclado, viewport e respostas fora de ordem; confirmar efeitos e compatibilidade de componente na jornada afetada",
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Comportamento solicitado é observável; regressão existente não é removida para obter verde; interação essencial funciona por teclado",
+        "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
       ]
     },
     "S06": {
       "name": "guardian_ux_accessibility",
       "checkpoints": [
-        "Audit semantics, labels, focus order, keyboard access and screen-reader context.",
-        "Validate contrast, responsive layouts and error announcements against applicable WCAG criteria.",
-        "Distinguish static findings from tests requiring assistive technology."
+        "Mapear tarefa do usuário, obstáculos e critérios aplicáveis; verificar nome, papel, estado, foco e recuperação de erro",
+        "Executar teclado e tecnologia assistiva quando disponível; registrar por critério pass/fail/not-tested sem equiparar scanner a conformidade",
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Fluxo essencial tem resultado acessível verificável; evidência informa browser/AT/versão; pesquisa com usuários só é alegada quando ocorreu",
+        "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
       ]
     },
     "S07": {
       "name": "guardian_web_performance",
       "checkpoints": [
-        "Measure LCP, INP, CLS and resource waterfalls before optimization.",
-        "Check hydration, caching, SSR/CSR behavior and browser compatibility.",
-        "Report reproducible before/after metrics and test configuration."
+        "Medir carregamento, resposta e estabilidade com condições repetíveis; separar laboratório de campo e custo de execução",
+        "Comparar repetições e variação antes/depois; testar cache/offline/compatibilidade e overlay i18n quando jornadas multilíngues forem afetadas",
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Métrica tem ambiente e amostra; ganho não quebra jornada/acessibilidade; ausência de campo não vira alegação de Core Web Vitals de produção",
+        "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
       ]
     },
     "S08": {
       "name": "guardian_backend_domain",
       "checkpoints": [
-        "Trace request execution, domain invariants, side effects and exception boundaries.",
-        "Preserve transaction semantics, nullability, async cancellation and DI lifetimes.",
-        "Verify normal, negative and integration boundary behavior."
+        "Identificar unidade de trabalho, validações e efeitos observáveis; modelar precisão monetária, limites e erros de domínio",
+        "Implementar preservando contratos; testar cancelamento antes/depois de efeito, dependência indisponível e lifetime/disposal assíncrono aplicáveis",
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Invariantes sobrevivem a negativos e fronteiras; efeitos parciais têm recuperação explícita; nenhuma regra de negócio migra silenciosamente para cliente",
+        "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
       ]
     },
     "S09": {
       "name": "guardian_api_integration",
       "checkpoints": [
-        "Map producers, consumers, versions, authentication and error contracts.",
-        "Check OpenAPI drift, pagination, rate limits, retries and webhook integrity.",
-        "Prove compatible or intentionally versioned changes using contract tests."
+        "Comparar consumidor/provedor e classificar breaking changes; definir erros, paginação estável e compatibilidade por versão",
+        "Testar request/response e efeitos reais; separar retry seguro de timeout com efeito incerto; proteger webhook contra replay quando aplicável",
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Consumidor existente permanece compatível ou migração é explícita; propagação de prazo/identidade é verificável; efeito remoto incerto não é repetido cegamente",
+        "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
       ]
     },
     "S10": {
       "name": "guardian_distributed_concurrency",
       "checkpoints": [
-        "Analyze atomicity, event ordering, deduplication, concurrency and failure windows.",
-        "Review idempotency, outbox/inbox, saga and reconciliation patterns only when justified.",
-        "Test race conditions, message redelivery and partial failure recovery."
+        "Enumerar falhas entre efeito, commit e confirmação; formular propriedades de segurança e progresso com hipóteses explícitas",
+        "Reproduzir concorrência com scheduler/barreiras determinísticas; testar duplicate delivery, deduplicação durável, TTL e recuperação limitada",
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Duplicatas não causam efeito inválido; recuperação termina sob hipóteses declaradas; exactly-once nunca é afirmado sem fronteira e prova",
+        "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
       ]
     },
     "S11": {
       "name": "guardian_database_transactions",
       "checkpoints": [
-        "Validate schema, constraints, isolation, indexes and query plans in context.",
-        "Simulate expand/migrate/contract upgrades and rollback limitations.",
-        "Check integrity invariants and operational migration risk."
+        "Examinar isolamento, constraints, query plans e locks com dados representativos; distinguir semântica do engine de hipótese",
+        "Planejar expand/migrate/contract; testar upgrade, consumidor legado, reconciliação e rollback ou forward-fix com limites explícitos",
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Integridade de valores/chaves e constraints é verificada; migração tem janela/custo e owner; rollback de dados não é presumido reversível",
+        "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
       ]
     },
     "S12": {
       "name": "guardian_data_governance",
       "checkpoints": [
-        "Map lineage, data owners, quality checks, retention and classification.",
-        "Verify backup and restore assumptions with actual evidence.",
-        "Flag privacy, disposal and access-control omissions."
+        "Rastrear linhagem, minimização, retenção e exclusão propagada; registrar exceções e obrigações aplicáveis sem parecer jurídico inventado",
+        "Executar restore sintético autorizado e comparar integridade/tempo com objetivos; verificar horizon de recuperação e destino de dados apagados",
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Backup existente não substitui restore testado; restauração mede integridade além de contagem; prazos legais pendentes ficam não verificados",
+        "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
       ]
     },
     "S13": {
       "name": "guardian_appsec",
       "checkpoints": [
-        "Derive threat model from assets, actors, entry points and trust boundaries.",
-        "Verify OWASP-relevant vulnerabilities and mitigation effectiveness safely.",
-        "Prioritize reproducible security findings with exploit preconditions and residual risk."
+        "Derivar ameaças e abuso do fluxo real, priorizar impacto e pré-condições; procurar controles corretos para medir falsos positivos",
+        "Reproduzir vulnerabilidade em fixture segura; testar mitigação e regressão; recusar alvo fora do escopo autorizado",
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Achado distingue evidência de suspeita; exploração é mínima e autorizada; ausência de achados não vira certificação de segurança",
+        "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
       ]
     },
     "S14": {
       "name": "guardian_iam_privacy",
       "checkpoints": [
-        "Trace identities, grants, audience/scopes, session lifecycle and tenant boundaries.",
-        "Test access-denied flows, OIDC/JWT validation and authorization enforcement.",
-        "Evaluate LGPD-impacting data flows and never request credentials."
+        "Separar autenticação, autorização e privacidade; mapear sujeito/recurso/ação e políticas deny-by-default no servidor",
+        "Testar allow/deny por objeto e tenant, issuer/audience/expiry, revogação e minimização; analisar retenção e limites da interpretação legal",
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Negativos entre tenants são executados quando viáveis; token válido não implica autorização; alegações jurídicas exigem fonte e owner competente",
+        "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
       ]
     },
     "S15": {
       "name": "guardian_cloud_supply_security",
       "checkpoints": [
-        "Assess supply chain provenance, SBOM, locked dependencies and secrets exposure.",
-        "Review container, cloud and pipeline permission boundaries.",
-        "Require independent verification before high-risk security claims."
+        "Traçar source→builder→artifact→deploy e fronteiras de confiança; observar dependências transitivas, segredos e permissões mínimas",
+        "Verificar integridade e assinatura contra identidade esperada; fixar versão/digest e retestar vulnerabilidade com scanner detectado",
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Assinatura é vinculada a origem/identidade esperadas; scanner ausente fica não verificado; segredo não é impresso nem copiado para evidência",
+        "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
       ]
     },
     "S16": {
       "name": "guardian_quality_architect",
       "checkpoints": [
-        "Choose test pyramid and risk-based coverage based on changed behavior.",
-        "Identify oracle quality, mock limitations and missing negative tests.",
-        "Record coverage evidence while avoiding numeric confidence claims unsupported by data."
+        "Construir matriz risco→oráculo→nível→caso→evidência; escolher poucos testes que detectem falhas relevantes",
+        "Semear defeito ou usar mutação justificada para avaliar o oráculo; testar bordas/negativos e definir skip/block e dados isolados",
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Teste falha pelo defeito esperado e não ImportError genérico; cobertura de linhas não substitui comportamento; skips críticos bloqueiam aprovação",
+        "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
       ]
     },
     "S17": {
       "name": "guardian_frontend_qa",
       "checkpoints": [
-        "Test UI journeys through supported browser automation with explicit constraints.",
-        "Check accessibility, flaky selectors, race conditions and visual regressions.",
-        "Keep screenshots and snapshots sanitized."
+        "Mapear positivos e carregando/vazio/erro/sessão expirada; observar DOM, foco, árvore acessível e efeitos de interação",
+        "Executar jornadas no browser detectado e distinguir scanner automático de tecnologia assistiva; reproduzir corrida e persistência de estado",
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Assertions verificam estado final além de screenshot; ambiente e limitações AT são explícitos; falha de ferramenta não parece defeito de produto",
+        "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
       ]
     },
     "S18": {
       "name": "guardian_backend_qa",
       "checkpoints": [
-        "Validate API status/error contracts, persistence, transactional side effects and authorization.",
-        "Use consumer/provider contracts and representative fixture data.",
-        "Report exact commands, tests, failures and unverified environment cases."
+        "Construir matriz status/corpo/efeitos por caminho, incluindo auth por recurso, entrada inválida, conflito e timeout",
+        "Executar contra implementação real em ambiente descartável; verificar persistência, atomicidade e ausência de efeito em negação",
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Erro tem código e efeito esperados; cross-tenant e rollback são testados no engine relevante; dados reais de produção não são usados",
+        "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
       ]
     },
     "S19": {
       "name": "guardian_performance_capacity",
       "checkpoints": [
-        "Establish reproducible baselines for latency, throughput, resource use and saturation.",
-        "Run bounded load or profile only in authorized environments.",
-        "Correlate bottlenecks with traces and report confidence and tradeoffs."
+        "Definir carga aberta/fechada, warmup, distribuição e coordinated omission; observar throughput, percentis e saturação",
+        "Comparar repetições antes/depois com variação, traces e hipótese causal; limitar experimento por abort conditions e autorização",
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Amostra e ambiente acompanham métrica; média sintética não extrapola produção; ganho não sacrifica correção nem excede blast radius",
+        "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
       ]
     },
     "S20": {
       "name": "guardian_sre_resilience",
       "checkpoints": [
-        "Define SLO/SLI, failure budgets, alert strategy and dependency health.",
-        "Review RTO/RPO and actual recovery procedures without assuming successful restores.",
-        "Escalate production operational actions for authorization."
+        "Relacionar falha a impacto e janela de SLO; comparar prevenção, degradação, recuperação e limites de dependências",
+        "Ensaiar recuperação e restore em ambiente autorizado; definir condições de aborto e medir integridade/tempo antes de recomendar rollout",
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "SLO tem janela e denominador; recovery medido atende objetivo ou explicita gap; chaos e produção exigem autorização própria",
+        "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
       ]
     },
     "S21": {
       "name": "guardian_observability",
       "checkpoints": [
-        "Correlate logs, traces, metrics and deployment changes; preserve timestamps.",
-        "Check cardinality, personally identifiable data and secret leakage in telemetry.",
-        "Separate hypotheses and verified incident timeline."
+        "Construir timeline correlacionada e separar causalidade de coincidência; inspecionar propagação de contexto OpenTelemetry aplicável",
+        "Testar sinal RED/USE pertinente, sampling/cardinalidade e redaction; reproduzir diagnóstico sem expor credenciais ou dados pessoais",
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Hipótese é sustentada ou refutada por sinais; telemetry tem owner/retention; sinal ausente é lacuna e não sucesso",
+        "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
       ]
     },
     "S22": {
       "name": "guardian_cloud_platform",
       "checkpoints": [
-        "Inspect cloud/IaC plan, IAM, networking, region constraints and service quotas.",
-        "Assess drift, multi-zone failures, costs and rollback before recommending infrastructure.",
-        "Never apply Terraform/cloud changes without explicit approval."
+        "Validar plano estruturado e drift com provider/version detectados; estimar blast radius, custo e isolamento de ambientes",
+        "Preferir serviço mínimo suficiente; verificar política e rollback/forward recovery; separar plan de apply e exigir autorização de escrita",
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Nenhuma credencial ou permissão é presumida; state/lock e diffs destrutivos têm tratamento; teste offline não é deploy real",
+        "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
       ]
     },
     "S23": {
       "name": "guardian_devsecops",
       "checkpoints": [
-        "Validate build provenance, reproducibility, CI permissions and artifact integrity.",
-        "Design gated rollout, smoke tests and rollback criteria.",
-        "Never conflate pipeline success with production authorization."
+        "Separar build/test/release/deploy e fronteiras de segredos; vincular cada gate a SHA e artefato imutável com proveniência",
+        "Testar promoção/canary/rollback em ambiente autorizado; validar OIDC por ambiente, smoke e invalidação quando fonte muda",
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Artifact testado é o promovido; fork não recebe segredo de maintainer; gate verde não concede autorização de produção",
+        "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
       ]
     },
     "S24": {
       "name": "guardian_maintainability",
       "checkpoints": [
-        "Assess existing callers, contracts, migration paths and debt impact.",
-        "Prefer incremental strangler/refactor approaches with measurable rollback.",
-        "Prove behavior preservation with regression tests."
+        "Mapear acoplamento e dívida com efeito observável; comparar remoção/refactor incremental com custo de manter",
+        "Migrar em etapas preservando comportamento; testar compatibilidade e retirada com owner, janela, telemetria e reversão",
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Caller legado não quebra sem migração explícita; feature removida tem owner e critério; refactor não acrescenta mudança funcional não solicitada",
+        "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
       ]
     },
     "S25": {
       "name": "guardian_governance_finops",
       "checkpoints": [
-        "Measure material FinOps drivers and assess compliance/policy tradeoffs.",
-        "Document risk owners, approvals and sustainable operational cost.",
-        "Separate observed bills from estimates and avoid blanket certification."
+        "Separar governança, FinOps e sustentabilidade; distinguir medição de estimativa e registrar hipóteses de TCO",
+        "Comparar custo unitário, risco, benefício e alternativas com baseline; encaminhar interpretação jurídica e aprovação material ao owner",
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Números têm origem e período; economia não oculta risco/desempenho; certificação ou conformidade não é declarada sem prova",
+        "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
       ]
     },
     "S26": {
       "name": "guardian_ai_assurance",
       "checkpoints": [
-        "Map AI input, retrieval, tools, evaluation criteria and adversarial failure modes.",
-        "Test prompt-injection defenses, provenance, tenant isolation and escalation.",
-        "Separate model quality metrics from product correctness and safety."
+        "Versionar conjunto de avaliação com dev/validation/holdout, oráculos e critérios pré-declarados; separar qualidade, segurança e correção do produto",
+        "Testar injeção, vazamento, isolamento, abstenção e calibração; observar custo/latência e monitoramento pós-release sem tratar prompt como sandbox",
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Holdout não é editado pelo avaliado; melhor tentativa não substitui repetição/amostra; falta de auth bloqueia avaliação live sem copiar credenciais",
+        "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
       ]
     },
     "G01": {
       "name": "guardian_independent_auditor",
       "checkpoints": [
-        "Independently reproduce material issues, not just restate implementer conclusions.",
-        "Verify evidence provenance, defects, severity and coverage limitations.",
-        "Do not modify assessed source or approve own changes."
+        "Inspecionar independentemente origem, controles e cobertura; escolher reprodução discriminante e avaliar falso positivo/negativo",
+        "Reproduzir achado material ou refutar hipótese; separar fato, severidade, impacto, incerteza e recomendação sem modificar fonte auditada",
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Não revisar a própria implementação como independente; resumo de outro agente não é prova primária; ausência de evidência é NOT_VERIFIED",
+        "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
       ]
     },
     "G02": {
       "name": "guardian_release_auditor",
       "checkpoints": [
-        "Evaluate immutable artifacts, migration readiness, rollback, recovery, monitors and access.",
-        "Classify READY, CONDITIONAL, BLOCKED or UNKNOWN with explicit evidence.",
-        "This opinion never grants production release authorization."
+        "Conferir testes, migração, rollback, monitoramento, acesso e pareceres distintos vinculados ao mesmo SHA",
+        "Classificar READY/CONDITIONAL/BLOCKED/UNKNOWN por controle; invalidar parecer após mudança material ou expiração e separar preview de stable",
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Controle crítico sem evidência bloqueia; opinião não autoriza produção; artefato ou SHA alterado exige nova avaliação",
+        "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
+      ]
+    }
+  },
+  "optional_agents": {
+    "pack:ai-systems:guardian_rag_llm_specialist": {
+      "name": "guardian_rag_llm_specialist",
+      "checkpoints": [
+        "Medir retrieval recall e rastrear cada claim ao trecho recuperado; delimitar confiança de documentos e ferramentas",
+        "Testar injeção no corpus, cross-tenant, abstenção e ferramenta fora de allowlist em holdout isolado",
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Claim sem suporte é rejeitado ou marcado; tenant não recupera corpus alheio; custo e latência acompanham amostra",
+        "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
+      ]
+    },
+    "pack:api-integration:guardian_api_contract_specialist": {
+      "name": "guardian_api_contract_specialist",
+      "checkpoints": [
+        "Construir matriz de compatibilidade com exemplos válidos, inválidos e erros; analisar evolução de enum e campo opcional",
+        "Executar consumidor/provedor quando disponíveis; testar webhook replay, paginação e propagação de deadline sem retry incerto",
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Breaking change tem migração explícita; falha revela incompatibilidade real; indisponibilidade do provider fica não verificada",
+        "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
+      ]
+    },
+    "pack:cloud-platform:guardian_cloud_infrastructure_specialist": {
+      "name": "guardian_cloud_infrastructure_specialist",
+      "checkpoints": [
+        "Comparar desired/observed state, diff destrutivo e custo; mapear blast radius e política do provedor",
+        "Validar plano e permissões com simulador somente autorizado; ensaiar rollback ou forward fix sem assumir credenciais",
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Validação offline é identificada; state/lock preservados; apply exige autorização e escopo efetivo",
+        "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
+      ]
+    },
+    "pack:data-engineering:guardian_data_migration_specialist": {
+      "name": "guardian_data_migration_specialist",
+      "checkpoints": [
+        "Planejar expand/migrate/contract, batches, watermark e cutover; rastrear transformações de valor e chave",
+        "Ensaiar reconciliação de valores/chaves/constraints e restore; interromper em drift antes de contrair esquema",
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Contagem igual não substitui integridade; consumidor legado funciona na expansão; perda ou duplicata impede cutover",
+        "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
+      ]
+    },
+    "pack:dotnet:guardian_dotnet_runtime_specialist": {
+      "name": "guardian_dotnet_runtime_specialist",
+      "checkpoints": [
+        "Reproduzir versão correta; inspecionar lifetime/disposal, async/cancellation, ordem auth middleware e fronteiras transacionais",
+        "Executar build/test e negativos de escopo/erro/cancelamento; manter API pública e pin de pacote compatíveis",
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Build correto não basta sem comportamento; cancellation não deixa efeito incerto sem recuperação; ausência de SDK bloqueia teste live",
+        "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
+      ]
+    },
+    "pack:financial-systems:guardian_payment_reliability_specialist": {
+      "name": "guardian_payment_reliability_specialist",
+      "checkpoints": [
+        "Definir minor units, arredondamento e conservação double-entry; mapear commit/provider/webhook e estados válidos",
+        "Testar duplicata, reordenação, timeout com efeito incerto, reconciliação e chargeback em fixture sintética",
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Débitos/créditos se conservam por moeda; replay não duplica débito; exactly-once global não é prometido",
+        "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
+      ]
+    },
+    "pack:frontend-experience:guardian_browser_accessibility_specialist": {
+      "name": "guardian_browser_accessibility_specialist",
+      "checkpoints": [
+        "Verificar nome/papel/estado, foco após transição e erro; mapear falha ao critério e impacto real",
+        "Reproduzir teclado e resposta fora de ordem; retestar correção mínima em browser sem alegar AT não executada",
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Jornada essencial é executada; evidência declara versão/browser/AT; scanner não certifica conformidade total",
+        "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
+      ]
+    },
+    "pack:quality-automation:guardian_contract_test_specialist": {
+      "name": "guardian_contract_test_specialist",
+      "checkpoints": [
+        "Definir oráculos por comportamento e risco; escolher contract/property/mutation somente quando detectam falha relevante",
+        "Semear regressão e verificar mensagem/efeito discriminante; isolar dados, registrar repetição e tratar flake sem ocultar falha",
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Teste detecta regressão real; quantidade/cobertura não substitui qualidade; fixture não reproduz cegamente a implementação",
+        "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
+      ]
+    },
+    "pack:security-assurance:guardian_threat_model_specialist": {
+      "name": "guardian_threat_model_specialist",
+      "checkpoints": [
+        "Construir misuse cases/attack tree e priorizar pré-condição, explorabilidade e impacto; identificar controles corretos",
+        "Testar abuso mínimo em fixture autorizada e retestar mitigação; abortar ação externa fora de escopo",
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Achado tem caminho e pré-condição; falso positivo é refutável; ferramenta indisponível não vira passe",
+        "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
+      ]
+    },
+    "pack:windows-tooling:guardian_windows_powershell_specialist": {
+      "name": "guardian_windows_powershell_specialist",
+      "checkpoints": [
+        "Resolver alvos dentro do escopo e rejeitar junction/reparse escape; manter um shell e parâmetros literais sem cmd concatenado",
+        "Exercitar SupportsShouldProcess/WhatIf sem escrita; aplicar só operação autorizada e verificar idempotência/cancelamento/rollback",
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Metacaracteres não viram código; alvo resolvido fica no escopo; elevação é externa e ACL não é presumida privada",
+        "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
       ]
     }
   }

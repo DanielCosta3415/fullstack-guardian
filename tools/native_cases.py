@@ -67,7 +67,7 @@ for a in catalog:
     if id=='S19':check+='d=json.loads(Path(__file__).with_name("case.json").read_text());cap=d["workers"]/d["mean_service_seconds"];print("capacity_rps",cap,"arrival_rps",d["arrival_requests_per_second"],"utilization",d["arrival_requests_per_second"]/cap)\n'
     (p/'check.py').write_text(check,encoding='utf8')
     manifest.append({'id':id,'agent_type':a['name'],'case_directory':str(p),'mode':mode,'task':task})
-    expected.append({'id':id,'expected_concepts':terms,'build':mode=='BUILD','requires_command':'check.py','seeded_failure':id in ('S05','S06','S17','S08','S13','S14','S18','G01','S16','S10','S11')})
+    expected.append({'schema_version':2,'expected_assertions':{'S05':['Amount lacks associated label'],'S06':['Amount lacks associated label'],'S17':['Amount lacks associated label'],'S08':['Negative amount accepted'],'S13':['Bob accessed Alice invoice'],'S14':['Bob accessed Alice invoice'],'S18':['Bob accessed Alice invoice'],'G01':['Bob accessed Alice invoice'],'S16':['Bob accessed Alice invoice'],'S10':['Duplicate charge under concurrency'],'S11':['Atomicity broken: debit committed before credit']}.get(id,[]),'id':id,'expected_concepts':terms,'build':mode=='BUILD','requires_command':'check.py','seeded_failure':id in ('S05','S06','S17','S08','S13','S14','S18','G01','S16','S10','S11')})
 (root/'cases.json').write_text(json.dumps(manifest,indent=2),encoding='utf8')
 (base/'all-agents-criteria.json').write_text(json.dumps(expected,indent=2),encoding='utf8')
 inventory={str(p.relative_to(root)):hashlib.sha256(p.read_bytes()).hexdigest() for p in root.rglob('*') if p.is_file()}

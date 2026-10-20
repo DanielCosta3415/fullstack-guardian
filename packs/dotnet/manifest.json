@@ -7,5 +7,6 @@
       "name": "guardian_dotnet_runtime_specialist",
       "file": "agents/guardian_dotnet_runtime_specialist.toml"
     }
-  ]
+  ],
+  "version": "2.2.0-dev.4"
 }

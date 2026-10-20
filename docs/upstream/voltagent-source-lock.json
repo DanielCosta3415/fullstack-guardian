@@ -1047,7 +1047,8 @@
       "path": "categories/09-meta-orchestration/performance-monitor.toml",
       "sha256": "37df98f3b815b2bfcb4baf2fa500b42b8bac56b394599dcf04f053e44032ba2b",
       "review_decision": "adaptar",
-      "guardian_mapping": "S15,S20"
+      "guardian_mapping": "S19,S21,A00",
+      "mapping_review_note": "Static review correction: capacity/performance, observability and orchestration; S15 is supply-chain security, not performance ownership."
     },
     {
       "name": "task-distributor",
@@ -1231,5 +1232,18 @@
       "review_decision": "adaptar",
       "guardian_mapping": "S26, S16, S18"
     }
-  ]
+  ],
+  "safe_adaptation": {
+    "schema_version": 1,
+    "reviewed_commit": "16f880a2a0486f880da75d2baffcd68af4cc4811",
+    "review_mode": "local-static-hash-locked",
+    "remote_auto_sync": false,
+    "import_or_install_upstream_profiles": false,
+    "truthfulness_waivable_by_parent": false,
+    "models": "inherit; explicit model opt-in requires independent availability/cost validation",
+    "sandbox": "requested profile mode is not proof of effective client/MCP isolation",
+    "corrective_guide": "docs/upstream/SAFE_ADAPTATION.md",
+    "review_tool": "tools/guardian_upstream.py",
+    "competence_certification": "NOT_VERIFIED; static instructions and profile counts cannot certify expertise"
+  }
 }

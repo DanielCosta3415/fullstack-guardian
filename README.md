@@ -1,4 +1,4 @@
-# Full-Stack Engineering Guardian — 2.2.0-dev.3
+# Full-Stack Engineering Guardian — 2.2.0-dev.4
 
 Development candidate: 29 core engineering roles, 20 operational skills, 132 taxonomy capabilities and ten optional specialist packs. The public stable release remains v2.1.0 until a separate reviewed release decision.
 
@@ -30,6 +30,23 @@ Linux/macOS: `bash install.sh --user`. Global paths can be adjusted through CODE
 Canonical metadata now generates the 39 profiles; supervised checks/review/verification are hash-bound to produced artifacts; read retries have bounded backoff; journals have explicit retention and privacy observations; optional packs have rollback; executable domain fixtures and full installed-runtime acceptance are available. See [completion status](docs/COMPLETION-STATUS.md) for actual evidence and blockers.
 
 ## What changed
+
+### Professional assurance in dev.4
+
+All 39 roles have versioned professional contracts: methods, typed capabilities, conditional tool needs, deliverables, completion criteria, handoffs and qualification limits. Core and optional roles have their own checkpoints. Reviewer roles cannot be planned as implementers; internationalization has an explicit S07 overlay.
+
+The primary interprets intent; the router recommends candidates and exposes uncertainty. Plans bind professional contract hashes, obligations and lifecycle responsibilities. Supervised integration requires verified professional outputs by default. Manual integration requires an explicit mode, acknowledgement of absent supervision and the reviewed patch hash.
+
+Professional evaluation is separate from native smoke. A public development corpus contains 103 specialist-judgment scenarios requiring independent SME review and 39 narrow typed postconditions; none is private holdout or universal certification.
+
+```sh
+python tools/guardian_professional.py
+python tools/guardian_qualification.py validate
+python tools/test_native_qualification.py --drypreview
+python tools/guardian_hooks.py install --project PATH
+```
+
+Hook registration simulates by default. `--apply` registers only; Codex's separate hook review/trust still applies and is never bypassed. Native `--run` tests consume account quota. See [professional assurance](docs/PROFESSIONAL_ASSURANCE.md), [hooks](docs/HOOKS.md) and [safe upstream adaptation](docs/upstream/SAFE_ADAPTATION.md).
 
 - Closed task, result and finding contracts; imported plans revalidate identity, risk, phase gates, budgets and acceptance.
 - Reviewed canonical catalog and generated documentation; installed/enabled/compatible optional profiles require an explicit current inventory observation.

@@ -4,8 +4,10 @@ import hashlib,json,re,unicodedata
 from pathlib import Path
 try:
     from .guardian_registry import discover, _contained
+    from .guardian_professional import load_contracts, render_contract
 except ImportError:
     from guardian_registry import discover, _contained
+    from guardian_professional import load_contracts, render_contract
 ROOT=Path(__file__).resolve().parent.parent
 FIELDS={'id','name','aliases','kind','file','sha256','competencies','modes','tool_requirements','model_policy','reviewer','source','license','profile'}
 def normalize(value):return unicodedata.normalize('NFKC',value).casefold().replace('-','_')
@@ -14,11 +16,18 @@ def observed_catalog_document(root=ROOT):
     # Validate every declared profile and namespace before catalog hashing. In
     # particular a manifest must never turn a catalog check into an outside read.
     trusted=discover(root)
+    # The observed helper also serves registry bootstrap fixtures without a catalog.
+    # Full package validation always requires professional contracts below.
+    professional = {c['id']:c for c in load_contracts(root)['contracts']} if (root/'core/professional-contracts-v1.json').is_file() else {}
+    def policy(agent_id):
+        c=professional.get(agent_id)
+        if c is None:
+            return {'competencies':[], 'modes':['audit','explore'], 'tool_requirements':['project_artifact_reader']}
+        return {'competencies':[v['id'] for v in c['capabilities']], 'modes':c['modes'], 'tool_requirements':[v['capability'] for v in c['tool_policy']['required']]}
     agents=json.loads(_contained(root/'core/agents.json',root).read_text(encoding='utf-8'))['agents']; records=[]
     for entry in agents:
         records.append({'id':entry['id'],'name':entry['name'],'aliases':[], 'kind':'core','file':entry['file'],
-          'sha256':hashlib.sha256(_contained(root/entry['file'],root).read_bytes()).hexdigest(),'competencies':entry.get('keywords',[]),
-          'modes':['audit','build','remediate','explore'],'tool_requirements':[], 'model_policy':'inherit',
+          'sha256':hashlib.sha256(_contained(root/entry['file'],root).read_bytes()).hexdigest(),**policy(entry['id']), 'model_policy':'inherit',
           'reviewer':'G02' if entry['id']=='G01' else 'G01','source':'guardian_original','license':'MIT'})
     for pack in trusted['packs']:
         manifest=_contained(root/'packs'/pack['name']/'manifest.json',root)
@@ -29,8 +38,7 @@ def observed_catalog_document(root=ROOT):
             profile=_contained(manifest.parent/entry['file'],manifest.parent)
             rel=profile.relative_to(root).as_posix()
             records.append({'id':'pack:'+doc['name']+':'+entry['name'],'name':entry['name'],'aliases':[], 'kind':'optional','file':rel,
-              'sha256':hashlib.sha256(_contained(root/rel,root).read_bytes()).hexdigest(),'competencies':entry.get('keywords',[]),
-              'modes':['audit','build','remediate','explore'],'tool_requirements':[], 'model_policy':'inherit','reviewer':'G01',
+              'sha256':hashlib.sha256(_contained(root/rel,root).read_bytes()).hexdigest(),**policy('pack:'+doc['name']+':'+entry['name']), 'model_policy':'inherit','reviewer':'G01',
               'source':'guardian_reviewed_adaptation','license':'MIT'})
     return {'schema_version':1,'records':records}
 def validate_catalog(root=ROOT):
@@ -47,6 +55,7 @@ def validate_catalog(root=ROOT):
             names.add(key)
         if r['model_policy']!='inherit' or r['reviewer']==r['id']:raise ValueError('Invalid inherited policy/reviewer')
     generated_outputs(root, check=True)
+    validate_playbooks(root)
     expected=observed_catalog_document(root)
     for record in expected['records']:record['profile']=next(r['profile'] for r in doc['records'] if r['id']==record['id'])
     expected['metadata_documents']=doc['metadata_documents']
@@ -63,6 +72,7 @@ def generated_outputs(root=ROOT, check=True):
     """Generate ONLY known profile/metadata paths; never config, model or permissions."""
     import tomllib
     root=Path(root).absolute();doc=catalog_document(root);outputs={}
+    contracts={c['id']:c for c in load_contracts(root)['contracts']}
     if set(doc)!={'schema_version','records','metadata_documents'} or doc['schema_version']!=1:raise ValueError('Invalid canonical schema')
     if not isinstance(doc.get('records'),list) or not doc['records']:raise ValueError('Expected reviewed profiles')
     for record in doc['records']:
@@ -71,6 +81,11 @@ def generated_outputs(root=ROOT, check=True):
         if not isinstance(profile,dict) or set(profile)!={'name','description','developer_instructions'} or any(not isinstance(v,str) for v in profile.values()):
             raise ValueError('Canonical profile permits only name, description and instructions')
         if profile['name']!=record['name']:raise ValueError('Canonical profile identity mismatch')
+        professional=contracts.get(record['id'])
+        if professional is None or not profile['developer_instructions'].endswith(render_contract(professional)):
+            raise ValueError('Generated professional method drift')
+        if record['modes']!=professional['modes'] or record['tool_requirements']!=[t['capability'] for t in professional['tool_policy']['required']] or record['competencies']!=[v['id'] for v in professional['capabilities']]:
+            raise ValueError('Catalog professional policy drift')
         rel=record['file']
         if not isinstance(rel,str) or not re.fullmatch(r'(?:global/agents/[a-z][a-z0-9_]*|packs/[a-z][a-z0-9_-]*/agents/[a-z][a-z0-9_]*)\.toml',rel):raise ValueError('Invalid generated profile path')
         text=''.join(key+' = '+json.dumps(profile[key],ensure_ascii=False)+'\n' for key in ('name','description','developer_instructions'))
@@ -106,10 +121,32 @@ def generated_outputs(root=ROOT, check=True):
     return {'valid':True,'generated':len(outputs),'permissions_granted':False}
 
 
+def professional_playbooks(root=ROOT):
+    """Compatibility view: existing core keys plus explicit optional specialist keys."""
+    contracts=load_contracts(root)['contracts']
+    result={'schema_version':1,'description':'Derived from professional-contracts-v1.json; declarations are not qualification evidence.','agents':{},'optional_agents':{}}
+    for c in contracts:
+        group='optional_agents' if c['id'].startswith('pack:') else 'agents'
+        result[group][c['id']]={'name':c['name'],'checkpoints':c['procedure']+c['definition_of_done']}
+    return result
+
+
+def validate_playbooks(root=ROOT):
+    root=Path(root).absolute()
+    actual=json.loads(_contained(root/'core/specialist-playbooks-v1.json',root).read_text(encoding='utf8'))
+    if actual!=professional_playbooks(root):raise ValueError('Generated professional playbook drift')
+    return {'valid':True,'profiles':len(actual['agents'])+len(actual['optional_agents'])}
+
+
 if __name__=='__main__':
     import argparse
     p=argparse.ArgumentParser();p.add_argument('--write',action='store_true',help='Generate reviewed canonical outputs; never import local profile edits');a=p.parse_args()
-    if a.write:generated_outputs(check=False)
+    if a.write:
+        # Preflight the compatibility view before any generated write.
+        playbook_target=_contained(ROOT/'core/specialist-playbooks-v1.json',ROOT)
+        playbook_bytes=json.dumps(professional_playbooks(),ensure_ascii=False,indent=2)+'\n'
+        generated_outputs(check=False)
+        playbook_target.write_text(playbook_bytes,encoding='utf8',newline='\n')
     print(json.dumps(validate_catalog()))
 
 

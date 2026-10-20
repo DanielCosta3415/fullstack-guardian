@@ -34,9 +34,9 @@ def same_path(a,b):
     a=a.replace('\\','/').rstrip('/');b=b.replace('\\','/').rstrip('/')
     return a.casefold()==b.casefold() if re.match(r'^[A-Za-z]:/',b) else a==b
 
-def paired_outcomes(payloads,case):
+def paired_outcomes(payloads,case,*,details=False):
     calls={p['call_id']:p for p in payloads if p.get('type') in ('function_call','custom_tool_call') and isinstance(p.get('call_id'),str)}
-    results=[]
+    results=[];seen_results=set()
     for output in payloads:
         if output.get('type') not in ('function_call_output','custom_tool_call_output'):continue
         call=calls.get(output.get('call_id'),{})
@@ -63,10 +63,27 @@ def paired_outcomes(payloads,case):
             elif len(specs)==1:index=0
             else:continue
             if specs[index] and isinstance(data,dict) and type(data.get('exit_code')) is int and isinstance(data.get('output'),str):
-                results.append(data['exit_code'])
+                identity=(call['call_id'],index)
+                if identity in seen_results:return []
+                seen_results.add(identity)
+                results.append({'exit_code':data['exit_code'],'output':data['output'],'call_id':call['call_id']} if details else data['exit_code'])
     return results
 
 def fixture_passed(outcomes,rule):
+    # Schema 1 is historical smoke only; callers must not call it qualification.
+    if rule.get('schema_version') == 2:
+        if not outcomes or any(not isinstance(o,dict) for o in outcomes):return False
+        codes=[o.get('exit_code') for o in outcomes]
+        def expected_failure(o):
+            text=o.get('output','')
+            # The final exception must match the seeded invariant, never an incidental
+            # import/name/syntax error. Full output is bound to exact command + cwd.
+            lines=[line.strip() for line in text.splitlines() if line.strip()]
+            return o.get('exit_code')==1 and bool(lines) and lines[-1] in [
+                'AssertionError: '+reason for reason in rule.get('expected_assertions',[])]
+        if rule.get('build'):
+            return len(outcomes)>=2 and (expected_failure(outcomes[0]) if rule.get('seeded_failure') else codes[0]==0) and codes[-1]==0
+        return expected_failure(outcomes[-1]) if rule.get('seeded_failure') else codes[-1]==0
     if rule.get('build'):
         return len(outcomes)>=2 and (1 in outcomes if rule.get('seeded_failure') else outcomes[0]==0) and outcomes[-1]==0
     return bool(outcomes) and outcomes[-1]==(1 if rule.get('seeded_failure') else 0)

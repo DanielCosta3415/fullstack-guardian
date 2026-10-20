@@ -84,6 +84,43 @@ def _persist(ex, home, record):
     return record
 
 
+def _professional_evidence(ex, home, state, plan, workflow):
+    """Corroborate specialist output against the actual stream, files and checks.
+
+    This is scoped artifact verification, not an authenticated SME credential.
+    The producer cannot waive an obligation or accept its own handoff.
+    """
+    seals = {}
+    for task in plan['tasks']:
+        ident = task['id']; produced = state['tasks'][ident]
+        log = ex.safe(home/'events'/(ident+'-attempt-'+str(produced['attempts'])+'.jsonl'))
+        output = ex.professional_output(log, task)
+        path = ex.safe(home/'results'/(ident+'.professional.json'))
+        if output is None or not path.is_file() or path.stat().st_size > 65536:
+            raise WorkflowError('Missing valid professional result for '+ident)
+        if (hashlib.sha256(path.read_bytes()).hexdigest() != produced.get('professional_output_sha256')
+                or json.loads(path.read_text(encoding='utf8')) != output):
+            raise WorkflowError('Professional result differs from produced CLI evidence')
+        if any(x['status'] != 'produced' for x in output['obligations']) or output['handoff']['status'] != 'pending_consumer_acceptance':
+            raise WorkflowError('Professional obligations/handoff remain blocked or not verified')
+        if any(r['severity'] in ('high', 'critical') for r in output['residual_risks']):
+            raise WorkflowError('New material professional risk requires re-planning and review')
+        cwd = ex.safe(Path(produced['worktree']))
+        current = inventory(cwd)
+        for artifact in output['artifacts']:
+            if current.get(artifact['path']) != artifact['sha256']:
+                raise WorkflowError('Professional artifact changed or missing')
+        approved = {ident+':'+str(i): argv for i, argv in enumerate(task['contract']['checks'])}
+        actual = {ident+':'+str(i): c for i, c in enumerate(c for c in workflow['checks'] if c['task_id'] == ident)}
+        for claim in output['checks']:
+            cid = claim['id']
+            if (cid not in approved or claim['argv'] != approved[cid] or ex.safe(cwd / claim['cwd']) != cwd
+                    or cid not in actual or claim['status'] != 'passed' or claim['exit_code'] != actual[cid]['exit_code']):
+                raise WorkflowError('Professional check claim lacks matching supervisor observation')
+        seals[ident] = hashlib.sha256(path.read_bytes()).hexdigest()
+    return seals
+
+
 def inspect(home):
     ex, home, state, plan, seal = _context(home)
     record = _load(home, state, seal)
@@ -116,6 +153,9 @@ def inspect(home):
             or home not in path.parents or not path.is_file()
             or hashlib.sha256(path.read_bytes()).hexdigest()!=review.get('sha256')):
             raise WorkflowError('Independent review evidence changed/missing')
+    if record['state'] in ('verified', 'integrated'):
+        if record.get('professional_outputs') != _professional_evidence(ex, home, state, plan, record):
+            raise WorkflowError('Professional output verification changed/missing')
     if record['state']=='integrated':
         receipt=json.loads(ex.safe(home/'integration-result.json').read_text(encoding='utf-8'))
         if receipt.get('state')!='applied_uncommitted' or receipt.get('patch_sha256')!=record.get('patch_sha256'):
@@ -248,7 +288,7 @@ def review(home, *, reviewer, producer, evidence, grant):
 
 
 def verify(home):
-    ex,home,state,_,seal=_context(home)
+    ex,home,state,plan,seal=_context(home)
     lock=ex._locked(home)
     try:
         record=inspect(home)
@@ -256,7 +296,9 @@ def verify(home):
         review=record['review']; path=ex.safe(home/review['path'])
         if home not in path.parents or not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest()!=review['sha256']:
             raise WorkflowError('Independent review evidence changed/missing')
-        record.update(state='verified', verification_scope='approved local checks and operator-supplied independent review; not release readiness')
+        professional = _professional_evidence(ex, home, state, plan, record)
+        record.update(state='verified', professional_outputs=professional,
+                      verification_scope='bound professional outputs/artifacts, approved local checks and operator-supplied independent review; not SME qualification or release readiness')
         return _persist(ex,home,record)
     finally: lock.unlink(missing_ok=True)
 

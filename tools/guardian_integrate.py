@@ -38,11 +38,18 @@ def _command(repo: Path, *args: str, data: bytes | None = None, check: bool = Tr
     return proc
 
 
-def inspect(home: Path) -> tuple[dict, bytes]:
+def inspect(home: Path, *, mode: str = "supervised") -> tuple[dict, bytes]:
     """Check trust boundary, reviewed state, patch and target applicability."""
     home = safe(home)
     state, plan = _load(home)
-    if (home / 'workflow.json').exists():
+    if mode not in ("supervised", "manual"):
+        raise IntegrationError("Unknown integration mode")
+    workflow_exists = (home / 'workflow.json').exists()
+    if mode == "supervised" and not workflow_exists:
+        raise IntegrationError("Supervised integration requires a verified supervisor workflow; missing evidence cannot select manual mode")
+    if mode == "manual" and workflow_exists:
+        raise IntegrationError("Manual mode cannot relabel a supervised run; inspect and complete its workflow")
+    if mode == "supervised":
         try:
             from .guardian_workflow import inspect as workflow_inspect
         except ImportError:
@@ -107,15 +114,21 @@ def inspect(home: Path) -> tuple[dict, bytes]:
         "scope_enforcement": "postcondition_only",
         "native_subagents_verified": state.get("native_subagents_verified", False),
         "manual_approval_required": True,
+        "integration_mode": mode,
+        "supervisor_verified": mode == "supervised",
+        "verification_label": "SUPERVISED_CHECKS_AND_REVIEW" if mode == "supervised" else "NOT_VERIFIED_BY_SUPERVISOR",
         "notice": "Exact patch reviewed? No tests are verified by this command. Human must inspect diff, run tests and explicitly approve apply.",
     }, patch)
 
 
 def integrate(home: Path, *, apply: bool = False, confirm_sha256: str | None = None,
-              grant: Grant | None = None) -> dict:
-    report, patch = inspect(home)
+              grant: Grant | None = None, mode: str = "supervised",
+              acknowledge_unverified: bool = False) -> dict:
+    report, patch = inspect(home, mode=mode)
     if not apply:
         return report
+    if mode == "manual" and acknowledge_unverified is not True:
+        raise IntegrationError("Manual apply requires explicit acknowledgement that supervisor checks/review are NOT VERIFIED")
     if not isinstance(confirm_sha256, str) or not HASH.fullmatch(confirm_sha256) or confirm_sha256 != report["patch_sha256"]:
         raise IntegrationError("Explicit SHA-256 confirmation does not match reviewed patch")
     home = safe(home)
@@ -144,7 +157,7 @@ def integrate(home: Path, *, apply: bool = False, confirm_sha256: str | None = N
         raise
     try:
         # Re-read under lock: no stale review or altered source / worktree allowed.
-        again, signed_patch = inspect(home)
+        again, signed_patch = inspect(home, mode=mode)
         if again["patch_sha256"] != confirm_sha256 or signed_patch != patch:
             raise IntegrationError("Reviewed changes drifted before integration")
         if (home / "integration-intent.json").exists() or (home / "integration-result.json").exists():
@@ -152,6 +165,7 @@ def integrate(home: Path, *, apply: bool = False, confirm_sha256: str | None = N
         atomic_json(home / "integration-intent.json", {
             "schema_version": 1, "patch_sha256": confirm_sha256,
             "base_revision": report["base_revision"], "state": "apply_pending",
+            "integration_mode": mode, "supervisor_verified": mode == "supervised",
         })
         _command(target, "apply", "--binary", "-", data=patch)
         # Git apply does not commit. Ensure output matches the approved patch.
@@ -161,12 +175,14 @@ def integrate(home: Path, *, apply: bool = False, confirm_sha256: str | None = N
         atomic_json(home / "integration-result.json", {
             "schema_version": 1, "patch_sha256": confirm_sha256,
             "base_revision": report["base_revision"], "state": "applied_uncommitted",
+            "integration_mode": mode, "supervisor_verified": mode == "supervised",
         })
         try:
             from .guardian_workflow import record_integrated
         except ImportError:
             from guardian_workflow import record_integrated
-        record_integrated(home, confirm_sha256)
+        if mode == "supervised":
+            record_integrated(home, confirm_sha256)
     finally:
         lock.unlink(missing_ok=True)
         execution_lock.unlink(missing_ok=True)
@@ -174,6 +190,8 @@ def integrate(home: Path, *, apply: bool = False, confirm_sha256: str | None = N
         "applied": True, "files_changed": report["files_changed"],
         "patch_sha256": confirm_sha256, "committed": False, "pushed": False,
         "tested": False, "production_deployed": False,
+        "integration_mode": mode, "supervisor_verified": mode == "supervised",
+        "verification_label": report["verification_label"],
         "notice": "Patch is now UNCOMMITTED in original repository. Run trusted tests and review before committing.",
     }
 
@@ -183,9 +201,14 @@ def main() -> int:
     parser.add_argument("--home", type=Path, required=True)
     parser.add_argument("--apply", action="store_true")
     parser.add_argument("--confirm-sha256", help="Reviewed patch hash; mandatory for --apply")
+    parser.add_argument("--mode", choices=("supervised", "manual"), default="supervised",
+                        help="Supervised is mandatory by default; manual is an explicitly unverified legacy path")
+    parser.add_argument("--acknowledge-unverified", action="store_true",
+                        help="Required with manual apply; never establishes test or review evidence")
     args = parser.parse_args()
     try:
-        result = integrate(args.home, apply=args.apply, confirm_sha256=args.confirm_sha256)
+        result = integrate(args.home, apply=args.apply, confirm_sha256=args.confirm_sha256,
+                           mode=args.mode, acknowledge_unverified=args.acknowledge_unverified)
         print(json.dumps(result, indent=2, ensure_ascii=False))
         return 0
     except (OSError, ValueError, subprocess.SubprocessError) as exc:

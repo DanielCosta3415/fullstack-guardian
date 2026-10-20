@@ -4,6 +4,13 @@ import argparse, json, os, re, sys, tomllib, unicodedata, stat
 from collections import Counter
 from pathlib import Path
 from datetime import datetime,timezone
+try:
+    from .guardian_intent import DOMAINS, RISK, interpret_candidates
+except ImportError:
+    try:
+        from tools.guardian_intent import DOMAINS, RISK, interpret_candidates
+    except ImportError:
+        from guardian_intent import DOMAINS, RISK, interpret_candidates
 ROOT=Path(__file__).resolve().parent.parent
 IGNORE={'.git','node_modules','bin','obj','dist','build','.next','.venv','venv','__pycache__','.terraform','coverage','target','.gradle','.idea','.vs','.guardian'}
 
@@ -69,19 +76,26 @@ TRIGGERS={
 
 SKILLS={'audit':'fullstack-audit','release':'production-readiness','security':'security-review','frontend':'frontend-assurance','backend':'backend-assurance','architecture':'architecture-assessment'}
 
-def route(prompt,inventory=None,mode='auto',stage=None,eligible_profiles=None,available_roles=None):
+def _triggered(pattern,text):
+    # Prefixes still permit Portuguese inflections, but embedded substrings
+    # such as reproducao/production do not create a release obligation.
+    return any(re.search(r'(?<!\w)'+re.escape(token),text) for token in pattern.split('|'))
+
+def route(prompt,inventory=None,mode='auto',stage=None,eligible_profiles=None,available_roles=None,intent_contract=None):
     if not prompt.strip():raise ValueError('Prompt vazio')
-    text=norm(prompt);hit={k:any(token in text for token in v.split('|')) for k,v in TRIGGERS.items()}
+    text=norm(prompt);hit={k:_triggered(v,text) for k,v in TRIGGERS.items()}
     # Remove narrowly scoped explicit exclusions from release candidate selection.
     # Destructive/security/financial risk is deliberately never suppressed by this.
     release_text=re.sub(r'\b(?:no|without|sem)\s+(?:release|deploy(?:ment)?|production|producao)(?:\s+(?:or|e|ou)\s+(?:release|deploy(?:ment)?|production|producao))?(?:\s+actions)?','',text)
     release_text=re.sub(r'\b(?:do not|dont|nao)\s+(?:deploy|implant\w*)\b','',release_text)
-    hit['release']=any(token in release_text for token in TRIGGERS['release'].split('|'))
+    hit['release']=_triggered(TRIGGERS['release'],release_text)
     mode=('AUDIT' if hit['audit'] else 'BUILD') if mode=='auto' else mode.upper()
     if mode not in ('AUDIT','BUILD','REMEDIATE','EXPLORE'):raise ValueError('Modo inválido')
     critical=hit['destructive'] and (hit['release'] or hit['finance'])
     high=any(hit[x] for x in ('finance','security','concurrency','destructive'))
     risk='critical' if critical else 'high' if high else 'medium' if any(hit[x] for x in ('release','data','architecture')) else 'low'
+    interpretation=interpret_candidates(prompt, intent_contract)
+    risk=RISK[max(RISK.index(risk),RISK.index(interpretation['minimum_risk']))]
     selected={}
     def add(ids,reason):
         for id in ids.split():selected.setdefault(id,[]).append(reason)
@@ -91,6 +105,8 @@ def route(prompt,inventory=None,mode='auto',stage=None,eligible_profiles=None,av
       ('release','S20 S23','Release/confiabilidade'),('ai','S26','IA incorporada ao produto')]
     for tag,ids,reason in rules:
         if hit[tag]:add(ids,reason)
+    for domain in interpretation['candidate_domains']:
+        add(' '.join(DOMAINS[domain]),'Obligation candidate: '+domain+'; primary must confirm relevance')
     if 'escalabilidade' in text or 'latencia' in text or 'performance' in text or 'carga' in text:add('S19','Desempenho/capacidade')
     if any(w in text for w in ('observabil','logs','trace','tracing','monitoramento','alerta','incidente')):add('S21','Observabilidade e resposta a incidentes')
     if any(w in text for w in ('indisponibil','falha operacional','incidente de producao','recuperacao de desastre')):add('S20','SRE, disponibilidade e recuperação')
@@ -104,6 +120,18 @@ def route(prompt,inventory=None,mode='auto',stage=None,eligible_profiles=None,av
         if n>=2:matches.append((n,a['id']))
     for _,id in sorted(matches,key=lambda it:(-it[0],it[1]))[:3]:add(id,'Especialidade fortemente relacionada ao pedido')
     tags=set(inventory.get('tags',[])) if inventory else set()
+    phase_responsibility=[]
+    if stage is not None:
+        phases=load('lifecycle-v1.json')['phases']
+        phase=next((p for p in phases if p['id']==stage),None)
+        if phase is None:raise ValueError('Invalid lifecycle stage')
+        # An explicit lifecycle phase supplies an accountable lead for ambiguous
+        # requests. It does not justify delegating every specialist in that phase.
+        if not selected:
+            lead=next((aid for aid in phase['responsible'] if aid not in ('G01','G02')),None)
+            if lead:add(lead,'Lifecycle lead: '+stage+'; narrow scope during primary triage')
+        for aid in phase['responsible']:
+            if aid in ('G01','G02'):add(aid,'Required lifecycle review: '+stage)
     if not selected:
         add('S05' if 'frontend' in tags and 'backend' not in tags else 'S08' if 'backend' in tags and 'frontend' not in tags else 'S02','Triagem inicial; escopo não inequívoco')
     if mode=='AUDIT':
@@ -145,6 +173,15 @@ def route(prompt,inventory=None,mode='auto',stage=None,eligible_profiles=None,av
                 del selected[aid]
     if mode=='EXPLORE':
         selected={k:v for k,v in selected.items() if k not in ('S18','S17') or risk in ('high','critical')}
+    if stage is not None:
+        for aid in phase['responsible']:
+            phase_responsibility.append({'agent_id':aid,'disposition':'selected' if aid in selected else 'not_delegated',
+                'reason':'; '.join(selected[aid]) if aid in selected else 'No matching obligation for '+aid+' among current domains ['+', '.join(interpretation['candidate_domains'])+']; primary must confirm this scope-based non-delegation before execution.',
+                'basis':interpretation['candidate_domains'], 'requires_primary_confirmation':aid not in selected})
+    for obligation in interpretation['obligation_coverage']:
+        obligation['selected_agents']=[aid for aid in obligation['candidate_agents'] if aid in selected]
+        obligation['unselected_agents']=[aid for aid in obligation['candidate_agents'] if aid not in selected]
+        obligation['disposition']='candidate_covered' if obligation['selected_agents'] else 'requires_primary_resolution'
     priority={'G02':98,'G01':97,'S13':90,'S14':90,'S10':88,'S11':87,'S18':85,'S03':80,'S20':79,'S23':78,'S16':77,'S08':70,'S05':70}
     ranked=sorted(selected,key=lambda a:(-priority.get(a,50),a))
     limit=8 if mode=='AUDIT' else 6 if risk in ('high','critical') else 4
@@ -163,10 +200,11 @@ def route(prompt,inventory=None,mode='auto',stage=None,eligible_profiles=None,av
       'agents':[{'id':id,'name':entries[id]['name'],'reason':sorted(set(selected[id]))} for id in ranked],
       'execution_waves':[p['agents'] for p in phases],'phases':phases,'suggested_skills':list(dict.fromkeys(skills)),
       'approval_boundaries':approvals,'routing_confidence':'medium' if any(hit.values()) else 'low',
-      'abstention_required':not any(hit.values()),'excluded_profiles':excluded_profiles,
-      'delegation_required':risk in ('high','critical') or mode=='AUDIT' or len([k for k,v in hit.items() if v])>1,
+      'abstention_required':not any(hit.values()) and not interpretation['candidate_domains'],'excluded_profiles':excluded_profiles,
+      'intent_analysis':interpretation,'phase_responsibility':phase_responsibility,
+      'delegation_required':risk in ('high','critical') or mode=='AUDIT' or len([k for k,v in hit.items() if v])>1 or len(interpretation['candidate_domains'])>1,
       'operating_mode':'read_only_exploration' if mode=='EXPLORE' or stage in ('discovery','requirements') else 'task_scoped',
-      'notice':'Regras heurísticas. O Codex deve validar e convocar subagentes nativamente; este script NÃO cria subagentes.'}
+      'notice':'Candidate rules and declared intent are advisory, not complete semantic understanding, authority or execution. The primary must adjudicate coverage and invoke native delegation.'}
 
 
 def assess(project, profile):
@@ -323,6 +361,7 @@ def main():
     sub=ap.add_subparsers(dest='cmd',required=True)
     p=sub.add_parser('inspect');p.add_argument('--project',default='.')
     p=sub.add_parser('route');p.add_argument('--project');g=p.add_mutually_exclusive_group(required=True);g.add_argument('--prompt');g.add_argument('--prompt-file');p.add_argument('--mode',choices=['auto','build','audit','remediate','explore'],default='auto')
+    p.add_argument('--intent-file',type=Path,help='Strict primary-declared intent JSON; advisory only');p.add_argument('--stage',choices=[p['id'] for p in load('lifecycle-v1.json')['phases']])
     p=sub.add_parser('assess');p.add_argument('--project',default='.');p.add_argument('--profile',required=True)
     sub.add_parser('validate');sub.add_parser('eval')
     p=sub.add_parser('audit-template');p.add_argument('--project',default='.');p.add_argument('--out',required=True)
@@ -330,7 +369,7 @@ def main():
     a=ap.parse_args()
     try:
         if a.cmd=='inspect':out=inspect_project(a.project)
-        elif a.cmd=='route':out=route(a.prompt if a.prompt is not None else Path(a.prompt_file).read_text(encoding='utf8'),inspect_project(a.project) if a.project else None,a.mode)
+        elif a.cmd=='route':out=route(a.prompt if a.prompt is not None else Path(a.prompt_file).read_text(encoding='utf8'),inspect_project(a.project) if a.project else None,a.mode,stage=a.stage,intent_contract=json.loads(a.intent_file.read_text(encoding='utf8')) if a.intent_file else None)
         elif a.cmd=='assess':out=assess(a.project,json.loads(Path(a.profile).read_text(encoding='utf8')))
         elif a.cmd=='validate':out=validate()
         elif a.cmd=='eval':out=evals()
