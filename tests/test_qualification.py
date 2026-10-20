@@ -97,9 +97,51 @@ class QualificationTests(unittest.TestCase):
     def test_oracle_mutation_rejected_by_expected_corpus_digest(self):
         corpus,obs,context=self.setup_observation()
         case=next(c for c in corpus['cases'] if c['id']==obs['case_id'])
-        case['oracle']['expected']={'integrate':True}
-        obs['artifact']={'integrate':True};obs['artifact_sha256']=q.digest(obs['artifact'])
+        key=next(k for k,v in case['oracle']['expected'].items() if type(v) is bool)
+        case['oracle']['expected'][key]=not case['oracle']['expected'][key]
+        obs['artifact']=copy.deepcopy(case['oracle']['expected']);obs['artifact_sha256']=q.digest(obs['artifact'])
         self.assertEqual(self.evaluate(corpus,[obs],context)['rows'][0]['state'],'STALE')
+
+    def test_preflight_rejects_oracle_boolean_type_confusion(self):
+        corpus,_,_=self.setup_observation()
+        case=next(c for c in corpus['cases'] if c['oracle']['kind']=='structured_exact')
+        key=next(k for k,v in case['oracle']['expected'].items() if type(v) is bool)
+        for wrong in ('true',1,None):
+            with self.subTest(wrong=wrong):
+                altered=copy.deepcopy(corpus)
+                target=next(c for c in altered['cases'] if c['id']==case['id'])
+                target['oracle']['expected'][key]=wrong
+                with self.assertRaisesRegex(ValueError,'Oracle violates'):q.validate(altered)
+
+    def test_preflight_rejects_undeclared_required_and_unsupported_assertion(self):
+        for mode in ('required','unknown','enum','array'):
+            with self.subTest(mode=mode):
+                corpus,_,_=self.setup_observation()
+                case=next(c for c in corpus['cases'] if c['oracle']['kind']=='structured_exact')
+                schema=case['artifacts']['schema']
+                if mode=='required':schema['required'].append('undeclared')
+                elif mode=='unknown':schema['anyOf']=[]
+                elif mode=='enum':schema['properties']['extra']={'type':'boolean','enum':['false']};schema['required'].append('extra')
+                else:schema['properties']['extra']={'type':'array','items':{'type':'unsupported'}};schema['required'].append('extra')
+                with self.assertRaises(ValueError):q.validate(corpus)
+
+    def test_preflight_checks_nested_oracle_values_and_enum_membership(self):
+        for shape,wrong in (({'type':'array','items':{'type':'integer'}},[True]),({'type':'string','enum':['READY','BLOCKED']},'unknown'),({'type':'number'},float('inf'))):
+            corpus,_,_=self.setup_observation()
+            case=next(c for c in corpus['cases'] if c['oracle']['kind']=='structured_exact')
+            schema=case['artifacts']['schema'];schema['properties']['extra']=shape;schema['required'].append('extra')
+            case['oracle']['expected']['extra']=wrong
+            with self.assertRaisesRegex(ValueError,'Oracle violates'):q.validate(corpus)
+
+    def test_number_representation_follows_schema_without_boolean_coercion(self):
+        corpus,obs,context=self.setup_observation()
+        case=next(c for c in corpus['cases'] if c['id']==obs['case_id'])
+        schema=case['artifacts']['schema'];schema['properties']['measurement']={'type':'number','enum':[1]};schema['required'].append('measurement')
+        case['oracle']['expected']['measurement']=1
+        obs['bindings']['corpus_sha256']=q.digest(corpus);context['profiles'][case['agent_id']]=obs['bindings'].copy()
+        for value,state in ((1.0,'OBSERVED_PASS'),(True,'FAIL')):
+            obs['artifact']=copy.deepcopy(case['oracle']['expected']);obs['artifact']['measurement']=value;obs['artifact_sha256']=q.digest(obs['artifact'])
+            self.assertEqual(self.evaluate(corpus,[obs],context)['rows'][0]['state'],state)
 
     def test_open_artifact_cannot_self_approve_sme(self):
         corpus,obs,context=self.setup_observation();case=corpus['cases'][0]

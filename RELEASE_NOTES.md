@@ -2,6 +2,8 @@
 
 Implements the N01–N18 audit response: 39 role-specific professional contracts and generated profiles/checkpoints, typed capability/tool policies, intent/obligation and lifecycle coverage, contract-bound results and supervised integration by default, a 142-case development qualification corpus, strict seeded-failure oracles, a two-trial native professional harness, opt-in trust-preserving advisory hooks, and a hash-locked upstream adaptation linter/guide. Open SME scenarios, private holdout and production readiness are not inferred from implementation or synthetic tests. Stable/global installation remains a separate reviewed action.
 
+Native compatibility fixes deliver the public case inventory through UTF-8 stdin and resolve only the running Python interpreter's symlink when registering hooks. Corpus1.1.0 clarifies all39 typed case contracts after independent ambiguity reviews, preserves the original oracle values and historical observations, and rejects invalid artifact schemas or incompatible oracles before model execution. See docs/PROFESSIONAL_ASSURANCE.md for the original34/39 repeated-case result and its limits.
+
 # 2.2.0-dev.3 — completion candidate
 
 Adds canonical generation of profiles/metadata, supervised acceptance transitions, bounded read retries, journal retention/privacy diagnostics, pack rollback, executable domain adapters, real Windows client probing, installed-runtime functional suites, call-correlated native acceptance, and explicit hosted-rootless grading. Current evidence and unresolved external gates are in docs/COMPLETION-STATUS.md. This is a development candidate; no stable promotion is inferred.

@@ -79,6 +79,42 @@ class NativeQualificationTests(unittest.TestCase):
                     self.assertIn(value,field['enum'])
                     self.assertGreaterEqual(len(field['enum']),2)
 
+    def test_calibration_describes_every_typed_field_without_answer_defaults(self):
+        self.assertEqual(self.corpus['corpus_version'],'1.1.0')
+        self.assertIn('Historical 34/39',self.corpus['source'])
+        typed=[c for c in self.corpus['cases'] if c['oracle']['kind']=='structured_exact']
+        self.assertEqual(len(typed),39)
+        for case in typed:
+            schema=case['artifacts']['schema']
+            self.assertGreater(len(schema['description']),80)
+            for name,field in schema['properties'].items():
+                with self.subTest(case=case['id'],field=name):
+                    self.assertIsInstance(field.get('description'),str)
+                    self.assertGreater(len(field['description']),35)
+                    self.assertNotIn('const',field)
+                    self.assertNotIn('default',field)
+                    for leak in ('expected value is','correct answer is','answer must be'):
+                        self.assertNotIn(leak,field['description'].lower())
+
+    def test_calibration_preserves_all_sme_oracles_and_case_identities(self):
+        # Frozen pre-calibration designs/oracles, not model results. Changes to
+        # these hashes require a separately reviewed corpus, never retry repair.
+        sme=[c for c in self.corpus['cases'] if c['oracle']['kind']=='independent_sme']
+        self.assertEqual(len(sme),103)
+        self.assertEqual(q.digest(sme),'d743c1257de7e10b570d0fd3efdcee133210630f3a58fe2cb6bd92ca44b9039c')
+        self.assertEqual(q.digest({c['id']:c['oracle'] for c in self.corpus['cases']}),
+                         '0e08b926662c2c43bb62fdae9bb2e0af1faf8be53cca7af01fc6ef8f308cd839')
+        identities=[{k:c[k] for k in ('id','agent_id','agent_type','family','split')} for c in self.corpus['cases']]
+        self.assertEqual(q.digest(identities),'ca90af69d83f147adedd097dfab7995134fef28cb09f8a77b564d0ae3f7bd5fb')
+
+    def test_access_and_release_decision_enums_have_distinct_defined_domains(self):
+        cases={c['agent_id']:c for c in self.corpus['cases'] if c['oracle']['kind']=='structured_exact'}
+        access=cases['S14']['artifacts']['schema']['properties']['decision']
+        release=cases['G02']['artifacts']['schema']['properties']['decision']
+        self.assertEqual(access['enum'],['ALLOW','DENY'])
+        self.assertEqual(release['enum'],['READY','BLOCKED','DENY'])
+        self.assertIn('permanently forbidden',release['description'])
+
     def test_native_child_metadata_and_json_accept(self):
         child=self.inspect(self.rows())
         self.assertEqual(child['session_id'],'child-1')

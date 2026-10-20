@@ -9,6 +9,7 @@ import argparse
 import datetime as dt
 import hashlib
 import json
+import math
 import os
 import stat
 from pathlib import Path
@@ -42,6 +43,42 @@ def load_json(path):
                       parse_constant=lambda _:(_ for _ in ()).throw(ValueError('Non-finite number')))
 
 
+def _typed_value(value, schema):
+    """Validate the bounded schema subset used by public typed cases."""
+    kind=schema['type']
+    valid={'boolean':lambda:type(value) is bool,
+           'integer':lambda:type(value) is int,
+           'number':lambda:type(value) is int or type(value) is float and math.isfinite(value),
+           'string':lambda:isinstance(value,str),
+           'array':lambda:isinstance(value,list) and all(_typed_value(v,schema['items']) for v in value),
+           'object':lambda:isinstance(value,dict) and set(value)==set(schema['properties']) and all(_typed_value(value[k],s) for k,s in schema['properties'].items())}[kind]()
+    return valid and ('enum' not in schema or any(value==v for v in schema['enum']))
+
+
+def _typed_schema(schema, depth=0):
+    # Not a general JSON Schema implementation: unknown assertions fail closed.
+    if depth>8 or not isinstance(schema,dict):raise ValueError('Invalid typed artifact schema')
+    kind=schema.get('type')
+    if kind not in ('boolean','integer','number','string','array','object'):raise ValueError('Unsupported typed artifact type')
+    allowed={'type','description'}
+    if kind=='object':
+        allowed|={'properties','required','additionalProperties'}
+        props=schema.get('properties');required=schema.get('required')
+        if not isinstance(props,dict) or not 1<=len(props)<=100 or any(not isinstance(k,str) or not k for k in props):raise ValueError('Invalid typed object properties')
+        if not isinstance(required,list) or any(not isinstance(k,str) for k in required) or len(required)!=len(set(required)) or set(required)!=set(props) or schema.get('additionalProperties') is not False:raise ValueError('Typed object requires every declared property exactly once')
+        for child in props.values():_typed_schema(child,depth+1)
+    elif kind=='array':
+        allowed.add('items');_typed_schema(schema.get('items'),depth+1)
+    else:
+        allowed.add('enum')
+    if set(schema)-allowed:raise ValueError('Unsupported typed schema assertion')
+    if 'description' in schema and (not isinstance(schema['description'],str) or not schema['description'].strip()):raise ValueError('Invalid typed field description')
+    if 'enum' in schema:
+        values=schema['enum']
+        base={k:v for k,v in schema.items() if k!='enum'}
+        if not isinstance(values,list) or not 1<=len(values)<=1000 or any(not _typed_value(v,base) for v in values) or any(v in values[:i] for i,v in enumerate(values)):raise ValueError('Invalid typed enum')
+
+
 def validate(corpus):
     if not isinstance(corpus,dict):raise ValueError('Expected corpus object')
     if corpus.get('schema_version')!=1 or corpus.get('evidence_class')!='PROFESSIONAL_CASE_DESIGN':
@@ -64,6 +101,9 @@ def validate(corpus):
         if oracle.get('kind') not in ('structured_exact','independent_sme'):raise ValueError('Unknown oracle')
         if oracle['kind']=='structured_exact':
             if not isinstance(oracle.get('expected'),dict) or not oracle['expected']:raise ValueError('Missing deterministic postconditions')
+            schema=case['artifacts'].get('schema')
+            _typed_schema(schema)
+            if schema['type']!='object' or not _typed_value(oracle['expected'],schema):raise ValueError('Oracle violates typed artifact schema')
         elif oracle.get('review_required') is not True:raise ValueError('Open artifacts require SME review')
     return {'valid':True,'case_count':len(cases),'agent_count':len(agents),
             'development_cases':len(cases),'private_holdout_cases':0,
@@ -131,7 +171,7 @@ def evaluate(corpus,observations,context,*,trust_observations=False,now=None):
                         state='BLOCKED';reason='Unsafe outcomes not explicitly excluded by observer'
                     elif oracle['kind']=='independent_sme':
                         state='REQUIRES_SME';reason='Domain correctness requires independent authenticated SME review; JSON approval is not certification'
-                    elif artifact==oracle['expected'] and type(artifact)==type(oracle['expected']) and digest(artifact)==digest(oracle['expected']):
+                    elif _typed_value(artifact,case['artifacts']['schema']) and artifact==oracle['expected']:
                         state='OBSERVED_PASS';reason='All exact typed domain postconditions satisfied; provenance unauthenticated'
                     else:
                         state='FAIL';reason='Structured domain postconditions differ (check OK is irrelevant)'
