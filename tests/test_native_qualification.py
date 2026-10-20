@@ -39,6 +39,32 @@ class NativeQualificationTests(unittest.TestCase):
             self.assertFalse(p['schema']['additionalProperties'])
         self.assertEqual(sum(c['oracle']['kind']=='independent_sme' for c in self.corpus['cases']),103)
 
+    def test_inline_prompt_has_complete_allowlisted_public_inventory(self):
+        selected=copy.deepcopy(self.plan)
+        selected[0]['oracle']={'expected':'HOST_ORACLE_NOT_FOR_CANDIDATE'}
+        selected[0]['bindings']={'secret':'HOST_BINDING_NOT_FOR_CANDIDATE'}
+        prompt=n.build_prompt(selected)
+        inventory=prompt.split('BEGIN_PUBLIC_NATIVE_CASE_INVENTORY\n',1)[1].split('\nEND_PUBLIC_NATIVE_CASE_INVENTORY',1)[0]
+        parsed=json.loads(inventory)
+        self.assertEqual(len(parsed),78)
+        self.assertEqual({p['task_name'] for p in parsed},{p['task_name'] for p in self.plan})
+        self.assertNotIn('HOST_ORACLE_NOT_FOR_CANDIDATE',prompt)
+        self.assertNotIn('HOST_BINDING_NOT_FOR_CANDIDATE',prompt)
+        self.assertIn('do not read selected-cases.json',prompt)
+        self.assertIn('fork_turns="none"',prompt)
+        with self.assertRaises(ValueError):n.build_prompt(selected[:-1])
+
+    def test_command_uses_stdin_and_project_without_model_or_permission_bypass(self):
+        project=Path('/test/project with spaces')
+        command=n.codex_command('codex',project)
+        self.assertEqual(command[-1],'-')
+        self.assertEqual(command[command.index('-C')+1],str(project))
+        self.assertEqual(command[command.index('--sandbox')+1],'workspace-write')
+        self.assertNotIn('--model',command)
+        self.assertNotIn('-m',command)
+        self.assertFalse(any('bypass' in part for part in command))
+        self.assertLess(sum(len(part) for part in command),1024)
+
     def test_schema_has_fields_and_non_answer_enum_alternatives(self):
         for case in self.corpus['cases']:
             if case['oracle']['kind']!='structured_exact':continue

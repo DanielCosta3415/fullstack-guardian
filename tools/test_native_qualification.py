@@ -128,6 +128,29 @@ def private_write(path,text):
     with os.fdopen(fd,'w',encoding='utf8') as stream:stream.write(text)
 
 
+def build_prompt(selected):
+    """Deliver public inputs inline: no model shell/filesystem read is needed.
+
+    A fresh selection avoids accidentally passing host oracles/bindings when a
+    caller adds fields to the internal plan. Stdin avoids Windows argv limits.
+    """
+    allowed=('task_name','trial','case_id','agent_id','agent_type','scenario','schema')
+    public=[{key:item[key] for key in allowed} for item in selected]
+    if len(public)!=78 or len({item['task_name'] for item in public})!=78:
+        raise ValueError('Inline plan requires all 78 distinct native trials')
+    return '''Authorized bounded native data-only development evaluation. The COMPLETE case inventory is supplied inline below as JSON; do not read selected-cases.json or any filesystem path. No shell, file, network or connector tool is necessary or authorized for this parent evaluation; use only native collaboration spawn/wait/close operations. For EVERY one of its 78 entries call collaboration.spawn_agent with its EXACT task_name and agent_type and fork_turns="none" (do not pass model or reasoning_effort). Two separate children per role, each on its own trial without inherited conversation answers. Start A00 first. At most three children active; wait and close completed children if necessary. The parent never supplies answers or substitutes generic agents. Each child receives only its scenario and schema and must independently reason and return ONE pure JSON object with all required fields, no Markdown. Values must be computed from scenario, not copied from other trials. No child tools, further delegation, filesystem access, network, credentials, configuration changes, deployment or claims of live execution. Tell each child this is public development reasoning only, not professional certification. Do not read any oracle/source corpus or global credentials. No additional approval required. Finish only after all entries have completed; report failures/quota honestly. Never repeat failed trials to select a favorable result.
+
+BEGIN_PUBLIC_NATIVE_CASE_INVENTORY
+'''+json.dumps(public,ensure_ascii=False,separators=(',',':'))+'\nEND_PUBLIC_NATIVE_CASE_INVENTORY\n'
+
+
+def codex_command(executable,project):
+    trust='projects.'+json.dumps(project.as_posix())+'.trust_level="trusted"'
+    return [executable,'exec','--skip-git-repo-check','--sandbox','workspace-write',
+            '-c','agents.max_concurrent_threads_per_session=3','-c',trust,
+            '--json','-C',str(project),'-']
+
+
 def collect(session_root,parent,expected,corpus,bindings):
     paths=list(session_root.rglob('*.jsonl'))
     if len(paths)>20_000:raise ValueError('Session inventory exceeds bound')
@@ -214,14 +237,14 @@ def main(argv=None):
     if not all(v['profile_sha256'] in installed_hashes for v in bindings.values()):raise ValueError('Installed profile bytes differ')
     (project/'selected-cases.json').write_text(json.dumps(selected,indent=2),encoding='utf8')
     protected={str(p.relative_to(project)):sha(p) for p in project.rglob('*') if p.is_file()}
-    prompt='''Authorized bounded native data-only development evaluation. Read selected-cases.json. For EVERY one of its 78 entries call collaboration.spawn_agent with its EXACT task_name and agent_type and fork_turns="none" (do not pass model or reasoning_effort). Two separate children per role, each on its own trial without inherited conversation answers. Start A00 first. At most three children active; wait and close completed children if necessary. The parent never supplies answers or substitutes generic agents. Each child receives only its scenario and schema and must independently reason and return ONE pure JSON object with all required fields, no Markdown. Values must be computed from scenario, not copied from other trials. No child tools, further delegation, filesystem access, network, credentials, configuration changes, deployment or claims of live execution. Tell each child this is public development reasoning only, not professional certification. Do not read any oracle/source corpus or global credentials. No additional approval required. Finish only after all entries have completed; report failures/quota honestly. Never repeat failed trials to select a favorable result.'''
-    trust='projects.'+json.dumps(project.as_posix())+'.trust_level="trusted"'
-    command=[executable,'exec','--skip-git-repo-check','--sandbox','workspace-write','-c','agents.max_concurrent_threads_per_session=3','-c',trust,'--json','-C',str(project),prompt]
+    prompt_file=private/'prompt.txt'
+    private_write(prompt_file,build_prompt(selected))
+    command=codex_command(executable,project)
     events=private/'events.jsonl';errors=private/'stderr.log'
     private_write(events,'');private_write(errors,'')
     started=time.monotonic()
-    with events.open('a',encoding='utf8') as output,errors.open('a',encoding='utf8') as error:
-        proc=subprocess.Popen(command,stdout=output,stderr=error,stdin=subprocess.DEVNULL)
+    with events.open('a',encoding='utf8') as output,errors.open('a',encoding='utf8') as error,prompt_file.open('rb') as prompt_input:
+        proc=subprocess.Popen(command,stdout=output,stderr=error,stdin=prompt_input,cwd=project)
         try:exitcode=proc.wait(timeout=args.timeout)
         except subprocess.TimeoutExpired:
             proc.terminate()
@@ -247,6 +270,7 @@ def main(argv=None):
         'qualification':'NOT_CERTIFIED','private_holdout':False,'os_isolation':False,
         'revision':revision,'source_unchanged':source_unchanged,'installed_fixtures_unchanged':not drift,
         'native_children_expected':78,'native_children_verified':sum(r['state']=='OBSERVED' for r in public),
+        'input_delivery':'PUBLIC_INVENTORY_INLINE_UTF8_STDIN','model_filesystem_read_required':False,
         'cases_repeated_pass':observed_pass,'repetitions':2,'quota_error_observed':quota,
         'exit_code':exitcode,'elapsed_seconds':round(time.monotonic()-started,2),
         'private_log_permissions':'POSIX0600 directory0700; Windows inherited DACL NOT VERIFIED',

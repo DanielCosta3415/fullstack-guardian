@@ -23,6 +23,17 @@ class HookTests(unittest.TestCase):
         self.assertNotIn('additionalContextLimit',h.groups()['SubagentStop']['hooks'][0])
         self.assertIn('additionalContextLimit',h.groups()['SessionStart']['hooks'][0])
 
+    def test_running_interpreter_symlink_resolves_before_strict_path_check(self):
+        link = self.home.parent/'python-link'
+        try:
+            link.symlink_to(Path(sys.executable).resolve(strict=True))
+        except OSError:
+            self.skipTest('Symlink creation unavailable')
+        with self.assertRaises(ValueError):
+            h.safe(link)
+        with patch.object(h.sys,'executable',str(link)):
+            self.assertIn(str(Path(sys.executable).resolve(strict=True)),h._command())
+
     def test_legacy_stop_definition_can_be_explicitly_removed(self):
         h.manage(self.home,apply=True)
         config=self.home/'hooks.json';receipt=self.home/'guardian-hooks.json'

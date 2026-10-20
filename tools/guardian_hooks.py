@@ -58,7 +58,10 @@ def _read(path):
 
 
 def _command():
-    argv = [str(safe(sys.executable)), '-B', str(safe(ROOT/'tools/guardian_hooks.py')), 'handle']
+    # Resolve the interpreter already running this installer (venv/setup-python
+    # commonly supplies a symlink). Source and destination policies stay strict.
+    interpreter = safe(Path(sys.executable).resolve(strict=True))
+    argv = [str(interpreter), '-B', str(safe(ROOT/'tools/guardian_hooks.py')), 'handle']
     if any(any(ord(c) < 32 for c in value) for value in argv):
         raise ValueError('Control characters in hook paths')
     if os.name == 'nt':
