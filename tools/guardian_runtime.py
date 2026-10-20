@@ -170,22 +170,37 @@ def _posix_group_has_live_members(pgid: int) -> bool:
     execute or retain an executing descendant by itself; live children remain
     separate rows and must still be terminated. Unknown inventory fails closed.
     """
-    try:
-        observed=subprocess.run(['/bin/ps','-A','-o','pid=','-o','pgid=','-o','stat='],
-            stdin=subprocess.DEVNULL,capture_output=True,text=True,encoding='ascii',
-            env={**os.environ,'LC_ALL':'C'},timeout=3,check=False)
-    except (OSError,UnicodeError,subprocess.SubprocessError) as exc:
-        raise RuntimeError('Cannot verify POSIX process group; termination uncertain') from exc
-    if observed.returncode or not observed.stdout.strip() or len(observed.stdout)>2_000_000:
-        raise RuntimeError('POSIX process inventory unavailable or exceeds budget')
-    for line in observed.stdout.splitlines():
-        fields=line.split()
-        if (len(fields)!=3 or not fields[0].isdecimal() or not fields[1].isdecimal()
-            or not fields[2] or not fields[2][0].isalpha()):
-            raise RuntimeError('Unrecognized POSIX process inventory; termination uncertain')
-        if int(fields[1])==pgid and not fields[2].startswith('Z'):
-            return True
-    return False
+    import time
+    for sample in range(3):
+        try:
+            observed=subprocess.run(['/bin/ps','-A','-o','pid=','-o','pgid=','-o','stat='],
+                stdin=subprocess.DEVNULL,capture_output=True,text=True,encoding='ascii',
+                env={**os.environ,'LC_ALL':'C'},timeout=3,check=False)
+        except (OSError,UnicodeError,subprocess.SubprocessError) as exc:
+            raise RuntimeError('Cannot verify POSIX process group; termination uncertain') from exc
+        if observed.returncode or not observed.stdout.strip() or len(observed.stdout)>2_000_000:
+            raise RuntimeError('POSIX process inventory unavailable or exceeds budget')
+        inconsistent=None
+        for line in observed.stdout.splitlines():
+            fields=line.split()
+            if len(fields)<2 or not fields[0].isdecimal() or not fields[1].isdecimal():
+                inconsistent=repr(fields)[:120]
+                continue # membership is unknown, so this sample cannot prove empty
+            if int(fields[1])!=pgid:
+                continue # another group's state cannot affect target termination
+            if len(fields)!=3 or not (fields[2][0].isalpha() or fields[2][0]=='?'):
+                inconsistent=repr(fields)[:120]
+                continue
+            # Apple's ps/tasks.c uses '?' when Mach task state is unavailable.
+            # Treat a target '?' as possibly live, NEVER as terminated. Persistent
+            # target uncertainty reaches the existing bounded termination failure.
+            if not fields[2].startswith('Z'):
+                return True
+        if inconsistent is None:
+            return False
+        if sample<2:
+            time.sleep(.02*(sample+1))
+    raise RuntimeError('Unrecognized POSIX process inventory after 3 samples; termination uncertain: '+inconsistent)
 
 
 def terminate_tree(proc: subprocess.Popen, grace: float = 2.0) -> None:

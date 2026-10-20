@@ -254,7 +254,7 @@ class ProcessTreeTests(unittest.TestCase):
 
     def test_posix_inventory_distinguishes_zombies_live_children_and_unknown_output(self):
         from tools.guardian_runtime import _posix_group_has_live_members
-        for rows,expected in [('123 123 Z\n456 456 S\n',False),('123 123 Z+\n456 123 S\n',True),('456 456 S\n',False)]:
+        for rows,expected in [('123 123 Z\n456 456 S\n',False),('123 123 Z+\n456 123 S\n',True),('456 456 S\n',False),('456 456 ?\n',False),('456 456\n',False),('123 123 ?\n',True)]:
             with patch('tools.guardian_runtime.subprocess.run',return_value=subprocess.CompletedProcess([],0,rows,'')):
                 self.assertEqual(_posix_group_has_live_members(123),expected)
         for result in (subprocess.CompletedProcess([],1,'','denied'),subprocess.CompletedProcess([],0,'PID PGID STAT\n',''),subprocess.CompletedProcess([],0,'',''),subprocess.CompletedProcess([],0,' \n\t','')):
@@ -262,6 +262,20 @@ class ProcessTreeTests(unittest.TestCase):
                 _posix_group_has_live_members(123)
         with patch('tools.guardian_runtime.subprocess.run',side_effect=subprocess.TimeoutExpired('ps',3)),self.assertRaises(RuntimeError):
             _posix_group_has_live_members(123)
+
+    def test_posix_inconsistent_membership_resamples_boundedly_without_claiming_dead(self):
+        from tools.guardian_runtime import _posix_group_has_live_members
+        unknown=subprocess.CompletedProcess([],0,'123 ? ?\n','')
+        valid=subprocess.CompletedProcess([],0,'456 456 S\n','')
+        with patch('tools.guardian_runtime.subprocess.run',side_effect=[unknown,valid]) as observer:
+            self.assertFalse(_posix_group_has_live_members(123))
+            self.assertEqual(observer.call_count,2)
+        for rows in ('123 ? ?\n','123 123\n'):
+            with patch('tools.guardian_runtime.subprocess.run',return_value=subprocess.CompletedProcess([],0,rows,'')) as observer:
+                with self.assertRaisesRegex(RuntimeError,'after 3 samples') as error:
+                    _posix_group_has_live_members(123)
+                self.assertEqual(observer.call_count,3)
+                self.assertIn(repr(rows.split()),str(error.exception))
 
     def test_posix_live_group_after_kill_deadline_is_not_reported_clean(self):
         from unittest.mock import Mock
