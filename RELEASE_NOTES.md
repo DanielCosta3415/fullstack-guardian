@@ -1,3 +1,7 @@
+# 2.2.0-rc.1 - release acceptance candidate
+
+Fixes native smoke input delivery through UTF-8 stdin and an explicit workspace. Adds guarded migration for legacy policy-heading/EOL drift, preserving semantic edits as conflicts and retaining byte-exact rollback. Adds blind professional-review intake for the 103 public case designs; imported reviews never authenticate human expertise or grant qualification. This candidate still requires actual external native workflow, human review and provenance/recovery gates before stable promotion.
+
 # 2.2.0-dev.4 — professional assurance candidate
 
 Implements the N01–N18 audit response: 39 role-specific professional contracts and generated profiles/checkpoints, typed capability/tool policies, intent/obligation and lifecycle coverage, contract-bound results and supervised integration by default, a 142-case development qualification corpus, strict seeded-failure oracles, a two-trial native professional harness, opt-in trust-preserving advisory hooks, and a hash-locked upstream adaptation linter/guide. Open SME scenarios, private holdout and production readiness are not inferred from implementation or synthetic tests. Stable/global installation remains a separate reviewed action.

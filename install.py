@@ -140,6 +140,32 @@ def remove_managed(current, entry):
         result = result.replace(header, b'', 1)
     return result
 
+
+def legacy_policy_base(current, addition):
+    """Recognize only legacy heading/EOL formatting drift, never policy edits.
+
+    Existing nonempty instruction lines remain exact. Remove just the bounded
+    owned block; outside bytes are preserved, including user spacing and rules.
+    """
+    import re
+    a,b=START.encode(),END.encode()
+    def block(data):
+        if data.count(a)!=1 or data.count(b)!=1 or data.index(a)>data.index(b):
+            raise ValueError('Malformed Guardian markers')
+        start,end=data.index(a),data.index(b)+len(b)
+        return start,end,data[start:end]
+    start,end,actual=block(current)
+    _,_,expected=block(addition)
+    def canonical(data):
+        lines=data.decode('utf8').splitlines()
+        heading=re.compile(r'^## Full-Stack Engineering Guardian System v(?:2\.0|2\.1\.0) — persistent coordination policy$')
+        if sum(bool(heading.fullmatch(line)) for line in lines)!=1:
+            raise ValueError('Unrecognized legacy policy heading')
+        return '\n'.join('LEGACY_GUARDIAN_HEADING' if heading.fullmatch(line) else line for line in lines if line.strip())
+    if canonical(actual)!=canonical(expected):
+        raise ValueError('Managed policy contains semantic edits; preserve and review manually')
+    return current[:start]+current[end:]
+
 def read(path):
     safe(path)
     if path.exists() and not path.is_file():
@@ -279,6 +305,7 @@ def _lifecycle(mode, dest, operation='install', apply=False, adopt=False):
         next_receipt = None
     else:
         jobs, instruction, piece = proposal(mode, dest)
+        policy_format_migrated = False
         desired = {str(dst): src.read_bytes() for src, dst in jobs}
         for name, data in desired.items():
             p = owned_path(name); old = read(p); e = previous.get(name)
@@ -304,8 +331,12 @@ def _lifecycle(mode, dest, operation='install', apply=False, adopt=False):
             old_addition = bytes.fromhex(e['addition']) if e and e.get('addition') else b''
             if old_addition:
                 if old.count(old_addition) != 1:
-                    raise ValueError('Managed block edited: ' + str(p))
-                base = remove_managed(old, e)
+                    if operation!='update' or kind!='policy':
+                        raise ValueError('Managed block edited: ' + str(p))
+                    base = legacy_policy_base(old,old_addition)
+                    policy_format_migrated = True
+                else:
+                    base = remove_managed(old, e)
             new, addition = policy_bytes(base, piece, runtime) if kind == 'policy' else config_bytes(base)
             if new != old:
                 changes[p] = new
@@ -318,6 +349,8 @@ def _lifecycle(mode, dest, operation='install', apply=False, adopt=False):
                 entries.append(entry)
         next_receipt = None
     result = {'operation': operation, 'apply': apply, 'changes': len(changes), 'files': len(entries)}
+    if operation in ('install','update') and policy_format_migrated:
+        result['policy_format_migration'] = 'LEGACY_HEADING_EOL_ONLY_OUTSIDE_BYTES_PRESERVED'
     if not apply:
         return result
     backup = safe(c / 'guardian-backups' / uuid.uuid4().hex)

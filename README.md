@@ -1,4 +1,4 @@
-# Full-Stack Engineering Guardian — 2.2.0-dev.4
+# Full-Stack Engineering Guardian — 2.2.0-rc.1
 
 Development candidate: 29 core engineering roles, 20 operational skills, 132 taxonomy capabilities and ten optional specialist packs. The public stable release remains v2.1.0 until a separate reviewed release decision.
 

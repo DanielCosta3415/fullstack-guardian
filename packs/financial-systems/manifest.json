@@ -8,5 +8,5 @@
       "file": "agents/guardian_payment_reliability_specialist.toml"
     }
   ],
-  "version": "2.2.0-dev.4"
+  "version": "2.2.0-rc.1"
 }

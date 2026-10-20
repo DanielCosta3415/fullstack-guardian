@@ -13,6 +13,29 @@ def with_check_instruction(case):
     case['task']+=' Mandatory check evidence: for EACH required before/after check invoke the exec code tool with EXACTLY this standalone source: '+code+' Use separate tool calls for reads/edits; never chain commands, capture/override exit codes or batch checks.'
     return case
 
+
+def build_prompt(plan,project):
+    """Inline the public task inventory; children still execute real fixture checks.
+
+    Do not inline fixture assertions or host evidence criteria. Stdin transports
+    the inventory without depending on the model shell cwd or Windows argv size.
+    """
+    public=[{key:case[key] for key in ('id','agent_type','case_directory','mode','task')} for case in plan]
+    if not public or len({c['id'] for c in public})!=len(public) or len({c['agent_type'] for c in public})!=len(public):
+        raise ValueError('Expected nonempty unique native case inventory')
+    prompt='''Authorized bounded local validation. The complete task inventory is supplied inline below; the parent need not read selected-cases.json or search for it. For EACH case invoke native collaboration.spawn_agent with agent_type exactly equal to its agent_type. The primary does not count. Every chosen profile must execute individually. At most three active children; A00 first. Close each completed native child before opening another if the session thread limit requires it. Each child must read only its case_directory inputs, execute python -B check.py from that directory, and provide actual output, diagnosis or authorized fix, file evidence and limitations. No child may delegate further. P01-P10 are AUDIT-only optional roles: reproduce their seeded assertion and report domain limitations; never claim framework/browser/cloud execution. AUDIT cases do not edit files; S05 may edit only index.html, S08/S24 only domain.py in their own directory and must rerun unchanged check.py before/after. A00 must additionally run the project-installed router at the absolute runtime path shown below; other findings are synthetic and intentionally fail in AUDIT. Do not deploy, use external connectors/network, read credentials, modify global configuration, install dependencies or create other sessions. The test is explicitly authorized, so no redundant approval question. Wait until ALL selected native children finish, do not substitute copied personas or generic types. Return compact results.
+MANDATORY evidence shape: every check must be a separate tools.exec_command call with cmd exactly python -B check.py and workdir exactly the absolute case_directory. Do not chain reads, other commands, exit manipulation or batch check calls; use separate calls for those actions. Always specify explicit absolute workdir for filesystem commands; never rely on the shell default directory. If the sandbox denies a fixture path, record the denial and stop that case; do not request bypass or modify host ACLs.
+In every child message include the exact case task and mode from the inline inventory. A00 must read and route the exact request in A00/case.json and verify specialist IDs against the installed core/agents.json catalog. Do not replace the case request with a generic evaluation summary.
+'''
+    prompt+='Router: '+str(project/'.guardian/tools/guardian.py')+'\n'
+    return prompt+'BEGIN_PUBLIC_NATIVE_TASKS\n'+json.dumps(public,ensure_ascii=False,separators=(',',':'))+'\nEND_PUBLIC_NATIVE_TASKS\n'
+
+
+def codex_command(executable,project):
+    trust='projects.'+json.dumps(project.as_posix())+'.trust_level="trusted"'
+    return [executable,'exec','--skip-git-repo-check','--sandbox','workspace-write','-c',
+            'agents.max_concurrent_threads_per_session=3','-c',trust,'--json','-C',str(project),'-']
+
 def extract(root_session, destination, expected):
     cases=json.loads((destination/'project/selected-cases.json').read_text(encoding='utf8'))
     criteria={r['id']:r for r in json.loads((destination/'all-agents-criteria.json').read_text(encoding='utf8'))}
@@ -63,6 +86,7 @@ def main():
     ap.add_argument('--out',type=Path,help='New empty evidence directory, outside source recommended')
     ap.add_argument('--timeout',type=int,default=1800)
     args=ap.parse_args()
+    if not 60<=args.timeout<=7200:raise ValueError('--timeout must be 60..7200 seconds')
     catalog=json.loads((ROOT/'core/agents.json').read_text(encoding='utf8'))['agents']
     if args.include_packs:
         for index,p in enumerate(sorted((ROOT/'packs').glob('*/manifest.json')),1):
@@ -79,6 +103,7 @@ def main():
     if not codex:raise ValueError('Codex CLI not found; install/sign in to a compatible Codex first')
     if not args.out:raise ValueError('--out required with --run')
     destination=args.out.expanduser().resolve()
+    if destination==ROOT or ROOT in destination.parents:raise ValueError('--out must be outside source checkout')
     if destination.exists() and any(destination.iterdir()):raise ValueError('Evidence directory must be new/empty')
     destination.mkdir(parents=True,exist_ok=True)
     subprocess.run([sys.executable,str(ROOT/'tools/native_cases.py'),str(destination),str(ROOT/'core/agents.json')],check=True)
@@ -94,20 +119,23 @@ def main():
                 subprocess.run([sys.executable,'-B',str(ROOT/'tools/guardian_packs.py'),'install','--pack',a['pack'],'--project',str(project),'--apply'],check=True)
     plan=[with_check_instruction(c) for c in plan if c['id'] in {a['id'] for a in chosen}]
     (project/'selected-cases.json').write_text(json.dumps(plan,indent=2),encoding='utf8')
-    prompt='''Authorized bounded local validation. Read selected-cases.json. For EACH case invoke native collaboration.spawn_agent with agent_type exactly equal to its agent_type. The primary does not count. Every chosen profile must execute individually. At most three active children; A00 first. Close each completed native child before opening another if the session thread limit requires it. Each child must read only its case_directory inputs, execute python -B check.py from that directory, and provide actual output, diagnosis or authorized fix, file evidence and limitations. No child may delegate further. P01-P10 are AUDIT-only optional roles: reproduce their seeded assertion and report domain limitations; never claim framework/browser/cloud execution. AUDIT cases do not edit files; S05 may edit only index.html, S08/S24 only domain.py in their own directory and must rerun unchanged check.py before/after. A00 must additionally run the project-installed router at the absolute runtime path shown below; other findings are synthetic and intentionally fail in AUDIT. Do not deploy, use external connectors/network, read credentials, modify global configuration, install dependencies or create other sessions. The test is explicitly authorized, so no redundant approval question. Wait until ALL selected native children finish, do not substitute copied personas or generic types. Return compact results.'''
-    prompt+='\nMANDATORY evidence shape: every check must be a separate tools.exec_command call with cmd exactly python -B check.py and workdir exactly the absolute case_directory. Do not chain reads, other commands, exit manipulation or batch check calls; use separate calls for those actions.'
-    prompt+='\nRouter: '+str(project/'.guardian/tools/guardian.py')
-    prompt+='\nIn every child message include the exact case task and mode from selected-cases.json. A00 must route the exact request in A00/case.json and verify specialist IDs against the installed core/agents.json catalog. Do not replace the case request with a generic evaluation summary.'
-    trust='projects.'+json.dumps(project.as_posix())+'.trust_level="trusted"'
-    cmd=[codex,'exec','--skip-git-repo-check','--sandbox','workspace-write','-c','agents.max_concurrent_threads_per_session=3','-c',trust,'--json','-C',str(project),prompt]
+    prompt=build_prompt(plan,project)
+    prompt_file=destination/'prompt-private.txt'
+    fd=os.open(prompt_file,os.O_WRONLY|os.O_CREAT|os.O_EXCL,0o600)
+    with os.fdopen(fd,'w',encoding='utf8') as stream:stream.write(prompt)
+    cmd=codex_command(codex,project)
     mutable={'S05/index.html','S08/domain.py','S24/domain.py'}
     protected={str(p.relative_to(project)):hashlib.sha256(p.read_bytes()).hexdigest() for c in plan for p in Path(c['case_directory']).rglob('*') if p.is_file() and str(p.relative_to(project)).replace('\\','/') not in mutable}
     (destination/'protected-fixtures.json').write_text(json.dumps(protected,sort_keys=True,indent=2),encoding='utf8')
     started=time.monotonic()
-    with (destination/'events.jsonl').open('w',encoding='utf8') as output,(destination/'stderr.log').open('w',encoding='utf8') as error:
-        p=subprocess.Popen(cmd,stdout=output,stderr=error,stdin=subprocess.DEVNULL,text=True,encoding='utf8')
+    with (destination/'events.jsonl').open('w',encoding='utf8') as output,(destination/'stderr.log').open('w',encoding='utf8') as error,prompt_file.open('rb') as prompt_input:
+        p=subprocess.Popen(cmd,stdout=output,stderr=error,stdin=prompt_input,text=True,encoding='utf8',cwd=project)
         try:code=p.wait(timeout=args.timeout)
-        except subprocess.TimeoutExpired:p.terminate();p.wait(timeout=15);code='timeout'
+        except subprocess.TimeoutExpired:
+            p.terminate()
+            try:p.wait(timeout=15)
+            except subprocess.TimeoutExpired:p.kill();p.wait(timeout=15)
+            code='timeout_descendants_not_verified'
     events=[]
     for line in (destination/'events.jsonl').read_text(encoding='utf8').splitlines():
         try:events.append(json.loads(line))
@@ -119,6 +147,8 @@ def main():
     result['fixture_drift']=changed
     revision=subprocess.run(['git','-C',str(ROOT),'rev-parse','HEAD'],capture_output=True,text=True,timeout=10)
     result['revision']=source_revision
+    result['input_delivery']='PUBLIC_TASKS_INLINE_UTF8_STDIN'
+    result['model_parent_filesystem_read_required']=False
     result['source_revision_unchanged']=None if source_revision is None else revision.returncode==0 and revision.stdout.strip()==source_revision
     result.update(acceptance_scope='Native type, parent, completion, recorded check and tool output; not domain certification',exit_code=code,elapsed_seconds=round(time.monotonic()-started,2),root_session=tid)
     (destination/'summary.json').write_text(json.dumps(result,indent=2),encoding='utf8')

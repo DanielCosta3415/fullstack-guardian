@@ -3,6 +3,33 @@ from pathlib import Path
 BASE=Path(__file__).resolve().parents[1]
 
 class NativeHarnessTests(unittest.TestCase):
+    def test_inline_tasks_keep_real_checks_and_do_not_copy_host_oracles(self):
+        from tools.test_native_agents import build_prompt,with_check_instruction
+        case=with_check_instruction({'id':'A00','agent_type':'guardian_engineering_orchestrator','mode':'AUDIT',
+            'case_directory':'C:/test/A00','task':'Read the exact request and execute router',
+            'evidence_rule':{'expected_assertions':['HOST_ONLY_ORACLE_MARKER']}})
+        prompt=build_prompt([case],Path('C:/test'))
+        raw=prompt.split('BEGIN_PUBLIC_NATIVE_TASKS\n',1)[1].split('\nEND_PUBLIC_NATIVE_TASKS',1)[0]
+        public=json.loads(raw)
+        self.assertEqual(len(public),1)
+        self.assertEqual(public[0]['case_directory'],'C:/test/A00')
+        self.assertIn('python -B check.py',public[0]['task'])
+        self.assertIn('explicit absolute workdir',prompt)
+        self.assertNotIn('HOST_ONLY_ORACLE_MARKER',prompt)
+        with self.assertRaises(ValueError):build_prompt([],Path('C:/test'))
+        with self.assertRaises(ValueError):build_prompt([case,case],Path('C:/test'))
+
+    def test_native_command_stdin_cwd_sandbox_and_no_model_override(self):
+        from tools.test_native_agents import codex_command
+        project=Path('/test/project with spaces')
+        command=codex_command('codex',project)
+        self.assertEqual(command[-1],'-')
+        self.assertEqual(command[command.index('-C')+1],str(project))
+        self.assertEqual(command[command.index('--sandbox')+1],'workspace-write')
+        self.assertNotIn('--model',command)
+        self.assertNotIn('-m',command)
+        self.assertFalse(any('bypass' in item for item in command))
+
     def test_check_instruction_is_carried_by_each_forwarded_case_task(self):
         from tools.test_native_agents import with_check_instruction
         from tools.native_check_evidence import specifications
