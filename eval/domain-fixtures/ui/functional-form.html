@@ -1,0 +1,11 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; form-action 'none'; connect-src 'none'">
+<title>Reviewed synthetic form</title>
+<form id="profile"><label for="email">Email</label><input id="email" name="email" type="email" required maxlength="80"><button type="submit">Save</button></form>
+<output id="status" aria-live="polite"></output>
+<script>
+document.getElementById('profile').addEventListener('submit', event => {
+  event.preventDefault();
+  document.getElementById('status').textContent = document.getElementById('email').value.trim();
+});
+</script></html>

@@ -10,6 +10,7 @@ import tomllib
 import uuid
 import tempfile
 from pathlib import Path
+from tools.guardian_maintenance import maintenance_locks, owned_target
 
 SOURCE = Path(__file__).resolve().parent
 START = '<!-- GUARDIAN-V2:START -->'
@@ -26,6 +27,7 @@ def atomic_write(path, content):
             stream.write(content)
             stream.flush()
             os.fsync(stream.fileno())
+        safe(path)
         os.replace(temp, path)
     finally:
         if temp is not None:
@@ -60,12 +62,14 @@ def locations(mode, dest):
 def proposal(mode, dest):
     c, skills, runtime, instruction, piece = locations(mode, dest)
     jobs = []
-    for f in SOURCE.rglob('*'):
+    roots = ('global', 'core', 'tools', 'tests', 'project-template', 'docs', 'packs', 'scripts', 'eval')
+    sources = [item for name in roots if (SOURCE / name).exists() for item in (SOURCE / name).rglob('*')]
+    sources.extend(SOURCE / name for name in ('install.py', 'README.md', 'RELEASE_NOTES.md', 'VERSION', 'LICENSE', 'NOTICE.md', 'THIRD_PARTY_NOTICES.md', 'SECURITY.md', 'SUPPORT.md'))
+    for f in sources:
         rel = f.relative_to(SOURCE)
         if f.is_file() and not any(x in rel.parts for x in ('__pycache__', '.git')) and f.suffix != '.pyc':
-            if rel.parts[0] in ('global', 'core', 'tools', 'tests', 'project-template', 'docs', 'packs', 'scripts') or rel.name in ('install.py', 'README.md', 'RELEASE_NOTES.md', 'VERSION', 'LICENSE'):
-                safe(f)
-                jobs.append((f, safe(runtime / rel)))
+            safe(f)
+            jobs.append((f, safe(runtime / rel)))
     for f in (SOURCE / 'global' / 'agents').glob('*.toml'):
         jobs.append((f, safe(c / 'agents' / f.name)))
     for f in (SOURCE / 'global' / 'skills').glob('*/SKILL.md'):
@@ -142,7 +146,43 @@ def read(path):
         raise ValueError('Not a regular file: ' + str(path))
     return path.read_bytes() if path.exists() else None
 
+def validate_receipt(raw, mode, identity, owned_path):
+    import re
+    value = json.loads(raw)
+    if not isinstance(value, dict) or value.get('schema') != 1 or value.get('mode') != mode or value.get('identity') != identity or not isinstance(value.get('files'), list) or not value['files']:
+        raise ValueError('Invalid ownership receipt')
+    seen = set()
+    for entry in value['files']:
+        if not isinstance(entry, dict) or not isinstance(entry.get('path'), str) or not isinstance(entry.get('hash'), str) or not re.fullmatch('[a-f0-9]{64}', entry['hash']):
+            raise ValueError('Invalid ownership entry')
+        path = owned_path(entry['path'])
+        if path in seen:
+            raise ValueError('Duplicate ownership entry')
+        seen.add(path)
+        if 'adopted' in entry and type(entry['adopted']) is not bool:
+            raise ValueError('Invalid adopted flag')
+        for key in ('addition', 'header'):
+            if key in entry:
+                if not isinstance(entry[key], str):
+                    raise ValueError('Invalid managed bytes')
+                data = bytes.fromhex(entry[key])
+                if not data or path not in (safe(identity['instruction']), safe(Path(identity['codex']) / 'config.toml')):
+                    raise ValueError('Invalid managed ownership block')
+    return value
+
+
 def lifecycle(mode, dest, operation='install', apply=False, adopt=False):
+    if apply:
+        c, skills, runtime, instruction, _ = locations(mode, dest)
+        # Runtime is already inside c (user) or instruction.parent (project).
+        # Locking it separately would create an apparent runtime before receipt
+        # validation and is unnecessary for mutual exclusion.
+        with maintenance_locks((c, skills, instruction.parent), operation):
+            return _lifecycle(mode, dest, operation, apply, adopt)
+    return _lifecycle(mode, dest, operation, apply, adopt)
+
+
+def _lifecycle(mode, dest, operation='install', apply=False, adopt=False):
     c, skills, runtime, instruction, piece = locations(mode, dest)
     receipt_path = safe(c / 'guardian-install.json')
     prior_bytes = read(receipt_path)
@@ -152,9 +192,8 @@ def lifecycle(mode, dest, operation='install', apply=False, adopt=False):
     skill_names = {f.parent.name for f in (SOURCE / 'global' / 'skills').glob('*/SKILL.md')}
     def owned_path(value):
         p = safe(value)
-        valid = p in (safe(instruction), safe(c / 'config.toml')) or safe(runtime) in p.parents
-        valid = valid or (p.parent == safe(c / 'agents') and p.name in agent_names)
-        valid = valid or (p.name == 'SKILL.md' and p.parent.name in skill_names and p.parent.parent == safe(skills))
+        valid = owned_target(p, codex=c, skills=skills, runtime=runtime, instruction=instruction,
+                             agent_names=agent_names, skill_names=skill_names)
         if not valid:
             raise ValueError('Receipt path outside installation roots: ' + str(p))
         return p
@@ -165,6 +204,8 @@ def lifecycle(mode, dest, operation='install', apply=False, adopt=False):
             if not isinstance(entry, dict) or not isinstance(entry.get('path'), str) or not isinstance(entry.get('hash'), str):
                 raise ValueError('Malformed ownership entry')
             owned_path(entry['path'])
+    if prior_bytes is not None:
+        validate_receipt(prior_bytes, mode, identity, owned_path)
     if operation == 'doctor':
         if not prior:
             raise ValueError('No ownership receipt; installation not verified')
@@ -185,7 +226,10 @@ def lifecycle(mode, dest, operation='install', apply=False, adopt=False):
         concurrency = agents.get('max_concurrent_threads_per_session', agents.get('max_threads'))
         if not isinstance(concurrency, int) or isinstance(concurrency, bool) or concurrency < 1:
             warnings.append('Agent concurrency is missing or invalid')
-        return {'operation': operation, 'verified_files': len(prior['files']), 'apply': False, 'warnings': warnings}
+        from tools.guardian_capabilities import capability_report
+        return {'operation': operation, 'verified_files': len(prior['files']), 'apply': False, 'warnings': warnings,
+                'client_capabilities': capability_report(),
+                'native_loading': 'NOT_VERIFIED', 'permissions_changed': False}
     if operation in ('update', 'uninstall', 'rollback') and not prior:
         raise ValueError('No receipt; explicit install --adopt is required for identical legacy files')
     changes = {}
@@ -195,17 +239,32 @@ def lifecycle(mode, dest, operation='install', apply=False, adopt=False):
         backup = safe(prior['backup'])
         if c / 'guardian-backups' not in backup.parents:
             raise ValueError('Invalid backup location')
-        manifest = json.loads((backup / 'transaction.json').read_text())
-        for item in manifest['changes']:
+        manifest = json.loads(read(backup / 'transaction.json'))
+        if not isinstance(manifest, dict) or not isinstance(manifest.get('changes'), list):
+            raise ValueError('Invalid rollback manifest')
+        seen = set()
+        for index, item in enumerate(manifest['changes']):
+            if not isinstance(item, dict) or set(item) not in ({'path', 'before', 'after'}, {'path', 'before', 'after', 'before_sha256'}) or item['before'] not in (None, str(index) + '.bin'):
+                raise ValueError('Invalid rollback entry')
             p = owned_path(item['path'])
+            if p in seen:
+                raise ValueError('Duplicate rollback target')
+            seen.add(p)
             current = read(p)
             if (digest(current) if current is not None else None) != item['after']:
                 raise ValueError('Rollback would overwrite user changes: ' + str(p))
             before_path = safe(backup / item['before']) if item['before'] else None
             if before_path is not None and before_path.parent != backup:
                 raise ValueError('Invalid backup file path')
-            changes[p] = before_path.read_bytes() if before_path else None
-        next_receipt = (backup / 'receipt-before.json').read_bytes() if (backup / 'receipt-before.json').exists() else None
+            old = read(before_path) if before_path else None
+            if before_path and old is None:
+                raise ValueError('Missing backup content')
+            if 'before_sha256' in item and item['before_sha256'] != (digest(old) if old is not None else None):
+                raise ValueError('Backup content digest mismatch')
+            changes[p] = old
+        next_receipt = read(backup / 'receipt-before.json')
+        if next_receipt is not None:
+            validate_receipt(next_receipt, mode, identity, owned_path)
     elif operation == 'uninstall':
         for e in prior['files']:
             p = owned_path(e['path']); current = read(p)
@@ -263,16 +322,16 @@ def lifecycle(mode, dest, operation='install', apply=False, adopt=False):
         return result
     backup = safe(c / 'guardian-backups' / uuid.uuid4().hex)
     backup.mkdir(parents=True)
-    manifest = {'changes': []}
+    manifest = {'schema_version': 2, 'mode': mode, 'identity': identity, 'operation': operation, 'changes': []}
     originals = {p: read(p) for p in changes}
     for i, (p, new) in enumerate(changes.items()):
         old = originals[p]; filename = str(i) + '.bin' if old is not None else None
         if filename:
-            (backup / filename).write_bytes(old)
-        manifest['changes'].append({'path': str(p), 'before': filename, 'after': digest(new) if new is not None else None})
+            atomic_write(backup / filename, old)
+        manifest['changes'].append({'path': str(p), 'before': filename, 'after': digest(new) if new is not None else None, 'before_sha256': digest(old) if old is not None else None})
     if prior_bytes:
-        (backup / 'receipt-before.json').write_bytes(prior_bytes)
-    (backup / 'transaction.json').write_text(json.dumps(manifest, indent=2))
+        atomic_write(backup / 'receipt-before.json', prior_bytes)
+    atomic_write(backup / 'transaction.json', json.dumps(manifest, indent=2).encode())
     if operation in ('install', 'update'):
         next_receipt = json.dumps({'schema': 1, 'mode': mode, 'identity': identity, 'version': (SOURCE / 'VERSION').read_text().strip() if (SOURCE / 'VERSION').exists() else '2.1.0', 'backup': str(backup), 'files': entries}, indent=2).encode()
     try:
@@ -318,21 +377,7 @@ def main():
     try:
         mode = 'user' if args.user else 'project'
         destination = args.home if args.user else args.project
-        if args.apply:
-            codex_dir, _, _, _, _ = locations(mode, destination)
-            codex_dir.mkdir(parents=True, exist_ok=True)
-            lock = safe(codex_dir / '.guardian-install.lock')
-            try:
-                handle = os.open(lock, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o600)
-            except FileExistsError as exc:
-                raise ValueError('Another installation or recovery is active; inspect lock before retry') from exc
-            try:
-                os.close(handle)
-                result = lifecycle(mode, destination, operation, True, args.adopt)
-            finally:
-                lock.unlink(missing_ok=True)
-        else:
-            result = lifecycle(mode, destination, operation, False, args.adopt)
+        result = lifecycle(mode, destination, operation, args.apply, args.adopt)
         print(json.dumps(result, indent=2))
         return 0
     except (ValueError, OSError, UnicodeError, KeyError, TypeError, AttributeError) as exc:

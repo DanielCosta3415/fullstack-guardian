@@ -60,6 +60,60 @@ class PackLifecycleTests(unittest.TestCase):
         with self.assertRaises(PackInstallError):
             operation("dotnet", self.codex, ROOT, action="uninstall")
 
+    def test_update_rollback_restores_prior_profile_and_receipt(self):
+        import shutil
+        operation('dotnet', self.codex, ROOT, apply=True)
+        profile=self.codex/'agents/guardian_dotnet_runtime_specialist.toml'
+        original=profile.read_bytes()
+        prior=json.loads((self.codex/'guardian-packs.json').read_text())
+        source=Path(self.tmp.name).resolve()/'source'
+        shutil.copytree(ROOT/'global',source/'global');shutil.copytree(ROOT/'core',source/'core');shutil.copytree(ROOT/'packs',source/'packs')
+        changed=source/'packs/dotnet/agents/guardian_dotnet_runtime_specialist.toml'
+        changed.write_bytes(changed.read_bytes()+b'\n# reviewed synthetic update\n')
+        operation('dotnet',self.codex,source,action='update',apply=True)
+        self.assertNotEqual(profile.read_bytes(),original)
+        self.assertEqual(operation('dotnet',self.codex,source,action='rollback')['changes'],1)
+        operation('dotnet',self.codex,source,action='rollback',apply=True)
+        self.assertEqual(profile.read_bytes(),original)
+        self.assertEqual(json.loads((self.codex/'guardian-packs.json').read_text()),prior)
+
+    def test_rollback_refuses_modified_agent_and_forged_identity(self):
+        operation('dotnet',self.codex,ROOT,apply=True)
+        with self.assertRaises(PackInstallError):operation('dotnet',self.codex,ROOT,action='rollback')
+        operation('dotnet',self.codex,ROOT,action='update',apply=True)
+        path=self.codex/'agents/guardian_dotnet_runtime_specialist.toml'
+        path.write_bytes(path.read_bytes()+b'\n# user edit\n')
+        with self.assertRaises(PackInstallError):operation('dotnet',self.codex,ROOT,action='rollback',apply=True)
+
+    def test_forged_rollback_profile_cannot_add_configuration_fields(self):
+        import base64,hashlib
+        operation('dotnet',self.codex,ROOT,apply=True)
+        operation('dotnet',self.codex,ROOT,action='update',apply=True)
+        receipt_path=self.codex/'guardian-packs.json';receipt=json.loads(receipt_path.read_text())
+        snapshot=receipt['packs']['dotnet']['rollback'];filename=next(iter(snapshot['files']))
+        data=base64.b64decode(snapshot['files'][filename])+b'\nsandbox_mode="danger-full-access"\n'
+        snapshot['files'][filename]=base64.b64encode(data).decode()
+        snapshot['receipt']['files'][filename]=hashlib.sha256(data).hexdigest()
+        receipt_path.write_text(json.dumps(receipt))
+        before=(self.codex/'agents'/filename).read_bytes()
+        with self.assertRaises(PackInstallError):operation('dotnet',self.codex,ROOT,action='rollback',apply=True)
+        self.assertEqual((self.codex/'agents'/filename).read_bytes(),before)
+
+    def test_all_ten_packs_update_rollback_and_uninstall_independently(self):
+        from tools.guardian_registry import discover
+        names=sorted(pack['name'] for pack in discover(ROOT)['packs'])
+        self.assertEqual(len(names),10)
+        for name in names:operation(name,self.codex,ROOT,apply=True)
+        before={path.name:path.read_bytes() for path in (self.codex/'agents').glob('*.toml')}
+        for name in names:
+            with self.subTest(pack=name):
+                operation(name,self.codex,ROOT,action='update',apply=True)
+                operation(name,self.codex,ROOT,action='rollback',apply=True)
+                self.assertEqual({path.name:path.read_bytes() for path in (self.codex/'agents').glob('*.toml')},before)
+        for name in names:operation(name,self.codex,ROOT,action='uninstall',apply=True)
+        self.assertEqual(json.loads((self.codex/'guardian-packs.json').read_text())['packs'],{})
+        self.assertEqual(list((self.codex/'agents').glob('*.toml')),[])
+
     def test_destination_symlink_rejected(self):
         self.codex.mkdir()
         somewhere = Path(self.tmp.name) / "outside"

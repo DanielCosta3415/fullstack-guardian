@@ -1,0 +1,72 @@
+"""Correlate the strict tool-call subset required by the native harness.
+
+Unknown JS/tool batching shapes fail closed. This is not a general JS parser or
+proof against a malicious same-account writer of all session evidence.
+"""
+import ast,json,re
+
+OBJECT=re.compile(r"tools\.exec_command\(\s*(\{[^{}]{1,16000}\})\s*\)",re.S)
+STRING=r"(?:\"(?:\\.|[^\"\\])*\"|'(?:\\.|[^'\\])*')"
+
+def specifications(source):
+    try:
+        data=json.loads(source)
+        return [data] if isinstance(data,dict) else []
+    except ValueError:pass
+    single=re.fullmatch(r'\s*text\(await tools\.exec_command\((\{[^{}]{1,16000}\})\)\);?\s*',source,re.S)
+    if single:objects=[single[1]]
+    else:
+        batch=re.fullmatch(r'\s*const results = await Promise\.allSettled\(\[(.*?)\]\);\s*results\.forEach\(\(r,i\)=>text\(\{i,\.\.\.r\}\)\);?\s*',source,re.S)
+        if not batch:return []
+        objects=[m[1] for m in OBJECT.finditer(batch[1])]
+        if not objects or OBJECT.sub('',batch[1]).strip(' \r\n\t,'):return []
+    specs=[]
+    for obj in objects:
+        obj=re.sub(r'(?<=[{,])\s*(cmd|workdir|max_output_tokens|yield_time_ms)\s*:',r'"\1":',obj)
+        try:value=ast.literal_eval(obj)
+        except (ValueError,SyntaxError):return []
+        if not isinstance(value,dict) or set(value)-{'cmd','workdir','max_output_tokens','yield_time_ms'}:return []
+        specs.append(value)
+    return specs
+
+def same_path(a,b):
+    if not isinstance(a,str) or not isinstance(b,str):return False
+    a=a.replace('\\','/').rstrip('/');b=b.replace('\\','/').rstrip('/')
+    return a.casefold()==b.casefold() if re.match(r'^[A-Za-z]:/',b) else a==b
+
+def paired_outcomes(payloads,case):
+    calls={p['call_id']:p for p in payloads if p.get('type') in ('function_call','custom_tool_call') and isinstance(p.get('call_id'),str)}
+    results=[]
+    for output in payloads:
+        if output.get('type') not in ('function_call_output','custom_tool_call_output'):continue
+        call=calls.get(output.get('call_id'),{})
+        source=call.get('input',call.get('arguments',''))
+        if not isinstance(source,str) or len(source)>64000:continue
+        if call.get('name') in ('exec','functions.exec'):
+            if call.get('type')!='custom_tool_call' or source.lstrip().startswith('{'):continue
+        elif call.get('name') in ('exec_command','functions.exec_command'):
+            if call.get('type')!='function_call' or not source.lstrip().startswith('{'):continue
+        else:continue
+        objects=specifications(source)
+        specs=[obj.get('cmd')=='python -B check.py' and same_path(obj.get('workdir'),case.get('case_directory')) for obj in objects]
+        blocks=output.get('output',[])
+        if isinstance(blocks,str):blocks=[{'text':blocks}]
+        if not isinstance(blocks,list):continue
+        for block in blocks:
+            try:data=json.loads(block.get('text','')) if isinstance(block,dict) else None
+            except (ValueError,TypeError):continue
+            if not isinstance(data,dict):continue
+            if 'i' in data:
+                index=data['i']
+                if type(index) is not int or not 0<=index<len(specs) or data.get('status')!='fulfilled':continue
+                data=data.get('value')
+            elif len(specs)==1:index=0
+            else:continue
+            if specs[index] and isinstance(data,dict) and type(data.get('exit_code')) is int and isinstance(data.get('output'),str):
+                results.append(data['exit_code'])
+    return results
+
+def fixture_passed(outcomes,rule):
+    if rule.get('build'):
+        return len(outcomes)>=2 and (1 in outcomes if rule.get('seeded_failure') else outcomes[0]==0) and outcomes[-1]==0
+    return bool(outcomes) and outcomes[-1]==(1 if rule.get('seeded_failure') else 0)

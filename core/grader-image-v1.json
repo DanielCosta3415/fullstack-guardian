@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "image": "docker.io/library/python@sha256:2ed6491b93cd49272ee6de2b5a38440c3448360322c089fc23e370722d74179d",
+  "platform": "linux/amd64",
+  "observed_tag": "3.12-slim-bookworm",
+  "observed_version": "3.12.15-slim-bookworm",
+  "upstream_revision": "2a3b794c223ab067d122719541cdd54a068732a5",
+  "source": "https://github.com/docker-library/python",
+  "decision": "Explicit hosted acceptance fixture image; no host installation or implicit grader pull. Digest identity is not a security certification."
+}

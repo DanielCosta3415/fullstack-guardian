@@ -5,6 +5,9 @@ on:
   workflow_dispatch:
 permissions:
   contents: read
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
 jobs:
   test:
     strategy:
@@ -22,6 +25,15 @@ jobs:
       - run: python tools/guardian.py validate
       - run: python tools/guardian.py eval
       - run: python tools/guardian_registry.py validate
+      - run: python tools/guardian_domain_checks.py --self-test
+      - run: python tools/guardian_catalog.py
+      - run: python tools/generate_catalog_docs.py --check
+      - run: python tools/guardian_capabilities.py
+      - run: python tools/guardian_release_gate.py
+      - if: matrix.os != 'windows-latest' || matrix.python != '3.12'
+        run: python tools/verify_distribution.py
+      - if: matrix.os == 'windows-latest' && matrix.python == '3.12'
+        run: python tools/verify_distribution.py --runtime-suite
       - run: python tools/guardian_platform.py stages
       - run: python tools/guardian_platform.py security-lint
       - run: python tools/guardian_platform.py plan --prompt "Validate API contract" --stage integration

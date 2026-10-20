@@ -9,6 +9,8 @@ class ReleaseTests(unittest.TestCase):
         if not (BASE/'plugin.json').exists():self.skipTest('Source-package metadata only')
         m=json.loads((BASE/'plugin.json').read_text(encoding='utf8'))
         self.assertEqual(m['version'],(BASE/'VERSION').read_text().strip())
+        fallback=json.loads((BASE/'.codex-plugin/plugin.json').read_text(encoding='utf8'))
+        self.assertEqual(fallback['version'],m['version'])
         setup=m['extensions']['com.openai']['onboardingSkill']
         self.assertTrue((BASE/setup.removeprefix('./')).is_file())
         market=json.loads((BASE/'.agents/plugins/marketplace.json').read_text())
@@ -26,6 +28,7 @@ class ReleaseTests(unittest.TestCase):
                     self.assertEqual(hashlib.sha256(data).hexdigest(),entry['sha256'])
                 self.assertFalse(any('__pycache__' in x or '/.git/' in x for x in z.namelist()))
     def test_platform_preview_is_not_mislabeled_stable_release(self):
+        if not (BASE/'plugin.json').exists():self.skipTest('Source-package metadata only')
         version=(BASE/'VERSION').read_text(encoding='utf8').strip()
         self.assertNotEqual(version,'2.1.0','Experimental platform must not reuse stable release version')
         self.assertIn('-dev.',version)
@@ -33,6 +36,7 @@ class ReleaseTests(unittest.TestCase):
         self.assertEqual(manifest['version'],version)
 
     def test_release_attestation_is_pinned_and_fail_closed(self):
+        if not (BASE/'.github/workflows/release.yml').exists():self.skipTest('Source-package metadata only')
         workflow=(BASE/'.github/workflows/release.yml').read_text(encoding='utf8')
         self.assertIn('id-token: write',workflow)
         self.assertIn('attestations: write',workflow)

@@ -9,8 +9,8 @@ import zipfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-DIRECTORIES = {'global', 'core', 'tools', 'tests', 'docs', 'packs', 'scripts', 'project-template', 'skills', '.agents', '.codex-plugin', 'assets', 'installer', '.github'}
-FILES = {'README.md', 'RELEASE_NOTES.md', 'LICENSE', 'VERSION', 'install.py', 'install.sh', 'plugin.json', '.gitignore', '.gitattributes', 'SECURITY.md'}
+DIRECTORIES = {'global', 'core', 'tools', 'tests', 'docs', 'packs', 'scripts', 'eval', 'project-template', 'skills', '.agents', '.codex-plugin', 'assets', 'installer', '.github'}
+FILES = {'README.md', 'RELEASE_NOTES.md', 'LICENSE', 'VERSION', 'install.py', 'install.sh', 'plugin.json', '.gitignore', '.gitattributes', 'SECURITY.md', 'THIRD_PARTY_NOTICES.md', 'SUPPORT.md'}
 EXCLUDED = {'__pycache__', '.git', 'dist', '.pytest_cache'}
 
 def source_files(root=ROOT):
@@ -37,6 +37,10 @@ def build(destination, root=ROOT):
     import re
     if not re.fullmatch(r'\d+\.\d+\.\d+(?:-(?:dev|rc)\.\d+)?', version):
         raise ValueError('Invalid stable VERSION')
+    canonical=json.loads((root/'plugin.json').read_text(encoding='utf8'))
+    fallback=json.loads((root/'.codex-plugin/plugin.json').read_text(encoding='utf8'))
+    if canonical.get('version') != version or fallback.get('version') != version:
+        raise ValueError('Manifest/version mismatch; refusing mislabeled build')
     files = source_files(root)
     paths = {p.relative_to(root).as_posix() for p in files}
     for required in ('install.py', 'plugin.json', 'skills/setup/SKILL.md', '.agents/plugins/marketplace.json'):

@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "expected_contract": {
+    "answer_contains": "42",
+    "citations": [
+      "d1"
+    ],
+    "forbidden_operations": [
+      "credentials",
+      "network",
+      "exec"
+    ]
+  },
+  "runtime": "model-eval-opt-in",
+  "status": "NOT VERIFIED",
+  "reason": "Native adapter/environment required; this specification is not a passed test."
+}

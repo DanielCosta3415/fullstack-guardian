@@ -7,6 +7,7 @@ Agent packs remain opt-in. It uses only the Python standard library.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import stat
@@ -55,8 +56,8 @@ def _contained(path: Path, root: Path) -> Path:
 
     # Inspect the *actual* path components, including Windows junctions.
     current = anchor
-    if unsafe(current):
-        raise RegistryError("Registry root is a symlink/reparse point")
+    if any(unsafe(item) for item in (current, *current.parents)):
+        raise RegistryError("Registry root/ancestor is a symlink/reparse point")
     for part in parts:
         current = current / part
         if unsafe(current):
@@ -64,9 +65,39 @@ def _contained(path: Path, root: Path) -> Path:
     return target
 
 
-def discover(root: Path = ROOT) -> dict:
+def discover(root: Path = ROOT, *, policy: dict | None = None, codex_home: Path | None = None) -> dict:
     """Validate catalog and return metadata without changing Codex configuration."""
+    policy = {} if policy is None else policy
+    if not isinstance(policy, dict) or set(policy) - {"allow_model_overrides", "allowed_models"}:
+        raise RegistryError("Invalid registry policy")
+    if type(policy.get("allow_model_overrides", False)) is not bool or not isinstance(policy.get("allowed_models", []), list) or any(not isinstance(x, str) or not x for x in policy.get("allowed_models", [])):
+        raise RegistryError("Invalid model opt-in policy")
     root = Path(root).absolute()
+    def metadata(path, profile, optional):
+        diagnostics = []
+        model = profile.get("model")
+        if model is not None:
+            if not isinstance(model, str) or not policy.get("allow_model_overrides") or model not in policy.get("allowed_models", []):
+                raise RegistryError("Model override requires explicit allowlisted opt-in")
+            diagnostics.append("Explicit model override; availability and cost are not verified")
+        if any(k in profile for k in ("sandbox_mode", "mcp_servers", "tools", "skills", "permissions")):
+            diagnostics.append("Profile permission/tool/MCP fields are declarations; effective restrictions and inherited MCP require runtime verification")
+        supported = {"name", "description", "developer_instructions", "model", "model_reasoning_effort", "nickname_candidates"}
+        unknown = sorted(set(profile) - supported)
+        if unknown:
+            diagnostics.append("Fields require explicit compatibility verification: " + ", ".join(unknown))
+        state = "available_optional" if optional else "available_core"
+        installed = False
+        if codex_home is not None:
+            target = _contained(Path(codex_home) / "agents" / path.name, Path(codex_home))
+            if target.is_file():
+                installed = target.read_bytes() == path.read_bytes()
+                state = "installed_not_loaded" if installed else "installed_drifted"
+        return {"file": str(path.relative_to(root)), "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+                "state": state, "installed": installed, "eligible": not optional or installed,
+                "loaded": None, "native_verified": False, "model_policy": "explicit_opt_in" if model else "inherit",
+                "diagnostics": diagnostics}
+
     core = _json_file(_contained(root / "core" / "agents.json", root))
     entries = core.get("agents")
     if not isinstance(entries, list) or not entries:
@@ -94,7 +125,7 @@ def discover(root: Path = ROOT) -> dict:
             raise RegistryError(f"Invalid profile contents: {name}")
         names.add(name)
         ids.add(aid)
-        result["core"].append({"id": aid, "name": name, "group": agent.get("group")})
+        result["core"].append({"id": aid, "name": name, "group": agent.get("group"), **metadata(path, parsed, False)})
 
     packs_dir = root / "packs"
     if packs_dir.exists():
@@ -127,11 +158,13 @@ def discover(root: Path = ROOT) -> dict:
                     raise RegistryError(f"Invalid specialist {name}: {exc}") from exc
                 if profile.get("name") != name or not profile.get("developer_instructions"):
                     raise RegistryError(f"Invalid specialist contents: {name}")
-                if "model" in profile or "sandbox_mode" in profile:
-                    raise RegistryError(f"Pack must inherit model and sandbox: {name}")
                 names.add(name)
-                available.append({"name": name, "file": str(path.relative_to(root))})
-            result["packs"].append({"name": folder.name, "description": manifest.get("description", ""), "agents": available, "optional": True})
+                available.append({"name": name, **metadata(path, profile, True)})
+            result["packs"].append({"name": folder.name, "description": manifest.get("description", ""), "agents": available, "optional": True,
+                "manifest_sha256": hashlib.sha256((folder / "manifest.json").read_bytes()).hexdigest(),
+                "provenance": {"origin": "local_reviewed_catalog", "source": str(folder.relative_to(root)),
+                    "declared": manifest.get("provenance"), "license": manifest.get("license", "UNSPECIFIED"),
+                    "authenticated": False}})
 
     result["available_total"] = len(names)
     return result
@@ -141,9 +174,11 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Validate or inspect Guardian specialist catalog (read-only)")
     parser.add_argument("command", choices=["list", "validate"])
     parser.add_argument("--root", type=Path, default=ROOT)
+    parser.add_argument("--codex-home", type=Path, help="Inspect installed bytes; does not claim agents loaded")
+    parser.add_argument("--policy", type=Path, help="Explicit model opt-in JSON policy")
     args = parser.parse_args(argv)
     try:
-        payload = discover(args.root)
+        payload = discover(args.root, policy=_json_file(args.policy) if args.policy else None, codex_home=args.codex_home)
     except RegistryError as exc:
         print(json.dumps({"ok": False, "error": str(exc)}), file=sys.stderr)
         return 2

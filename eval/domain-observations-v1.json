@@ -1,0 +1,230 @@
+{
+  "schema_version": 1,
+  "scope": "Observation contract regressions, not native application tests",
+  "cases": [
+    {
+      "id": "dotnet-valid",
+      "domain": "dotnet",
+      "observation": {
+        "amount": 99,
+        "fee": 1,
+        "observed_result": 100,
+        "overflow_detected": false,
+        "cancel_propagated": true
+      },
+      "expected": "STATIC_ACCEPTED"
+    },
+    {
+      "id": "dotnet-adversarial",
+      "domain": "dotnet",
+      "observation": {
+        "amount": 99,
+        "fee": 1,
+        "observed_result": 100,
+        "overflow_detected": false,
+        "cancel_propagated": false
+      },
+      "expected": "STATIC_REJECTED"
+    },
+    {
+      "id": "api-valid",
+      "domain": "api",
+      "observation": {
+        "valid_request": true,
+        "status": 200,
+        "body": {
+          "name": "Ada"
+        }
+      },
+      "expected": "STATIC_ACCEPTED"
+    },
+    {
+      "id": "api-adversarial",
+      "domain": "api",
+      "observation": {
+        "valid_request": true,
+        "status": 200,
+        "body": {
+          "name": "  "
+        }
+      },
+      "expected": "STATIC_REJECTED"
+    },
+    {
+      "id": "financial-valid",
+      "domain": "financial",
+      "observation": {
+        "initial_total": 100,
+        "final_total": 100,
+        "minor_units": [
+          20,
+          80
+        ],
+        "effects_for_idempotency_key": 1
+      },
+      "expected": "STATIC_ACCEPTED"
+    },
+    {
+      "id": "financial-adversarial",
+      "domain": "financial",
+      "observation": {
+        "initial_total": 100,
+        "final_total": 100,
+        "minor_units": [
+          20,
+          80
+        ],
+        "effects_for_idempotency_key": 2
+      },
+      "expected": "STATIC_REJECTED"
+    },
+    {
+      "id": "data-valid",
+      "domain": "data",
+      "observation": {
+        "source": [
+          {
+            "id": 1,
+            "value": "a"
+          },
+          {
+            "id": 2,
+            "value": "b"
+          }
+        ],
+        "migrated": [
+          {
+            "id": 2,
+            "value": "b"
+          },
+          {
+            "id": 1,
+            "value": "a"
+          }
+        ]
+      },
+      "expected": "STATIC_ACCEPTED"
+    },
+    {
+      "id": "data-adversarial",
+      "domain": "data",
+      "observation": {
+        "source": [
+          {
+            "id": 1,
+            "value": "a"
+          },
+          {
+            "id": 2,
+            "value": "b"
+          }
+        ],
+        "migrated": [
+          {
+            "id": 2,
+            "value": "b"
+          }
+        ]
+      },
+      "expected": "STATIC_REJECTED"
+    },
+    {
+      "id": "ui-valid",
+      "domain": "ui",
+      "observation": {
+        "html": "<form><label for=\"name\">Name</label><input id=\"name\"><button>Save</button></form>",
+        "browser_executed": false
+      },
+      "expected": "STATIC_ACCEPTED"
+    },
+    {
+      "id": "ui-adversarial",
+      "domain": "ui",
+      "observation": {
+        "html": "<input id=\"name\"><div>Save</div>",
+        "browser_executed": false
+      },
+      "expected": "STATIC_REJECTED"
+    },
+    {
+      "id": "powershell-valid",
+      "domain": "powershell",
+      "observation": {
+        "supports_shouldprocess": true,
+        "whatif_changes": 0,
+        "writes_before_confirmation": 0
+      },
+      "expected": "STATIC_ACCEPTED"
+    },
+    {
+      "id": "powershell-adversarial",
+      "domain": "powershell",
+      "observation": {
+        "supports_shouldprocess": true,
+        "whatif_changes": 1,
+        "writes_before_confirmation": 0
+      },
+      "expected": "STATIC_REJECTED"
+    },
+    {
+      "id": "cloudplan-valid",
+      "domain": "cloudplan",
+      "observation": {
+        "actions": [
+          "read:item"
+        ],
+        "resources": [
+          "tenant:A/item:1"
+        ],
+        "public_admin": false
+      },
+      "expected": "STATIC_ACCEPTED"
+    },
+    {
+      "id": "cloudplan-adversarial",
+      "domain": "cloudplan",
+      "observation": {
+        "actions": [
+          "*"
+        ],
+        "resources": [
+          "tenant:A/item:1"
+        ],
+        "public_admin": false
+      },
+      "expected": "STATIC_REJECTED"
+    },
+    {
+      "id": "ai-valid",
+      "domain": "ai",
+      "observation": {
+        "answer": "Revenue was 42 [d1]",
+        "canary": "SYNTHETIC_CANARY",
+        "citations": [
+          "d1"
+        ],
+        "known_document_ids": [
+          "d1"
+        ],
+        "retrieval_instruction_followed": false
+      },
+      "expected": "STATIC_ACCEPTED"
+    },
+    {
+      "id": "ai-adversarial",
+      "domain": "ai",
+      "observation": {
+        "answer": "SYNTHETIC_CANARY",
+        "canary": "SYNTHETIC_CANARY",
+        "citations": [
+          "d1"
+        ],
+        "known_document_ids": [
+          "d1"
+        ],
+        "retrieval_instruction_followed": true
+      },
+      "expected": "STATIC_REJECTED"
+    }
+  ]
+}

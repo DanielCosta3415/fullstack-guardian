@@ -1,0 +1,41 @@
+name: Isolated grader acceptance
+on:
+  push:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+jobs:
+  isolated:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Provision disposable rootless backend with reviewed image digest
+        run: bash scripts/Setup-HostedGrader.sh
+      - name: Require actually verified isolated backend
+        run: python -c "from tools.guardian_grader_sandbox import probe; p=probe(); print(p); assert p['available'], 'Isolation unavailable; no skipped release gate'"
+      - name: Diagnose failed trusted preflight
+        if: failure()
+        run: |
+          docker info --format '{{json .SecurityOptions}}'
+          docker image inspect "$GUARDIAN_GRADER_IMAGE" --format '{{json .RepoDigests}}'
+          python - <<'PY'
+          import os,subprocess,shutil
+          from tools.guardian_grader_sandbox import container_command,PREFLIGHT
+          command=container_command(shutil.which('docker'),os.environ['GUARDIAN_GRADER_IMAGE'],'guardian-diagnostic')
+          try:
+              result=subprocess.run(command+['-I','-B','-c',PREFLIGHT],timeout=30)
+              raise SystemExit(result.returncode)
+          finally:
+              subprocess.run(['docker','rm','--force','guardian-diagnostic'],check=False)
+          PY
+      - name: Native isolation, cancellation and adversarial grading regressions
+        run: python tools/run_grader_acceptance.py --out grader-acceptance.json
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: grader-acceptance
+          path: grader-acceptance.json
+          if-no-files-found: error

@@ -69,7 +69,7 @@ TRIGGERS={
 
 SKILLS={'audit':'fullstack-audit','release':'production-readiness','security':'security-review','frontend':'frontend-assurance','backend':'backend-assurance','architecture':'architecture-assessment'}
 
-def route(prompt,inventory=None,mode='auto'):
+def route(prompt,inventory=None,mode='auto',stage=None,eligible_profiles=None,available_roles=None):
     if not prompt.strip():raise ValueError('Prompt vazio')
     text=norm(prompt);hit={k:any(token in text for token in v.split('|')) for k,v in TRIGGERS.items()}
     # Remove narrowly scoped explicit exclusions from release candidate selection.
@@ -78,7 +78,7 @@ def route(prompt,inventory=None,mode='auto'):
     release_text=re.sub(r'\b(?:do not|dont|nao)\s+(?:deploy|implant\w*)\b','',release_text)
     hit['release']=any(token in release_text for token in TRIGGERS['release'].split('|'))
     mode=('AUDIT' if hit['audit'] else 'BUILD') if mode=='auto' else mode.upper()
-    if mode not in ('AUDIT','BUILD','REMEDIATE'):raise ValueError('Modo inválido')
+    if mode not in ('AUDIT','BUILD','REMEDIATE','EXPLORE'):raise ValueError('Modo inválido')
     critical=hit['destructive'] and (hit['release'] or hit['finance'])
     high=any(hit[x] for x in ('finance','security','concurrency','destructive'))
     risk='critical' if critical else 'high' if high else 'medium' if any(hit[x] for x in ('release','data','architecture')) else 'low'
@@ -112,8 +112,39 @@ def route(prompt,inventory=None,mode='auto'):
         if 'backend' in tags:add('S08 S18','Camada Back-End identificada')
         if 'cloud' in tags or 'container' in tags:add('S22','Infraestrutura identificada')
         if 'ci' in tags:add('S23','CI detectada')
-    elif risk in ('high','critical'):add('G01','Revisão independente obrigatória')
+    policy=load('coordination-policy-v1.json')
+    matrix=policy.get('gate_matrix',{})
+    if policy.get('schema_version')!=1 or matrix.get('high')!=['G01'] or matrix.get('critical')!=['G01'] or matrix.get('delivery')!=['G02']:
+        raise ValueError('Coordination gate matrix invalid; required reviews cannot be waived')
+    for gate_id in matrix.get(risk,[]):add(gate_id,'Revisão independente obrigatória por risco')
     if hit['release'] or critical:add('G02','Prontidão de produção')
+    for gate_id in matrix.get(stage,[]):add(gate_id,'Gate obrigatório da etapa '+str(stage))
+    # Discovery is investigation, never implicit implementation. Optional packs
+    # only join with registry state AND the caller's actual native role inventory.
+    excluded_profiles=[]
+    pack_entries={}
+    for profile in eligible_profiles or []:
+        if not isinstance(profile,dict): raise ValueError('Invalid eligible profile record')
+        name=profile.get('name'); pid=profile.get('id')
+        if not all(profile.get(key) is True for key in ('installed','enabled','compatible')) or name not in set(available_roles or []):
+            excluded_profiles.append({'name':name,'reason':'installation/enabled/compatibility/native-role evidence incomplete'})
+            continue
+        keywords=profile.get('keywords',[])
+        if not isinstance(keywords,list) or any(not isinstance(k,str) for k in keywords):raise ValueError('Invalid specialist keywords')
+        if not isinstance(pid,str) or pid in entries or name in {e['name'] for e in entries.values()}:
+            raise ValueError('Optional identity collision')
+        if any(norm(k) in text for k in keywords if len(k)>2):
+            pack_entries[pid]={'name':name}
+            add(pid,'Optional pack installed, enabled, compatible and available in caller native role inventory')
+    entries.update(pack_entries)
+    if pack_entries:
+        # A proven relevant optional role replaces only the generic uncertainty
+        # placeholder, never mandatory risk coverage or independent reviewers.
+        for aid in list(selected):
+            if aid not in pack_entries and all(reason.startswith('Triagem inicial') for reason in selected[aid]):
+                del selected[aid]
+    if mode=='EXPLORE':
+        selected={k:v for k,v in selected.items() if k not in ('S18','S17') or risk in ('high','critical')}
     priority={'G02':98,'G01':97,'S13':90,'S14':90,'S10':88,'S11':87,'S18':85,'S03':80,'S20':79,'S23':78,'S16':77,'S08':70,'S05':70}
     ranked=sorted(selected,key=lambda a:(-priority.get(a,50),a))
     limit=8 if mode=='AUDIT' else 6 if risk in ('high','critical') else 4
@@ -132,6 +163,9 @@ def route(prompt,inventory=None,mode='auto'):
       'agents':[{'id':id,'name':entries[id]['name'],'reason':sorted(set(selected[id]))} for id in ranked],
       'execution_waves':[p['agents'] for p in phases],'phases':phases,'suggested_skills':list(dict.fromkeys(skills)),
       'approval_boundaries':approvals,'routing_confidence':'medium' if any(hit.values()) else 'low',
+      'abstention_required':not any(hit.values()),'excluded_profiles':excluded_profiles,
+      'delegation_required':risk in ('high','critical') or mode=='AUDIT' or len([k for k,v in hit.items() if v])>1,
+      'operating_mode':'read_only_exploration' if mode=='EXPLORE' or stage in ('discovery','requirements') else 'task_scoped',
       'notice':'Regras heurísticas. O Codex deve validar e convocar subagentes nativamente; este script NÃO cria subagentes.'}
 
 
@@ -211,6 +245,17 @@ def validate():
                     errors.append('Critérios de ciclo de vida inválidos '+phase['id'])
     except (OSError,ValueError,KeyError,TypeError) as exc:
         errors.append('Metadados de plataforma inválidos '+str(exc))
+    try:
+        try:
+            from .guardian_catalog import validate_catalog
+        except ImportError:
+            try:
+                from tools.guardian_catalog import validate_catalog
+            except ImportError:
+                from guardian_catalog import validate_catalog
+        validate_catalog(ROOT)
+    except (OSError,ValueError,KeyError,TypeError) as exc:
+        errors.append('Canonical catalog invalid: '+str(exc))
     skills=list((ROOT/'global'/'skills').glob('*/SKILL.md'))
     if len(skills)<8:errors.append('Conjunto mínimo de oito skills ausente')
     if len({p.parent.name for p in skills})!=len(skills):errors.append('Skills duplicadas')
@@ -277,7 +322,7 @@ def main():
     ap=argparse.ArgumentParser(description='Guardian v2: operação estática local, sem executar código de projeto.')
     sub=ap.add_subparsers(dest='cmd',required=True)
     p=sub.add_parser('inspect');p.add_argument('--project',default='.')
-    p=sub.add_parser('route');p.add_argument('--project');g=p.add_mutually_exclusive_group(required=True);g.add_argument('--prompt');g.add_argument('--prompt-file');p.add_argument('--mode',choices=['auto','build','audit','remediate'],default='auto')
+    p=sub.add_parser('route');p.add_argument('--project');g=p.add_mutually_exclusive_group(required=True);g.add_argument('--prompt');g.add_argument('--prompt-file');p.add_argument('--mode',choices=['auto','build','audit','remediate','explore'],default='auto')
     p=sub.add_parser('assess');p.add_argument('--project',default='.');p.add_argument('--profile',required=True)
     sub.add_parser('validate');sub.add_parser('eval')
     p=sub.add_parser('audit-template');p.add_argument('--project',default='.');p.add_argument('--out',required=True)

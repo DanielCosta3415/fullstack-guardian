@@ -30,12 +30,14 @@ class ExecutorTests(unittest.TestCase):
         git(self.repo, "add", "example.txt")
         git(self.repo, "-c", "user.name=CI Test", "-c", "user.email=test@example.invalid", "commit", "-q", "-m", "test base")
         self.plan = create_plan("Corrigir service ASP.NET Core do backend")
+        for task in self.plan["tasks"]:
+            task["contract"].update(operation="write", allowed_paths=["example.txt"], checks=[[sys.executable, "-V"]], idempotent=False)
         self.briefs = {t["id"]: "Review the ASP.NET Core service test boundary and implement a minimal testable change." for t in self.plan["tasks"]}
 
     def test_execution_requires_explicit_briefs(self):
         initialize(self.plan, self.repo, self.home)
         with self.assertRaises(ExecutionError):
-            execute(self.home, apply=True, codex_binary=sys.executable)
+            execute(self.home, apply=True, codex_binary=sys.executable, authorize_writes=True)
 
     def test_brief_tampering_is_rejected(self):
         initialize(self.plan, self.repo, self.home, briefs=self.briefs)
@@ -45,7 +47,7 @@ class ExecutorTests(unittest.TestCase):
         content[key] = "A different request with no authorization and too much scope"
         path.write_text(json.dumps(content))
         with self.assertRaises(ExecutionError):
-            execute(self.home, apply=True, codex_binary=sys.executable)
+            execute(self.home, apply=True, codex_binary=sys.executable, authorize_writes=True)
 
     def test_init_creates_state_but_not_git_worktree(self):
         result = initialize(self.plan, self.repo, self.home, briefs=self.briefs)
@@ -81,8 +83,8 @@ class ExecutorTests(unittest.TestCase):
                 f.write("synthetic changed\n")
             return 0, True, "fake-test"
         with patch("tools.guardian_executor._process", side_effect=fake_process):
-            result = execute(self.home, apply=True, codex_binary=sys.executable, max_tasks=29)
-        self.assertEqual(result["overall"], "completed")
+            result = execute(self.home, apply=True, codex_binary=sys.executable, max_tasks=29, authorize_writes=True)
+        self.assertEqual(result["overall"], "produced")
         self.assertEqual(len(set(seen)), 1)
         self.assertEqual((self.repo / "example.txt").read_text(), "baseline\n")
         self.assertIn("synthetic changed", (self.home / "worktree" / "example.txt").read_text())
@@ -99,11 +101,11 @@ class ExecutorTests(unittest.TestCase):
             logs.write_text('{"type":"turn.failed"}\n')
             return 1, False, None
         with patch("tools.guardian_executor._process", side_effect=bad):
-            result = execute(self.home, apply=True, codex_binary=sys.executable)
+            result = execute(self.home, apply=True, codex_binary=sys.executable, authorize_writes=True)
         self.assertEqual(result["overall"], "blocked")
         self.assertEqual(result["completed"], 0)
         with patch("tools.guardian_executor._process", side_effect=bad):
-            again = execute(self.home, apply=True, codex_binary=sys.executable)
+            again = execute(self.home, apply=True, codex_binary=sys.executable, authorize_writes=True)
         self.assertEqual(again["executed_this_run"], 0)
 
     def test_plan_modification_detected(self):
@@ -119,7 +121,7 @@ class ExecutorTests(unittest.TestCase):
         initialize(self.plan, self.repo, self.home)
         (self.repo / "dirty.txt").write_text("dirty")
         with self.assertRaises(ExecutionError):
-            execute(self.home, apply=True, codex_binary=sys.executable)
+            execute(self.home, apply=True, codex_binary=sys.executable, authorize_writes=True)
 
     def test_native_child_evidence_requires_exact_role_and_completion(self):
         sessions = self.home.parent / "codex" / "sessions"
@@ -142,7 +144,7 @@ class ExecutorTests(unittest.TestCase):
             return 0, True, "fake-test"
         with (patch("tools.guardian_executor._process", side_effect=fake_process),
               patch("tools.guardian_executor.verify_native_child", return_value=False)):
-            output = execute(self.home, apply=True, codex_binary=sys.executable, native_subagents=True)
+            output = execute(self.home, apply=True, codex_binary=sys.executable, native_subagents=True, authorize_writes=True)
         self.assertEqual(output["overall"], "blocked")
         self.assertFalse(output["native_subagents_verified"])
         self.assertEqual(status(self.home)["tasks"][next(iter(status(self.home)["tasks"]))]["error_code"],

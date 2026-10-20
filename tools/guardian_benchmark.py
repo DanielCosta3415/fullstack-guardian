@@ -62,7 +62,21 @@ def compare(baseline: dict, candidate: dict) -> dict:
     trial_success = sum(x["passed"] for x in trial)
     gains = sum(not x["passed"] and y["passed"] for x, y in zip(base, trial))
     losses = sum(x["passed"] and not y["passed"] for x, y in zip(base, trial))
+    # Cluster uncertainty by case, not by repeated samples (pseudoreplication).
+    case_deltas = []
+    for case in sorted({c for c, _ in keys}):
+        subset = [key for key in keys if key[0] == case]
+        case_deltas.append(statistics.mean(int(b["samples"][k]["passed"]) - int(a["samples"][k]["passed"]) for k in subset))
+    ci = None
+    if len(case_deltas) >= 2:
+        import random
+        rng = random.Random(0)
+        boot = sorted(statistics.mean(rng.choices(case_deltas, k=len(case_deltas))) for _ in range(2000))
+        ci = [round(boot[49], 4), round(boot[1949], 4)]
     return {
+        "uncertainty": {"method": "case-cluster percentile bootstrap, seed 0, 2000 resamples",
+                        "confidence_level": 0.95, "pass_delta_interval": ci,
+                        "warning": "Descriptive small-dataset uncertainty; not causal or a significance test"},
         "schema_version": 1,
         "paired_samples": n,
         "unique_cases": len({c for c, _ in keys}),

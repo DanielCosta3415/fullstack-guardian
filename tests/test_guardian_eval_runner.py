@@ -8,6 +8,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 from tools.guardian_eval_runner import EvalError, fixture, run
+from tools.guardian_grader_sandbox import validate_oracle
 
 
 class NativeBenchmarkTests(unittest.TestCase):
@@ -36,7 +37,7 @@ class NativeBenchmarkTests(unittest.TestCase):
         (self.project / "answer.txt").write_text("bad\n")
         git("add", "answer.txt")
         git("-c", "user.email=ci@example.invalid", "-c", "user.name=CI", "commit", "-q", "-m", "baseline")
-        self.dataset = {"schema_version": 1, "cases": [
+        self.dataset = {"schema_version": 1, "dataset_version":"test-v1", "split":"holdout", "cases": [
             {"case_id": "fix_answer", "prompt": "Fix answer.txt to contain the expected result", "checks": ["expected"]}
         ]}
 
@@ -49,16 +50,20 @@ class NativeBenchmarkTests(unittest.TestCase):
 
     def test_pairing_and_unavailable_token_count(self):
         calls = []
-        def fake(codex, project, prompt, model, effort, timeout, event_path):
+        self.checker.write_text(json.dumps({"schema_version":2,"cases":{"fix_answer":{"checks":{"expected":[{"file":"target.py","function":"answer","args":[],"expected":{"kind":"value","value":1}}]}}}}))
+        config = self.project.parent / "config"
+        config.mkdir()
+        (config / "config.toml").write_text('model = "test-model"\n')
+        def fake(codex, project, prompt, model, effort, timeout, event_path, config_home):
             calls.append((model, effort, prompt))
             (project / "answer.txt").write_text("good\n")
             event_path.parent.mkdir(parents=True, exist_ok=True)
             event_path.write_text('{"type":"turn.completed"}\n')
             return 0, True, None
-        with patch("tools.guardian_eval_runner._codex", side_effect=fake):
+        with patch("tools.guardian_eval_runner._codex", side_effect=fake), patch("tools.guardian_eval_runner.probe", return_value={"available":True}), patch("tools.guardian_eval_runner.grade_oracle", return_value={"passed":True,"checks":[{"check":"expected","vector":0,"passed":True}]}):
             result = run(self.dataset, self.project, self.checker, self.output,
                          "test-model", "medium", 1, 120, apply=True, codex_binary=sys.executable,
-                         candidate_guidance="Guardian: verify contract invariants and error paths with actual tests.")
+                         candidate_guidance="Guardian: verify contract invariants and error paths with actual tests.", isolated_config=config)
         self.assertEqual(len(calls), 2)
         self.assertEqual(result["paired_samples"], 1)
         self.assertTrue(result["native_codex_run"])

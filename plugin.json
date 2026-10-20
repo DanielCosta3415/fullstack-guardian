@@ -1,8 +1,8 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "fullstack-guardian",
-  "version": "2.2.0-dev.1",
-  "description": "Prévia experimental da plataforma Fullstack Guardian: ciclo de vida, especialistas e execução supervisionada.",
+  "version": "2.2.0-dev.3",
+  "description": "Prévia de engenharia Guardian: contratos verificáveis, execução supervisionada e instalação preservadora.",
   "author": {
     "name": "Daniel Lopes da Costa"
   },
@@ -14,8 +14,8 @@
       "onboardingSkill": "./skills/setup/SKILL.md",
       "interface": {
         "displayName": "Full-Stack Guardian",
-        "shortDescription": "Prévia 2.2: plataforma de engenharia assistida",
-        "longDescription": "Prévia de desenvolvimento (não certificada): 29 agentes centrais, 12 workflows de ciclo de vida, dez perfis opcionais e ferramentas de validação e execução supervisionada.",
+        "shortDescription": "Guardian 2.2: engenharia supervisionada",
+        "longDescription": "Prévia: 29 papéis centrais, 20 skills, dez packs opcionais e verificações explícitas de capacidades, evidências e permissões.",
         "developerName": "Daniel Lopes da Costa",
         "category": "Developer Tools",
         "websiteURL": "https://github.com/DanielCosta3415/fullstack-guardian",

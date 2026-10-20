@@ -9,7 +9,7 @@ class RegistryTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
-        self.root = Path(self.temp.name)
+        self.root = Path(self.temp.name).resolve()
         (self.root / "core").mkdir()
         (self.root / "global" / "agents").mkdir(parents=True)
         (self.root / "global" / "agents" / "base.toml").write_text(
@@ -88,6 +88,26 @@ class RegistryTests(unittest.TestCase):
             f.write('model="other-model"\n')
         with self.assertRaises(RegistryError):
             discover(self.root)
+
+    def test_explicit_allowlisted_model_policy(self):
+        folder = self.add_pack()
+        with (folder / "agents" / "guardian_test_extra.toml").open("a", encoding="utf-8") as stream:
+            stream.write('model="reviewed-model"\n')
+        result = discover(self.root, policy={"allow_model_overrides": True, "allowed_models": ["reviewed-model"]})
+        self.assertEqual(result["packs"][0]["agents"][0]["model_policy"], "explicit_opt_in")
+        with self.assertRaises(RegistryError):
+            discover(self.root, policy={"allow_model_overrides": True, "allowed_models": ["different-model"]})
+
+    def test_core_and_optional_controls_diagnosed_uniformly(self):
+        folder = self.add_pack()
+        for path in (self.root / "global/agents/base.toml", folder / "agents/guardian_test_extra.toml"):
+            with path.open("a", encoding="utf-8") as stream:
+                stream.write('sandbox_mode="read-only"\n')
+        result = discover(self.root)
+        for profile in (result["core"][0], result["packs"][0]["agents"][0]):
+            self.assertTrue(any("effective restrictions" in item for item in profile["diagnostics"]))
+            self.assertIsNone(profile["loaded"])
+            self.assertFalse(profile["native_verified"])
 
     def test_symlink_pack_rejected(self):
         outside=self.root/"outside"

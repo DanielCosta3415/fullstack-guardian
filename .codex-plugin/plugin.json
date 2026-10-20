@@ -1,7 +1,7 @@
 {
   "name": "fullstack-guardian",
-  "version": "2.1.0",
-  "description": "29 especialistas e configuração global preservadora para engenharia no Codex.",
+  "version": "2.2.0-dev.3",
+  "description": "Prévia de engenharia Guardian: contratos verificáveis, execução supervisionada e instalação preservadora.",
   "author": {
     "name": "Daniel Lopes da Costa"
   },
