@@ -213,6 +213,87 @@ class RuntimeTests(unittest.TestCase):
 
 
 class ProcessTreeTests(unittest.TestCase):
+    def test_posix_zombie_only_group_needs_no_second_signal_or_early_reap(self):
+        from unittest.mock import Mock
+        proc=Mock(pid=123)
+        with patch('tools.guardian_runtime.os.name','posix'),patch('tools.guardian_runtime.os.killpg',create=True) as killpg,patch('tools.guardian_runtime._posix_group_has_live_members',return_value=False):
+            terminate_tree(proc,grace=0)
+        killpg.assert_called_once_with(123,15)
+        proc.wait.assert_called_once_with(timeout=10)
+        proc.poll.assert_not_called()
+
+    def test_posix_leader_exit_does_not_skip_killing_live_children(self):
+        from unittest.mock import Mock
+        proc=Mock(pid=123)
+        def signal_group(pid,sig):
+            proc.wait.assert_not_called() # leader PID stays reserved through escalation
+        with patch('tools.guardian_runtime.os.name','posix'),patch('tools.guardian_runtime.signal.SIGKILL',9,create=True),patch('tools.guardian_runtime.os.killpg',side_effect=signal_group,create=True) as killpg,patch('tools.guardian_runtime._posix_group_has_live_members',side_effect=[True,False]):
+            terminate_tree(proc,grace=0)
+        self.assertEqual([call.args for call in killpg.call_args_list],[(123,15),(123,9)])
+        proc.wait.assert_called_once_with(timeout=10)
+
+    def test_posix_permission_error_with_live_members_is_not_suppressed(self):
+        from unittest.mock import Mock
+        proc=Mock(pid=123)
+        with patch('tools.guardian_runtime.os.name','posix'),patch('tools.guardian_runtime.os.killpg',side_effect=PermissionError('denied'),create=True),patch('tools.guardian_runtime._posix_group_has_live_members',return_value=True):
+            with self.assertRaisesRegex(RuntimeError,'live POSIX group'):
+                terminate_tree(proc,grace=0)
+        proc.wait.assert_not_called()
+
+    def test_posix_permission_error_on_escalation_requires_independent_empty_observation(self):
+        from unittest.mock import Mock
+        proc=Mock(pid=123)
+        with patch('tools.guardian_runtime.os.name','posix'),patch('tools.guardian_runtime.signal.SIGKILL',9,create=True),patch('tools.guardian_runtime.os.killpg',side_effect=[None,PermissionError('Darwin zombie group')],create=True),patch('tools.guardian_runtime._posix_group_has_live_members',side_effect=[True,False,False]):
+            terminate_tree(proc,grace=0)
+        proc.wait.assert_called_once_with(timeout=10)
+        proc=Mock(pid=123)
+        with patch('tools.guardian_runtime.os.name','posix'),patch('tools.guardian_runtime.signal.SIGKILL',9,create=True),patch('tools.guardian_runtime.os.killpg',side_effect=[None,PermissionError('denied')],create=True),patch('tools.guardian_runtime._posix_group_has_live_members',side_effect=[True,True]):
+            with self.assertRaisesRegex(RuntimeError,'kill live POSIX group'):
+                terminate_tree(proc,grace=0)
+        proc.wait.assert_not_called()
+
+    def test_posix_inventory_distinguishes_zombies_live_children_and_unknown_output(self):
+        from tools.guardian_runtime import _posix_group_has_live_members
+        for rows,expected in [('123 123 Z\n456 456 S\n',False),('123 123 Z+\n456 123 S\n',True),('456 456 S\n',False)]:
+            with patch('tools.guardian_runtime.subprocess.run',return_value=subprocess.CompletedProcess([],0,rows,'')):
+                self.assertEqual(_posix_group_has_live_members(123),expected)
+        for result in (subprocess.CompletedProcess([],1,'','denied'),subprocess.CompletedProcess([],0,'PID PGID STAT\n',''),subprocess.CompletedProcess([],0,'',''),subprocess.CompletedProcess([],0,' \n\t','')):
+            with patch('tools.guardian_runtime.subprocess.run',return_value=result),self.assertRaises(RuntimeError):
+                _posix_group_has_live_members(123)
+        with patch('tools.guardian_runtime.subprocess.run',side_effect=subprocess.TimeoutExpired('ps',3)),self.assertRaises(RuntimeError):
+            _posix_group_has_live_members(123)
+
+    def test_posix_live_group_after_kill_deadline_is_not_reported_clean(self):
+        from unittest.mock import Mock
+        proc=Mock(pid=123)
+        with patch('tools.guardian_runtime.os.name','posix'),patch('tools.guardian_runtime.signal.SIGKILL',9,create=True),patch('tools.guardian_runtime.os.killpg',create=True),patch('tools.guardian_runtime._posix_group_has_live_members',return_value=True),patch('time.monotonic',side_effect=[0,0,0,11]):
+            with self.assertRaisesRegex(RuntimeError,'group termination not confirmed'):
+                terminate_tree(proc,grace=0)
+        proc.wait.assert_not_called()
+
+    @unittest.skipIf(sys.platform=='win32','POSIX process group acceptance requires Linux/macOS')
+    def test_real_posix_exited_leader_and_term_ignoring_child_are_terminated(self):
+        import os
+        import signal
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp); sentinel=root/'survived'; ready=root/'ready'
+            child_code="import signal,time,pathlib; signal.signal(signal.SIGTERM,signal.SIG_IGN); pathlib.Path("+repr(str(ready))+").touch(); time.sleep(1.5); pathlib.Path("+repr(str(sentinel))+").touch(); time.sleep(20)"
+            parent_code="import subprocess,sys,time; subprocess.Popen([sys.executable,'-c',"+repr(child_code)+"]); time.sleep(20)"
+            proc=subprocess.Popen([sys.executable,'-c',parent_code],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,start_new_session=True)
+            try:
+                deadline=time.monotonic()+5
+                while not ready.exists() and time.monotonic()<deadline: time.sleep(.02)
+                self.assertTrue(ready.exists(),'Child readiness must be established before cancellation')
+                terminate_tree(proc,grace=.1)
+                time.sleep(1.6)
+                self.assertIsNotNone(proc.returncode)
+                self.assertFalse(sentinel.exists())
+            finally:
+                if proc.returncode is None:
+                    try: os.killpg(proc.pid,signal.SIGKILL)
+                    except (ProcessLookupError,PermissionError): pass
+                    proc.wait(timeout=5)
+
     def test_cancel_terminates_descendant_before_sentinel_write(self):
         import os
         with tempfile.TemporaryDirectory() as tmp:

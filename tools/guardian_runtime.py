@@ -162,24 +162,69 @@ def _windows_kill_tree(proc):
         for handle in handles: kernel.CloseHandle(handle)
 
 
+def _posix_group_has_live_members(pgid: int) -> bool:
+    """Observe live group members without relying on killpg(..., 0) semantics.
+
+    Darwin's killpg can return EPERM for a group containing only zombies (XNU
+    killpg1 filters SZOMB before counting signalable processes). A zombie cannot
+    execute or retain an executing descendant by itself; live children remain
+    separate rows and must still be terminated. Unknown inventory fails closed.
+    """
+    try:
+        observed=subprocess.run(['/bin/ps','-A','-o','pid=','-o','pgid=','-o','stat='],
+            stdin=subprocess.DEVNULL,capture_output=True,text=True,encoding='ascii',
+            env={**os.environ,'LC_ALL':'C'},timeout=3,check=False)
+    except (OSError,UnicodeError,subprocess.SubprocessError) as exc:
+        raise RuntimeError('Cannot verify POSIX process group; termination uncertain') from exc
+    if observed.returncode or not observed.stdout.strip() or len(observed.stdout)>2_000_000:
+        raise RuntimeError('POSIX process inventory unavailable or exceeds budget')
+    for line in observed.stdout.splitlines():
+        fields=line.split()
+        if (len(fields)!=3 or not fields[0].isdecimal() or not fields[1].isdecimal()
+            or not fields[2] or not fields[2][0].isalpha()):
+            raise RuntimeError('Unrecognized POSIX process inventory; termination uncertain')
+        if int(fields[1])==pgid and not fields[2].startswith('Z'):
+            return True
+    return False
+
+
 def terminate_tree(proc: subprocess.Popen, grace: float = 2.0) -> None:
     """Terminate process descendants; a failure must not be reported as success."""
     if os.name == "nt":
         _windows_kill_tree(proc)
     else:
+        import time
+        import math
+        if type(grace) not in (int,float) or not math.isfinite(grace) or not 0<=grace<=60:
+            raise RuntimeError('Invalid process termination grace period')
         try:
             os.killpg(proc.pid, signal.SIGTERM)
         except ProcessLookupError:
             pass
-        try:
-            proc.wait(timeout=grace)
-        except subprocess.TimeoutExpired:
-            pass
-        # Kill the original process group even when its leader exited first.
-        try:
-            os.killpg(proc.pid, signal.SIGKILL)
-        except ProcessLookupError:
-            pass
+        except PermissionError as exc:
+            if _posix_group_has_live_members(proc.pid):
+                raise RuntimeError('Cannot signal live POSIX group; termination uncertain') from exc
+        # Do not wait/poll (and reap) the leader before escalation. Its zombie
+        # reserves the PID while we inspect remaining children. A reaped leader
+        # says nothing about children that ignored TERM in the original group.
+        deadline=time.monotonic()+grace
+        while _posix_group_has_live_members(proc.pid):
+            remaining=deadline-time.monotonic()
+            if remaining<=0:
+                try:
+                    os.killpg(proc.pid,signal.SIGKILL)
+                except ProcessLookupError:
+                    break
+                except PermissionError as exc:
+                    if _posix_group_has_live_members(proc.pid):
+                        raise RuntimeError('Cannot kill live POSIX group; termination uncertain') from exc
+                kill_deadline=time.monotonic()+10
+                while _posix_group_has_live_members(proc.pid):
+                    if time.monotonic()>=kill_deadline:
+                        raise RuntimeError('POSIX process group termination not confirmed')
+                    time.sleep(.05)
+                break
+            time.sleep(min(.05,remaining))
     try:
         proc.wait(timeout=10)
     except subprocess.TimeoutExpired as exc:
