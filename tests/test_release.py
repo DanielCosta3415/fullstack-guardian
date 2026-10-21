@@ -5,6 +5,11 @@ spec=importlib.util.spec_from_file_location('guardian_release_builder',BASE/'too
 builder=importlib.util.module_from_spec(spec);spec.loader.exec_module(builder)
 
 class ReleaseTests(unittest.TestCase):
+    def test_generated_catalog_matches_current_metadata(self):
+        if not (BASE/'plugin.json').exists():self.skipTest('Source-package metadata only')
+        from tools.generate_catalog_docs import render
+        self.assertEqual((BASE/'docs/CATALOG.md').read_text(encoding='utf8'),render(BASE))
+
     def test_plugin_onboarding_and_marketplace(self):
         if not (BASE/'plugin.json').exists():self.skipTest('Source-package metadata only')
         m=json.loads((BASE/'plugin.json').read_text(encoding='utf8'))
