@@ -1,5 +1,15 @@
 # Professional artifact cases — public objective subscopes
 
+## Public response protocol 2
+
+Each task now publishes a versioned, fixture-independent definition for every output field in `tools/guardian_professional_protocol.py`. It specifies namespaces, formats, decision/fault vocabularies, calculations and whether a field describes supplied observations or a normative recommendation. These rules are supplied verbatim before an evaluation, together with the exact case inventory; they are not generated from expected answers. Native summaries bind the protocol version and public inventory digest. Provenance-valid returned JSON is retained even when its case inventory is invalid.
+
+Three formerly ambiguous fields have explicit protocol-2 names: `verified_claim_ids` contains claim IDs whose required evidence is fully present, never evidence IDs; `unsafe_flow_ids` flags a missing tenant check or a cross-tenant request as static risk without claiming observed disclosure; `secrets_may_be_granted_to_untrusted_code` is a normative prohibition, distinct from the input snapshot's actual secret access. Focus faults, recovery blockers, DI edges and decisions also have published generic vocabularies. Decimal retention calculations use a fixed precision of 28 significant digits.
+
+The initial protocol-1 native development run remains recorded as 37/39 corroborated children, 97 observed cases, 66 passes and 31 failures. Independent review found 27 primarily underspecified response contracts, three domain/oracle ambiguities and one mixed protocol/task-adherence failure. One additional child returned unknown/duplicate case identifiers; another lacked a valid completed final. Quota was observed, but does not explain every failure. No old answer is regraded or silently promoted under protocol 2. A new complete run is required, and passes from different attempts must not be pooled.
+
+All 39 professional profiles additionally require exact identifier/obligation reconciliation, separation of observed facts from recommendations, and a final check of types, units, boundaries and closed output contracts. These practices support professional handoffs; they do not certify expert competence.
+
 This layer supplies **103 versioned fixtures for all 39 Guardian roles**, bound to the original 103 `independent_sme` case IDs and complete source-case digests. It adds concrete data artifacts and checkable tasks; it does not change the original professional corpus, its oracles, execution statuses or qualitative review requirements.
 
 `eval/professional-cases/catalog.json` records every original criterion's digest and scope. Correctness is explicitly **PARTIAL_OBJECTIVE**: only the named artifact projection is checked. Evidence provenance, overall safety and collaboration/recipient acceptance remain **NOT_ASSESSED** by this layer. Every manifest names remaining semantic review. No case has a fabricated SME approval.

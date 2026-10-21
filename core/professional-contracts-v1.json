@@ -29,7 +29,10 @@
       "procedure": [
         "Mapear cada obrigação a tarefa, dono, dependência e oráculo; separar fatos, hipóteses, criticidade, complexidade e maturidade",
         "Reconciliar contradições com evidência discriminante; replanejar quando premissa ou disponibilidade mudar; manter gates obrigatórios em ondas",
-        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo."
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados."
       ],
       "artifacts": [
         "Matriz obrigação→tarefa→dono→evidência",
@@ -212,7 +215,10 @@
       "procedure": [
         "Distinguir demanda de solução de problema observado; comparar hipóteses concorrentes e vieses da amostra",
         "Definir experimento mínimo com baseline, limiar, owner e critério de parada; aceitar evidência inconclusiva em vez de inventar validação",
-        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo."
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados."
       ],
       "artifacts": [
         "Quadro problema/hipótese/evidência",
@@ -418,7 +424,10 @@
       "procedure": [
         "Converter linguagem vaga em obrigação observável com exemplos positivos, negativos, fronteiras e acesso negado",
         "Resolver conflitos de regras pela precedência autorizada; analisar impacto de mudança sem apagar invariantes existentes",
-        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo."
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados."
       ],
       "artifacts": [
         "Matriz requisito→caso→oráculo",
@@ -679,7 +688,10 @@
       "procedure": [
         "Comparar arquitetura mínima suficiente com alternativas e modos de falha; testar a premissa que distingue as opções",
         "Registrar ADR para fronteira estrutural alterada com consequências, compatibilidade e plano reversível; separar escala comprovada de estimativa",
-        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo."
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados."
       ],
       "artifacts": [
         "Mapa As-Is/To-Be/lacunas",
@@ -961,7 +973,10 @@
       "procedure": [
         "Localizar fonte de verdade, ownership de estado, fronteiras de renderização e cache; analisar corrida em respostas e transições",
         "Comparar mudança mínima com refatoração; testar navegação, erro e invalidação preservando contratos públicos de componentes",
-        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo."
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados."
       ],
       "artifacts": [
         "Mapa de estado/fronteiras",
@@ -1163,7 +1178,10 @@
       "procedure": [
         "Implementar comportamento pequeno com estados carregando, vazio, erro, validação e sucesso; preservar ownership de estado",
         "Exercitar teclado, viewport e respostas fora de ordem; confirmar efeitos e compatibilidade de componente na jornada afetada",
-        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo."
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados."
       ],
       "artifacts": [
         "Diff de UI com escopo",
@@ -1333,7 +1351,10 @@
       "procedure": [
         "Mapear tarefa do usuário, obstáculos e critérios aplicáveis; verificar nome, papel, estado, foco e recuperação de erro",
         "Executar teclado e tecnologia assistiva quando disponível; registrar por critério pass/fail/not-tested sem equiparar scanner a conformidade",
-        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo."
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados."
       ],
       "artifacts": [
         "Matriz critério/jornada/evidência",
@@ -1483,7 +1504,10 @@
       "procedure": [
         "Medir carregamento, resposta e estabilidade com condições repetíveis; separar laboratório de campo e custo de execução",
         "Comparar repetições e variação antes/depois; testar cache/offline/compatibilidade e overlay i18n quando jornadas multilíngues forem afetadas",
-        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo."
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados."
       ],
       "artifacts": [
         "Baseline reproduzível e percentis",
@@ -1661,7 +1685,10 @@
       "procedure": [
         "Identificar unidade de trabalho, validações e efeitos observáveis; modelar precisão monetária, limites e erros de domínio",
         "Implementar preservando contratos; testar cancelamento antes/depois de efeito, dependência indisponível e lifetime/disposal assíncrono aplicáveis",
-        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo."
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados."
       ],
       "artifacts": [
         "Diff de domínio",
@@ -1823,7 +1850,10 @@
       "procedure": [
         "Comparar consumidor/provedor e classificar breaking changes; definir erros, paginação estável e compatibilidade por versão",
         "Testar request/response e efeitos reais; separar retry seguro de timeout com efeito incerto; proteger webhook contra replay quando aplicável",
-        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo."
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados."
       ],
       "artifacts": [
         "Matriz de compatibilidade",
@@ -2081,7 +2111,10 @@
       "procedure": [
         "Enumerar falhas entre efeito, commit e confirmação; formular propriedades de segurança e progresso com hipóteses explícitas",
         "Reproduzir concorrência com scheduler/barreiras determinísticas; testar duplicate delivery, deduplicação durável, TTL e recuperação limitada",
-        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo."
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados."
       ],
       "artifacts": [
         "Matriz de falhas/efeitos",
@@ -2271,7 +2304,10 @@
       "procedure": [
         "Examinar isolamento, constraints, query plans e locks com dados representativos; distinguir semântica do engine de hipótese",
         "Planejar expand/migrate/contract; testar upgrade, consumidor legado, reconciliação e rollback ou forward-fix com limites explícitos",
-        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo."
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados."
       ],
       "artifacts": [
         "Plano de migração e lock budget",
@@ -2474,7 +2510,10 @@
       "procedure": [
         "Rastrear linhagem, minimização, retenção e exclusão propagada; registrar exceções e obrigações aplicáveis sem parecer jurídico inventado",
         "Executar restore sintético autorizado e comparar integridade/tempo com objetivos; verificar horizon de recuperação e destino de dados apagados",
-        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo."
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados."
       ],
       "artifacts": [
         "Inventário de dados e retenção",
@@ -2675,7 +2714,10 @@
       "procedure": [
         "Derivar ameaças e abuso do fluxo real, priorizar impacto e pré-condições; procurar controles corretos para medir falsos positivos",
         "Reproduzir vulnerabilidade em fixture segura; testar mitigação e regressão; recusar alvo fora do escopo autorizado",
-        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo."
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados."
       ],
       "artifacts": [
         "Threat model e matriz ameaça/controle/teste",
@@ -2869,7 +2911,10 @@
       "procedure": [
         "Separar autenticação, autorização e privacidade; mapear sujeito/recurso/ação e políticas deny-by-default no servidor",
         "Testar allow/deny por objeto e tenant, issuer/audience/expiry, revogação e minimização; analisar retenção e limites da interpretação legal",
-        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo."
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados."
       ],
       "artifacts": [
         "Matriz de acesso por recurso",
@@ -3074,7 +3119,10 @@
       "procedure": [
         "Traçar source→builder→artifact→deploy e fronteiras de confiança; observar dependências transitivas, segredos e permissões mínimas",
         "Verificar integridade e assinatura contra identidade esperada; fixar versão/digest e retestar vulnerabilidade com scanner detectado",
-        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo."
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados."
       ],
       "artifacts": [
         "Grafo de proveniência",
@@ -3306,7 +3354,10 @@
       "procedure": [
         "Construir matriz risco→oráculo→nível→caso→evidência; escolher poucos testes que detectem falhas relevantes",
         "Semear defeito ou usar mutação justificada para avaliar o oráculo; testar bordas/negativos e definir skip/block e dados isolados",
-        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo."
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados."
       ],
       "artifacts": [
         "Estratégia de verificação",
@@ -3472,7 +3523,10 @@
       "procedure": [
         "Mapear positivos e carregando/vazio/erro/sessão expirada; observar DOM, foco, árvore acessível e efeitos de interação",
         "Executar jornadas no browser detectado e distinguir scanner automático de tecnologia assistiva; reproduzir corrida e persistência de estado",
-        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo."
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados."
       ],
       "artifacts": [
         "Casos E2E por jornada",
@@ -3637,7 +3691,10 @@
       "procedure": [
         "Construir matriz status/corpo/efeitos por caminho, incluindo auth por recurso, entrada inválida, conflito e timeout",
         "Executar contra implementação real em ambiente descartável; verificar persistência, atomicidade e ausência de efeito em negação",
-        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo."
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados."
       ],
       "artifacts": [
         "Suíte API/contrato",
@@ -3811,7 +3868,10 @@
       "procedure": [
         "Definir carga aberta/fechada, warmup, distribuição e coordinated omission; observar throughput, percentis e saturação",
         "Comparar repetições antes/depois com variação, traces e hipótese causal; limitar experimento por abort conditions e autorização",
-        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo."
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados."
       ],
       "artifacts": [
         "Plano reproduzível de carga",
@@ -3997,7 +4057,10 @@
       "procedure": [
         "Relacionar falha a impacto e janela de SLO; comparar prevenção, degradação, recuperação e limites de dependências",
         "Ensaiar recuperação e restore em ambiente autorizado; definir condições de aborto e medir integridade/tempo antes de recomendar rollout",
-        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo."
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados."
       ],
       "artifacts": [
         "Análise de falhas e budget",
@@ -4163,7 +4226,10 @@
       "procedure": [
         "Construir timeline correlacionada e separar causalidade de coincidência; inspecionar propagação de contexto OpenTelemetry aplicável",
         "Testar sinal RED/USE pertinente, sampling/cardinalidade e redaction; reproduzir diagnóstico sem expor credenciais ou dados pessoais",
-        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo."
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados."
       ],
       "artifacts": [
         "Timeline de incidente",
@@ -4324,7 +4390,10 @@
       "procedure": [
         "Validar plano estruturado e drift com provider/version detectados; estimar blast radius, custo e isolamento de ambientes",
         "Preferir serviço mínimo suficiente; verificar política e rollback/forward recovery; separar plan de apply e exigir autorização de escrita",
-        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo."
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados."
       ],
       "artifacts": [
         "Análise de plan/policy",
@@ -4489,7 +4558,10 @@
       "procedure": [
         "Separar build/test/release/deploy e fronteiras de segredos; vincular cada gate a SHA e artefato imutável com proveniência",
         "Testar promoção/canary/rollback em ambiente autorizado; validar OIDC por ambiente, smoke e invalidação quando fonte muda",
-        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo."
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados."
       ],
       "artifacts": [
         "Pipeline e matriz de confiança",
@@ -4667,7 +4739,10 @@
       "procedure": [
         "Mapear acoplamento e dívida com efeito observável; comparar remoção/refactor incremental com custo de manter",
         "Migrar em etapas preservando comportamento; testar compatibilidade e retirada com owner, janela, telemetria e reversão",
-        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo."
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados."
       ],
       "artifacts": [
         "Mapa de callers/contratos",
@@ -4837,7 +4912,10 @@
       "procedure": [
         "Separar governança, FinOps e sustentabilidade; distinguir medição de estimativa e registrar hipóteses de TCO",
         "Comparar custo unitário, risco, benefício e alternativas com baseline; encaminhar interpretação jurídica e aprovação material ao owner",
-        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo."
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados."
       ],
       "artifacts": [
         "Registro de risco/owners",
@@ -4993,7 +5071,10 @@
       "procedure": [
         "Versionar conjunto de avaliação com dev/validation/holdout, oráculos e critérios pré-declarados; separar qualidade, segurança e correção do produto",
         "Testar injeção, vazamento, isolamento, abstenção e calibração; observar custo/latência e monitoramento pós-release sem tratar prompt como sandbox",
-        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo."
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados."
       ],
       "artifacts": [
         "Matriz risco→eval→controle",
@@ -5663,7 +5744,10 @@
       "procedure": [
         "Inspecionar independentemente origem, controles e cobertura; escolher reprodução discriminante e avaliar falso positivo/negativo",
         "Reproduzir achado material ou refutar hipótese; separar fato, severidade, impacto, incerteza e recomendação sem modificar fonte auditada",
-        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo."
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados."
       ],
       "artifacts": [
         "Achados arquivo/símbolo/reprodução",
@@ -5792,7 +5876,10 @@
       "procedure": [
         "Conferir testes, migração, rollback, monitoramento, acesso e pareceres distintos vinculados ao mesmo SHA",
         "Classificar READY/CONDITIONAL/BLOCKED/UNKNOWN por controle; invalidar parecer após mudança material ou expiração e separar preview de stable",
-        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo."
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados."
       ],
       "artifacts": [
         "Matriz de controles/evidências",
@@ -5978,7 +6065,10 @@
       "procedure": [
         "Medir retrieval recall e rastrear cada claim ao trecho recuperado; delimitar confiança de documentos e ferramentas",
         "Testar injeção no corpus, cross-tenant, abstenção e ferramenta fora de allowlist em holdout isolado",
-        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo."
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados."
       ],
       "artifacts": [
         "Mapa de confiança RAG",
@@ -6160,7 +6250,10 @@
       "procedure": [
         "Construir matriz de compatibilidade com exemplos válidos, inválidos e erros; analisar evolução de enum e campo opcional",
         "Executar consumidor/provedor quando disponíveis; testar webhook replay, paginação e propagação de deadline sem retry incerto",
-        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo."
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados."
       ],
       "artifacts": [
         "Contrato versionado",
@@ -6334,7 +6427,10 @@
       "procedure": [
         "Comparar desired/observed state, diff destrutivo e custo; mapear blast radius e política do provedor",
         "Validar plano e permissões com simulador somente autorizado; ensaiar rollback ou forward fix sem assumir credenciais",
-        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo."
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados."
       ],
       "artifacts": [
         "Matriz IaC/risco",
@@ -6532,7 +6628,10 @@
       "procedure": [
         "Planejar expand/migrate/contract, batches, watermark e cutover; rastrear transformações de valor e chave",
         "Ensaiar reconciliação de valores/chaves/constraints e restore; interromper em drift antes de contrair esquema",
-        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo."
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados."
       ],
       "artifacts": [
         "Plano de backfill/cutover",
@@ -6730,7 +6829,10 @@
       "procedure": [
         "Reproduzir versão correta; inspecionar lifetime/disposal, async/cancellation, ordem auth middleware e fronteiras transacionais",
         "Executar build/test e negativos de escopo/erro/cancelamento; manter API pública e pin de pacote compatíveis",
-        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo."
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados."
       ],
       "artifacts": [
         "Diagnóstico .NET localizado",
@@ -6946,7 +7048,10 @@
       "procedure": [
         "Definir minor units, arredondamento e conservação double-entry; mapear commit/provider/webhook e estados válidos",
         "Testar duplicata, reordenação, timeout com efeito incerto, reconciliação e chargeback em fixture sintética",
-        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo."
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados."
       ],
       "artifacts": [
         "Invariantes de ledger",
@@ -7162,7 +7267,10 @@
       "procedure": [
         "Verificar nome/papel/estado, foco após transição e erro; mapear falha ao critério e impacto real",
         "Reproduzir teclado e resposta fora de ordem; retestar correção mínima em browser sem alegar AT não executada",
-        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo."
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados."
       ],
       "artifacts": [
         "Matriz WCAG por jornada",
@@ -7332,7 +7440,10 @@
       "procedure": [
         "Definir oráculos por comportamento e risco; escolher contract/property/mutation somente quando detectam falha relevante",
         "Semear regressão e verificar mensagem/efeito discriminante; isolar dados, registrar repetição e tratar flake sem ocultar falha",
-        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo."
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados."
       ],
       "artifacts": [
         "Suíte de contrato versionada",
@@ -7526,7 +7637,10 @@
       "procedure": [
         "Construir misuse cases/attack tree e priorizar pré-condição, explorabilidade e impacto; identificar controles corretos",
         "Testar abuso mínimo em fixture autorizada e retestar mitigação; abortar ação externa fora de escopo",
-        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo."
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados."
       ],
       "artifacts": [
         "Threat model verificável",
@@ -7706,7 +7820,10 @@
       "procedure": [
         "Resolver alvos dentro do escopo e rejeitar junction/reparse escape; manter um shell e parâmetros literais sem cmd concatenado",
         "Exercitar SupportsShouldProcess/WhatIf sem escrita; aplicar só operação autorizada e verificar idempotência/cancelamento/rollback",
-        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo."
+        "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados."
       ],
       "artifacts": [
         "Script delimitado",

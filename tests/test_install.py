@@ -16,6 +16,6 @@ class InstallTests(unittest.TestCase):
    src=BASE/'project-template'/'AGENTS.md'
    inst.append_instruction(p,src,True)
    inst.append_instruction(p,src,True)
-   self.assertIn('Regra existente',p.read_text())
-   self.assertEqual(p.read_text().count(inst.START),1)
+   self.assertIn('Regra existente',p.read_text(encoding='utf8'))
+   self.assertEqual(p.read_text(encoding='utf8').count(inst.START),1)
 if __name__=='__main__':unittest.main()

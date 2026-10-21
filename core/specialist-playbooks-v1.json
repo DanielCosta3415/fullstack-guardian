@@ -8,6 +8,9 @@
         "Mapear cada obrigação a tarefa, dono, dependência e oráculo; separar fatos, hipóteses, criticidade, complexidade e maturidade",
         "Reconciliar contradições com evidência discriminante; replanejar quando premissa ou disponibilidade mudar; manter gates obrigatórios em ondas",
         "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
         "Nenhuma obrigação pode desaparecer na síntese; consumidor aceita handoff; bloqueios e desvios do roteador têm motivo verificável",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
         "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
@@ -19,6 +22,9 @@
         "Distinguir demanda de solução de problema observado; comparar hipóteses concorrentes e vieses da amostra",
         "Definir experimento mínimo com baseline, limiar, owner e critério de parada; aceitar evidência inconclusiva em vez de inventar validação",
         "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
         "Recomendação liga decisão à evidência; desconhecidos permanecem explícitos; métrica não premia comportamento contrário ao resultado do usuário",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
         "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
@@ -30,6 +36,9 @@
         "Converter linguagem vaga em obrigação observável com exemplos positivos, negativos, fronteiras e acesso negado",
         "Resolver conflitos de regras pela precedência autorizada; analisar impacto de mudança sem apagar invariantes existentes",
         "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
         "Cada requisito tem owner e verificação; termos como rápido ou seguro têm contexto mensurável; ambiguidade material bloqueia apenas trabalho dependente",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
         "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
@@ -41,6 +50,9 @@
         "Comparar arquitetura mínima suficiente com alternativas e modos de falha; testar a premissa que distingue as opções",
         "Registrar ADR para fronteira estrutural alterada com consequências, compatibilidade e plano reversível; separar escala comprovada de estimativa",
         "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
         "Alternativa escolhida cobre requisitos rastreados; dependências e recuperação são viáveis no ambiente observado; custo/complexidade são proporcionais",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
         "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
@@ -52,6 +64,9 @@
         "Localizar fonte de verdade, ownership de estado, fronteiras de renderização e cache; analisar corrida em respostas e transições",
         "Comparar mudança mínima com refatoração; testar navegação, erro e invalidação preservando contratos públicos de componentes",
         "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
         "Estado duplicado e resposta fora de ordem têm política explícita; jornada e compatibilidade são preservadas; escrita exige escopo delegado separado da revisão",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
         "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
@@ -63,6 +78,9 @@
         "Implementar comportamento pequeno com estados carregando, vazio, erro, validação e sucesso; preservar ownership de estado",
         "Exercitar teclado, viewport e respostas fora de ordem; confirmar efeitos e compatibilidade de componente na jornada afetada",
         "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
         "Comportamento solicitado é observável; regressão existente não é removida para obter verde; interação essencial funciona por teclado",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
         "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
@@ -74,6 +92,9 @@
         "Mapear tarefa do usuário, obstáculos e critérios aplicáveis; verificar nome, papel, estado, foco e recuperação de erro",
         "Executar teclado e tecnologia assistiva quando disponível; registrar por critério pass/fail/not-tested sem equiparar scanner a conformidade",
         "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
         "Fluxo essencial tem resultado acessível verificável; evidência informa browser/AT/versão; pesquisa com usuários só é alegada quando ocorreu",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
         "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
@@ -85,6 +106,9 @@
         "Medir carregamento, resposta e estabilidade com condições repetíveis; separar laboratório de campo e custo de execução",
         "Comparar repetições e variação antes/depois; testar cache/offline/compatibilidade e overlay i18n quando jornadas multilíngues forem afetadas",
         "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
         "Métrica tem ambiente e amostra; ganho não quebra jornada/acessibilidade; ausência de campo não vira alegação de Core Web Vitals de produção",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
         "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
@@ -96,6 +120,9 @@
         "Identificar unidade de trabalho, validações e efeitos observáveis; modelar precisão monetária, limites e erros de domínio",
         "Implementar preservando contratos; testar cancelamento antes/depois de efeito, dependência indisponível e lifetime/disposal assíncrono aplicáveis",
         "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
         "Invariantes sobrevivem a negativos e fronteiras; efeitos parciais têm recuperação explícita; nenhuma regra de negócio migra silenciosamente para cliente",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
         "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
@@ -107,6 +134,9 @@
         "Comparar consumidor/provedor e classificar breaking changes; definir erros, paginação estável e compatibilidade por versão",
         "Testar request/response e efeitos reais; separar retry seguro de timeout com efeito incerto; proteger webhook contra replay quando aplicável",
         "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
         "Consumidor existente permanece compatível ou migração é explícita; propagação de prazo/identidade é verificável; efeito remoto incerto não é repetido cegamente",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
         "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
@@ -118,6 +148,9 @@
         "Enumerar falhas entre efeito, commit e confirmação; formular propriedades de segurança e progresso com hipóteses explícitas",
         "Reproduzir concorrência com scheduler/barreiras determinísticas; testar duplicate delivery, deduplicação durável, TTL e recuperação limitada",
         "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
         "Duplicatas não causam efeito inválido; recuperação termina sob hipóteses declaradas; exactly-once nunca é afirmado sem fronteira e prova",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
         "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
@@ -129,6 +162,9 @@
         "Examinar isolamento, constraints, query plans e locks com dados representativos; distinguir semântica do engine de hipótese",
         "Planejar expand/migrate/contract; testar upgrade, consumidor legado, reconciliação e rollback ou forward-fix com limites explícitos",
         "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
         "Integridade de valores/chaves e constraints é verificada; migração tem janela/custo e owner; rollback de dados não é presumido reversível",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
         "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
@@ -140,6 +176,9 @@
         "Rastrear linhagem, minimização, retenção e exclusão propagada; registrar exceções e obrigações aplicáveis sem parecer jurídico inventado",
         "Executar restore sintético autorizado e comparar integridade/tempo com objetivos; verificar horizon de recuperação e destino de dados apagados",
         "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
         "Backup existente não substitui restore testado; restauração mede integridade além de contagem; prazos legais pendentes ficam não verificados",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
         "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
@@ -151,6 +190,9 @@
         "Derivar ameaças e abuso do fluxo real, priorizar impacto e pré-condições; procurar controles corretos para medir falsos positivos",
         "Reproduzir vulnerabilidade em fixture segura; testar mitigação e regressão; recusar alvo fora do escopo autorizado",
         "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
         "Achado distingue evidência de suspeita; exploração é mínima e autorizada; ausência de achados não vira certificação de segurança",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
         "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
@@ -162,6 +204,9 @@
         "Separar autenticação, autorização e privacidade; mapear sujeito/recurso/ação e políticas deny-by-default no servidor",
         "Testar allow/deny por objeto e tenant, issuer/audience/expiry, revogação e minimização; analisar retenção e limites da interpretação legal",
         "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
         "Negativos entre tenants são executados quando viáveis; token válido não implica autorização; alegações jurídicas exigem fonte e owner competente",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
         "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
@@ -173,6 +218,9 @@
         "Traçar source→builder→artifact→deploy e fronteiras de confiança; observar dependências transitivas, segredos e permissões mínimas",
         "Verificar integridade e assinatura contra identidade esperada; fixar versão/digest e retestar vulnerabilidade com scanner detectado",
         "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
         "Assinatura é vinculada a origem/identidade esperadas; scanner ausente fica não verificado; segredo não é impresso nem copiado para evidência",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
         "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
@@ -184,6 +232,9 @@
         "Construir matriz risco→oráculo→nível→caso→evidência; escolher poucos testes que detectem falhas relevantes",
         "Semear defeito ou usar mutação justificada para avaliar o oráculo; testar bordas/negativos e definir skip/block e dados isolados",
         "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
         "Teste falha pelo defeito esperado e não ImportError genérico; cobertura de linhas não substitui comportamento; skips críticos bloqueiam aprovação",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
         "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
@@ -195,6 +246,9 @@
         "Mapear positivos e carregando/vazio/erro/sessão expirada; observar DOM, foco, árvore acessível e efeitos de interação",
         "Executar jornadas no browser detectado e distinguir scanner automático de tecnologia assistiva; reproduzir corrida e persistência de estado",
         "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
         "Assertions verificam estado final além de screenshot; ambiente e limitações AT são explícitos; falha de ferramenta não parece defeito de produto",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
         "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
@@ -206,6 +260,9 @@
         "Construir matriz status/corpo/efeitos por caminho, incluindo auth por recurso, entrada inválida, conflito e timeout",
         "Executar contra implementação real em ambiente descartável; verificar persistência, atomicidade e ausência de efeito em negação",
         "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
         "Erro tem código e efeito esperados; cross-tenant e rollback são testados no engine relevante; dados reais de produção não são usados",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
         "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
@@ -217,6 +274,9 @@
         "Definir carga aberta/fechada, warmup, distribuição e coordinated omission; observar throughput, percentis e saturação",
         "Comparar repetições antes/depois com variação, traces e hipótese causal; limitar experimento por abort conditions e autorização",
         "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
         "Amostra e ambiente acompanham métrica; média sintética não extrapola produção; ganho não sacrifica correção nem excede blast radius",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
         "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
@@ -228,6 +288,9 @@
         "Relacionar falha a impacto e janela de SLO; comparar prevenção, degradação, recuperação e limites de dependências",
         "Ensaiar recuperação e restore em ambiente autorizado; definir condições de aborto e medir integridade/tempo antes de recomendar rollout",
         "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
         "SLO tem janela e denominador; recovery medido atende objetivo ou explicita gap; chaos e produção exigem autorização própria",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
         "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
@@ -239,6 +302,9 @@
         "Construir timeline correlacionada e separar causalidade de coincidência; inspecionar propagação de contexto OpenTelemetry aplicável",
         "Testar sinal RED/USE pertinente, sampling/cardinalidade e redaction; reproduzir diagnóstico sem expor credenciais ou dados pessoais",
         "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
         "Hipótese é sustentada ou refutada por sinais; telemetry tem owner/retention; sinal ausente é lacuna e não sucesso",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
         "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
@@ -250,6 +316,9 @@
         "Validar plano estruturado e drift com provider/version detectados; estimar blast radius, custo e isolamento de ambientes",
         "Preferir serviço mínimo suficiente; verificar política e rollback/forward recovery; separar plan de apply e exigir autorização de escrita",
         "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
         "Nenhuma credencial ou permissão é presumida; state/lock e diffs destrutivos têm tratamento; teste offline não é deploy real",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
         "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
@@ -261,6 +330,9 @@
         "Separar build/test/release/deploy e fronteiras de segredos; vincular cada gate a SHA e artefato imutável com proveniência",
         "Testar promoção/canary/rollback em ambiente autorizado; validar OIDC por ambiente, smoke e invalidação quando fonte muda",
         "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
         "Artifact testado é o promovido; fork não recebe segredo de maintainer; gate verde não concede autorização de produção",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
         "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
@@ -272,6 +344,9 @@
         "Mapear acoplamento e dívida com efeito observável; comparar remoção/refactor incremental com custo de manter",
         "Migrar em etapas preservando comportamento; testar compatibilidade e retirada com owner, janela, telemetria e reversão",
         "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
         "Caller legado não quebra sem migração explícita; feature removida tem owner e critério; refactor não acrescenta mudança funcional não solicitada",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
         "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
@@ -283,6 +358,9 @@
         "Separar governança, FinOps e sustentabilidade; distinguir medição de estimativa e registrar hipóteses de TCO",
         "Comparar custo unitário, risco, benefício e alternativas com baseline; encaminhar interpretação jurídica e aprovação material ao owner",
         "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
         "Números têm origem e período; economia não oculta risco/desempenho; certificação ou conformidade não é declarada sem prova",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
         "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
@@ -294,6 +372,9 @@
         "Versionar conjunto de avaliação com dev/validation/holdout, oráculos e critérios pré-declarados; separar qualidade, segurança e correção do produto",
         "Testar injeção, vazamento, isolamento, abstenção e calibração; observar custo/latência e monitoramento pós-release sem tratar prompt como sandbox",
         "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
         "Holdout não é editado pelo avaliado; melhor tentativa não substitui repetição/amostra; falta de auth bloqueia avaliação live sem copiar credenciais",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
         "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
@@ -305,6 +386,9 @@
         "Inspecionar independentemente origem, controles e cobertura; escolher reprodução discriminante e avaliar falso positivo/negativo",
         "Reproduzir achado material ou refutar hipótese; separar fato, severidade, impacto, incerteza e recomendação sem modificar fonte auditada",
         "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
         "Não revisar a própria implementação como independente; resumo de outro agente não é prova primária; ausência de evidência é NOT_VERIFIED",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
         "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
@@ -316,6 +400,9 @@
         "Conferir testes, migração, rollback, monitoramento, acesso e pareceres distintos vinculados ao mesmo SHA",
         "Classificar READY/CONDITIONAL/BLOCKED/UNKNOWN por controle; invalidar parecer após mudança material ou expiração e separar preview de stable",
         "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
         "Controle crítico sem evidência bloqueia; opinião não autoriza produção; artefato ou SHA alterado exige nova avaliação",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
         "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
@@ -329,6 +416,9 @@
         "Medir retrieval recall e rastrear cada claim ao trecho recuperado; delimitar confiança de documentos e ferramentas",
         "Testar injeção no corpus, cross-tenant, abstenção e ferramenta fora de allowlist em holdout isolado",
         "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
         "Claim sem suporte é rejeitado ou marcado; tenant não recupera corpus alheio; custo e latência acompanham amostra",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
         "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
@@ -340,6 +430,9 @@
         "Construir matriz de compatibilidade com exemplos válidos, inválidos e erros; analisar evolução de enum e campo opcional",
         "Executar consumidor/provedor quando disponíveis; testar webhook replay, paginação e propagação de deadline sem retry incerto",
         "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
         "Breaking change tem migração explícita; falha revela incompatibilidade real; indisponibilidade do provider fica não verificada",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
         "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
@@ -351,6 +444,9 @@
         "Comparar desired/observed state, diff destrutivo e custo; mapear blast radius e política do provedor",
         "Validar plano e permissões com simulador somente autorizado; ensaiar rollback ou forward fix sem assumir credenciais",
         "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
         "Validação offline é identificada; state/lock preservados; apply exige autorização e escopo efetivo",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
         "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
@@ -362,6 +458,9 @@
         "Planejar expand/migrate/contract, batches, watermark e cutover; rastrear transformações de valor e chave",
         "Ensaiar reconciliação de valores/chaves/constraints e restore; interromper em drift antes de contrair esquema",
         "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
         "Contagem igual não substitui integridade; consumidor legado funciona na expansão; perda ou duplicata impede cutover",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
         "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
@@ -373,6 +472,9 @@
         "Reproduzir versão correta; inspecionar lifetime/disposal, async/cancellation, ordem auth middleware e fronteiras transacionais",
         "Executar build/test e negativos de escopo/erro/cancelamento; manter API pública e pin de pacote compatíveis",
         "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
         "Build correto não basta sem comportamento; cancellation não deixa efeito incerto sem recuperação; ausência de SDK bloqueia teste live",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
         "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
@@ -384,6 +486,9 @@
         "Definir minor units, arredondamento e conservação double-entry; mapear commit/provider/webhook e estados válidos",
         "Testar duplicata, reordenação, timeout com efeito incerto, reconciliação e chargeback em fixture sintética",
         "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
         "Débitos/créditos se conservam por moeda; replay não duplica débito; exactly-once global não é prometido",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
         "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
@@ -395,6 +500,9 @@
         "Verificar nome/papel/estado, foco após transição e erro; mapear falha ao critério e impacto real",
         "Reproduzir teclado e resposta fora de ordem; retestar correção mínima em browser sem alegar AT não executada",
         "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
         "Jornada essencial é executada; evidência declara versão/browser/AT; scanner não certifica conformidade total",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
         "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
@@ -406,6 +514,9 @@
         "Definir oráculos por comportamento e risco; escolher contract/property/mutation somente quando detectam falha relevante",
         "Semear regressão e verificar mensagem/efeito discriminante; isolar dados, registrar repetição e tratar flake sem ocultar falha",
         "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
         "Teste detecta regressão real; quantidade/cobertura não substitui qualidade; fixture não reproduz cegamente a implementação",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
         "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
@@ -417,6 +528,9 @@
         "Construir misuse cases/attack tree e priorizar pré-condição, explorabilidade e impacto; identificar controles corretos",
         "Testar abuso mínimo em fixture autorizada e retestar mitigação; abortar ação externa fora de escopo",
         "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
         "Achado tem caminho e pré-condição; falso positivo é refutável; ferramenta indisponível não vira passe",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
         "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
@@ -428,6 +542,9 @@
         "Resolver alvos dentro do escopo e rejeitar junction/reparse escape; manter um shell e parâmetros literais sem cmd concatenado",
         "Exercitar SupportsShouldProcess/WhatIf sem escrita; aplicar só operação autorizada e verificar idempotência/cancelamento/rollback",
         "Correlacionar o resultado com cada obrigação recebida; registrar fatos, hipóteses e checks indisponíveis sem expandir o escopo.",
+        "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
+        "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
+        "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
         "Metacaracteres não viram código; alvo resolvido fica no escopo; elevação é externa e ACL não é presumida privada",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
         "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."

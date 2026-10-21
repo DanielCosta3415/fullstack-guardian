@@ -4,6 +4,8 @@ Adds an explicitly selected operator-autonomous release policy with corroborated
 
 Adds 103 versioned professional artifact tasks across 39 roles, data-only allowlisted oracles, manually calculated family goldens and contrasts, and a native 39-child/103-artifact observation harness. These measure named objective subscopes and safe abstention, not full SME qualification, live framework execution or a private holdout. The new continuation skill and schema2 checkpoints preserve task/evidence/source/index state and explicit operator policy through interruptions without credentials, account monitoring or automatic wakeup.
 
+Public response protocol2 specifies all112 fields across39 families before execution, separates claim/evidence namespaces and observations from normative decisions, and preserves the failed protocol1 development run. All39 professional profiles now require exact obligation/identifier reconciliation and final checks of facts, types, units, boundaries and output contracts. Decimal projections use a fixed context; temporary-root tests support macOS aliases and managed instruction tests read explicit UTF-8 on Windows.
+
 Publishing and global installation require actual final-revision acceptance and normal permissions; this version label is not evidence that rollout has already occurred. Historical candidates below retain their original scope and outcomes.
 
 # 2.2.0-rc.1 - release acceptance candidate (historical policy)

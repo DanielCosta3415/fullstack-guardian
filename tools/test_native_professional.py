@@ -39,8 +39,8 @@ def plan(root=ROOT):
 def prompt(selected):
     if len(selected)!=39 or len({x['task_name'] for x in selected})!=39:raise ValueError('Exact distinct 39-child inventory required')
     top=('task_name','agent_id','agent_type')
-    public=[dict({k:x[k] for k in top},cases=[{k:c[k] for k in ('case_id','scenario','objective_task','input','response_schema','qualification','remaining_semantic_review')} for c in x['cases']]) for x in selected]
-    return '''Authorized public objective-subscope evaluation. Use only collaboration spawn/wait/close operations; do not use shell, filesystem, network, connectors or credentials. For each inventory entry spawn its exact agent_type and task_name with fork_turns="none", without model/reasoning overrides. Start A00 first; at most three children active. Never substitute generic agents, share answers, retry failures to select favorable outcomes or execute candidate code. Each child gets only its own cases and computes outputs from the supplied artifacts and task, without reading oracles or any filesystem. Result arrays are unordered collections preserving multiplicity, except literal_paths which preserves input order. Integer fields require exact integers (never booleans); number fields allow finite values with relative and absolute tolerance 1e-9. The child must return one pure JSON object {"case_results":[{"case_id":"exact-case-id","result":{...computed schema fields...}},...]} covering all its two or three cases, no Markdown, no tools or further delegation. Explicitly tell each child this is public static-data artifact analysis, not real framework/browser/cloud/DB execution and not SME certification. Preserve failures and quota. The supervisor writes the actual final JSON as an artifact after native session corroboration; do not fabricate completion or model identity. Finish only after all39 children complete.
+    public=[dict({k:x[k] for k in top},cases=[{k:c[k] for k in ('case_id','scenario','objective_task','input','response_schema','protocol_version','output_contract','qualification','remaining_semantic_review')} for c in x['cases']]) for x in selected]
+    return '''Authorized public objective-subscope evaluation. Use only collaboration spawn/wait/close operations; do not use shell, filesystem, network, connectors or credentials. For each inventory entry spawn its exact agent_type and task_name with fork_turns="none", without model/reasoning overrides. Start A00 first; at most three children active. Never substitute generic agents, share answers, retry failures to select favorable outcomes or execute candidate code. Forward each assigned public case object verbatim, including exact case_id, protocol_version and output_contract; never abbreviate or reconstruct identifiers. Each child gets only its own cases and computes outputs from the supplied artifacts and task, without reading oracles or any filesystem. Treat output_contract as the public definition of each response field, including its namespace and closed vocabulary. Return every assigned case_id exactly once, copied byte-for-byte. Result arrays are unordered collections preserving multiplicity, except literal_paths which preserves input order. Integer fields require exact integers (never booleans); number fields allow finite values with relative and absolute tolerance 1e-9. The child must return one pure JSON object {"case_results":[{"case_id":"exact-case-id","result":{...computed schema fields...}},...]} covering all its two or three cases, no Markdown, no tools or further delegation. Explicitly tell each child this is public static-data artifact analysis, not real framework/browser/cloud/DB execution and not SME certification. Preserve failures and quota. The supervisor writes the actual final JSON as an artifact after native session corroboration; do not fabricate completion or model identity. Finish only after all39 children complete.
 BEGIN_PUBLIC_PROFESSIONAL_TASKS
 '''+json.dumps(public,ensure_ascii=False,separators=(',',':'))+'\nEND_PUBLIC_PROFESSIONAL_TASKS\n'
 
@@ -89,9 +89,9 @@ def collect(session_root,parent,selected,root=ROOT):
             child=native.inspect_child(native.read_session(matches[0]),item,parent,set(pairs))
             if child['session_id'] in seen:raise ValueError('Duplicate child session')
             seen.add(child['session_id'])
+            artifacts[item['task_name']]=child['artifact']
             graded=grade_child(item,child['artifact'],root)
             row.update(state='CORROBORATED',model=child['model'],cases=graded)
-            artifacts[item['task_name']]=child['artifact']
         except (ValueError,OSError,TypeError,KeyError) as exc:row['reason']=str(exc)
         reports.append(row)
     return reports,artifacts
@@ -149,8 +149,9 @@ def main(argv=None):
     artifact_dir=project/'observed-artifacts';artifact_dir.mkdir()
     for name,artifact in artifacts.items():native.private_write(artifact_dir/(name+'.json'),json.dumps(artifact,ensure_ascii=True,indent=2))
     reports=[r for row in rows for r in row.get('cases',[])]
-    summary={'schema_version':1,'evidence_class':'NATIVE_PUBLIC_PROFESSIONAL_OBJECTIVE_SUBSCOPES','revision':revision,
+    summary={'schema_version':1,'evidence_class':'NATIVE_PUBLIC_PROFESSIONAL_OBJECTIVE_SUBSCOPES','revision':revision,'protocol_version':cases.PROTOCOL_VERSION,
              'source_unchanged':unchanged,'installed_fixtures_unchanged':fixtures_unchanged,'profile_sha256':profile_hashes,
+             'public_task_inventory_sha256':cases.q.digest(selected),
              'native_children_expected':39,'native_children_corroborated':sum(r['state']=='CORROBORATED' for r in rows),
              'objective_tasks_expected':103,'objective_tasks_observed':len(reports),'objective_tasks_passed':sum(r['objective_passed'] for r in reports),
              'sme_qualified_cases':0,'private_holdout_validated':False,'os_isolation':False,
