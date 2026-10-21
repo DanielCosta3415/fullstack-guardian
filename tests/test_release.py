@@ -31,9 +31,22 @@ class ReleaseTests(unittest.TestCase):
         if not (BASE/'plugin.json').exists():self.skipTest('Source-package metadata only')
         version=(BASE/'VERSION').read_text(encoding='utf8').strip()
         self.assertNotEqual(version,'2.1.0','Experimental platform must not reuse stable release version')
-        self.assertIn('-dev.',version)
+        self.assertRegex(version,r'^\d+\.\d+\.\d+-(?:dev|rc)\.\d+$')
         manifest=json.loads((BASE/'plugin.json').read_text(encoding='utf8'))
         self.assertEqual(manifest['version'],version)
+
+    def test_version_labels_never_authorize_stable_promotion(self):
+        from tools.guardian_release_gate import inspect
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder).resolve();(root/'.codex-plugin').mkdir()
+            for version in ('2.2.0-dev.4','2.2.0-rc.1','2.2.0'):
+                (root/'VERSION').write_text(version)
+                for name in ('plugin.json','.codex-plugin/plugin.json'):
+                    (root/name).write_text(json.dumps({'version':version}))
+                report=inspect(root)
+                self.assertEqual(report['preview'],'-' in version)
+                self.assertFalse(report['stable_promotion_allowed'])
+                self.assertFalse(report['publication_authorized'])
 
     def test_release_attestation_is_pinned_and_fail_closed(self):
         if not (BASE/'.github/workflows/release.yml').exists():self.skipTest('Source-package metadata only')

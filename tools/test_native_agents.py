@@ -27,6 +27,7 @@ def build_prompt(plan,project):
 MANDATORY evidence shape: every check must be a separate tools.exec_command call with cmd exactly python -B check.py and workdir exactly the absolute case_directory. Do not chain reads, other commands, exit manipulation or batch check calls; use separate calls for those actions. Always specify explicit absolute workdir for filesystem commands; never rely on the shell default directory. If the sandbox denies a fixture path, record the denial and stop that case; do not request bypass or modify host ACLs.
 In every child message include the exact case task and mode from the inline inventory. A00 must read and route the exact request in A00/case.json and verify specialist IDs against the installed core/agents.json catalog. Do not replace the case request with a generic evaluation summary.
 '''
+    prompt+='Every spawn must use fork_turns="none": provide only that case task, mode, directory and these check/safety constraints, never the full inventory or prior answers. Do not override model or reasoning_effort.\n'
     prompt+='Router: '+str(project/'.guardian/tools/guardian.py')+'\n'
     return prompt+'BEGIN_PUBLIC_NATIVE_TASKS\n'+json.dumps(public,ensure_ascii=False,separators=(',',':'))+'\nEND_PUBLIC_NATIVE_TASKS\n'
 

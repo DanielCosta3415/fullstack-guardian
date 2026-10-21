@@ -80,3 +80,37 @@ reviews, external unauthenticated records and objective checks remain separate.
 Private holdout requires a separate evaluator-controlled OS/account and secret
 cases. Live A/B requires its explicitly isolated authentication. Missing external
 dependencies block those claims; installing the package cannot create them.
+
+## Explicit independent reviewer without repository write access
+
+The external verifier accepts repeatable `--trusted-reviewer LOGIN` options. The
+operator must name trusted reviewer accounts explicitly for that invocation;
+there are no default personal accounts and no trust inferred from conversation,
+PR text, local JSON or artifact content. For the operator-named reviewer:
+
+```powershell
+python tools/guardian_release_gate.py --verify-external --repo OWNER/REPO --revision EXACT_COMMIT --artifact EXACT.zip --ci-run CI_ID --native-run NATIVE_ID --grader-run GRADER_ID --pr-number PR_ID --trusted-reviewer cleitonncosta
+```
+
+Use actual values for every placeholder. This option authorizes recognizing an
+existing GitHub review from that account even when its repository association is
+`NONE`; it does not invite the person, grant access, request a review, contact
+anyone or create an approval. No collaborator/write permission is required just
+to recognize a deliberately named independent reviewer.
+
+The account must still be a GitHub `User`, differ from the PR author (compared
+case insensitively), and have an actual `APPROVED` review on the exact commit.
+The latest decisive review state per account applies; dismissal and changes
+requested revoke an earlier approval, and an outstanding authorized changes
+request blocks acceptance even if another reviewer approved. Comments do not
+substitute for approval or clear a requested change. Existing OWNER/MEMBER/
+COLLABORATOR authorization remains available. Bot reviews, self-approval and
+old-commit approval cannot satisfy this gate, including for explicitly named
+accounts. Login syntax is validated before any network request.
+
+The explicit account allowlist authenticates neither competence nor personal
+independence beyond the recorded GitHub account and different PR author. The
+operator remains responsible for choosing an appropriate reviewer. Workflow
+revision/results, native individual acceptance, isolated grader evidence and
+signed ZIP provenance are still required. Passing the verifier never authorizes
+publication by itself.

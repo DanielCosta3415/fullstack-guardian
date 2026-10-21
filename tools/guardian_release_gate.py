@@ -55,12 +55,47 @@ def verify_acceptance_reports(native,grader,revision):
         raise ValueError('Executed grader gate must pass without skips')
 
 
-def verify_external(repo,revision,artifact,ci_run,native_run,grader_run,pr_number):
+def _trusted_logins(values):
+    # Explicit operator allowlist, never inferred from chat, artifact or PR text.
+    if not isinstance(values, (list, tuple)):
+        raise ValueError('Trusted reviewers must be an explicit list of GitHub logins')
+    result=set()
+    for value in values:
+        if not isinstance(value,str) or not re.fullmatch(r'[A-Za-z0-9](?:[A-Za-z0-9-]{0,37}[A-Za-z0-9])?',value) or '--' in value:
+            raise ValueError('Invalid trusted GitHub reviewer login')
+        result.add(value.casefold())
+    return result
+
+
+def _verify_human_reviews(reviews,author,revision,trusted_reviewers=()):
+    trusted=_trusted_logins(trusted_reviewers)
+    if not isinstance(author,str) or not author:
+        raise ValueError('PR author identity unavailable')
+    latest={}
+    # GitHub returns reviews chronologically; comments do not revoke a review.
+    # A later dismissal or changes-requested state must invalidate approval.
+    for review in reviews:
+        if not isinstance(review,dict):raise ValueError('Invalid review record')
+        if review.get('state') not in ('APPROVED','CHANGES_REQUESTED','DISMISSED'):continue
+        user=review.get('user')
+        if not isinstance(user,dict):raise ValueError('Invalid reviewer identity')
+        login=user.get('login')
+        if not isinstance(login,str) or not login:raise ValueError('Reviewer login unavailable')
+        key=login.casefold()
+        authorized=review.get('author_association') in ('OWNER','MEMBER','COLLABORATOR') or key in trusted
+        if authorized and user.get('type')=='User' and key!=author.casefold():
+            latest[key]=(review.get('state'),review.get('commit_id'))
+    if any(state=='CHANGES_REQUESTED' for state,commit in latest.values()) or ('APPROVED',revision) not in latest.values():
+        raise ValueError('Current revision lacks independent authorized human review')
+
+
+def verify_external(repo,revision,artifact,ci_run,native_run,grader_run,pr_number,*,trusted_reviewers=()):
     """Read actual GitHub checks/reviews and cryptographic provenance. No publish.
 
     Network access is explicit at the CLI. Hash-linked local JSON and a model's
     READY response cannot replace the remote evidence required here.
     """
+    trusted_reviewers=sorted(_trusted_logins(trusted_reviewers))
     if not re.fullmatch(r'[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+',repo) or not re.fullmatch(r'[0-9a-f]{40}',revision):
         raise ValueError('Invalid repository/revision')
     ids=(ci_run,native_run,grader_run,pr_number)
@@ -92,13 +127,7 @@ def verify_external(repo,revision,artifact,ci_run,native_run,grader_run,pr_numbe
         reviews.extend(batch)
         if len(batch)<100:break
     else:raise ValueError('Review inventory exceeds bounded pagination')
-    latest={}
-    for review in reviews:
-        if review.get('state') not in ('APPROVED','CHANGES_REQUESTED','DISMISSED'):continue
-        if review.get('author_association') in ('OWNER','MEMBER','COLLABORATOR') and review.get('user',{}).get('type')=='User' and review['user'].get('login')!=author:
-            latest[review['user']['login']]=(review.get('state'),review.get('commit_id'))
-    if any(state=='CHANGES_REQUESTED' for state,commit in latest.values()) or ('APPROVED',revision) not in latest.values():
-        raise ValueError('Current revision lacks independent authorized human review')
+    _verify_human_reviews(reviews,author,revision,trusted_reviewers)
     command=['gh','attestation','verify',str(artifact),'--repo',repo,'--source-digest',revision,
              '--signer-workflow',repo+'/.github/workflows/release.yml','--format','json']
     verified=subprocess.run(command,capture_output=True,text=True,timeout=90)
@@ -111,10 +140,12 @@ def verify_external(repo,revision,artifact,ci_run,native_run,grader_run,pr_numbe
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--verify-external',action='store_true',help='Explicit read-only network verification; never publishes')
+    parser.add_argument('--trusted-reviewer',action='append',default=[],metavar='LOGIN',
+                        help='Explicit trusted human GitHub reviewer; repeatable, grants no repository access')
     parser.add_argument('--repo');parser.add_argument('--revision');parser.add_argument('--artifact',type=Path)
     for name in ('ci-run','native-run','grader-run','pr-number'):parser.add_argument('--'+name,type=int)
     args=parser.parse_args()
     if args.verify_external:
-        result=verify_external(args.repo,args.revision,args.artifact,args.ci_run,args.native_run,args.grader_run,args.pr_number)
+        result=verify_external(args.repo,args.revision,args.artifact,args.ci_run,args.native_run,args.grader_run,args.pr_number,trusted_reviewers=args.trusted_reviewer)
     else:result=inspect()
     print(json.dumps(result,indent=2))
