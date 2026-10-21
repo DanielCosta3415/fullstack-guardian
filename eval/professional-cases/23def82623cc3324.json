@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "case_id": "S25:professional:1",
+  "family": "cost",
+  "task": "Compute baseline and committed spend in minor units; assess alternatives against declared RTO/availability. No procurement authorization follows.",
+  "input": {
+    "usage": [
+      {
+        "units": 80,
+        "unit_price_minor": 100
+      }
+    ],
+    "commitment_minor": 12000,
+    "max_rto_minutes": 30,
+    "min_availability_ppm": 999000,
+    "alternatives": [
+      {
+        "id": "reserved-lockin",
+        "rto_minutes": 20,
+        "availability_ppm": 999500
+      }
+    ]
+  }
+}

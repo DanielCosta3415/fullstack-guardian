@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "case_id": "S23:professional:1",
+  "family": "workflow",
+  "task": "Identify secret/write-token exposure when untrusted fork code executes in a privileged event context.",
+  "input": {
+    "jobs": [
+      {
+        "id": "pull_request_target",
+        "untrusted_code": true,
+        "secret_access": true,
+        "write_token": true
+      },
+      {
+        "id": "read-only-pr",
+        "untrusted_code": true,
+        "secret_access": false,
+        "write_token": false
+      }
+    ]
+  }
+}

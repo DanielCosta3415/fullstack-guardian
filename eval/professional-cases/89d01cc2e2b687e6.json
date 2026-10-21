@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "case_id": "S07:professional:2",
+  "family": "latency",
+  "task": "Derive nearest-rank p99, mean, median and SLO outcome from recorded interaction durations. These are supplied measurements, not a new browser run.",
+  "input": {
+    "latency_ms": [
+      20,
+      25,
+      30,
+      35,
+      40,
+      45,
+      50,
+      600
+    ],
+    "slo_p99_ms": 200
+  }
+}

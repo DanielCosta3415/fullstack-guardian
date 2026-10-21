@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "case_id": "S15:professional:3",
+  "family": "workflow",
+  "task": "Identify untrusted jobs with secret or write-token exposure, including cache/artefact poisoning permissions.",
+  "input": {
+    "jobs": [
+      {
+        "id": "fork-build",
+        "untrusted_code": true,
+        "secret_access": true,
+        "write_token": false
+      },
+      {
+        "id": "trusted-release",
+        "untrusted_code": false,
+        "secret_access": true,
+        "write_token": true
+      },
+      {
+        "id": "fork-cache",
+        "untrusted_code": true,
+        "secret_access": false,
+        "write_token": true
+      }
+    ]
+  }
+}

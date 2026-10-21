@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "case_id": "S03:professional:1",
+  "family": "tenant_flows",
+  "task": "Identify tenant isolation holes from the flow inventory; low traffic does not remove isolation requirements or imply Kubernetes.",
+  "input": {
+    "flows": [
+      {
+        "id": "search",
+        "token_tenant": "A",
+        "object_tenant": "A",
+        "tenant_check": true
+      },
+      {
+        "id": "report-export",
+        "token_tenant": "A",
+        "object_tenant": "A",
+        "tenant_check": false
+      }
+    ]
+  }
+}

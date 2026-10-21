@@ -1,4 +1,12 @@
-# 2.2.0-rc.1 - release acceptance candidate
+# 2.2.0 — autonomous operator acceptance and durable continuation
+
+Adds an explicitly selected operator-autonomous release policy with corroborated local native39 and distinct G01/G02 agent reviews in place of human PR approval and dedicated remote Codex execution. Strict compatibility, actual CI, isolated grader and exact signed ZIP provenance remain. Native criteria are regenerated from pinned source and actual session/check/profile bindings are verified; imported summaries alone cannot approve a release.
+
+Adds 103 versioned professional artifact tasks across 39 roles, data-only allowlisted oracles, manually calculated family goldens and contrasts, and a native 39-child/103-artifact observation harness. These measure named objective subscopes and safe abstention, not full SME qualification, live framework execution or a private holdout. The new continuation skill and schema2 checkpoints preserve task/evidence/source/index state and explicit operator policy through interruptions without credentials, account monitoring or automatic wakeup.
+
+Publishing and global installation require actual final-revision acceptance and normal permissions; this version label is not evidence that rollout has already occurred. Historical candidates below retain their original scope and outcomes.
+
+# 2.2.0-rc.1 - release acceptance candidate (historical policy)
 
 Fixes native smoke input delivery through UTF-8 stdin and an explicit workspace. Adds guarded migration for legacy policy-heading/EOL drift, preserving semantic edits as conflicts and retaining byte-exact rollback. Adds blind professional-review intake for the 103 public case designs; imported reviews never authenticate human expertise or grant qualification. This candidate still requires actual external native workflow, human review and provenance/recovery gates before stable promotion.
 

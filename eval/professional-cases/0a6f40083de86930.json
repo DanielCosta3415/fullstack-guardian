@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "case_id": "pack:frontend-experience:guardian_browser_accessibility_specialist:professional:1",
+  "family": "focus",
+  "task": "Nested dialog closes after its trigger was removed: choose a mounted fallback; report target fault without claiming browser execution.",
+  "input": {
+    "escape_closes": true,
+    "trap_enabled": true,
+    "restore_target": "nested-trigger",
+    "mounted_focusable": [
+      "main-trigger",
+      "page-heading"
+    ],
+    "fallback_order": [
+      "nested-trigger",
+      "main-trigger",
+      "page-heading"
+    ]
+  }
+}

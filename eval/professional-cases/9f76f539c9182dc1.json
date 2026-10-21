@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "case_id": "pack:frontend-experience:guardian_browser_accessibility_specialist:professional:2",
+  "family": "accessibility",
+  "task": "Detect duplicated asynchronous live-region announcements from the supplied accessibility event log.",
+  "input": {
+    "controls": [
+      {
+        "id": "email",
+        "error": true,
+        "error_associated": true,
+        "keyboard": true,
+        "name": "Label",
+        "role": "button"
+      }
+    ],
+    "announcements": [
+      {
+        "id": "email-error",
+        "count": 2
+      },
+      {
+        "id": "save-success",
+        "count": 1
+      }
+    ]
+  }
+}

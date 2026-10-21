@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "case_id": "S24:professional:3",
+  "family": "evidence_limits",
+  "task": "One quiet day cannot exclude a monthly consumer; identify unsupported retirement claim.",
+  "input": {
+    "claims": [
+      {
+        "id": "service-safe-to-retire",
+        "required_evidence": [
+          "full-month-consumer-window",
+          "job-owner-approval"
+        ]
+      },
+      {
+        "id": "day-no-traffic",
+        "required_evidence": [
+          "one-day-logs"
+        ]
+      }
+    ],
+    "observed_evidence": [
+      "one-day-logs"
+    ]
+  }
+}

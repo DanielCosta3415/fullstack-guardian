@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "case_id": "S17:professional:3",
+  "family": "stale_response",
+  "task": "Reject results for a prior navigation even if the request identifier matches.",
+  "input": {
+    "active_request": "req2",
+    "active_navigation": "page-B",
+    "responses": [
+      {
+        "id": "old-page-result",
+        "request": "req2",
+        "navigation": "page-A"
+      },
+      {
+        "id": "current-result",
+        "request": "req2",
+        "navigation": "page-B"
+      }
+    ]
+  }
+}

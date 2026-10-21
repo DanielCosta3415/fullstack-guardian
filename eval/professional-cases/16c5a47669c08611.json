@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "case_id": "pack:security-assurance:guardian_threat_model_specialist:professional:3",
+  "family": "evidence_limits",
+  "task": "Avoid false-positive exploit claims when an injected control payload remains inert in the recorded parser negative control.",
+  "input": {
+    "claims": [
+      {
+        "id": "injection-exploitable",
+        "required_evidence": [
+          "unsafe-parser-execution"
+        ]
+      },
+      {
+        "id": "payload-inert",
+        "required_evidence": [
+          "safe-parser-negative"
+        ]
+      }
+    ],
+    "observed_evidence": [
+      "safe-parser-negative"
+    ]
+  }
+}

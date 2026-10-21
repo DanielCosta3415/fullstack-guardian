@@ -1,4 +1,10 @@
-# Completion status — 2.2.0-dev.4
+# Completion status — 2.2.0
+
+The current implementation adds explicit operator-autonomous acceptance, project-local durable continuation and 103 executable public objective artifact subscopes for 39 roles. Local native evidence must be corroborated against source-generated fixtures, actual sessions/checks and exact installed runtime/profile bytes; summaries or labels alone are insufficient. Strict compatibility remains available. See AUTONOMOUS_RELEASE_POLICY.md, CONTINUATION.md and PROFESSIONAL_CASES.md for the current contracts.
+
+Final-revision test, signing, recovery, release and global-install outcomes must be recorded separately after execution. This source document does not certify those outcomes in advance. Complete qualitative professional judgment, private holdout, live A/B and unavailable stack-specific execution are never inferred from objective artifacts. Historical statements below are not current acceptance evidence or a requirement to reintroduce human/remote-native gates when the operator explicitly selected autonomous policy.
+
+## Historical dev.4 completion record
 
 The professional-assurance candidate adds the N01–N18 audit response. See PROFESSIONAL_ASSURANCE.md for the implemented role contracts, planning and result gates, evaluation layers and limits; HOOKS.md for optional registration and independent Codex trust. Current test/native/CI outcomes must be tied to the final revision, not inherited from the historical dev.3 evidence below. Stable promotion and a global upgrade remain separate reviewed operations. Public professional-case observations cannot replace independent SME qualification or a private holdout.
 

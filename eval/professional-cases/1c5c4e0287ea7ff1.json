@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "case_id": "G01:professional:2",
+  "family": "counterexample",
+  "task": "Find inputs falsifying the unanimous claim that every supplied value is strictly below the bound.",
+  "input": {
+    "bound": 100,
+    "inputs": [
+      1,
+      99,
+      100,
+      101
+    ]
+  }
+}

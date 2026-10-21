@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "case_id": "A00:professional:2",
+  "family": "obligations",
+  "task": "Identify unsafe readiness after independent reviewer contradicts the proposed billing fix. Verified evidence does not contain the claimed passing test.",
+  "input": {
+    "requested": [
+      "fix",
+      "review",
+      "docs"
+    ],
+    "tasks": [
+      {
+        "id": "implement",
+        "obligations": [
+          "fix",
+          "docs"
+        ],
+        "ready": true,
+        "evidence": [
+          "claimed-pass"
+        ]
+      },
+      {
+        "id": "review",
+        "obligations": [
+          "review"
+        ],
+        "ready": false,
+        "evidence": [
+          "repro-failure"
+        ]
+      }
+    ],
+    "verified_evidence": [
+      "repro-failure"
+    ]
+  }
+}

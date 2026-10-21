@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "case_id": "pack:dotnet:guardian_dotnet_runtime_specialist:professional:2",
+  "family": "evidence_limits",
+  "task": "Request cancellation evidence alone cannot prove propagation into SQL.",
+  "input": {
+    "claims": [
+      {
+        "id": "cancel-propagated",
+        "required_evidence": [
+          "http-cancel-receipt",
+          "sql-cancel-token"
+        ]
+      },
+      {
+        "id": "http-cancel-observed",
+        "required_evidence": [
+          "http-cancel-receipt"
+        ]
+      }
+    ],
+    "observed_evidence": [
+      "http-cancel-receipt"
+    ]
+  }
+}

@@ -32,11 +32,11 @@ class ReleaseTests(unittest.TestCase):
                     data=z.read('fullstack-guardian-'+first['version']+'/'+entry['path'])
                     self.assertEqual(hashlib.sha256(data).hexdigest(),entry['sha256'])
                 self.assertFalse(any('__pycache__' in x or '/.git/' in x for x in z.namelist()))
-    def test_platform_preview_is_not_mislabeled_stable_release(self):
+    def test_release_identity_is_consistent_without_reusing_baseline(self):
         if not (BASE/'plugin.json').exists():self.skipTest('Source-package metadata only')
         version=(BASE/'VERSION').read_text(encoding='utf8').strip()
-        self.assertNotEqual(version,'2.1.0','Experimental platform must not reuse stable release version')
-        self.assertRegex(version,r'^\d+\.\d+\.\d+-(?:dev|rc)\.\d+$')
+        self.assertNotEqual(version,'2.1.0','The new release must not reuse the previous stable identity')
+        self.assertRegex(version,r'^\d+\.\d+\.\d+(?:-(?:dev|rc)\.\d+)?$')
         manifest=json.loads((BASE/'plugin.json').read_text(encoding='utf8'))
         self.assertEqual(manifest['version'],version)
 

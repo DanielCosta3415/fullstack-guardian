@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "case_id": "S10:professional:2",
+  "family": "fencing",
+  "task": "Accept only writes bearing the current fencing token; enumerate late expired worker writes.",
+  "input": {
+    "current_token": 9,
+    "writes": [
+      {
+        "id": "old-worker",
+        "token": 8
+      },
+      {
+        "id": "new-worker",
+        "token": 9
+      },
+      {
+        "id": "older",
+        "token": 7
+      }
+    ]
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "case_id": "S16:professional:2",
+  "family": "contract",
+  "task": "Identify required-request drift hidden by a permissive provider mock, using concrete old/new contract artifacts.",
+  "input": {
+    "old_required": [
+      "id"
+    ],
+    "new_required": [
+      "id",
+      "currency"
+    ],
+    "new_response_fields": [
+      "id"
+    ],
+    "provider_enum": [
+      "ok"
+    ],
+    "client_enum": [
+      "ok"
+    ]
+  }
+}

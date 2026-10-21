@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "case_id": "pack:api-integration:guardian_api_contract_specialist:professional:3",
+  "family": "ledger",
+  "task": "Reconcile repeated POST effects after timeout using durable idempotency keys.",
+  "input": {
+    "opening_minor": 10000,
+    "events": [
+      {
+        "id": "post-initial",
+        "key": "request-77",
+        "delta_minor": -2000
+      },
+      {
+        "id": "post-timeout-retry",
+        "key": "request-77",
+        "delta_minor": -2000
+      }
+    ],
+    "transactions": []
+  }
+}

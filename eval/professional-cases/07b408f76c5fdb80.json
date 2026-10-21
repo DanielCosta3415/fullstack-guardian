@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "case_id": "S17:professional:1",
+  "family": "focus",
+  "task": "Find Escape and removed focus-return target defects; use a mounted fallback only.",
+  "input": {
+    "escape_closes": false,
+    "trap_enabled": true,
+    "restore_target": "removed-trigger",
+    "mounted_focusable": [
+      "page-heading"
+    ],
+    "fallback_order": [
+      "nested-trigger",
+      "main-trigger",
+      "page-heading"
+    ]
+  }
+}

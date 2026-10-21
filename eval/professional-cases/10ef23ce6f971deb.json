@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "case_id": "S17:professional:2",
+  "family": "submission",
+  "task": "Evaluate an expired session while a duplicate submit attempts the same key; preserve input and do not claim success.",
+  "input": {
+    "requests": [
+      {
+        "id": "expired-1",
+        "idempotency_key": "k1",
+        "authenticated": false,
+        "valid": true
+      },
+      {
+        "id": "expired-2",
+        "idempotency_key": "k1",
+        "authenticated": false,
+        "valid": true
+      }
+    ],
+    "responses": [
+      {
+        "committed": false
+      }
+    ]
+  }
+}

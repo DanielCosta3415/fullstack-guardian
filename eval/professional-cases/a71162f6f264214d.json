@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "case_id": "S13:professional:2",
+  "family": "ssrf",
+  "task": "Inspect every redirect DNS result and block any non-global address. No network requests may execute.",
+  "input": {
+    "hops": [
+      {
+        "id": "initial",
+        "resolved_ips": [
+          "8.8.8.8"
+        ]
+      },
+      {
+        "id": "redirect",
+        "resolved_ips": [
+          "127.0.0.1"
+        ]
+      },
+      {
+        "id": "dns-rebind",
+        "resolved_ips": [
+          "10.1.2.3"
+        ]
+      }
+    ]
+  }
+}

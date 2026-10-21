@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "case_id": "G01:professional:1",
+  "family": "provenance",
+  "task": "Reject correct-looking evidence bound to another revision rather than accepting model consensus.",
+  "input": {
+    "revision": "release-42",
+    "workflow": "release.yml",
+    "artifacts": [
+      {
+        "id": "wrong-commit-log",
+        "revision": "other-commit",
+        "workflow": "release.yml",
+        "signature_valid": true
+      }
+    ]
+  }
+}

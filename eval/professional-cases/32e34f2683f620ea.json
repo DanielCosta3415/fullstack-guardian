@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "case_id": "pack:financial-systems:guardian_payment_reliability_specialist:professional:1",
+  "family": "ledger",
+  "task": "Derive expected single-capture ledger balance after timeout and retry.",
+  "input": {
+    "opening_minor": 10000,
+    "events": [
+      {
+        "id": "capture",
+        "key": "gateway-55",
+        "delta_minor": -3456
+      },
+      {
+        "id": "capture-retry",
+        "key": "gateway-55",
+        "delta_minor": -3456
+      }
+    ],
+    "transactions": []
+  }
+}

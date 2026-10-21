@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "case_id": "pack:api-integration:guardian_api_contract_specialist:professional:2",
+  "family": "webhook",
+  "task": "Enforce temporal replay defense independently of signature validity.",
+  "input": {
+    "now": 1000,
+    "window_seconds": 300,
+    "deliveries": [
+      {
+        "id": "valid-expired",
+        "event_id": "e1",
+        "timestamp": 100,
+        "signature_valid": true
+      },
+      {
+        "id": "valid-fresh",
+        "event_id": "e2",
+        "timestamp": 990,
+        "signature_valid": true
+      }
+    ]
+  }
+}

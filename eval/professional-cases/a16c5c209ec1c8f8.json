@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "case_id": "S09:professional:2",
+  "family": "webhook",
+  "task": "Validate signature flags and timestamp windows; deduplicate valid event IDs without executing a webhook server.",
+  "input": {
+    "now": 1000,
+    "window_seconds": 300,
+    "deliveries": [
+      {
+        "id": "bad-signature",
+        "event_id": "e1",
+        "timestamp": 990,
+        "signature_valid": false
+      },
+      {
+        "id": "expired",
+        "event_id": "e2",
+        "timestamp": 100,
+        "signature_valid": true
+      },
+      {
+        "id": "first",
+        "event_id": "e3",
+        "timestamp": 999,
+        "signature_valid": true
+      },
+      {
+        "id": "retry",
+        "event_id": "e3",
+        "timestamp": 1000,
+        "signature_valid": true
+      }
+    ]
+  }
+}

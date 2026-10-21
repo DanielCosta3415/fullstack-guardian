@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "case_id": "pack:ai-systems:guardian_rag_llm_specialist:professional:2",
+  "family": "relevance",
+  "task": "Match actual subject and effective interval; reject lexical near-match with the wrong subject.",
+  "input": {
+    "question_subject": "invoice-retry",
+    "as_of": "2026-10-20",
+    "documents": [
+      {
+        "id": "lexical-decoy",
+        "subject": "retry-ui-label",
+        "effective_from": "2020-01-01",
+        "effective_until": null
+      },
+      {
+        "id": "relevant",
+        "subject": "invoice-retry",
+        "effective_from": "2026-01-01",
+        "effective_until": null
+      }
+    ]
+  }
+}

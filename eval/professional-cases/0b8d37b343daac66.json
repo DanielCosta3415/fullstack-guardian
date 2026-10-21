@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "case_id": "S14:professional:1",
+  "family": "jwt",
+  "task": "Reject unknown kid, disallowed algorithm or invalid signature evidence. Never permit algorithm downgrade.",
+  "input": {
+    "known_kids": [
+      "key-current"
+    ],
+    "allowed_algs": [
+      "RS256"
+    ],
+    "tokens": [
+      {
+        "id": "unknown",
+        "kid": "missing",
+        "alg": "RS256",
+        "signature_valid": true
+      },
+      {
+        "id": "downgrade",
+        "kid": "key-current",
+        "alg": "none",
+        "signature_valid": true
+      },
+      {
+        "id": "valid",
+        "kid": "key-current",
+        "alg": "RS256",
+        "signature_valid": true
+      }
+    ]
+  }
+}

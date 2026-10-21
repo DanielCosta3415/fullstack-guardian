@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "case_id": "G01:professional:3",
+  "family": "evidence_limits",
+  "task": "Reclassify unsupported exploit assertion when only a negative parser control is observed; no invented exploitability.",
+  "input": {
+    "claims": [
+      {
+        "id": "exploitable",
+        "required_evidence": [
+          "reachable-parser",
+          "unescaped-control-path"
+        ]
+      },
+      {
+        "id": "parser-blocks-input",
+        "required_evidence": [
+          "parser-negative-test"
+        ]
+      }
+    ],
+    "observed_evidence": [
+      "parser-negative-test"
+    ]
+  }
+}

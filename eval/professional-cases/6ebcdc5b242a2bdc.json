@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "case_id": "pack:frontend-experience:guardian_browser_accessibility_specialist:professional:3",
+  "family": "accessibility",
+  "task": "Identify custom control missing keyboard/name/role in supplied accessibility properties. AT execution remains unverified.",
+  "input": {
+    "controls": [
+      {
+        "id": "custom-toggle",
+        "error": false,
+        "error_associated": true,
+        "keyboard": false,
+        "name": "",
+        "role": ""
+      },
+      {
+        "id": "native-toggle",
+        "error": false,
+        "error_associated": true,
+        "keyboard": true,
+        "name": "Label",
+        "role": "button"
+      }
+    ],
+    "announcements": []
+  }
+}

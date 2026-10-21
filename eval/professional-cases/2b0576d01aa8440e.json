@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "case_id": "pack:dotnet:guardian_dotnet_runtime_specialist:professional:1",
+  "family": "di_lifetime",
+  "task": "Inspect DI graph for singleton capture of scoped service; no .NET runtime has executed.",
+  "input": {
+    "services": [
+      {
+        "id": "hosted-service",
+        "lifetime": "singleton",
+        "depends_on": [
+          "db-context"
+        ]
+      },
+      {
+        "id": "db-context",
+        "lifetime": "scoped",
+        "depends_on": []
+      }
+    ]
+  }
+}

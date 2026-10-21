@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "case_id": "S20:professional:2",
+  "family": "topology",
+  "task": "Find required dependencies with no surviving zone; do not assume container orchestration solves the outage.",
+  "input": {
+    "failed_zones": [
+      "zone-a"
+    ],
+    "dependencies": [
+      {
+        "id": "db",
+        "required": true,
+        "zones": [
+          "zone-a"
+        ]
+      },
+      {
+        "id": "queue",
+        "required": true,
+        "zones": [
+          "zone-a",
+          "zone-b"
+        ]
+      },
+      {
+        "id": "optional-metrics",
+        "required": false,
+        "zones": [
+          "zone-a"
+        ]
+      }
+    ]
+  }
+}

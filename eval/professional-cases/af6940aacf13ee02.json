@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "case_id": "S05:professional:2",
+  "family": "submission",
+  "task": "Compute effects and failed-request exclusions when the API has not confirmed commit; input must remain recoverable.",
+  "input": {
+    "requests": [
+      {
+        "id": "unauth",
+        "idempotency_key": "k0",
+        "authenticated": false,
+        "valid": true
+      },
+      {
+        "id": "valid",
+        "idempotency_key": "k1",
+        "authenticated": true,
+        "valid": true
+      }
+    ],
+    "responses": [
+      {
+        "committed": false
+      }
+    ]
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "case_id": "pack:dotnet:guardian_dotnet_runtime_specialist:professional:3",
+  "family": "evidence_limits",
+  "task": "Detect absent unauthorized request test; pipeline source alone does not prove authentication enforcement.",
+  "input": {
+    "claims": [
+      {
+        "id": "endpoint-protected",
+        "required_evidence": [
+          "unauthorized-negative-request",
+          "authorized-positive-request"
+        ]
+      },
+      {
+        "id": "middleware-configured",
+        "required_evidence": [
+          "pipeline-source"
+        ]
+      }
+    ],
+    "observed_evidence": [
+      "pipeline-source",
+      "authorized-positive-request"
+    ]
+  }
+}

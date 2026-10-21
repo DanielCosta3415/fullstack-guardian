@@ -2195,7 +2195,7 @@
           "file": "agents/guardian_rag_llm_specialist.toml"
         }
       ],
-      "version": "2.2.0-rc.1"
+      "version": "2.2.0"
     },
     "packs/api-integration/manifest.json": {
       "schema_version": 1,
@@ -2207,7 +2207,7 @@
           "file": "agents/guardian_api_contract_specialist.toml"
         }
       ],
-      "version": "2.2.0-rc.1"
+      "version": "2.2.0"
     },
     "packs/cloud-platform/manifest.json": {
       "schema_version": 1,
@@ -2219,7 +2219,7 @@
           "file": "agents/guardian_cloud_infrastructure_specialist.toml"
         }
       ],
-      "version": "2.2.0-rc.1"
+      "version": "2.2.0"
     },
     "packs/data-engineering/manifest.json": {
       "schema_version": 1,
@@ -2231,7 +2231,7 @@
           "file": "agents/guardian_data_migration_specialist.toml"
         }
       ],
-      "version": "2.2.0-rc.1"
+      "version": "2.2.0"
     },
     "packs/dotnet/manifest.json": {
       "schema_version": 1,
@@ -2243,7 +2243,7 @@
           "file": "agents/guardian_dotnet_runtime_specialist.toml"
         }
       ],
-      "version": "2.2.0-rc.1"
+      "version": "2.2.0"
     },
     "packs/financial-systems/manifest.json": {
       "schema_version": 1,
@@ -2255,7 +2255,7 @@
           "file": "agents/guardian_payment_reliability_specialist.toml"
         }
       ],
-      "version": "2.2.0-rc.1"
+      "version": "2.2.0"
     },
     "packs/frontend-experience/manifest.json": {
       "schema_version": 1,
@@ -2267,7 +2267,7 @@
           "file": "agents/guardian_browser_accessibility_specialist.toml"
         }
       ],
-      "version": "2.2.0-rc.1"
+      "version": "2.2.0"
     },
     "packs/quality-automation/manifest.json": {
       "schema_version": 1,
@@ -2279,7 +2279,7 @@
           "file": "agents/guardian_contract_test_specialist.toml"
         }
       ],
-      "version": "2.2.0-rc.1"
+      "version": "2.2.0"
     },
     "packs/security-assurance/manifest.json": {
       "schema_version": 1,
@@ -2291,7 +2291,7 @@
           "file": "agents/guardian_threat_model_specialist.toml"
         }
       ],
-      "version": "2.2.0-rc.1"
+      "version": "2.2.0"
     },
     "packs/windows-tooling/manifest.json": {
       "schema_version": 1,
@@ -2303,7 +2303,7 @@
           "file": "agents/guardian_windows_powershell_specialist.toml"
         }
       ],
-      "version": "2.2.0-rc.1"
+      "version": "2.2.0"
     }
   }
 }

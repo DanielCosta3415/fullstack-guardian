@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "case_id": "S21:professional:1",
+  "family": "traces",
+  "task": "Find lost asynchronous trace propagation and orphan spans; supplied spans do not establish root cause by themselves.",
+  "input": {
+    "spans": [
+      {
+        "id": "http",
+        "parent": null,
+        "trace": "trace1"
+      },
+      {
+        "id": "queue-receive",
+        "parent": "missing-send",
+        "trace": null
+      },
+      {
+        "id": "db",
+        "parent": "queue-receive",
+        "trace": "trace2"
+      }
+    ]
+  }
+}

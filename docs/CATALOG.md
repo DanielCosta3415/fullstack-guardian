@@ -1,6 +1,6 @@
 # Generated catalog
 
-Version: 2.2.0-rc.1
+Version: 2.2.0
 
 Availability is not installation, native loading, or correctness. Model policy inherits by default.
 
@@ -116,12 +116,13 @@ proposal = result_template("S08", task_id="task-1", obligation_ids=["O1"])
 validate_result(proposal, "S08", task_id="task-1", obligation_ids=["O1"])
 ```
 
-## Operational skills (20)
+## Operational skills (21)
 
 - `architecture-assessment`
 - `backend-assurance`
 - `frontend-assurance`
 - `fullstack-audit`
+- `guardian-continuation`
 - `guardian-evaluation`
 - `guardian-routing`
 - `lifecycle-architecture`

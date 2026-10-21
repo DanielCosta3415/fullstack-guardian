@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "case_id": "S22:professional:3",
+  "family": "evidence_limits",
+  "task": "Reject unsupported access-removal conclusion when legitimate operations and owner approval remain unverified.",
+  "input": {
+    "claims": [
+      {
+        "id": "remove-iam-role",
+        "required_evidence": [
+          "role-unused",
+          "owner-approval"
+        ]
+      },
+      {
+        "id": "plan-reviewed",
+        "required_evidence": [
+          "plan-diff"
+        ]
+      }
+    ],
+    "observed_evidence": [
+      "plan-diff"
+    ]
+  }
+}

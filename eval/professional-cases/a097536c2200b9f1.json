@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "case_id": "S08:professional:2",
+  "family": "currency",
+  "task": "Normalize valid nonnegative exact amounts to minor units and reject nonfinite/negative/excess precision without permitting invalid state mutation.",
+  "input": {
+    "amounts": [
+      {
+        "id": "valid",
+        "value": "12.34",
+        "decimals": 2
+      },
+      {
+        "id": "overprecision",
+        "value": "1.001",
+        "decimals": 2
+      },
+      {
+        "id": "nan",
+        "value": "NaN",
+        "decimals": 2
+      },
+      {
+        "id": "negative",
+        "value": "-1",
+        "decimals": 2
+      }
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "case_id": "pack:quality-automation:guardian_contract_test_specialist:professional:3",
+  "family": "mutants",
+  "task": "Compare surviving race duplicate mutation with existing sequential-only test kills.",
+  "input": {
+    "mutants": [
+      "duplicate-concurrent",
+      "duplicate-sequential"
+    ],
+    "tests": [
+      {
+        "id": "sequential-retry",
+        "assertions": true,
+        "kills": [
+          "duplicate-sequential"
+        ]
+      }
+    ]
+  }
+}

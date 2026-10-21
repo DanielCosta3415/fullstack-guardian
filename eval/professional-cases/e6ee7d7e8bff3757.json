@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "case_id": "S04:professional:1",
+  "family": "stale_response",
+  "task": "Choose only active-query and active-navigation responses; list stale response IDs.",
+  "input": {
+    "active_request": "q-new",
+    "active_navigation": "screen-1",
+    "responses": [
+      {
+        "id": "late-old",
+        "request": "q-old",
+        "navigation": "screen-1"
+      },
+      {
+        "id": "new",
+        "request": "q-new",
+        "navigation": "screen-1"
+      }
+    ]
+  }
+}

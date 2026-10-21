@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "case_id": "S23:professional:2",
+  "family": "provenance",
+  "task": "Reject green signed artifacts from a previous revision; bind release to exact revision.",
+  "input": {
+    "revision": "release-42",
+    "workflow": "release.yml",
+    "artifacts": [
+      {
+        "id": "green-old-sha",
+        "revision": "release-41",
+        "workflow": "release.yml",
+        "signature_valid": true
+      },
+      {
+        "id": "current",
+        "revision": "release-42",
+        "workflow": "release.yml",
+        "signature_valid": true
+      }
+    ]
+  }
+}

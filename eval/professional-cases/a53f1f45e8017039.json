@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "case_id": "S19:professional:2",
+  "family": "evidence_limits",
+  "task": "Separate unsupported CPU explanation from measured connection-pool queue evidence.",
+  "input": {
+    "claims": [
+      {
+        "id": "cpu-bottleneck",
+        "required_evidence": [
+          "cpu-samples"
+        ]
+      },
+      {
+        "id": "pool-queue",
+        "required_evidence": [
+          "pool-wait-samples",
+          "connection-count"
+        ]
+      }
+    ],
+    "observed_evidence": [
+      "pool-wait-samples",
+      "connection-count"
+    ]
+  }
+}

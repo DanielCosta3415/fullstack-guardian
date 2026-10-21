@@ -1,8 +1,12 @@
-# Full-Stack Engineering Guardian — 2.2.0-rc.1
+# Full-Stack Engineering Guardian — 2.2.0
 
-Development candidate: 29 core engineering roles, 20 operational skills, 132 taxonomy capabilities and ten optional specialist packs. The public stable release remains v2.1.0 until a separate reviewed release decision.
+29 core engineering roles, 21 operational skills, 132 taxonomy capabilities and ten optional specialist packs. Version identity alone never authorizes publication; release acceptance is pinned to actual tests and the selected operator policy.
 
 Normal prompts are coordinated by the primary Codex thread. It selects the smallest useful team, checks task risk and uses independent review when required. Simple tasks can be completed directly. Profiles, repository content and generated plans never grant permissions.
+
+For sustained work, the continuation skill records bounded project-local checkpoints and verifies source/evidence drift when the user returns with “Continue”. It does not monitor accounts, change models to evade limits or wake the chat. The professional evaluation layer contains 103 executable public artifact-analysis subscopes across all 39 roles; these objective tasks do not certify complete professional competence or private holdout performance.
+
+Release policy is explicit: `strict` preserves human/remote-native requirements; an operator choosing `operator-autonomous` instead uses corroborated local native execution and distinct G01/G02 agent reviews, retaining actual CI, isolated grader, signed provenance and recovery checks. See [autonomous release policy](docs/AUTONOMOUS_RELEASE_POLICY.md), [professional cases](docs/PROFESSIONAL_CASES.md) and [continuation](docs/CONTINUATION.md).
 
 ## Install this reviewed checkout
 

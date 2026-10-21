@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "case_id": "S03:professional:2",
+  "family": "contract",
+  "task": "Compare legacy required response fields against the migration response; identify broken readers without claiming an executed rollback.",
+  "input": {
+    "old_required": [
+      "id",
+      "balance"
+    ],
+    "new_required": [
+      "id",
+      "balance"
+    ],
+    "new_response_fields": [
+      "id",
+      "available"
+    ],
+    "provider_enum": [],
+    "client_enum": []
+  }
+}

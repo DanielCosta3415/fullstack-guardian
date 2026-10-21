@@ -1,11 +1,22 @@
 # Release acceptance and global rollout
 
-Version 2.2.0-rc.1 prepares release acceptance. A successful package build or a
+Version 2.2.0 requires explicit release acceptance. A successful package build or a
 local AI review does not promote it to stable. Pin every acceptance result to
 the final commit and exact ZIP. A version/manifests change creates a new commit
 and invalidates earlier revision-specific release evidence.
 
-## Required release evidence
+## Release profiles
+
+`strict` remains the compatible default below. An operator can explicitly choose
+`operator-autonomous` when human PR approval and a dedicated remote native test
+are outside the product's accepted release process. This deliberate policy choice
+is recorded, rather than treated as a missing approval or a completed remote test.
+See [the autonomous release policy](AUTONOMOUS_RELEASE_POLICY.md) for its required
+corroborated local 39-profile execution and distinct native G01/G02 advisory
+reviews. CI, the isolated grader and exact signed ZIP provenance remain remote
+requirements under both profiles. There is no automatic fallback between them.
+
+## Required release evidence for strict
 
 1. Full CI matrix and actual installed-runtime tests for the final commit.
 2. Local native 39-profile smoke with real case-directory checks, then the
@@ -20,8 +31,9 @@ and invalidates earlier revision-specific release evidence.
 
 `tools/guardian_release_gate.py --verify-external` checks actual GitHub workflow,
 artifact, review and signed provenance evidence. Never generate a substitute
-JSON approval, count local logs as the remote native workflow, approve a PR as
-if an independent human, or remove a gate simply because its dependency is absent.
+JSON approval, count local logs as the remote native workflow, or approve a PR as
+if an independent human. Changing release policy is an explicit operator decision;
+unavailable infrastructure alone never selects a less restrictive profile.
 
 ## Native runner provisioning
 
