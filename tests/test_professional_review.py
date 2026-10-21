@@ -18,7 +18,9 @@ class ProfessionalReviewTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
-        self.root = Path(self.temp.name)
+        # macOS may expose the OS temp root through /var -> /private/var.
+        # Canonicalize only this trusted fixture root, never candidate paths.
+        self.root = Path(self.temp.name).resolve()
         (self.root / 'answer.txt').write_bytes(b'candidate output, not verified')
         self.sha = hashlib.sha256((self.root / 'answer.txt').read_bytes()).hexdigest()
         self.manifest = {'schema_version': 1, 'submissions': [{
