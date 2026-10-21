@@ -177,7 +177,7 @@ class ProfessionalCaseTests(unittest.TestCase):
         self.assertEqual(currency['response_schema']['properties']['minor_units'],{'type':'object','additionalProperties':{}})
 
     def clone(self):
-        temp=tempfile.TemporaryDirectory();self.addCleanup(temp.cleanup);root=Path(temp.name)
+        temp=tempfile.TemporaryDirectory();self.addCleanup(temp.cleanup);root=Path(temp.name).resolve()
         (root/'core').mkdir();(root/'eval/professional-cases').mkdir(parents=True)
         (root/'core/qualification-cases-v1.json').write_bytes((c.ROOT/'core/qualification-cases-v1.json').read_bytes())
         for file in (c.ROOT/'eval/professional-cases').glob('*.json'):(root/'eval/professional-cases'/file.name).write_bytes(file.read_bytes())
@@ -225,7 +225,7 @@ class ProfessionalCaseTests(unittest.TestCase):
 
     def test_parent_file_tools_rejected_and_missing_children_not_model_proof(self):
         with tempfile.TemporaryDirectory() as folder:
-            root=Path(folder);path=root/'parent.jsonl'
+            root=Path(folder).resolve();path=root/'parent.jsonl'
             rows=[{'type':'session_meta','payload':{'id':'parent'}},{'type':'response_item','payload':{'type':'function_call','namespace':'functions','name':'exec','arguments':'{}'}}]
             path.write_text('\n'.join(json.dumps(x) for x in rows),encoding='utf8')
             with self.assertRaisesRegex(ValueError,'unauthorized tool'):n.collect(root,'parent',n.plan()[:1])
