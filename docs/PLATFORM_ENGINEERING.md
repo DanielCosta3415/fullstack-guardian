@@ -1,7 +1,7 @@
 # Guardian platform operations — 2.2.0-dev.2
 
 This development candidate extends the existing architecture: 29 core profiles,
-20 skills and ten optional packs. The primary Codex thread coordinates normal
+21 skills and ten optional packs. The primary Codex thread coordinates normal
 prompts. The deterministic router proposes a minimal relevant team; it neither
 spawns agents nor grants permissions. Simple tasks remain direct.
 

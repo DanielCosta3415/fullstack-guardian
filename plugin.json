@@ -15,7 +15,7 @@
       "interface": {
         "displayName": "Full-Stack Guardian",
         "shortDescription": "Guardian 2.2: engenharia supervisionada",
-        "longDescription": "Prévia: 29 papéis centrais, 20 skills, dez packs opcionais e verificações explícitas de capacidades, evidências e permissões.",
+        "longDescription": "29 papéis centrais, 21 skills, dez packs opcionais e verificações explícitas de capacidades, evidências e permissões.",
         "developerName": "Daniel Lopes da Costa",
         "category": "Developer Tools",
         "websiteURL": "https://github.com/DanielCosta3415/fullstack-guardian",
