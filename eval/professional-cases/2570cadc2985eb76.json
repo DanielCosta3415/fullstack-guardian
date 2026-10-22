@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "case_id": "pack:api-integration:guardian_api_contract_specialist:professional:1",
+  "family": "contract",
+  "task": "Detect generated-client enum incompatibility even though required field names are unchanged.",
+  "input": {
+    "old_required": [
+      "id"
+    ],
+    "new_required": [
+      "id"
+    ],
+    "new_response_fields": [
+      "id"
+    ],
+    "provider_enum": [
+      "queued",
+      "done",
+      "reconciling"
+    ],
+    "client_enum": [
+      "queued",
+      "done"
+    ]
+  }
+}

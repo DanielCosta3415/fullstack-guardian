@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "case_id": "S21:professional:2",
+  "family": "evidence_limits",
+  "task": "Determine missing cost-budget and incident diagnostic evidence for a user_id metric label.",
+  "input": {
+    "claims": [
+      {
+        "id": "cardinality-safe",
+        "required_evidence": [
+          "distinct-label-count",
+          "cost-budget"
+        ]
+      },
+      {
+        "id": "diagnostic-value",
+        "required_evidence": [
+          "incident-query"
+        ]
+      }
+    ],
+    "observed_evidence": [
+      "distinct-label-count"
+    ]
+  }
+}

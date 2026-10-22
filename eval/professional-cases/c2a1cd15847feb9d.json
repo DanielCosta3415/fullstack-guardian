@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "case_id": "S26:professional:3",
+  "family": "evidence_limits",
+  "task": "A leaked public-eval score cannot support promotion or private temporal generalization; expose absent independent evidence.",
+  "input": {
+    "claims": [
+      {
+        "id": "promote-model",
+        "required_evidence": [
+          "independent-temporal-holdout",
+          "safety-checks"
+        ]
+      },
+      {
+        "id": "public-eval-score",
+        "required_evidence": [
+          "public-eval-log"
+        ]
+      }
+    ],
+    "observed_evidence": [
+      "public-eval-log"
+    ]
+  }
+}

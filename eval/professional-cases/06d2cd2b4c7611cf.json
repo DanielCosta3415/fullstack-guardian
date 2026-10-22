@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "case_id": "S06:professional:2",
+  "family": "accessibility",
+  "task": "Find error associations and interaction accessibility gaps in this static artifact; do not claim assistive technology execution.",
+  "input": {
+    "controls": [
+      {
+        "id": "email",
+        "error": true,
+        "error_associated": false,
+        "keyboard": true,
+        "name": "Label",
+        "role": "button"
+      },
+      {
+        "id": "save",
+        "error": false,
+        "error_associated": true,
+        "keyboard": true,
+        "name": "Label",
+        "role": "button"
+      }
+    ],
+    "announcements": [
+      {
+        "id": "error-live",
+        "count": 1
+      }
+    ]
+  }
+}

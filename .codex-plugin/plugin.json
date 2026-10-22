@@ -1,7 +1,7 @@
 {
   "name": "fullstack-guardian",
-  "version": "2.2.0-dev.3",
-  "description": "Prévia de engenharia Guardian: contratos verificáveis, execução supervisionada e instalação preservadora.",
+  "version": "2.2.0",
+  "description": "Guardian engineering coordination with verifiable contracts, supervised execution and preserving installation.",
   "author": {
     "name": "Daniel Lopes da Costa"
   },
@@ -15,7 +15,7 @@
   "interface": {
     "displayName": "Full-Stack Guardian",
     "shortDescription": "Coordenação adaptativa com 29 especialistas",
-    "longDescription": "Configuração guiada para instalar 29 agentes, oito skills e 132 capacidades no Codex local, preservando personalizações.",
+    "longDescription": "Configuração guiada de 29 papéis principais, 21 skills e dez packs opcionais, com contratos profissionais, evidências e permissões explícitas.",
     "developerName": "Daniel Lopes da Costa",
     "category": "Developer Tools",
     "websiteURL": "https://github.com/DanielCosta3415/fullstack-guardian",

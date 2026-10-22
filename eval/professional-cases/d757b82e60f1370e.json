@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "case_id": "S25:professional:3",
+  "family": "cost",
+  "task": "Reject cheaper alternatives violating explicit RTO/availability constraints and compute baseline commitment costs.",
+  "input": {
+    "usage": [
+      {
+        "units": 100,
+        "unit_price_minor": 120
+      }
+    ],
+    "commitment_minor": 9000,
+    "max_rto_minutes": 30,
+    "min_availability_ppm": 999000,
+    "alternatives": [
+      {
+        "id": "single-zone",
+        "rto_minutes": 180,
+        "availability_ppm": 990000
+      },
+      {
+        "id": "two-zone",
+        "rto_minutes": 20,
+        "availability_ppm": 999500
+      }
+    ]
+  }
+}

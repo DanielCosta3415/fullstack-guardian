@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "case_id": "pack:windows-tooling:guardian_windows_powershell_specialist:professional:3",
+  "family": "windows_path",
+  "task": "WhatIf/cancellation permits no writes; inspect every planned operation without executing it.",
+  "input": {
+    "paths": [
+      "C:/workspace/a",
+      "C:/workspace/b"
+    ],
+    "operations": [
+      {
+        "id": "a",
+        "reparse": false,
+        "within_workspace": true
+      },
+      {
+        "id": "b",
+        "reparse": false,
+        "within_workspace": true
+      }
+    ],
+    "what_if": true,
+    "cancelled": true
+  }
+}

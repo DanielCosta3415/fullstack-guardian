@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "case_id": "G02:professional:3",
+  "family": "release_context",
+  "task": "Produce separate preview and production readiness indicators; preview does not imply production recovery readiness.",
+  "input": {
+    "approved_context": {
+      "sha": "v42",
+      "environment": "preview"
+    },
+    "current_context": {
+      "sha": "v42",
+      "environment": "preview"
+    },
+    "restore_tested": false,
+    "preview_tested": true
+  }
+}

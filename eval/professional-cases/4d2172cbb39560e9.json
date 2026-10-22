@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "case_id": "S23:professional:3",
+  "family": "evidence_limits",
+  "task": "Identify unsupported canary continuation and untested rollback, preserving previous artifact integrity evidence.",
+  "input": {
+    "claims": [
+      {
+        "id": "continue-canary",
+        "required_evidence": [
+          "within-error-budget"
+        ]
+      },
+      {
+        "id": "rollback-verified",
+        "required_evidence": [
+          "previous-artifact-digest",
+          "restore-probe"
+        ]
+      }
+    ],
+    "observed_evidence": [
+      "previous-artifact-digest"
+    ]
+  }
+}

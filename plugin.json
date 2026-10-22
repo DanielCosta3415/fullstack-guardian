@@ -1,8 +1,8 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "fullstack-guardian",
-  "version": "2.2.0-dev.3",
-  "description": "Prévia de engenharia Guardian: contratos verificáveis, execução supervisionada e instalação preservadora.",
+  "version": "2.2.0",
+  "description": "Guardian engineering coordination with verifiable contracts, supervised execution and preserving installation.",
   "author": {
     "name": "Daniel Lopes da Costa"
   },
@@ -15,7 +15,7 @@
       "interface": {
         "displayName": "Full-Stack Guardian",
         "shortDescription": "Guardian 2.2: engenharia supervisionada",
-        "longDescription": "Prévia: 29 papéis centrais, 20 skills, dez packs opcionais e verificações explícitas de capacidades, evidências e permissões.",
+        "longDescription": "29 papéis centrais, 21 skills, dez packs opcionais e verificações explícitas de capacidades, evidências e permissões.",
         "developerName": "Daniel Lopes da Costa",
         "category": "Developer Tools",
         "websiteURL": "https://github.com/DanielCosta3415/fullstack-guardian",

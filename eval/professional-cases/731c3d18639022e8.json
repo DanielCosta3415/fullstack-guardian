@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "case_id": "S02:professional:2",
+  "family": "conflicts",
+  "task": "Return every conflicting price-rule ID sharing the same key and differing values. Do not invent priority.",
+  "input": {
+    "rules": [
+      {
+        "id": "sales-price",
+        "key": "account-basic",
+        "value": 900
+      },
+      {
+        "id": "support-price",
+        "key": "account-basic",
+        "value": 1100
+      },
+      {
+        "id": "other",
+        "key": "account-pro",
+        "value": 2500
+      }
+    ]
+  }
+}

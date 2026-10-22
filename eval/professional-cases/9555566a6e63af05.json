@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "case_id": "S11:professional:1",
+  "family": "migration",
+  "task": "Evaluate each migration step against remaining NULL rows and active legacy readers; do not run SQL.",
+  "input": {
+    "null_rows": 7,
+    "legacy_readers": 2,
+    "steps": [
+      {
+        "id": "expand",
+        "requires_not_null": false,
+        "drops_legacy": false
+      },
+      {
+        "id": "enforce-not-null",
+        "requires_not_null": true,
+        "drops_legacy": false
+      },
+      {
+        "id": "drop-old",
+        "requires_not_null": false,
+        "drops_legacy": true
+      }
+    ]
+  }
+}

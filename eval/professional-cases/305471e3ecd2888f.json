@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "case_id": "S12:professional:1",
+  "family": "restore",
+  "task": "Assess recovery readiness when the backup is intact but its encryption key is unavailable.",
+  "input": {
+    "key_available": false,
+    "expected_by_key": {
+      "a": 1
+    },
+    "restored": [
+      {
+        "key": "a",
+        "value": 1
+      }
+    ]
+  }
+}

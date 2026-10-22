@@ -7,5 +7,6 @@
       "name": "guardian_browser_accessibility_specialist",
       "file": "agents/guardian_browser_accessibility_specialist.toml"
     }
-  ]
+  ],
+  "version": "2.2.0"
 }

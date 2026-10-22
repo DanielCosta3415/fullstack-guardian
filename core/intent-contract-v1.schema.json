@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Guardian primary-declared intent; not authority",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "goals",
+    "obligations",
+    "risk",
+    "constraints",
+    "uncertainties"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "goals": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 2000
+      },
+      "maxItems": 64,
+      "minItems": 1
+    },
+    "risk": {
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ]
+    },
+    "constraints": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 2000
+      },
+      "maxItems": 64
+    },
+    "uncertainties": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 2000
+      },
+      "maxItems": 64
+    },
+    "obligations": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 64,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "domain",
+          "acceptance",
+          "evidence"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_-]{0,63}$"
+          },
+          "domain": {
+            "enum": [
+              "accessibility",
+              "ai",
+              "api",
+              "architecture",
+              "backend",
+              "backend_quality",
+              "cloud",
+              "concurrency",
+              "data_governance",
+              "database",
+              "delivery",
+              "frontend",
+              "frontend_architecture",
+              "frontend_quality",
+              "governance",
+              "maintenance",
+              "observability",
+              "performance",
+              "product",
+              "quality",
+              "requirements",
+              "resilience",
+              "security",
+              "supply_chain",
+              "web_compatibility"
+            ]
+          },
+          "acceptance": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2000
+            },
+            "maxItems": 64,
+            "minItems": 1
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2000
+            },
+            "maxItems": 64,
+            "minItems": 1
+          }
+        }
+      }
+    }
+  }
+}

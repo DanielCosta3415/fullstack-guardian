@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "case_id": "S24:professional:2",
+  "family": "migration",
+  "task": "Identify premature contract/drop while legacy readers still run, even after all rows are backfilled.",
+  "input": {
+    "null_rows": 0,
+    "legacy_readers": 1,
+    "steps": [
+      {
+        "id": "expand",
+        "requires_not_null": false,
+        "drops_legacy": false
+      },
+      {
+        "id": "contract",
+        "requires_not_null": true,
+        "drops_legacy": true
+      }
+    ]
+  }
+}

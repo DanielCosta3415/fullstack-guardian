@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "case_id": "S15:professional:2",
+  "family": "evidence_limits",
+  "task": "Assess evidence sufficiency for reachability and mitigation; advisory presence does not prove exploit reachability.",
+  "input": {
+    "claims": [
+      {
+        "id": "reachable-vulnerability",
+        "required_evidence": [
+          "advisory",
+          "dependency-graph",
+          "reachable-callpath"
+        ]
+      },
+      {
+        "id": "patched",
+        "required_evidence": [
+          "patched-lockfile",
+          "regression-result"
+        ]
+      }
+    ],
+    "observed_evidence": [
+      "advisory",
+      "dependency-graph"
+    ]
+  }
+}

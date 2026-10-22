@@ -1,5 +1,6 @@
 """Real local supervisor checks/integration; mock only model CLI, no quota/network."""
 import json
+import hashlib
 import subprocess
 import sys
 import tempfile
@@ -15,6 +16,7 @@ from tools.guardian_policy import Grant, authorize_action
 from tools.guardian_trace import init, append, verify as trace_verify, expire, privacy_acl, TraceError
 from tools.guardian_workflow import check, review, verify, inspect, WorkflowError, _run
 from tools.guardian_integrate import integrate, IntegrationError
+from tools.guardian_professional import result_template
 
 
 def git(root,*args):
@@ -33,8 +35,19 @@ class WorkflowTests(unittest.TestCase):
             task['contract'].update(operation='write',allowed_paths=['value.txt'],checks=[[sys.executable,'-B','-c',"from pathlib import Path; assert Path('value.txt').read_text() == 'after\\n'"]],idempotent=False)
         initialize(self.plan,self.repo,self.home,briefs={t['id']:'Perform only the bounded explicit local fixture change and retain evidence.' for t in self.plan['tasks']})
         def fake(codex,slot,prompt,timeout,logs,mode):
-            logs.parent.mkdir(parents=True,exist_ok=True); logs.write_text('{"type":"turn.completed"}\n')
-            (slot/'value.txt').write_text('after\n'); return 0,True,None
+            (slot/'value.txt').write_text('after\n')
+            task=next(t for t in self.plan['tasks'] if 'Task ID: '+t['id']+'.' in prompt)
+            result=result_template(task['agent_id'],task_id=task['id'],obligation_ids=task['obligations'])
+            result['artifacts']=[{'path':'value.txt','sha256':hashlib.sha256((slot/'value.txt').read_bytes()).hexdigest()}]
+            result['checks']=[{'id':task['id']+':'+str(i),'argv':argv,'cwd':getattr(self,'model_cwd','.'),'exit_code':0,
+                              'status':'passed','evidence':['artifact:value.txt']} for i,argv in enumerate(task['contract']['checks'])]
+            for item in result['obligations']:item.update(status='produced',evidence=['artifact:value.txt'])
+            result['not_verified']=[]
+            result['handoff'].update(status='pending_consumer_acceptance',artifacts=['value.txt'])
+            logs.parent.mkdir(parents=True,exist_ok=True)
+            events=[{'type':'item.completed','item':{'type':'agent_message','text':json.dumps(result)}},{'type':'turn.completed'}]
+            logs.write_text(''.join(json.dumps(e)+'\n' for e in events));return 0,True,None
+        self.fake_model=fake
         with patch('tools.guardian_executor._process',side_effect=fake):
             execute(self.home,apply=True,codex_binary=sys.executable,authorize_writes=True)
         self.grant=Grant(str(self.repo),frozenset({'local_check','review'}),(str(self.home),),time.time()+120,'human_session')
@@ -56,6 +69,29 @@ class WorkflowTests(unittest.TestCase):
         self.assertTrue(result['applied']); self.assertEqual(inspect(self.home)['state'],'integrated')
         self.assertEqual((self.repo/'value.txt').read_text(),'after\n')
         self.assertFalse(inspect(self.home)['review']['identity_authenticated'])
+
+    def test_missing_professional_output_cannot_be_verified(self):
+        self.reviewed()
+        ident=self.plan['tasks'][0]['id']
+        (self.home/'results'/(ident+'.professional.json')).unlink()
+        with self.assertRaisesRegex(WorkflowError,'Missing valid professional'):
+            verify(self.home)
+
+    def test_tampered_professional_artifact_hash_cannot_be_verified(self):
+        self.reviewed();ident=self.plan['tasks'][0]['id'];path=self.home/'results'/(ident+'.professional.json')
+        output=json.loads(path.read_text());output['artifacts'][0]['sha256']='0'*64;path.write_text(json.dumps(output))
+        with self.assertRaisesRegex(WorkflowError,'differs'):
+            verify(self.home)
+
+    def test_relative_check_in_another_directory_is_not_corroborated(self):
+        self.home=self.root/'second-run';self.model_cwd='another-directory'
+        initialize(self.plan,self.repo,self.home,briefs={t['id']:'Perform only the bounded explicit local fixture change and retain evidence.' for t in self.plan['tasks']})
+        with patch('tools.guardian_executor._process',side_effect=self.fake_model):
+            execute(self.home,apply=True,codex_binary=sys.executable,authorize_writes=True)
+        self.grant=Grant(str(self.repo),frozenset({'local_check','review'}),(str(self.home),),time.time()+120,'human_session')
+        self.reviewed()
+        with self.assertRaisesRegex(WorkflowError,'matching supervisor'):
+            verify(self.home)
 
     def test_contract_commands_never_authorize_execution(self):
         with self.assertRaisesRegex(WorkflowError,'trusted scoped'):

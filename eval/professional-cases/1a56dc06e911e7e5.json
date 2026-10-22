@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "case_id": "S16:professional:1",
+  "family": "mutants",
+  "task": "Find surviving balance mutation despite reported full coverage; tests without assertions do not kill mutants.",
+  "input": {
+    "mutants": [
+      "double-debit",
+      "skip-debit"
+    ],
+    "tests": [
+      {
+        "id": "coverage-only",
+        "assertions": false,
+        "kills": []
+      },
+      {
+        "id": "balance-positive",
+        "assertions": true,
+        "kills": [
+          "skip-debit"
+        ]
+      }
+    ]
+  }
+}

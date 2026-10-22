@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "case_id": "pack:quality-automation:guardian_contract_test_specialist:professional:1",
+  "family": "contract",
+  "task": "Detect new required request field that breaks legacy consumers even if the provider adds response fields.",
+  "input": {
+    "old_required": [
+      "id"
+    ],
+    "new_required": [
+      "id",
+      "currency"
+    ],
+    "new_response_fields": [
+      "id",
+      "currency"
+    ],
+    "provider_enum": [],
+    "client_enum": []
+  }
+}

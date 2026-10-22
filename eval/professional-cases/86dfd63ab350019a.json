@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "case_id": "S21:professional:3",
+  "family": "evidence_limits",
+  "task": "Separate supported per-process order from unprovable global timing under skew and partial sampling.",
+  "input": {
+    "claims": [
+      {
+        "id": "global-order",
+        "required_evidence": [
+          "clock-offset-bounds",
+          "complete-sampling"
+        ]
+      },
+      {
+        "id": "local-order",
+        "required_evidence": [
+          "sequence-numbers"
+        ]
+      }
+    ],
+    "observed_evidence": [
+      "sequence-numbers"
+    ]
+  }
+}

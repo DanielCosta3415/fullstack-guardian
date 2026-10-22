@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "case_id": "S18:professional:2",
+  "family": "permissions",
+  "task": "Check required scopes and tenant equality for requests; denied requests must not disclose object data.",
+  "input": {
+    "requests": [
+      {
+        "id": "no-export-scope",
+        "required_scopes": [
+          "export"
+        ],
+        "token_scopes": [
+          "read"
+        ],
+        "token_tenant": "A",
+        "object_tenant": "A"
+      },
+      {
+        "id": "read-ok",
+        "required_scopes": [
+          "read"
+        ],
+        "token_scopes": [
+          "read"
+        ],
+        "token_tenant": "A",
+        "object_tenant": "A"
+      }
+    ]
+  }
+}

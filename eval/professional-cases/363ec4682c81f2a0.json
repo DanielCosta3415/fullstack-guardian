@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "case_id": "S09:professional:1",
+  "family": "contract",
+  "task": "Assess optional response addition against old required response and request fields; identify compatibility from the supplied contract.",
+  "input": {
+    "old_required": [
+      "id"
+    ],
+    "new_required": [
+      "id"
+    ],
+    "new_response_fields": [
+      "id",
+      "optional_note"
+    ],
+    "provider_enum": [
+      "created"
+    ],
+    "client_enum": [
+      "created"
+    ]
+  }
+}

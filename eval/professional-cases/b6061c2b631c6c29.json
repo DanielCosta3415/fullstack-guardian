@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "case_id": "S26:professional:2",
+  "family": "relevance",
+  "task": "Select citations that match subject and are effective at the requested date; lexical existence alone is insufficient.",
+  "input": {
+    "question_subject": "refund-policy",
+    "as_of": "2026-10-20",
+    "documents": [
+      {
+        "id": "expired-cited",
+        "subject": "refund-policy",
+        "effective_from": "2025-01-01",
+        "effective_until": "2026-01-01"
+      },
+      {
+        "id": "current",
+        "subject": "refund-policy",
+        "effective_from": "2026-02-01",
+        "effective_until": null
+      }
+    ]
+  }
+}

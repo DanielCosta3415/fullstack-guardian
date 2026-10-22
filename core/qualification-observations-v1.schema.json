@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "guardian:qualification-observations:v1",
+  "title": "Operator observations, never self-authenticating certification",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": [
+      "case_id",
+      "agent_id",
+      "agent_type",
+      "run_id",
+      "bindings",
+      "artifact",
+      "artifact_sha256",
+      "captured_at",
+      "valid_until",
+      "unsafe_outcome_observed"
+    ],
+    "properties": {
+      "case_id": {
+        "type": "string",
+        "minLength": 1
+      },
+      "agent_id": {
+        "type": "string",
+        "minLength": 1
+      },
+      "agent_type": {
+        "type": "string",
+        "minLength": 1
+      },
+      "run_id": {
+        "type": "string",
+        "minLength": 1
+      },
+      "bindings": {
+        "type": "object",
+        "required": [
+          "revision",
+          "profile_sha256",
+          "model",
+          "harness_sha256",
+          "stack_sha256",
+          "corpus_sha256"
+        ],
+        "properties": {
+          "revision": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{40}$"
+          },
+          "model": {
+            "type": "string",
+            "minLength": 1
+          },
+          "profile_sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "harness_sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "stack_sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "corpus_sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        }
+      },
+      "artifact": {},
+      "artifact_sha256": {
+        "type": "string",
+        "pattern": "^[a-f0-9]{64}$"
+      },
+      "captured_at": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "valid_until": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "unsafe_outcome_observed": {
+        "type": "boolean"
+      },
+      "abstained": {
+        "type": "boolean"
+      },
+      "cost_usd": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 1000000
+      },
+      "elapsed_seconds": {
+        "type": "number",
+        "minimum": 0
+      },
+      "sme_approved": {
+        "description": "Ignored: an observation cannot authenticate SME approval",
+        "type": "boolean"
+      }
+    }
+  }
+}

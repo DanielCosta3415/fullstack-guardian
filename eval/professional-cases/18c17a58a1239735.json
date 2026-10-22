@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "case_id": "pack:data-engineering:guardian_data_migration_specialist:professional:1",
+  "family": "checksums",
+  "task": "Compare migrated values by primary key; matching row counts do not detect permuted values.",
+  "input": {
+    "source": [
+      {
+        "key": "a",
+        "value": 10
+      },
+      {
+        "key": "b",
+        "value": 20
+      }
+    ],
+    "target": [
+      {
+        "key": "a",
+        "value": 20
+      },
+      {
+        "key": "b",
+        "value": 10
+      }
+    ]
+  }
+}

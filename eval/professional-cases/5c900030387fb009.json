@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "case_id": "pack:data-engineering:guardian_data_migration_specialist:professional:3",
+  "family": "migration",
+  "task": "Keep contract/drop blocked while old-version readers remain, although backfill is complete.",
+  "input": {
+    "null_rows": 0,
+    "legacy_readers": 3,
+    "steps": [
+      {
+        "id": "add-column",
+        "requires_not_null": false,
+        "drops_legacy": false
+      },
+      {
+        "id": "drop-legacy-column",
+        "requires_not_null": true,
+        "drops_legacy": true
+      }
+    ]
+  }
+}

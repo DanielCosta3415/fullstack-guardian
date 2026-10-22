@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "case_id": "S22:professional:1",
+  "family": "cloud_plan",
+  "task": "Block planned deletion/replacement of stateful database; do not authorize apply.",
+  "input": {
+    "resources": [
+      {
+        "id": "db",
+        "stateful": true,
+        "actions": [
+          "delete",
+          "create"
+        ]
+      },
+      {
+        "id": "cache",
+        "stateful": false,
+        "actions": [
+          "update"
+        ]
+      }
+    ]
+  }
+}

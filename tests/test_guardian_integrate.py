@@ -49,7 +49,7 @@ class IntegrationTests(unittest.TestCase):
 
     def test_preview_cannot_touch_base_repository(self):
         self.finish()
-        result, patch = inspect(self.home)
+        result, patch = inspect(self.home, mode="manual")
         self.assertTrue(result["git_apply_check"])
         self.assertEqual(result["files_changed"], 1)
         self.assertFalse(result["applied"])
@@ -58,31 +58,49 @@ class IntegrationTests(unittest.TestCase):
 
     def test_explicit_hash_confirmed_integration(self):
         self.finish()
-        report = integrate(self.home)
+        report = integrate(self.home, mode="manual")
         with self.assertRaises(IntegrationError):
-            integrate(self.home, apply=True, confirm_sha256="0"*64)
-        result = integrate(self.home, apply=True, confirm_sha256=report["patch_sha256"])
+            integrate(self.home, apply=True, confirm_sha256="0"*64, mode="manual", acknowledge_unverified=True)
+        with self.assertRaisesRegex(IntegrationError, 'acknowledgement'):
+            integrate(self.home, apply=True, confirm_sha256=report["patch_sha256"], mode="manual")
+        result = integrate(self.home, apply=True, confirm_sha256=report["patch_sha256"], mode="manual", acknowledge_unverified=True)
         self.assertTrue(result["applied"])
         self.assertFalse(result["committed"])
+        self.assertFalse(result["supervisor_verified"])
+        self.assertEqual(result["verification_label"], "NOT_VERIFIED_BY_SUPERVISOR")
         self.assertEqual((self.repo / "service.py").read_text(), "BASELINE = False\n")
         with self.assertRaises(IntegrationError):
-            integrate(self.home)  # original source now intentionally dirty
+            integrate(self.home, mode="manual")  # original source now intentionally dirty
+
+    def test_missing_workflow_never_silently_selects_manual(self):
+        self.finish()
+        with self.assertRaisesRegex(IntegrationError, 'requires a verified supervisor'):
+            inspect(self.home)
+        with self.assertRaisesRegex(IntegrationError, 'requires a verified supervisor'):
+            integrate(self.home, apply=True, confirm_sha256='0'*64, acknowledge_unverified=True)
+        self.assertEqual((self.repo/'service.py').read_text(), 'BASELINE = True\n')
+
+    def test_manual_cannot_relabel_existing_workflow(self):
+        self.finish()
+        (self.home/'workflow.json').write_text('{}')
+        with self.assertRaisesRegex(IntegrationError, 'cannot relabel'):
+            inspect(self.home, mode='manual')
 
     def test_untracked_changes_require_manual_integration(self):
         self.finish(untracked=True)
         with self.assertRaises(IntegrationError):
-            integrate(self.home)
+            integrate(self.home, mode="manual")
 
     def test_policy_file_changes_require_manual_integration(self):
         self.finish(protected=True)
         with self.assertRaises(IntegrationError):
-            integrate(self.home)
+            integrate(self.home, mode="manual")
 
     def test_worktree_drift_after_execution_invalidates_review(self):
         self.finish()
         (self.home/'worktree'/'service.py').write_text('UNREVIEWED = True\n')
         with self.assertRaisesRegex(IntegrationError,'changed after'):
-            integrate(self.home)
+            integrate(self.home, mode="manual")
 
     def test_protected_source_rename_cannot_hide_behind_safe_destination(self):
         import json
@@ -97,7 +115,7 @@ class IntegrationTests(unittest.TestCase):
         last=max(state['tasks'].values(),key=lambda r:r['started_at_ns'])
         last['artifact_sha256']=_plan_hash(inventory(worktree));atomic_json(path,state)
         with self.assertRaisesRegex(IntegrationError,'Protected'):
-            integrate(self.home)
+            integrate(self.home, mode="manual")
 
 
 

@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "case_id": "S04:professional:2",
+  "family": "evidence_limits",
+  "task": "Identify unsupported hydration and accessibility claims. HTML snapshots alone do not prove browser reproduction.",
+  "input": {
+    "claims": [
+      {
+        "id": "hydration-reproduced",
+        "required_evidence": [
+          "server-html",
+          "client-first-html",
+          "hydration-console"
+        ]
+      },
+      {
+        "id": "accessible",
+        "required_evidence": [
+          "a11y-tree"
+        ]
+      }
+    ],
+    "observed_evidence": [
+      "server-html",
+      "client-first-html"
+    ]
+  }
+}

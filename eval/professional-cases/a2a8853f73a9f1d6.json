@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "case_id": "S05:professional:1",
+  "family": "submission",
+  "task": "Compute distinct valid authenticated idempotency effects. Preserve input; only a committed response permits success.",
+  "input": {
+    "requests": [
+      {
+        "id": "enter-1",
+        "idempotency_key": "k1",
+        "authenticated": true,
+        "valid": true
+      },
+      {
+        "id": "enter-2",
+        "idempotency_key": "k1",
+        "authenticated": true,
+        "valid": true
+      }
+    ],
+    "responses": [
+      {
+        "committed": true
+      }
+    ]
+  }
+}

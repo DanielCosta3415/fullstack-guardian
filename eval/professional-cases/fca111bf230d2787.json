@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "case_id": "pack:cloud-platform:guardian_cloud_infrastructure_specialist:professional:1",
+  "family": "cloud_plan",
+  "task": "Separate dangerous stateful replacement from replaceable stateless worker; never apply the plan.",
+  "input": {
+    "resources": [
+      {
+        "id": "stateful-store",
+        "stateful": true,
+        "actions": [
+          "replace"
+        ]
+      },
+      {
+        "id": "stateless-worker",
+        "stateful": false,
+        "actions": [
+          "replace"
+        ]
+      }
+    ]
+  }
+}

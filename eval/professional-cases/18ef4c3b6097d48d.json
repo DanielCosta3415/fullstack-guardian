@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "case_id": "pack:financial-systems:guardian_payment_reliability_specialist:professional:2",
+  "family": "evidence_limits",
+  "task": "Out-of-order refund receipt cannot prove final payment reconciliation or monotonic state.",
+  "input": {
+    "claims": [
+      {
+        "id": "refund-reconciled",
+        "required_evidence": [
+          "refund-before-capture-trace",
+          "final-ledger-invariant"
+        ]
+      },
+      {
+        "id": "event-received",
+        "required_evidence": [
+          "refund-before-capture-trace"
+        ]
+      }
+    ],
+    "observed_evidence": [
+      "refund-before-capture-trace"
+    ]
+  }
+}

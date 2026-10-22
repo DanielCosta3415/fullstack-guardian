@@ -75,7 +75,8 @@ def _safe_summary(text: str) -> str:
 def create_plan(prompt: str, project: Path | None = None, mode: str = "build",
                 stage: str = "development", root: Path = ROOT,
                 max_agents: int = 12, max_waves: int = 12, _validate: bool = True, _inventory: dict | None = None,
-                codex_home: Path | None = None, available_roles: list | None = None, capabilities: dict | None = None) -> dict:
+                codex_home: Path | None = None, available_roles: list | None = None, capabilities: dict | None = None,
+                intent_contract: dict | None = None) -> dict:
     """Build a bounded, non-executable plan; every delegation is pending."""
     prompt = _safe_summary(prompt)
     if mode not in MODES or stage not in STAGES:
@@ -103,7 +104,15 @@ def create_plan(prompt: str, project: Path | None = None, mode: str = "build",
                 raise PlatformError("Invalid inventory " + key)
         if type(inventory["files_scanned"]) is not int or inventory["files_scanned"]<0 or type(inventory["truncated"]) is not bool or not isinstance(inventory["architecture_as_is_heuristic"],dict):
             raise PlatformError("Malformed inventory counts/architecture")
-    result = route(prompt, inventory=inventory, mode=mode, stage=stage, eligible_profiles=eligibility["profiles"], available_roles=available_roles)
+    try:
+        result = route(prompt, inventory=inventory, mode=mode, stage=stage, eligible_profiles=eligibility["profiles"], available_roles=available_roles, intent_contract=intent_contract)
+    except ValueError as exc:
+        raise PlatformError(str(exc)) from exc
+    try:
+        from .guardian_professional import load_contracts
+    except ImportError:
+        from guardian_professional import load_contracts
+    professional_contracts={c['id']:c for c in load_contracts(root)['contracts']}
     selected = result["agents"]
     if len(selected) > max_agents:
         raise PlatformError("Routing exceeds agent budget; human must refine scope, no silent dropping")
@@ -122,6 +131,16 @@ def create_plan(prompt: str, project: Path | None = None, mode: str = "build",
             item = next((x for x in selected if x["id"] == aid), None)
             if item is None:
                 raise PlatformError("Routing phases inconsistent with agent selection")
+            scoped_obligations=[o for o in result['intent_analysis']['obligation_coverage'] if aid in o['selected_agents']]
+            task_acceptance=next(p for p in workflows['phases'] if p['id']==stage)['criteria']
+            task_acceptance=list(dict.fromkeys(task_acceptance+[criterion for o in scoped_obligations for criterion in o['acceptance']]))
+            professional=professional_contracts[aid]
+            professional_binding={
+                'agent_id':aid,
+                'contract_version':professional['contract_version'],
+                'contract_sha256':hashlib.sha256(json.dumps(professional,sort_keys=True,separators=(',',':'),ensure_ascii=False,allow_nan=False).encode('utf-8')).hexdigest(),
+                'result_fields':list(professional['result_contract']),
+            }
             tasks.append({
                 "id": "task-" + aid.lower().replace(":", "-"),
                 "agent_id": aid,
@@ -133,10 +152,12 @@ def create_plan(prompt: str, project: Path | None = None, mode: str = "build",
                 "reason": item["reason"],
                 "state": "pending",
                 "scope": "to_be_assigned_by_primary",
-                "contract": default_contract(prompt, phase_criteria=next(p for p in workflows["phases"] if p["id"] == stage)["criteria"]),
+                "contract": default_contract(prompt, phase_criteria=task_acceptance),
+                "obligations": ['REQUEST-1']+[o['id'] for o in scoped_obligations],
                 "write_ownership": "unassigned",
                 "evidence_required": ["files_examined", "commands_and_results", "limitations"],
-                "specialist_checkpoints": playbooks["agents"].get(aid, {"checkpoints":["Inspect actual framework/version evidence", "Reproduce a domain invariant and negative case", "Record unsupported interfaces and limitations"]})["checkpoints"],
+                "specialist_checkpoints": professional['procedure']+professional['definition_of_done'],
+                "professional_contract": professional_binding,
             })
             wave_ids.append("task-" + aid.lower().replace(":", "-"))
         previous_wave = wave_ids
@@ -155,6 +176,15 @@ def create_plan(prompt: str, project: Path | None = None, mode: str = "build",
             "native_verified":False},
         "budget": {"max_agents": max_agents, "max_waves": max_waves},
         "intent": hashlib.sha256(prompt.encode("utf-8")).hexdigest(),
+        "request_obligation": {
+            "id":"REQUEST-1", "objective":prompt,
+            "kind":"request_proposal_not_semantic_certification",
+            "status":"pending_primary_confirmation",
+            "semantic_coverage_verified":False,
+            "acceptance_basis":"Task goal, applicable phase criteria and professional checkpoints require primary adjudication before execution.",
+        },
+        "intent_analysis": result["intent_analysis"],
+        "phase_responsibility": result["phase_responsibility"],
         "stage": stage,
         "mode": mode,
         "risk": risk,
@@ -200,9 +230,12 @@ def validate_plan(plan: dict, known: dict | None = None, root: Path = ROOT) -> d
     budget = plan.get("budget")
     if not isinstance(budget, dict) or set(budget) != {"max_agents", "max_waves"}:
         raise PlatformError("Missing or invalid plan budget")
+    if not isinstance(plan.get('intent_analysis'),dict):
+        raise PlatformError('Missing or malformed primary intent analysis')
     canonical = create_plan(plan.get("summary"), mode=plan.get("mode"), stage=plan.get("stage"),
                             root=root, _validate=False, _inventory=plan.get("source_context"),
-                            codex_home=context["codex_home"], available_roles=context["available_roles"],capabilities=context["capabilities"], **budget)
+                            codex_home=context["codex_home"], available_roles=context["available_roles"],capabilities=context["capabilities"],
+                            intent_contract=plan.get("intent_analysis",{}).get("contract"), **budget)
     if set(plan) != set(canonical):
         raise PlatformError("Unknown or missing plan fields")
     # Contracts can be narrowed by the primary before execution. Routing, risk,
@@ -370,6 +403,7 @@ def main(argv: list[str] | None = None) -> int:
     q.add_argument("--project", type=Path)
     q.add_argument("--mode", choices=MODES, default="build")
     q.add_argument("--stage", choices=STAGES, default="development")
+    q.add_argument("--intent-file", type=Path, help="Strict primary-declared intent JSON; never authority or proof")
     q.add_argument("--max-agents", type=int, default=12)
     q.add_argument("--max-waves", type=int, default=12)
     q.add_argument("--codex-home",type=Path,help="Inspect actual optional receipt/config/installed bytes")
@@ -385,7 +419,8 @@ def main(argv: list[str] | None = None) -> int:
             out = load_workflows()
         elif a.command == "plan":
             out = create_plan(a.prompt, a.project, a.mode, a.stage, max_agents=a.max_agents, max_waves=a.max_waves,
-                codex_home=a.codex_home,available_roles=json.loads(a.roles_file.read_text(encoding="utf-8")) if a.roles_file else None,capabilities=_read_json(a.capabilities) if a.capabilities else None)
+                codex_home=a.codex_home,available_roles=json.loads(a.roles_file.read_text(encoding="utf-8")) if a.roles_file else None,capabilities=_read_json(a.capabilities) if a.capabilities else None,
+                intent_contract=_read_json(a.intent_file) if a.intent_file else None)
         elif a.command == "verify":
             out = validate_evidence(_read_json(a.evidence), _read_json(a.plan))
         else:

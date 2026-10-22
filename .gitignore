@@ -4,6 +4,7 @@ __pycache__/
 venv/
 dist/
 work/
+.guardian-state/
 *.log
 .env
 .env.*

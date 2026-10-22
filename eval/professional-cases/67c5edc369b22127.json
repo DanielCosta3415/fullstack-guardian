@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "case_id": "S06:professional:1",
+  "family": "focus",
+  "task": "Audit supplied modal focus-state evidence, list defects and first available fallback. Screen reader execution is not observed.",
+  "input": {
+    "escape_closes": true,
+    "trap_enabled": false,
+    "restore_target": "trigger",
+    "mounted_focusable": [
+      "trigger",
+      "page-heading"
+    ],
+    "fallback_order": [
+      "nested-trigger",
+      "main-trigger",
+      "page-heading"
+    ]
+  }
+}

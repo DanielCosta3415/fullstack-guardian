@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "case_id": "pack:quality-automation:guardian_contract_test_specialist:professional:2",
+  "family": "mutants",
+  "task": "A blindly updated snapshot must not count as a semantic assertion killing the balance mutant.",
+  "input": {
+    "mutants": [
+      "wrong-total",
+      "missing-currency"
+    ],
+    "tests": [
+      {
+        "id": "updated-snapshot",
+        "assertions": true,
+        "kills": []
+      },
+      {
+        "id": "currency-assert",
+        "assertions": true,
+        "kills": [
+          "missing-currency"
+        ]
+      }
+    ]
+  }
+}

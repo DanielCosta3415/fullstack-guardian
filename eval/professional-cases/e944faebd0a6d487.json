@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "case_id": "pack:financial-systems:guardian_payment_reliability_specialist:professional:3",
+  "family": "currency",
+  "task": "Honor per-currency exponents 0 and 3, rejecting unsupported fractional JPY instead of universally assuming two decimals.",
+  "input": {
+    "amounts": [
+      {
+        "id": "jpy",
+        "value": "100",
+        "decimals": 0
+      },
+      {
+        "id": "kwd",
+        "value": "1.234",
+        "decimals": 3
+      },
+      {
+        "id": "jpy-fraction",
+        "value": "1.2",
+        "decimals": 0
+      }
+    ]
+  }
+}

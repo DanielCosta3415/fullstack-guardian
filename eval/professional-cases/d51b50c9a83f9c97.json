@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "case_id": "pack:cloud-platform:guardian_cloud_infrastructure_specialist:professional:3",
+  "family": "evidence_limits",
+  "task": "Identify missing second-zone capacity that prevents claiming the proposed HA architecture is feasible.",
+  "input": {
+    "claims": [
+      {
+        "id": "ha-feasible",
+        "required_evidence": [
+          "regional-quota",
+          "second-zone-capacity"
+        ]
+      },
+      {
+        "id": "single-zone-probe",
+        "required_evidence": [
+          "zone-a-probe"
+        ]
+      }
+    ],
+    "observed_evidence": [
+      "regional-quota",
+      "zone-a-probe"
+    ]
+  }
+}

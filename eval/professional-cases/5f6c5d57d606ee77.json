@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "case_id": "S22:professional:2",
+  "family": "dns",
+  "task": "Identify broken DNS and unreachable private endpoint topology from supplied dependency records.",
+  "input": {
+    "reachable_networks": [
+      "app-net"
+    ],
+    "dependencies": [
+      {
+        "id": "private-db",
+        "dns_resolves": false,
+        "endpoint_network": "app-net"
+      },
+      {
+        "id": "private-storage",
+        "dns_resolves": true,
+        "endpoint_network": "isolated-net"
+      }
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "case_id": "S01:professional:1",
+  "family": "cohorts",
+  "task": "Calculate exact retained/activated rates as Decimal strings; count only observed interviews. Activity counts alone cannot establish value validation.",
+  "input": {
+    "cohorts": [
+      {
+        "cohort": "jan",
+        "activated": 200,
+        "retained": 120
+      },
+      {
+        "cohort": "feb",
+        "activated": 400,
+        "retained": 160
+      }
+    ],
+    "interviews": []
+  }
+}

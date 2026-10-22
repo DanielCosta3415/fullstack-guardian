@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "case_id": "S18:professional:1",
+  "family": "ledger",
+  "task": "Reconcile timeout after committed financial operation; duplicated request keys must not double-debit.",
+  "input": {
+    "opening_minor": 10000,
+    "events": [
+      {
+        "id": "committed",
+        "key": "capture",
+        "delta_minor": -1199
+      },
+      {
+        "id": "timeout-retry",
+        "key": "capture",
+        "delta_minor": -1199
+      }
+    ],
+    "transactions": []
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "case_id": "S24:professional:1",
+  "family": "boundary",
+  "task": "Compare >= threshold with faulty > threshold using supplied boundary inputs.",
+  "input": {
+    "threshold": 100,
+    "inputs": [
+      99,
+      100,
+      101,
+      0
+    ]
+  }
+}

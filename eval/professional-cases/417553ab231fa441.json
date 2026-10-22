@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "case_id": "pack:windows-tooling:guardian_windows_powershell_specialist:professional:1",
+  "family": "windows_path",
+  "task": "Preserve literal paths including spaces/metacharacters; never reinterpret as a command.",
+  "input": {
+    "paths": [
+      "C:/workspace/space folder/data.txt",
+      "C:/workspace/a;$(whoami).txt"
+    ],
+    "operations": [
+      {
+        "id": "literal-file",
+        "reparse": false,
+        "within_workspace": true
+      }
+    ],
+    "what_if": false,
+    "cancelled": false
+  }
+}

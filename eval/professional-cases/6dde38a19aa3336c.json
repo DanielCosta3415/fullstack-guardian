@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "case_id": "S16:professional:3",
+  "family": "evidence_limits",
+  "task": "Identify missing shuffled-order evidence; do not hide the recorded flaky failure behind passing isolated execution.",
+  "input": {
+    "claims": [
+      {
+        "id": "order-independent",
+        "required_evidence": [
+          "seed-17-alone",
+          "seed-17-shuffled"
+        ]
+      },
+      {
+        "id": "fixed",
+        "required_evidence": [
+          "isolation-change",
+          "seed-17-shuffled"
+        ]
+      }
+    ],
+    "observed_evidence": [
+      "seed-17-alone",
+      "isolation-change"
+    ]
+  }
+}

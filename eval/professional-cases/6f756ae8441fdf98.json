@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "case_id": "S20:professional:3",
+  "family": "evidence_limits",
+  "task": "Detect absent low-traffic false-positive evidence; nominal burn-rate examples do not verify low-volume safety.",
+  "input": {
+    "claims": [
+      {
+        "id": "fast-burn-alert",
+        "required_evidence": [
+          "high-volume-fast-window",
+          "long-window"
+        ]
+      },
+      {
+        "id": "low-traffic-safe",
+        "required_evidence": [
+          "low-volume-negative"
+        ]
+      }
+    ],
+    "observed_evidence": [
+      "high-volume-fast-window",
+      "long-window"
+    ]
+  }
+}

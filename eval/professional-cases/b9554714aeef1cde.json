@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "case_id": "S01:professional:2",
+  "family": "cohorts",
+  "task": "Calculate rates and count only actually observed interviews. Planned interviews are not validated stakeholder evidence.",
+  "input": {
+    "cohorts": [
+      {
+        "cohort": "trial",
+        "activated": 100,
+        "retained": 25
+      }
+    ],
+    "interviews": [
+      {
+        "id": "planned-1",
+        "observed": false
+      },
+      {
+        "id": "planned-2",
+        "observed": false
+      }
+    ]
+  }
+}

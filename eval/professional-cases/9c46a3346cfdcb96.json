@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "case_id": "S18:professional:3",
+  "family": "contract",
+  "task": "Determine compatibility of explicitly supported absent/null variants for a legacy consumer; no new required field is introduced.",
+  "input": {
+    "old_required": [
+      "id"
+    ],
+    "new_required": [
+      "id"
+    ],
+    "new_response_fields": [
+      "id"
+    ],
+    "provider_enum": [
+      "absent",
+      "null",
+      "value"
+    ],
+    "client_enum": [
+      "absent",
+      "null",
+      "value"
+    ]
+  }
+}

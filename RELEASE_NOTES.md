@@ -1,3 +1,23 @@
+# 2.2.0 — autonomous operator acceptance and durable continuation
+
+Adds an explicitly selected operator-autonomous release policy with corroborated local native39 and distinct G01/G02 agent reviews in place of human PR approval and dedicated remote Codex execution. Strict compatibility, actual CI, isolated grader and exact signed ZIP provenance remain. Native criteria are regenerated from pinned source and actual session/check/profile bindings are verified; imported summaries alone cannot approve a release.
+
+Adds 103 versioned professional artifact tasks across 39 roles, data-only allowlisted oracles, manually calculated family goldens and contrasts, and a native 39-child/103-artifact observation harness. These measure named objective subscopes and safe abstention, not full SME qualification, live framework execution or a private holdout. The new continuation skill and schema2 checkpoints preserve task/evidence/source/index state and explicit operator policy through interruptions without credentials, account monitoring or automatic wakeup.
+
+Public response protocol2 specifies all112 fields across39 families before execution, separates claim/evidence namespaces and observations from normative decisions, and preserves the failed protocol1 development run. All39 professional profiles now require exact obligation/identifier reconciliation and final checks of facts, types, units, boundaries and output contracts. Decimal projections use a fixed context; temporary-root tests support macOS aliases and managed instruction tests read explicit UTF-8 on Windows.
+
+Publishing and global installation require actual final-revision acceptance and normal permissions; this version label is not evidence that rollout has already occurred. Historical candidates below retain their original scope and outcomes.
+
+# 2.2.0-rc.1 - release acceptance candidate (historical policy)
+
+Fixes native smoke input delivery through UTF-8 stdin and an explicit workspace. Adds guarded migration for legacy policy-heading/EOL drift, preserving semantic edits as conflicts and retaining byte-exact rollback. Adds blind professional-review intake for the 103 public case designs; imported reviews never authenticate human expertise or grant qualification. This candidate still requires actual external native workflow, human review and provenance/recovery gates before stable promotion.
+
+# 2.2.0-dev.4 — professional assurance candidate
+
+Implements the N01–N18 audit response: 39 role-specific professional contracts and generated profiles/checkpoints, typed capability/tool policies, intent/obligation and lifecycle coverage, contract-bound results and supervised integration by default, a 142-case development qualification corpus, strict seeded-failure oracles, a two-trial native professional harness, opt-in trust-preserving advisory hooks, and a hash-locked upstream adaptation linter/guide. Open SME scenarios, private holdout and production readiness are not inferred from implementation or synthetic tests. Stable/global installation remains a separate reviewed action.
+
+Native compatibility fixes deliver the public case inventory through UTF-8 stdin and resolve only the running Python interpreter's symlink when registering hooks. Corpus1.1.0 clarifies all39 typed case contracts after independent ambiguity reviews, preserves the original oracle values and historical observations, and rejects invalid artifact schemas or incompatible oracles before model execution. See docs/PROFESSIONAL_ASSURANCE.md for the original34/39 repeated-case result and its limits.
+
 # 2.2.0-dev.3 — completion candidate
 
 Adds canonical generation of profiles/metadata, supervised acceptance transitions, bounded read retries, journal retention/privacy diagnostics, pack rollback, executable domain adapters, real Windows client probing, installed-runtime functional suites, call-correlated native acceptance, and explicit hosted-rootless grading. Current evidence and unresolved external gates are in docs/COMPLETION-STATUS.md. This is a development candidate; no stable promotion is inferred.

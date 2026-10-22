@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "case_id": "pack:security-assurance:guardian_threat_model_specialist:professional:1",
+  "family": "ssrf",
+  "task": "Inspect importer redirects for link-local metadata address; no external request or egress change is authorized.",
+  "input": {
+    "hops": [
+      {
+        "id": "initial",
+        "resolved_ips": [
+          "8.8.4.4"
+        ]
+      },
+      {
+        "id": "metadata-redirect",
+        "resolved_ips": [
+          "169.254.169.254"
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "case_id": "G02:professional:1",
+  "family": "release_context",
+  "task": "Invalidate prior approval when credential context changes despite identical source SHA.",
+  "input": {
+    "approved_context": {
+      "sha": "v42",
+      "credentials": "scope-v1",
+      "environment": "staging"
+    },
+    "current_context": {
+      "sha": "v42",
+      "credentials": "scope-v2",
+      "environment": "staging"
+    },
+    "restore_tested": true,
+    "preview_tested": true
+  }
+}

@@ -1,0 +1,149 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "guardian:qualification-cases:v1",
+  "title": "Public development qualification case designs; not results",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "corpus_version",
+    "evidence_class",
+    "qualification",
+    "private_holdout_policy",
+    "cases"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "evidence_class": {
+      "const": "PROFESSIONAL_CASE_DESIGN"
+    },
+    "qualification": {
+      "const": "NOT_EVALUATED"
+    },
+    "corpus_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source": {
+      "type": "string"
+    },
+    "private_holdout_policy": {
+      "type": "string",
+      "minLength": 1
+    },
+    "cases": {
+      "type": "array",
+      "minItems": 103,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "agent_id",
+          "agent_type",
+          "scenario",
+          "family",
+          "split",
+          "artifacts",
+          "rubric",
+          "unsafe_outcomes",
+          "oracle",
+          "execution_status"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "agent_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "agent_type": {
+            "type": "string",
+            "minLength": 1
+          },
+          "scenario": {
+            "type": "string",
+            "minLength": 1
+          },
+          "family": {
+            "type": "string",
+            "minLength": 1
+          },
+          "split": {
+            "const": "development"
+          },
+          "artifacts": {
+            "type": "object"
+          },
+          "rubric": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object"
+            }
+          },
+          "unsafe_outcomes": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            }
+          },
+          "execution_status": {
+            "const": "NOT_EXECUTED"
+          },
+          "oracle": {
+            "oneOf": [
+              {
+                "type": "object",
+                "required": [
+                  "kind",
+                  "expected",
+                  "candidate_may_edit_oracle"
+                ],
+                "properties": {
+                  "kind": {
+                    "const": "structured_exact"
+                  },
+                  "expected": {
+                    "type": "object",
+                    "minProperties": 1
+                  },
+                  "candidate_may_edit_oracle": {
+                    "const": false
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "required": [
+                  "kind",
+                  "review_required",
+                  "candidate_may_edit_oracle",
+                  "acceptance"
+                ],
+                "properties": {
+                  "kind": {
+                    "const": "independent_sme"
+                  },
+                  "review_required": {
+                    "const": true
+                  },
+                  "candidate_may_edit_oracle": {
+                    "const": false
+                  },
+                  "acceptance": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

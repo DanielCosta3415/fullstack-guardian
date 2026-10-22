@@ -5,6 +5,11 @@ spec=importlib.util.spec_from_file_location('guardian_release_builder',BASE/'too
 builder=importlib.util.module_from_spec(spec);spec.loader.exec_module(builder)
 
 class ReleaseTests(unittest.TestCase):
+    def test_generated_catalog_matches_current_metadata(self):
+        if not (BASE/'plugin.json').exists():self.skipTest('Source-package metadata only')
+        from tools.generate_catalog_docs import render
+        self.assertEqual((BASE/'docs/CATALOG.md').read_text(encoding='utf8'),render(BASE))
+
     def test_plugin_onboarding_and_marketplace(self):
         if not (BASE/'plugin.json').exists():self.skipTest('Source-package metadata only')
         m=json.loads((BASE/'plugin.json').read_text(encoding='utf8'))
@@ -27,13 +32,26 @@ class ReleaseTests(unittest.TestCase):
                     data=z.read('fullstack-guardian-'+first['version']+'/'+entry['path'])
                     self.assertEqual(hashlib.sha256(data).hexdigest(),entry['sha256'])
                 self.assertFalse(any('__pycache__' in x or '/.git/' in x for x in z.namelist()))
-    def test_platform_preview_is_not_mislabeled_stable_release(self):
+    def test_release_identity_is_consistent_without_reusing_baseline(self):
         if not (BASE/'plugin.json').exists():self.skipTest('Source-package metadata only')
         version=(BASE/'VERSION').read_text(encoding='utf8').strip()
-        self.assertNotEqual(version,'2.1.0','Experimental platform must not reuse stable release version')
-        self.assertIn('-dev.',version)
+        self.assertNotEqual(version,'2.1.0','The new release must not reuse the previous stable identity')
+        self.assertRegex(version,r'^\d+\.\d+\.\d+(?:-(?:dev|rc)\.\d+)?$')
         manifest=json.loads((BASE/'plugin.json').read_text(encoding='utf8'))
         self.assertEqual(manifest['version'],version)
+
+    def test_version_labels_never_authorize_stable_promotion(self):
+        from tools.guardian_release_gate import inspect
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder).resolve();(root/'.codex-plugin').mkdir()
+            for version in ('2.2.0-dev.4','2.2.0-rc.1','2.2.0'):
+                (root/'VERSION').write_text(version)
+                for name in ('plugin.json','.codex-plugin/plugin.json'):
+                    (root/name).write_text(json.dumps({'version':version}))
+                report=inspect(root)
+                self.assertEqual(report['preview'],'-' in version)
+                self.assertFalse(report['stable_promotion_allowed'])
+                self.assertFalse(report['publication_authorized'])
 
     def test_release_attestation_is_pinned_and_fail_closed(self):
         if not (BASE/'.github/workflows/release.yml').exists():self.skipTest('Source-package metadata only')

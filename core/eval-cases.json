@@ -1,25 +1,260 @@
 {
- "version": "2.0",
- "cases": [
-  {"id":"finance_race","prompt":"Corrigir transferências PIX simultâneas e saldo incorreto", "must_include":["S08","S10","S11","S14","S18","G01"],"risk":"high"},
-  {"id":"auth","prompt":"Revisar autorização JWT e RBAC de endpoints", "must_include":["S13","S14","G01"],"risk":"high"},
-  {"id":"frontend","prompt":"Corrigir interface HTML e CSS do formulário", "must_include":["S05","S17"],"must_exclude":["G02"],"risk":"low"},
-  {"id":"frontend_ux","prompt":"Melhorar a acessibilidade WCAG e responsividade na tela", "must_include":["S06","S05"],"risk":"low"},
-  {"id":"integration","prompt":"Alterar endpoint de API e contrato OpenAPI", "must_include":["S08","S09","S18"],"risk":"low"},
-  {"id":"architecture","prompt":"Revisar arquitetura de microserviços e escalabilidade", "must_include":["S03","S19"],"risk":"medium"},
-  {"id":"observability","prompt":"Criar logs estruturados e rastreamento de traces", "must_include":["S21"],"risk":"low"},
-  {"id":"database","prompt":"Adicionar migration SQL com integridade de dados", "must_include":["S11","S18"],"risk":"medium"},
-  {"id":"release","prompt":"Preparar deploy em produção do release", "must_include":["S23","G02"],"risk":"medium"},
-  {"id":"destructive_prod","prompt":"Deletar em produção todas as transações do banco", "must_include":["G01","G02"],"risk":"critical"},
-  {"id":"auditoria","prompt":"Auditar completamente o projeto", "must_include":["S16","G01"],"risk":"low"},
-  {"id":"ai_assurance","prompt":"Avaliar RAG e prompt injection do chatbot com modelo de IA", "must_include":["S26"],"risk":"low"},
-  {"id":"incident","prompt":"Investigar observabilidade e incidente de indisponibilidade", "must_include":["S21","S20"],"risk":"low"},
-  {"id":"pipeline","prompt":"Corrigir pipeline Jenkins CI/CD", "must_include":["S23"],"risk":"low"},
-  {"id":"simple","prompt":"Corrigir texto de um botão", "must_include":["S02"],"must_exclude":["G02"],"risk":"low"},
-  {"id":"architecture_impact","prompt":"Planejar a arquitetura e regra de negócio", "must_include":["S03","S02"],"risk":"medium"},
-  {"id":"perf","prompt":"Reduzir latência e gargalo de performance", "must_include":["S19"],"risk":"low"},
-  {"id":"quality","prompt":"Criar testes de integração e melhorar cobertura", "must_include":["S16","S18"],"risk":"low"},
-  {"id":"backend","prompt":"Corrigir service ASP.NET Core do backend", "must_include":["S08","S18"],"risk":"low"},
-  {"id":"cloud","prompt":"Revisar Terraform e AWS da infraestrutura", "must_include":["S22"],"risk":"low"}
- ]
+  "version": "2.0",
+  "cases": [
+    {
+      "id": "finance_race",
+      "prompt": "Corrigir transferências PIX simultâneas e saldo incorreto",
+      "must_include": [
+        "S08",
+        "S10",
+        "S11",
+        "S14",
+        "S18",
+        "G01"
+      ],
+      "risk": "high"
+    },
+    {
+      "id": "auth",
+      "prompt": "Revisar autorização JWT e RBAC de endpoints",
+      "must_include": [
+        "S13",
+        "S14",
+        "G01"
+      ],
+      "risk": "high"
+    },
+    {
+      "id": "frontend",
+      "prompt": "Corrigir interface HTML e CSS do formulário",
+      "must_include": [
+        "S05",
+        "S17"
+      ],
+      "must_exclude": [
+        "G02"
+      ],
+      "risk": "low"
+    },
+    {
+      "id": "frontend_ux",
+      "prompt": "Melhorar a acessibilidade WCAG e responsividade na tela",
+      "must_include": [
+        "S06",
+        "S05"
+      ],
+      "risk": "low"
+    },
+    {
+      "id": "integration",
+      "prompt": "Alterar endpoint de API e contrato OpenAPI",
+      "must_include": [
+        "S08",
+        "S09",
+        "S18"
+      ],
+      "risk": "low"
+    },
+    {
+      "id": "architecture",
+      "prompt": "Revisar arquitetura de microserviços e escalabilidade",
+      "must_include": [
+        "S03",
+        "S19"
+      ],
+      "risk": "medium"
+    },
+    {
+      "id": "observability",
+      "prompt": "Criar logs estruturados e rastreamento de traces",
+      "must_include": [
+        "S21"
+      ],
+      "risk": "low"
+    },
+    {
+      "id": "database",
+      "prompt": "Adicionar migration SQL com integridade de dados",
+      "must_include": [
+        "S11",
+        "S18"
+      ],
+      "risk": "medium"
+    },
+    {
+      "id": "release",
+      "prompt": "Preparar deploy em produção do release",
+      "must_include": [
+        "S23",
+        "G02"
+      ],
+      "risk": "medium"
+    },
+    {
+      "id": "destructive_prod",
+      "prompt": "Deletar em produção todas as transações do banco",
+      "must_include": [
+        "G01",
+        "G02"
+      ],
+      "risk": "critical"
+    },
+    {
+      "id": "auditoria",
+      "prompt": "Auditar completamente o projeto",
+      "must_include": [
+        "S16",
+        "G01"
+      ],
+      "risk": "low"
+    },
+    {
+      "id": "ai_assurance",
+      "prompt": "Avaliar RAG e prompt injection do chatbot com modelo de IA",
+      "must_include": [
+        "S26"
+      ],
+      "risk": "low"
+    },
+    {
+      "id": "incident",
+      "prompt": "Investigar observabilidade e incidente de indisponibilidade",
+      "must_include": [
+        "S21",
+        "S20"
+      ],
+      "risk": "low"
+    },
+    {
+      "id": "pipeline",
+      "prompt": "Corrigir pipeline Jenkins CI/CD",
+      "must_include": [
+        "S23"
+      ],
+      "risk": "low"
+    },
+    {
+      "id": "simple",
+      "prompt": "Corrigir texto de um botão",
+      "must_include": [
+        "S02"
+      ],
+      "must_exclude": [
+        "G02"
+      ],
+      "risk": "low"
+    },
+    {
+      "id": "architecture_impact",
+      "prompt": "Planejar a arquitetura e regra de negócio",
+      "must_include": [
+        "S03",
+        "S02"
+      ],
+      "risk": "medium"
+    },
+    {
+      "id": "perf",
+      "prompt": "Reduzir latência e gargalo de performance",
+      "must_include": [
+        "S19"
+      ],
+      "risk": "low"
+    },
+    {
+      "id": "quality",
+      "prompt": "Criar testes de integração e melhorar cobertura",
+      "must_include": [
+        "S16",
+        "S18"
+      ],
+      "risk": "low"
+    },
+    {
+      "id": "backend",
+      "prompt": "Corrigir service ASP.NET Core do backend",
+      "must_include": [
+        "S08",
+        "S18"
+      ],
+      "risk": "low"
+    },
+    {
+      "id": "cloud",
+      "prompt": "Revisar Terraform e AWS da infraestrutura",
+      "must_include": [
+        "S22"
+      ],
+      "risk": "medium"
+    },
+    {
+      "id": "cross_tenant_pt",
+      "prompt": "Uma pessoa consegue entrar na conta de outra empresa",
+      "must_include": [
+        "S13",
+        "S14",
+        "G01"
+      ],
+      "risk": "high"
+    },
+    {
+      "id": "cross_tenant_en",
+      "prompt": "A user can read another organization records",
+      "must_include": [
+        "S13",
+        "S14",
+        "G01"
+      ],
+      "risk": "high"
+    },
+    {
+      "id": "keyboard_only",
+      "prompt": "Quem nao usa mouse nao consegue concluir o cadastro",
+      "must_include": [
+        "S06"
+      ],
+      "risk": "low"
+    },
+    {
+      "id": "plural_rtl",
+      "prompt": "Fix locale plural rules and right-to-left layout",
+      "must_include": [
+        "S07"
+      ],
+      "risk": "low"
+    },
+    {
+      "id": "vendor_governance",
+      "prompt": "Comparar fornecedores e obrigacoes contratuais",
+      "must_include": [
+        "S25"
+      ],
+      "risk": "medium"
+    },
+    {
+      "id": "legacy_upgrade",
+      "prompt": "Planejar migracao de versao do sistema legado",
+      "must_include": [
+        "S24"
+      ],
+      "risk": "medium"
+    },
+    {
+      "id": "repeated_delivery",
+      "prompt": "Recebemos duas vezes a mesma encomenda e enviamos duas entregas",
+      "must_include": [
+        "S10",
+        "G01"
+      ],
+      "risk": "high"
+    },
+    {
+      "id": "discover_value",
+      "prompt": "Descobrir se os clientes precisam antes de construir",
+      "must_include": [
+        "S01"
+      ],
+      "risk": "low"
+    }
+  ]
 }

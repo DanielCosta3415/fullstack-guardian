@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "case_id": "S15:professional:1",
+  "family": "provenance",
+  "task": "Reject a signed artifact from a nonapproved workflow; a valid signature alone is insufficient.",
+  "input": {
+    "revision": "release-42",
+    "workflow": "release.yml",
+    "artifacts": [
+      {
+        "id": "wrong-signer",
+        "revision": "release-42",
+        "workflow": "untrusted.yml",
+        "signature_valid": true
+      },
+      {
+        "id": "correct",
+        "revision": "release-42",
+        "workflow": "release.yml",
+        "signature_valid": true
+      }
+    ]
+  }
+}

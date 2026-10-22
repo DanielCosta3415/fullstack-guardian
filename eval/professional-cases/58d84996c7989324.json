@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "case_id": "S14:professional:2",
+  "family": "tenant_flows",
+  "task": "Evaluate tenant A requests for tenant B across API/export/cache, even when the session is valid.",
+  "input": {
+    "flows": [
+      {
+        "id": "api",
+        "token_tenant": "A",
+        "object_tenant": "B",
+        "tenant_check": true
+      },
+      {
+        "id": "export",
+        "token_tenant": "A",
+        "object_tenant": "B",
+        "tenant_check": false
+      },
+      {
+        "id": "cache",
+        "token_tenant": "A",
+        "object_tenant": "B",
+        "tenant_check": false
+      }
+    ]
+  }
+}

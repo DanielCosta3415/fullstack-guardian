@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "case_id": "S02:professional:1",
+  "family": "evidence_limits",
+  "task": "Determine which transfer acceptance criteria have evidence; absent denial/retry evidence must remain unsupported.",
+  "input": {
+    "claims": [
+      {
+        "id": "effects",
+        "required_evidence": [
+          "ledger-before",
+          "ledger-after"
+        ]
+      },
+      {
+        "id": "authorization",
+        "required_evidence": [
+          "denied-transfer"
+        ]
+      },
+      {
+        "id": "timeout-retry",
+        "required_evidence": [
+          "retry-reconciliation"
+        ]
+      }
+    ],
+    "observed_evidence": [
+      "ledger-before",
+      "ledger-after"
+    ]
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "case_id": "pack:cloud-platform:guardian_cloud_infrastructure_specialist:professional:2",
+  "family": "dns",
+  "task": "Locate unresolved private dependency rather than inventing cloud provider execution.",
+  "input": {
+    "reachable_networks": [
+      "app-net"
+    ],
+    "dependencies": [
+      {
+        "id": "private-sql",
+        "dns_resolves": false,
+        "endpoint_network": "app-net"
+      },
+      {
+        "id": "public-docs",
+        "dns_resolves": true,
+        "endpoint_network": "app-net"
+      }
+    ]
+  }
+}

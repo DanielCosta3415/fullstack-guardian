@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "case_id": "S07:professional:1",
+  "family": "locale",
+  "task": "Convert decimal currency amounts using stated currency exponents, identify RTL locale bases and explicit timezones; never use local timezone assumptions.",
+  "input": {
+    "amounts": [
+      {
+        "id": "brl",
+        "amount": "12.34",
+        "currency_decimals": 2
+      },
+      {
+        "id": "kwd",
+        "amount": "1.234",
+        "currency_decimals": 3
+      }
+    ],
+    "locales": [
+      "pt-BR",
+      "ar-SA",
+      "en-US"
+    ],
+    "timezones": [
+      "America/Sao_Paulo",
+      "Asia/Riyadh"
+    ]
+  }
+}
