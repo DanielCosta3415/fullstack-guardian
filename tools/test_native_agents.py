@@ -125,7 +125,12 @@ def preflight_global(home,project,root=ROOT):
     roots=('global','core','tools','tests','project-template','docs','packs','scripts','eval')
     files=[p for directory in roots for p in (root/directory).rglob('*') if p.is_file()
            and '__pycache__' not in p.parts and p.suffix!='.pyc']
-    files += [root/name for name in ('install.py','README.md','RELEASE_NOTES.md','VERSION','LICENSE','NOTICE.md','THIRD_PARTY_NOTICES.md','SECURITY.md','SUPPORT.md')]
+    files += [root/name for name in ('install.py','README.md','RELEASE_NOTES.md','VERSION','LICENSE','THIRD_PARTY_NOTICES.md','SECURITY.md','SUPPORT.md')]
+    # NOTICE is optional in the actual installer/package. Still reject a linked
+    # optional path before deciding whether it is present; mandatory files above
+    # must never be silently skipped when missing.
+    notice=safe(root/'NOTICE.md')
+    if notice.exists():files.append(notice)
     for source in files:
         target=safe(runtime/source.relative_to(root));digest=hashlib.sha256(safe(source).read_bytes()).hexdigest()
         if not target.is_file() or hashlib.sha256(target.read_bytes()).hexdigest()!=digest or owned.get(str(target))!=digest:

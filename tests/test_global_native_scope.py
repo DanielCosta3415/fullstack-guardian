@@ -1,5 +1,5 @@
 """Global scope verification uses synthetic installations, never live credentials/models."""
-import hashlib,json,shutil,tempfile,unittest
+import hashlib,json,os,shutil,subprocess,sys,tempfile,unittest
 from pathlib import Path
 from unittest.mock import patch
 from tools import test_native_agents as harness
@@ -71,6 +71,43 @@ class GlobalNativeScopeTests(unittest.TestCase):
         (self.runtime/'VERSION').write_text('2.2.0')
         (self.runtime/'README.md').write_text('drift')
         with self.assertRaisesRegex(ValueError,'drift'):self.verify()
+
+    def test_optional_notice_absent_but_mandatory_source_still_required(self):
+        (self.root/'NOTICE.md').unlink();(self.runtime/'NOTICE.md').unlink()
+        receipt_path=self.home/'guardian-install.json';receipt=json.loads(receipt_path.read_text())
+        receipt['files']=[x for x in receipt['files'] if Path(x['path']).name!='NOTICE.md']
+        receipt_path.write_text(json.dumps(receipt),encoding='utf8')
+        self.assertEqual(self.verify()['profiles_verified'],39)
+        (self.root/'README.md').unlink()
+        with self.assertRaises((ValueError,OSError)):self.verify()
+
+    def test_real_installer_and_all_packs_pass_readonly_global_preflight(self):
+        # Exercise the shipped installer and its actual ownership receipt, rather
+        # than manufacturing every possible source file as the synthetic setup
+        # does. The ancestor patch in setUp bounds discovery to this fixture.
+        actual_home=self.base/'actual-user';actual_home.mkdir()
+        codex=actual_home/'.codex';project=self.base/'actual-evidence/project';project.mkdir(parents=True)
+        env=os.environ.copy();env.update(PYTHONUTF8='1',PYTHONDONTWRITEBYTECODE='1')
+        commands=[[sys.executable,'-B',str(harness.ROOT/'install.py'),'--user','--home',str(actual_home),'--apply']]
+        for manifest in sorted((harness.ROOT/'packs').glob('*/manifest.json')):
+            pack=json.loads(manifest.read_text(encoding='utf8'))
+            commands.append([sys.executable,'-B',str(harness.ROOT/'tools/guardian_packs.py'),'install','--pack',pack['name'],'--user','--home',str(codex),'--apply'])
+        for command in commands:
+            result=subprocess.run(command,env=env,capture_output=True,text=True,encoding='utf8',timeout=180)
+            self.assertEqual(result.returncode,0,result.stderr)
+        before=harness.global_snapshot(codex)
+        with patch.object(harness.subprocess,'Popen') as models:
+            result=harness.preflight_global(codex,project,harness.ROOT)
+        self.assertEqual(result['profiles_verified'],39)
+        self.assertEqual(result['runtime_scope'],'global-existing')
+        self.assertEqual(before,harness.global_snapshot(codex));models.assert_not_called()
+        self.assertFalse((project/'.guardian').exists());self.assertFalse((project/'.codex').exists())
+
+    def test_optional_notice_link_is_rejected_even_if_target_is_absent(self):
+        notice=self.root/'NOTICE.md';notice.unlink()
+        try:notice.symlink_to(self.base/'absent-notice-target')
+        except (OSError,NotImplementedError):self.skipTest('Host does not permit symlink creation')
+        with self.assertRaisesRegex(ValueError,'Linked/reparse'):self.verify()
 
     def test_ancestor_alias_profile_and_agent_config_override_refused(self):
         local=self.project.parent/'.codex';(local/'agents').mkdir(parents=True)
