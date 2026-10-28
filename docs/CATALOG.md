@@ -1,6 +1,6 @@
 # Generated catalog
 
-Version: 2.2.0
+Version: 2.2.1
 
 Availability is not installation, native loading, or correctness. Model policy inherits by default.
 

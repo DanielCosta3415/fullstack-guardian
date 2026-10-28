@@ -1,6 +1,6 @@
 # Release acceptance and global rollout
 
-Version 2.2.0 requires explicit release acceptance. A successful package build or a
+Version 2.2.1 requires explicit release acceptance. A successful package build or a
 local AI review does not promote it to stable. Pin every acceptance result to
 the final commit and exact ZIP. A version/manifests change creates a new commit
 and invalidates earlier revision-specific release evidence.

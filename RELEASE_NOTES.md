@@ -1,3 +1,9 @@
+# 2.2.1 — native evidence stream ordering correction
+
+The schema-2 native fixture verifier tolerates complete JSON stdout metadata before or after the expected stderr assertion. It still requires the exact seeded invariant and command/cwd/result binding, rejects incidental or conflicting exceptions, and preserves BUILD before/after acceptance. Defensive regressions cover stream ordering, echo-only metadata, malformed suffixes, incompatible errors and command binding.
+
+The original 2.2.0 global batch executed all 39 roles but its strict verifier accepted 38 because one correctly reproduced assertion preceded buffered JSON. That original result remains unchanged. Patch acceptance and any new native results must be recorded against this patch's actual revision; no historical run is relabelled. Agent contracts, professional fixtures, model inheritance and operator policy are unchanged.
+
 # 2.2.0 — autonomous operator acceptance and durable continuation
 
 Adds an explicitly selected operator-autonomous release policy with corroborated local native39 and distinct G01/G02 agent reviews in place of human PR approval and dedicated remote Codex execution. Strict compatibility, actual CI, isolated grader and exact signed ZIP provenance remain. Native criteria are regenerated from pinned source and actual session/check/profile bindings are verified; imported summaries alone cannot approve a release.

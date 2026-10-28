@@ -76,11 +76,37 @@ def fixture_passed(outcomes,rule):
         codes=[o.get('exit_code') for o in outcomes]
         def expected_failure(o):
             text=o.get('output','')
-            # The final exception must match the seeded invariant, never an incidental
-            # import/name/syntax error. Full output is bound to exact command + cwd.
-            lines=[line.strip() for line in text.splitlines() if line.strip()]
-            return o.get('exit_code')==1 and bool(lines) and lines[-1] in [
-                'AssertionError: '+reason for reason in rule.get('expected_assertions',[])]
+            # stdout JSON may be drained after stderr. Remove only complete JSON
+            # containers at the boundaries, never search JSON strings for assertions.
+            # Full output remains bound to exact command + cwd by paired_outcomes.
+            if not isinstance(text,str):return False
+            decoder=json.JSONDecoder()
+            text=text.strip()
+            while text:
+                try:value,end=decoder.raw_decode(text)
+                except ValueError:break
+                if not isinstance(value,(dict,list)) or (end<len(text) and text[end] not in '\r\n'):break
+                text=text[end:].strip()
+            lines=text.splitlines()
+            for start in range(len(lines)):
+                if lines[start].strip() and not lines[start].lstrip().startswith(('{','[')):continue
+                suffix='\n'.join(lines[start:]).strip()
+                while suffix:
+                    try:value,end=decoder.raw_decode(suffix)
+                    except ValueError:break
+                    if not isinstance(value,(dict,list)) or (end<len(suffix) and suffix[end] not in '\r\n'):break
+                    suffix=suffix[end:].strip()
+                if not suffix:
+                    lines=lines[:start]
+                    break
+            expected=['AssertionError: '+reason for reason in rule.get('expected_assertions',[])]
+            # Reject incompatible exception summaries even before a chained assertion.
+            # ExceptionGroup uses a tree instead of column-zero summaries; it is
+            # not the single seeded assertion required by this rule.
+            if any('Exception Group Traceback' in line or re.match(r'^\s*[|+] .*',line) for line in lines):return False
+            if any(re.match(r'^[A-Za-z_][\w.]*:',line) and line not in expected for line in lines):return False
+            lines=[line.strip() for line in lines if line.strip()]
+            return type(o.get('exit_code')) is int and o['exit_code']==1 and bool(lines) and lines[-1] in expected
         if rule.get('build'):
             return len(outcomes)>=2 and (expected_failure(outcomes[0]) if rule.get('seeded_failure') else codes[0]==0) and codes[-1]==0
         return expected_failure(outcomes[-1]) if rule.get('seeded_failure') else codes[-1]==0

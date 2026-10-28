@@ -1,4 +1,4 @@
-# Completion status — 2.2.0
+# Completion status — 2.2.1
 
 The current implementation adds explicit operator-autonomous acceptance, project-local durable continuation and 103 executable public objective artifact subscopes for 39 roles. Local native evidence must be corroborated against source-generated fixtures, actual sessions/checks and exact installed runtime/profile bytes; summaries or labels alone are insufficient. Strict compatibility remains available. See AUTONOMOUS_RELEASE_POLICY.md, CONTINUATION.md and PROFESSIONAL_CASES.md for the current contracts.
 

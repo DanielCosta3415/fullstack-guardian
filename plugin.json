@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "fullstack-guardian",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "Guardian engineering coordination with verifiable contracts, supervised execution and preserving installation.",
   "author": {
     "name": "Daniel Lopes da Costa"
