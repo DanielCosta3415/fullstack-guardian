@@ -5,7 +5,7 @@
     {
       "id": "A00",
       "name": "guardian_engineering_orchestrator",
-      "title": "Principal Software Engineering Architect & Multi-Agent Orchestrator",
+      "title": "Orquestrador de Engenharia",
       "description": "Coordenação, triagem de demandas, seleção dinâmica de especialistas, minimização de custo e consolidação de evidências",
       "group": "orchestration",
       "scope": "all",
@@ -16,7 +16,7 @@
     {
       "id": "S01",
       "name": "guardian_product_discovery",
-      "title": "Senior Product Manager & Product Discovery Specialist",
+      "title": "Especialista em Descoberta de Produto",
       "description": "Estratégia de produto, usuários, hipóteses, escopo, priorização e indicadores de valor",
       "group": "strategy",
       "scope": "transversal",
@@ -35,7 +35,7 @@
     {
       "id": "S02",
       "name": "guardian_requirements_engineer",
-      "title": "Senior Business Analyst & Requirements Engineer",
+      "title": "Engenheiro de Requisitos",
       "description": "Requisitos, critérios de aceitação, invariantes, rastreabilidade e lacunas de especificação",
       "group": "requirements",
       "scope": "fullstack",
@@ -53,7 +53,7 @@
     {
       "id": "S03",
       "name": "guardian_solutions_architect",
-      "title": "Principal Software & Solutions Architect",
+      "title": "Arquiteto de Soluções",
       "description": "Decisões de arquitetura, limites de domínio, diagramas, ADRs e simplicidade suficiente",
       "group": "architecture",
       "scope": "fullstack",
@@ -72,7 +72,7 @@
     {
       "id": "S04",
       "name": "guardian_frontend_architect",
-      "title": "Senior Front-End Architect",
+      "title": "Arquiteto Front-End",
       "description": "Componentização, estado, roteamento, renderização e evolução do Front-End",
       "group": "frontend",
       "scope": "frontend",
@@ -90,7 +90,7 @@
     {
       "id": "S05",
       "name": "guardian_frontend_engineer",
-      "title": "Senior Front-End Software Engineer",
+      "title": "Engenheiro Front-End",
       "description": "Implementação de interfaces, estado, formulários, consumo de API e tratamento de falhas",
       "group": "frontend",
       "scope": "frontend",
@@ -114,7 +114,7 @@
     {
       "id": "S06",
       "name": "guardian_ux_accessibility",
-      "title": "Senior UX/UI, Design Systems & Accessibility Engineer",
+      "title": "Especialista em UX e Acessibilidade",
       "description": "Acessibilidade WCAG, experiência do usuário, design systems e navegação",
       "group": "frontend",
       "scope": "frontend",
@@ -134,7 +134,7 @@
     {
       "id": "S07",
       "name": "guardian_web_performance",
-      "title": "Senior Web Performance & Browser Platform Engineer",
+      "title": "Especialista em Desempenho Web",
       "description": "Core Web Vitals, browser, SSR/CSR, PWA, offline e compatibilidade",
       "group": "frontend",
       "scope": "frontend",
@@ -156,7 +156,7 @@
     {
       "id": "S08",
       "name": "guardian_backend_domain",
-      "title": "Principal Back-End & Domain Engineer",
+      "title": "Engenheiro Back-End e Especialista de Domínio",
       "description": "Regra de negócio, serviços, casos de uso, validações e implementação do Back-End",
       "group": "backend",
       "scope": "backend",
@@ -180,7 +180,7 @@
     {
       "id": "S09",
       "name": "guardian_api_integration",
-      "title": "Senior API & Systems Integration Architect",
+      "title": "Especialista em Integração de APIs",
       "description": "Contratos REST/gRPC, versionamento, gateways, webhooks e interoperabilidade",
       "group": "integration",
       "scope": "fullstack",
@@ -202,7 +202,7 @@
     {
       "id": "S10",
       "name": "guardian_distributed_concurrency",
-      "title": "Principal Distributed Systems & Concurrency Engineer",
+      "title": "Especialista em Concorrência e Sistemas Distribuídos",
       "description": "Concorrência, filas, idempotência, consistência distribuída e falhas parciais",
       "group": "backend",
       "scope": "backend",
@@ -224,7 +224,7 @@
     {
       "id": "S11",
       "name": "guardian_database_transactions",
-      "title": "Senior Database Architect & Transaction Engineer",
+      "title": "Especialista em Bancos de Dados e Transações",
       "description": "Bancos SQL/NoSQL, modelagem, índices, migrations e integridade transacional",
       "group": "data",
       "scope": "backend",
@@ -246,7 +246,7 @@
     {
       "id": "S12",
       "name": "guardian_data_governance",
-      "title": "Senior Data Reliability & Governance Engineer",
+      "title": "Especialista em Governança de Dados",
       "description": "Ciclo de vida de dados, qualidade, linhagem, retenção, backup e restauração",
       "group": "data",
       "scope": "transversal",
@@ -265,7 +265,7 @@
     {
       "id": "S13",
       "name": "guardian_appsec",
-      "title": "Principal Application Security & Threat Modeling Engineer",
+      "title": "Especialista em Segurança de Aplicações",
       "description": "Modelagem de ameaças, AppSec, vulnerabilidades e fluxos de confiança",
       "group": "security",
       "scope": "fullstack",
@@ -286,7 +286,7 @@
     {
       "id": "S14",
       "name": "guardian_iam_privacy",
-      "title": "Senior IAM, Authorization & Privacy Engineer",
+      "title": "Especialista em Identidade, Acesso e Privacidade",
       "description": "Autenticação, autorização, IAM, OIDC, OAuth, sessões, LGPD e privacidade",
       "group": "security",
       "scope": "fullstack",
@@ -310,7 +310,7 @@
     {
       "id": "S15",
       "name": "guardian_cloud_supply_security",
-      "title": "Senior Cloud & Software Supply Chain Security Engineer",
+      "title": "Especialista em Segurança Cloud e Cadeia de Fornecimento de Software",
       "description": "Segurança de cloud, dependências, pipelines, contêineres, SBOM e segredos",
       "group": "security",
       "scope": "transversal",
@@ -330,7 +330,7 @@
     {
       "id": "S16",
       "name": "guardian_quality_architect",
-      "title": "Principal Software Quality & Test Architect",
+      "title": "Arquiteto de Qualidade",
       "description": "Estratégia de testes, critérios de cobertura, qualidade e verificações rastreáveis",
       "group": "quality",
       "scope": "fullstack",
@@ -349,7 +349,7 @@
     {
       "id": "S17",
       "name": "guardian_frontend_qa",
-      "title": "Senior Front-End QA & E2E Automation Engineer",
+      "title": "Engenheiro de Qualidade Front-End",
       "description": "Testes de interface, componentes, acessibilidade, navegador e jornada E2E",
       "group": "quality",
       "scope": "frontend",
@@ -368,7 +368,7 @@
     {
       "id": "S18",
       "name": "guardian_backend_qa",
-      "title": "Senior Back-End QA, API & Contract Test Engineer",
+      "title": "Engenheiro de Qualidade Back-End",
       "description": "Testes de API, contratos, persistência, regressões e cenários negativos",
       "group": "quality",
       "scope": "backend",
@@ -386,7 +386,7 @@
     {
       "id": "S19",
       "name": "guardian_performance_capacity",
-      "title": "Principal Performance, Scalability & Capacity Engineer",
+      "title": "Especialista em Desempenho e Capacidade",
       "description": "Testes de carga, latência, capacidade, gargalos e planejamento de escala",
       "group": "reliability",
       "scope": "fullstack",
@@ -407,7 +407,7 @@
     {
       "id": "S20",
       "name": "guardian_sre_resilience",
-      "title": "Principal Site Reliability & Resilience Engineer",
+      "title": "Engenheiro de Confiabilidade e Resiliência — SRE",
       "description": "SLO, SLA, RTO, RPO, disponibilidade, resiliência e continuidade",
       "group": "reliability",
       "scope": "transversal",
@@ -428,7 +428,7 @@
     {
       "id": "S21",
       "name": "guardian_observability",
-      "title": "Senior Observability & Incident Response Engineer",
+      "title": "Especialista em Observabilidade",
       "description": "Logs, traces, métricas, alertas, diagnóstico e incidentes",
       "group": "operations",
       "scope": "transversal",
@@ -449,7 +449,7 @@
     {
       "id": "S22",
       "name": "guardian_cloud_platform",
-      "title": "Principal Cloud, Platform & Infrastructure Engineer",
+      "title": "Engenheiro de Plataforma e Infraestrutura Cloud",
       "description": "Infraestrutura, IaC, cloud, ambientes, containers, rede e provisionamento",
       "group": "platform",
       "scope": "transversal",
@@ -471,7 +471,7 @@
     {
       "id": "S23",
       "name": "guardian_devsecops",
-      "title": "Senior DevSecOps, CI/CD & Release Engineer",
+      "title": "Engenheiro DevSecOps",
       "description": "CI/CD, build, testes em pipeline, entrega, implantação e rollback",
       "group": "platform",
       "scope": "transversal",
@@ -491,7 +491,7 @@
     {
       "id": "S24",
       "name": "guardian_maintainability",
-      "title": "Principal Software Maintainability & Evolution Engineer",
+      "title": "Especialista em Manutenibilidade e Evolução de Software",
       "description": "Dívida técnica, refatoração, manutenção, versões, migração e descomissionamento",
       "group": "evolution",
       "scope": "fullstack",
@@ -510,7 +510,7 @@
     {
       "id": "S25",
       "name": "guardian_governance_finops",
-      "title": "Senior Engineering Governance, FinOps & Sustainability Specialist",
+      "title": "Especialista em Governança e FinOps",
       "description": "Gestão de riscos, conformidade, custos, fornecedores e sustentabilidade",
       "group": "governance",
       "scope": "transversal",
@@ -529,7 +529,7 @@
     {
       "id": "S26",
       "name": "guardian_ai_assurance",
-      "title": "Senior AI Engineering & AI Assurance Specialist",
+      "title": "Especialista em Qualidade e Riscos de IA",
       "description": "Qualidade de produtos com IA, avaliações, riscos e mitigação de resultados",
       "group": "governance",
       "scope": "conditional",
@@ -548,7 +548,7 @@
     {
       "id": "G01",
       "name": "guardian_independent_auditor",
-      "title": "Principal Independent Software Engineering Auditor",
+      "title": "Auditor Independente",
       "description": "Auditoria independente orientada a evidências, defeitos e cobertura da taxonomia",
       "group": "assurance",
       "scope": "all",
@@ -559,7 +559,7 @@
     {
       "id": "G02",
       "name": "guardian_release_auditor",
-      "title": "Principal Production Readiness & Release Assurance Auditor",
+      "title": "Auditor de Prontidão para Liberação",
       "description": "Gate de prontidão para produção, riscos, operação e recomendações de liberação",
       "group": "assurance",
       "scope": "all",

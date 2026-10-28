@@ -9,15 +9,40 @@ except ImportError:
     from guardian_professional import load_contracts
 ROOT=Path(__file__).resolve().parents[1]
 
+def role_display_names(records, root=ROOT):
+    """Presentation labels never replace stable role identities or contracts."""
+    doc=json.loads((Path(root)/'core/role-display-names-v1.json').read_text(encoding='utf8'))
+    if set(doc)!={'schema_version','locale','roles'} or doc['schema_version']!=1 or doc['locale']!='pt-BR':
+        raise ValueError('Invalid role display names document')
+    names=doc['roles']
+    if not isinstance(names,dict) or set(names)!={r['name'] for r in records}:
+        raise ValueError('Role display names must cover exactly the canonical identities')
+    for name,title in names.items():
+        if not isinstance(title,str) or not title.strip() or title!=title.strip() or any(c in title for c in '\r\n|'):
+            raise ValueError('Invalid professional role title')
+    metadata={a['name']:a['title'] for a in json.loads((Path(root)/'core/agents.json').read_text(encoding='utf8'))['agents']}
+    for record in records:
+        title=names[record['name']]
+        profile=record['profile']
+        if not profile['description'].startswith(title+' — ') or not profile['developer_instructions'].startswith('Perfil profissional: '+title+'.\n'):
+            raise ValueError('Professional role presentation drift')
+        if record['kind']=='core' and metadata.get(record['name'])!=title:
+            raise ValueError('Core professional title drift')
+    return names
+
 def render(root=ROOT):
     root=Path(root);validate_catalog(root)
     doc=json.loads((root/'core/contracts-catalog-v1.json').read_text(encoding='utf8'))
+    titles=role_display_names(doc['records'],root)
     contracts={c['id']:c for c in load_contracts(root)['contracts']}
     skills=sorted(p.parent.name for p in (root/'global/skills').glob('*/SKILL.md'))
     version=(root/'VERSION').read_text().strip()
     lines=['# Generated catalog', '', 'Version: '+version, '', 'Availability is not installation, native loading, or correctness. Model policy inherits by default.', '', 'Reviewed sources: `core/contracts-catalog-v1.json` owns identity/base instructions and metadata; `core/professional-contracts-v1.json` owns the professional methods, typed capabilities, routing terms, required/conditional/optional tool needs, handoffs and unmeasured qualification. The appended professional instruction must exactly match the renderer; neither generated TOMLs nor derived playbooks can rebaseline the canonical sources. `python -B tools/guardian_catalog.py --write` generates 39 TOMLs, core metadata, ten pack manifests and the compatibility playbook. It never writes user configuration or model/sandbox permissions.', '', '| ID | Role | Kind | Reviewer | Profile SHA-256 |','|---|---|---|---|---|']
     for record in doc['records']:
         lines.append('| '+ ' | '.join(str(record[k]) for k in ('id','name','kind','reviewer','sha256'))+' |')
+    lines += ['', '## Nomes profissionais oficiais (39)', '', 'Os nomes abaixo são rótulos de apresentação em português. Identificadores `guardian_*`, responsabilidades, roteamento, modelos e permissões permanecem estáveis. Fonte dos nomes: `core/role-display-names-v1.json`; o gerador verifica sua correspondência com os títulos principais e os 39 perfis canônicos.', '', '| Identificador técnico | Nome profissional |', '|---|---|']
+    for record in doc['records']:
+        lines.append('| '+record['name']+' | '+titles[record['name']]+' |')
     lines += ['', '## Professional contracts (39)', '', 'Contracts are declarations, not certificates. All professional qualification remains `NOT_EVALUATED` until separate measured evidence exists. Core `competencies` now holds taxonomy IDs; routing words remain separately in `routing_terms` and legacy `core/agents.json` keywords.', '', '| ID | Modes | Typed capabilities | Required tool needs | Contract |', '|---|---|---|---|---|']
     for record in doc['records']:
         c=contracts[record['id']]

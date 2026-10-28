@@ -4,6 +4,8 @@
 
 Normal prompts are coordinated by the primary Codex thread. It selects the smallest useful team, checks task risk and uses independent review when required. Simple tasks can be completed directly. Profiles, repository content and generated plans never grant permissions.
 
+The 39 roles have consistent Portuguese professional presentation names, such as **Orquestrador de Engenharia**, **Engenheiro de Requisitos** and **Auditor Independente**. See the [official professional names](docs/CATALOG.md#nomes-profissionais-oficiais-39). Technical `guardian_*` identifiers, routing, professional contracts, model inheritance and permissions are unchanged. Catalog generation checks the labels against all canonical profiles; existing installations receive them through the normal reviewed update and optional-pack update procedures.
+
 For sustained work, the continuation skill records bounded project-local checkpoints and verifies source/evidence drift when the user returns with “Continue”. It does not monitor accounts, change models to evade limits or wake the chat. The professional evaluation layer contains 103 executable public artifact-analysis subscopes across all 39 roles; these objective tasks do not certify complete professional competence or private holdout performance.
 
 Release policy is explicit: `strict` preserves human/remote-native requirements; an operator choosing `operator-autonomous` instead uses corroborated local native execution and distinct G01/G02 agent reviews, retaining actual CI, isolated grader, signed provenance and recovery checks. See [autonomous release policy](docs/AUTONOMOUS_RELEASE_POLICY.md), [professional cases](docs/PROFESSIONAL_CASES.md) and [continuation](docs/CONTINUATION.md).

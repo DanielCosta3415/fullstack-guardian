@@ -8,45 +8,91 @@ Reviewed sources: `core/contracts-catalog-v1.json` owns identity/base instructio
 
 | ID | Role | Kind | Reviewer | Profile SHA-256 |
 |---|---|---|---|---|
-| A00 | guardian_engineering_orchestrator | core | G01 | 2c05bd2f6fcf7a24eff286ec6f94f5ecf2372789c0c65eeca5a7c1a2d6b84924 |
-| S01 | guardian_product_discovery | core | G01 | 5b387729e276934604111b2724129fb2a959fa2503d6493b8102fd0a7ded9f23 |
-| S02 | guardian_requirements_engineer | core | G01 | 1473fe8254c9057b6ae53d7821d9cad5a94d7776e116124b20d5450962bb8d48 |
-| S03 | guardian_solutions_architect | core | G01 | 25eafa8f9b750631639c07284f585e7ef813c3a21141277759edb8c46af0db0f |
-| S04 | guardian_frontend_architect | core | G01 | 7487211a311b7aa51596487f9c2d84dbf4c0e4780917e1032368f9f2283bc990 |
-| S05 | guardian_frontend_engineer | core | G01 | 267dae63e90ddac7240e7aff7c505caac6e2c7bb010aa7162cc8899807792796 |
-| S06 | guardian_ux_accessibility | core | G01 | bc44c1ba60ad5511b7ccfd7aee8f8f72581819a1cbba54d00f5bf7bef9032bed |
-| S07 | guardian_web_performance | core | G01 | 2ec90bc237771844bd38daeef4f7fd534e5d6b9af1d990f08fd242aba10ac044 |
-| S08 | guardian_backend_domain | core | G01 | 984bf2b343e1fee008f13da2333364a53650166f4378d3a3afd060a55183224d |
-| S09 | guardian_api_integration | core | G01 | e0f0b7dd63f4d481d4b983b4ad7535bad76b3364cc78465126478f1563cef3ec |
-| S10 | guardian_distributed_concurrency | core | G01 | 6eb405db8d2f35aa64fbe667769da1508f105be6fcf78b32742147e37104ab9f |
-| S11 | guardian_database_transactions | core | G01 | 9d954ab503ec14a2b83583078a56748a929e750ca47805097a00233e66e2a6aa |
-| S12 | guardian_data_governance | core | G01 | 73c63bc804144fa2b5146b3bde8c527e5adada9e4e0d409098ec1a91c5d41abd |
-| S13 | guardian_appsec | core | G01 | 626b6d16f0ae81cfca504c06ecf91b90e58f9bea32583b83a556dd5b7b580b5a |
-| S14 | guardian_iam_privacy | core | G01 | ecf5f659f82f045a4a495bbb214c7d247b31a3ae9946270df2cc1c370ce36ae8 |
-| S15 | guardian_cloud_supply_security | core | G01 | fd5e99a81446e10d6aec497cb445a994e40711c396a9e472a233b67a3e972427 |
-| S16 | guardian_quality_architect | core | G01 | 818a0b5acc93298ec4a7f43b10076a80e87b0e6fbde62f6bbac84d4bbcbff75e |
-| S17 | guardian_frontend_qa | core | G01 | 4172b5718fbc9a5d0e5d3fbe362de2e0fde7f3f32321acae46fef9c6e63bbe66 |
-| S18 | guardian_backend_qa | core | G01 | b83843eda048b73bfe8157daf289a89af50116bdeab485fcef7d1f10225692b7 |
-| S19 | guardian_performance_capacity | core | G01 | 948c2700c69b3c74f3edecaf05e82b87a046252b8281a9bebdb8d89a90ae15fe |
-| S20 | guardian_sre_resilience | core | G01 | abeb9bf832dd996c282cb08207679b6df6abfec6cdebee7885e902e5498b07f2 |
-| S21 | guardian_observability | core | G01 | b99c681bfbe54565e4f3df7655ff410f41958a369cfbdf479664efd41ece6047 |
-| S22 | guardian_cloud_platform | core | G01 | bad1fa06fe0e4a8c765732c37b9ca81794ebd84225343d080d73698e83e82746 |
-| S23 | guardian_devsecops | core | G01 | 54d42f5d0f1174c423236f60af71bbffc3856027c48ef3d4c0972836cb247916 |
-| S24 | guardian_maintainability | core | G01 | 5f3cc505892c6411825bc617cd7f1f631a164ed2f0138f5e248d1cf3a2fbf722 |
-| S25 | guardian_governance_finops | core | G01 | f4694fef36d84d7f5209566c4575fd6401c51b6a1203123c0b3b26251a8c53fa |
-| S26 | guardian_ai_assurance | core | G01 | e208e20739e132cf1f05f5c70537474c71e8a6c26704e89091a7670da3177275 |
-| G01 | guardian_independent_auditor | core | G02 | 073e9afdbc521740ca8161acb761176ea83d9a1a8ff1f22a0c773be27ca61c65 |
-| G02 | guardian_release_auditor | core | G01 | 0fe9fde3ebb4b197b02771fd3fa09ab0d50e61279550c4c5a698d41ba3fb4718 |
-| pack:ai-systems:guardian_rag_llm_specialist | guardian_rag_llm_specialist | optional | G01 | 2f37f0276aeeef6b7a4df1b594a474571baad27d47d0df8df97310b595c3c8b4 |
-| pack:api-integration:guardian_api_contract_specialist | guardian_api_contract_specialist | optional | G01 | 9755e7e1ca8632ff50b8c1323f14c3e5ee3772755e05b5130ca8bac9b47a8d5d |
-| pack:cloud-platform:guardian_cloud_infrastructure_specialist | guardian_cloud_infrastructure_specialist | optional | G01 | 7b341b923153e1d305a7f14db2cde05b893114641e11c6e058481dac1c223095 |
-| pack:data-engineering:guardian_data_migration_specialist | guardian_data_migration_specialist | optional | G01 | 68624c6aff3bfa909015cd790a1bbfb00e65842258df6626dff5246c6326335b |
-| pack:dotnet:guardian_dotnet_runtime_specialist | guardian_dotnet_runtime_specialist | optional | G01 | 79bcd7236433862ec9fe3c0610be3fea6ec3ca810976a7d966b2cff6166f6855 |
-| pack:financial-systems:guardian_payment_reliability_specialist | guardian_payment_reliability_specialist | optional | G01 | 18f9b1a99bdc32b58c859ba02192cbbaf8cba6fe57fd4fe46649c6fe79b07eca |
-| pack:frontend-experience:guardian_browser_accessibility_specialist | guardian_browser_accessibility_specialist | optional | G01 | 6bf559fa0ab32d90575cd4017a1345fb8e6d6aee32590c9999f8dd96d2ecc36b |
-| pack:quality-automation:guardian_contract_test_specialist | guardian_contract_test_specialist | optional | G01 | 87a3af741bbca6c64d44b4aa97a2b478697b487eba447b06d6b7d3306eedfb6b |
-| pack:security-assurance:guardian_threat_model_specialist | guardian_threat_model_specialist | optional | G01 | a0b14a94d686e428412efdb5033b3dd1fbe0ff16170288ab60c543d9355fb820 |
-| pack:windows-tooling:guardian_windows_powershell_specialist | guardian_windows_powershell_specialist | optional | G01 | 958f28af5d8d60fd8f43b59a4e38f5097611ee438f87bca7d28db3e3d2c28973 |
+| A00 | guardian_engineering_orchestrator | core | G01 | 921d2e09f0f9a6779df2fa65fc24c223f97ac7651def1f9a1f672f031a02f732 |
+| S01 | guardian_product_discovery | core | G01 | 23fc07371774c144039fa5a6e1d53400bc4b0f2a6766c5fb681b93c0e27df9b9 |
+| S02 | guardian_requirements_engineer | core | G01 | c4d229dc5fe2891d90f2a370f638743003d046c40d64b34d8276f72e0a4b93c9 |
+| S03 | guardian_solutions_architect | core | G01 | c50bad9a6b76a5d171934790f9f1d55444d90407209da957363a5b1696a3b12d |
+| S04 | guardian_frontend_architect | core | G01 | 6857f407d92f3249ac3298b71a3e907655e767730efd53de948323972d30ceb3 |
+| S05 | guardian_frontend_engineer | core | G01 | b27195871e86fe1c9026fd051e001ace62c11b6b8144addc79c174b38ea5f6fd |
+| S06 | guardian_ux_accessibility | core | G01 | de6202f85d39c0aeb455ce1903c3eb3a27cfd8aea19cb14bb305e6d27266d802 |
+| S07 | guardian_web_performance | core | G01 | 672f4705ad8c2c7b6794481dc94cde25912995fa8328ece520e2d63118063328 |
+| S08 | guardian_backend_domain | core | G01 | 2b31da4e41977b399d599499da6cb5e878825935103f9428552c662779babda7 |
+| S09 | guardian_api_integration | core | G01 | 5c355baf5066b15971ca2453e46d6113cdc1188578affa59dcdabc1b38a7fff1 |
+| S10 | guardian_distributed_concurrency | core | G01 | de4a233f7d3f92ba0c65557279e1907a6f85550e0d3c37813924cdeb7488d375 |
+| S11 | guardian_database_transactions | core | G01 | bad111b486b78e4bac12d330128e80f27744f60fa0841127a1014ef13ddd8455 |
+| S12 | guardian_data_governance | core | G01 | 57b0d0f68f22b561586f58edeccd5c9ae7daef3389ca6ce74756d5a2ada43319 |
+| S13 | guardian_appsec | core | G01 | c0b9350d5c695044a460f47bb12f417b8167848a777da03a3682a9da71460b9d |
+| S14 | guardian_iam_privacy | core | G01 | e96bd8d23094aa6324395915870d8c95e72fbab9c4c73f407a9ad52d9970d99c |
+| S15 | guardian_cloud_supply_security | core | G01 | 9e2ba9fc2b0e223639812419951b535e3cee5d24cf8adb620a0f7062354f7a71 |
+| S16 | guardian_quality_architect | core | G01 | 195ebc2bfff9c69ef6e1a40432ad8fc395f9a4d246eba2d04f48f704f4d5d297 |
+| S17 | guardian_frontend_qa | core | G01 | 8277ac4f7f3033193f43560db015da6a5c7f37164e420532a563994112f1e090 |
+| S18 | guardian_backend_qa | core | G01 | eeaa61de25603d0de7a2af121592f4e16f0ebb4030c55138884e229e6cb25015 |
+| S19 | guardian_performance_capacity | core | G01 | b10c70a3a3d195ff7dd02d76eb4dbae4adcf43208714bb52a46c40fb68216dad |
+| S20 | guardian_sre_resilience | core | G01 | cc24e50beabc4c64c6ed00cdd1f6167ecdbb1d8558b442e3f283627510700c08 |
+| S21 | guardian_observability | core | G01 | 18b3e8f825a2899f61fa2eda56bbfa5df7e89ace7d1e77759fc5c2c389e10b19 |
+| S22 | guardian_cloud_platform | core | G01 | 9685ae6780bf4a1eca7df84a0b42b05ff1a16dba633bf88a69c1d44956f70b06 |
+| S23 | guardian_devsecops | core | G01 | 947e659b8e7440b924b0e8c85c9d4b4bd0c4bcff1963bfe092440a29fa9af993 |
+| S24 | guardian_maintainability | core | G01 | 73760a66ca076e291c8e49cc6c7949a5759cbbbf6f0b82eaf06c9eecd493e402 |
+| S25 | guardian_governance_finops | core | G01 | b49e62208a1fb6fa95b1eab043f5e81a05411ec12db640dbbfeb74d07c1b5455 |
+| S26 | guardian_ai_assurance | core | G01 | 5a4918d19502cab9d3e3f4e9f08754c6866767ce803f008ee1bb352b41f32252 |
+| G01 | guardian_independent_auditor | core | G02 | abdac11de0e5d8b1710a4c4dd7f34dcafd4b45e49e50b9a2437a4e2fcd2db1b1 |
+| G02 | guardian_release_auditor | core | G01 | ded5b175186e1a3703dd89df3542e1a695bca19d94e02215a1a343e4a3907cdd |
+| pack:ai-systems:guardian_rag_llm_specialist | guardian_rag_llm_specialist | optional | G01 | 419277779d05e25eb18c22d066514d391954e7788136a770ac7121197dd7b430 |
+| pack:api-integration:guardian_api_contract_specialist | guardian_api_contract_specialist | optional | G01 | 6a015ca7e504cf9196fc31526f0544a864253931ac07518e84b1fdfe0c0b0027 |
+| pack:cloud-platform:guardian_cloud_infrastructure_specialist | guardian_cloud_infrastructure_specialist | optional | G01 | b43c2a3f9003e77894d8c6b0bfd495ccd53cfa2a55a7a74c30988dea0ded5406 |
+| pack:data-engineering:guardian_data_migration_specialist | guardian_data_migration_specialist | optional | G01 | 9196b70a17d3cd23afee5bb048a1bf24ef65bf4d279cc72b5e6713c8c46c036c |
+| pack:dotnet:guardian_dotnet_runtime_specialist | guardian_dotnet_runtime_specialist | optional | G01 | 1978c4b36d97dfc21c5897b28cd606496c49c183f34cdbdcd470a9b849e70a6d |
+| pack:financial-systems:guardian_payment_reliability_specialist | guardian_payment_reliability_specialist | optional | G01 | 48bda262d0ee1ef67cd58e57a3151b30130dc3e8d906b3d4595fcd6789c079a6 |
+| pack:frontend-experience:guardian_browser_accessibility_specialist | guardian_browser_accessibility_specialist | optional | G01 | 5da0a7a89402be513c7cb43162f93dfbbdc3e69e68a688a3cfd31b39e3f43091 |
+| pack:quality-automation:guardian_contract_test_specialist | guardian_contract_test_specialist | optional | G01 | b7a259399ccdf234e2eb207b8edb6e77b805081c488086bb12da2fb293eb9607 |
+| pack:security-assurance:guardian_threat_model_specialist | guardian_threat_model_specialist | optional | G01 | bd987b7e68d152d7d9d1ba16a48d86295517f55270d9f939c239cbc0ff7776da |
+| pack:windows-tooling:guardian_windows_powershell_specialist | guardian_windows_powershell_specialist | optional | G01 | 1beff331f76c405409f6945329e3d1345fbde27039b01cecfb9ecd11c8994cf9 |
+
+## Nomes profissionais oficiais (39)
+
+Os nomes abaixo são rótulos de apresentação em português. Identificadores `guardian_*`, responsabilidades, roteamento, modelos e permissões permanecem estáveis. Fonte dos nomes: `core/role-display-names-v1.json`; o gerador verifica sua correspondência com os títulos principais e os 39 perfis canônicos.
+
+| Identificador técnico | Nome profissional |
+|---|---|
+| guardian_engineering_orchestrator | Orquestrador de Engenharia |
+| guardian_product_discovery | Especialista em Descoberta de Produto |
+| guardian_requirements_engineer | Engenheiro de Requisitos |
+| guardian_solutions_architect | Arquiteto de Soluções |
+| guardian_frontend_architect | Arquiteto Front-End |
+| guardian_frontend_engineer | Engenheiro Front-End |
+| guardian_ux_accessibility | Especialista em UX e Acessibilidade |
+| guardian_web_performance | Especialista em Desempenho Web |
+| guardian_backend_domain | Engenheiro Back-End e Especialista de Domínio |
+| guardian_api_integration | Especialista em Integração de APIs |
+| guardian_distributed_concurrency | Especialista em Concorrência e Sistemas Distribuídos |
+| guardian_database_transactions | Especialista em Bancos de Dados e Transações |
+| guardian_data_governance | Especialista em Governança de Dados |
+| guardian_appsec | Especialista em Segurança de Aplicações |
+| guardian_iam_privacy | Especialista em Identidade, Acesso e Privacidade |
+| guardian_cloud_supply_security | Especialista em Segurança Cloud e Cadeia de Fornecimento de Software |
+| guardian_quality_architect | Arquiteto de Qualidade |
+| guardian_frontend_qa | Engenheiro de Qualidade Front-End |
+| guardian_backend_qa | Engenheiro de Qualidade Back-End |
+| guardian_performance_capacity | Especialista em Desempenho e Capacidade |
+| guardian_sre_resilience | Engenheiro de Confiabilidade e Resiliência — SRE |
+| guardian_observability | Especialista em Observabilidade |
+| guardian_cloud_platform | Engenheiro de Plataforma e Infraestrutura Cloud |
+| guardian_devsecops | Engenheiro DevSecOps |
+| guardian_maintainability | Especialista em Manutenibilidade e Evolução de Software |
+| guardian_governance_finops | Especialista em Governança e FinOps |
+| guardian_ai_assurance | Especialista em Qualidade e Riscos de IA |
+| guardian_independent_auditor | Auditor Independente |
+| guardian_release_auditor | Auditor de Prontidão para Liberação |
+| guardian_rag_llm_specialist | Especialista em RAG e LLM |
+| guardian_api_contract_specialist | Especialista em Contratos de API |
+| guardian_cloud_infrastructure_specialist | Especialista em Infraestrutura Cloud |
+| guardian_data_migration_specialist | Especialista em Migração de Dados |
+| guardian_dotnet_runtime_specialist | Especialista em Runtime .NET e ASP.NET Core |
+| guardian_payment_reliability_specialist | Especialista em Confiabilidade de Pagamentos |
+| guardian_browser_accessibility_specialist | Especialista em Navegador e Acessibilidade |
+| guardian_contract_test_specialist | Especialista em Testes de Contratos |
+| guardian_threat_model_specialist | Especialista em Modelagem de Ameaças |
+| guardian_windows_powershell_specialist | Especialista em Windows e PowerShell |
 
 ## Professional contracts (39)
 

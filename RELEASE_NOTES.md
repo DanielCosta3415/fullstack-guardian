@@ -1,3 +1,7 @@
+# Unreleased — professional role presentation names
+
+Standardizes Portuguese professional presentation names across the 29 core roles and ten optional specialists. Stable `guardian_*` identifiers, routing, capabilities, professional contracts, model inheritance and permissions are preserved. The canonical profiles and core titles contain the approved names; a versioned display-name map and generated catalog documentation detect naming drift. This source change does not itself publish a new versioned release or modify existing installations.
+
 # 2.2.1 — native evidence stream ordering correction
 
 The schema-2 native fixture verifier tolerates complete JSON stdout metadata before or after the expected stderr assertion. It still requires the exact seeded invariant and command/cwd/result binding, rejects incidental or conflicting exceptions, and preserves BUILD before/after acceptance. Defensive regressions cover stream ordering, echo-only metadata, malformed suffixes, incompatible errors and command binding.
