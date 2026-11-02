@@ -20,10 +20,9 @@ REV='a'*40
 
 
 class PolicyMatrixTests(unittest.TestCase):
-    def test_inspect_and_receipts_share_closed_requirements_for_both_policies(self):
+    def test_receipts_share_closed_requirements_for_both_policies(self):
         for policy in ('strict','operator-autonomous'):
-            report=gate.inspect(policy=policy)
-            receipt=report['requirement_receipt']
+            receipt=gate.policy_receipt(policy)
             rows={r['id']:r for r in receipt['requirements']}
             self.assertEqual(set(rows),set(gate._POLICY_BASELINES))
             self.assertFalse(receipt['verifier_policy_checks_passed'])
@@ -33,7 +32,18 @@ class PolicyMatrixTests(unittest.TestCase):
             self.assertEqual(rows['remote_asset_install_and_recovery']['status'],'manual')
             self.assertFalse(rows['remote_asset_install_and_recovery']['verified'])
             self.assertEqual(rows['independent_human_pr_review']['required'],policy=='strict')
-            self.assertEqual(set(report['requirements']),{r['id'] for r in rows.values() if r['required']})
+
+    def test_inspect_and_receipts_share_closed_requirements_for_both_policies(self):
+        # Distribution manifests are intentionally absent from installed runtime
+        # layouts. Only source-package identity inspection is source-specific;
+        # the policy matrix and fail-closed receipt tests above run everywhere.
+        if not (gate.ROOT/'plugin.json').is_file():
+            self.skipTest('Source-package manifest inspection only')
+        for policy in ('strict','operator-autonomous'):
+            report=gate.inspect(policy=policy)
+            self.assertEqual(report['requirement_receipt'],gate.policy_receipt(policy))
+            rows=report['requirement_receipt']['requirements']
+            self.assertEqual(set(report['requirements']),{r['id'] for r in rows if r['required']})
 
     def test_matrix_omission_duplicate_unknown_and_downgrade_rejected(self):
         matrix=gate.policy_matrix()
