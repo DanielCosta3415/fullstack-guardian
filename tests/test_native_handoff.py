@@ -10,7 +10,7 @@ from tools.guardian_handoff import inspect_handoff, consume_handoff, invalidated
 class NativeHandoffTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory(); self.addCleanup(self.temp.cleanup)
-        self.project = Path(self.temp.name)
+        self.project = Path(self.temp.name).resolve()
         (self.project / 'result.txt').write_text('observed artifact', encoding='utf8')
         sha = hashlib.sha256((self.project / 'result.txt').read_bytes()).hexdigest()
         self.handoff = {'schema_version': 1, 'run': 'synthetic-run', 'task': 'task-fix',

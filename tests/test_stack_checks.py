@@ -76,13 +76,13 @@ class StackChecksTests(unittest.TestCase):
     def test_tools_absent_do_not_execute_or_become_passed(self):
         with tempfile.TemporaryDirectory() as temp, patch.object(s, '_tool', return_value=None), \
              patch.object(s, 'process', side_effect=AssertionError('Missing tools cannot run')):
-            report = s.run(Path(temp) / 'new-output')
+            report = s.run(Path(temp).resolve() / 'new-output')
         self.assertTrue(all(item['status'] == 'BLOCKED' for item in report['stacks']))
 
     def test_existing_output_directory_is_never_reused(self):
         with tempfile.TemporaryDirectory() as temp:
             with self.assertRaisesRegex(ValueError, 'new dedicated'):
-                s.run(temp, ['node'])
+                s.run(Path(temp).resolve(), ['node'])
 
     def test_dotnet_uses_offline_config_no_implicit_restore_and_ephemeral_homes(self):
         config = ET.fromstring(s.fixture_bytes('dotnet', 'NuGet.Config'))
@@ -99,7 +99,7 @@ class StackChecksTests(unittest.TestCase):
             return observed('dotnet', argv[-1])
         with tempfile.TemporaryDirectory() as temp, patch.object(s, '_tool', return_value='trusted-dotnet'), \
              patch.object(s, 'process', side_effect=fake_process):
-            report = s.run(Path(temp) / 'new-output', ['dotnet'])
+            report = s.run(Path(temp).resolve() / 'new-output', ['dotnet'])
         self.assertEqual(report['stacks'][0]['status'], 'PASSED')
         self.assertEqual(len(calls), 8)  # version + restore + build + five variants
         self.assertIn('--configfile', calls[1][0])
