@@ -1,4 +1,23 @@
-# Unreleased — professional role presentation names
+# Unreleased — audit remediation and professional role evolution
+
+Implements the November audit's twelve architectural fronts and a traceable
+sixty-seven-item role evolution ledger: canonical Git artifact seals including
+modes/base/index/patch; evidence-minimum readiness; generated typed capability
+summaries; explicit strict/autonomous verification matrices; enriched versioned
+professional contracts and discriminating public controls; native handoff intake;
+risk/effect/authorization separation; expiring client/profile/tool observations;
+small-team/conflict-free-wave planning and numeric metrics; responsibility-aware
+inventory; and revision/content fingerprints. Historical installation migration
+fixtures check all 39 profiles, edited-file conflicts and exact rollback.
+
+The public development harness executes trusted local fixtures and faulty
+controls, not arbitrary candidate code. Real browser/AT, application frameworks,
+provider infrastructure, native model competence, SME qualification and private
+holdout remain separate evidence requirements. See `docs/PROFESSIONAL_DEPTH.md`,
+`docs/COORDINATION_RUNTIME.md` and `docs/audit-role-remediation.json` for exact
+scope. These source changes do not publish a release or update global installs.
+
+## Professional presentation names
 
 Standardizes Portuguese professional presentation names across the 29 core roles and ten optional specialists. Stable `guardian_*` identifiers, routing, capabilities, professional contracts, model inheritance and permissions are preserved. The canonical profiles and core titles contain the approved names; a versioned display-name map and generated catalog documentation detect naming drift. This source change does not itself publish a new versioned release or modify existing installations.
 

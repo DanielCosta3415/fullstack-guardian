@@ -52,7 +52,7 @@ def validate_document(doc, catalog, taxonomy):
     for c in contracts:
         if not isinstance(c, dict) or set(c) != FIELDS:
             raise ValueError("Unknown/missing professional contract field")
-        if c["name"] != expected[c["id"]]["name"] or c["contract_version"] != "1.0.0":
+        if c["name"] != expected[c["id"]]["name"] or c["contract_version"] != "1.1.0":
             raise ValueError("Professional identity/version mismatch")
         for key in ("mission", "scope"):
             if not isinstance(c[key], str) or not c[key].strip():
@@ -81,6 +81,9 @@ def validate_document(doc, catalog, taxonomy):
                 raise ValueError("Professional taxonomy ownership drift")
         elif any(v["role"] != "extension" for v in c["capabilities"]):
             raise ValueError("Optional specialist cannot claim canonical primary ownership")
+        profile = expected[c["id"]].get("profile")
+        if profile is not None:
+            validate_profile_capabilities(profile, c)
         tools = c["tool_policy"]
         if not isinstance(tools, dict) or set(tools) != {"required", "conditional", "optional", "empty_required_reason", "observation"} or tools["observation"] != "NOT_OBSERVED_BY_CONTRACT":
             raise ValueError("Tool declaration cannot assert availability")
@@ -116,6 +119,27 @@ def validate_document(doc, catalog, taxonomy):
             _strings(overlay["procedure"], "overlay procedure")
             _strings(overlay["acceptance"], "overlay acceptance")
     return doc
+
+
+def capability_summary(contract):
+    """One complete, typed summary generated only from the canonical contract."""
+    lines = ["Capacidades tipadas completas (fonte: professional-contracts-v1.json):"]
+    for role in ("primary", "review", "extension"):
+        values = [v["id"] for v in contract["capabilities"] if v["role"] == role]
+        lines.append("- " + role + ": " + (", ".join(values) if values else "nenhuma") + ".")
+    return "\n".join(lines)
+
+
+def validate_profile_capabilities(profile, contract):
+    text = profile.get("developer_instructions", "")
+    heading = "Capacidades tipadas completas (fonte: professional-contracts-v1.json):"
+    if text.count(heading) != 1 or capability_summary(contract) not in text:
+        raise ValueError("professional method drift: inline capability summary drift: " + contract["id"])
+    # Legacy untyped lists caused S04/G01 drift; they cannot coexist with the
+    # canonical complete list and give a competing representation of coverage.
+    if re.search(r"(?m)^Capacidades (?:primárias|para revisão) da? ?(?:Taxonomia v3)?:?", text) or "Capacidades para revisão:" in text:
+        raise ValueError("Competing legacy inline capability list")
+    return True
 
 
 def load_contracts(root=ROOT):
@@ -285,7 +309,7 @@ def validate_result(result, agent_id, *, task_id, obligation_ids, root=ROOT):
 def render_contract(contract):
     """Small generated prompt; full contract is loaded only for assigned work."""
     c = contract
-    lines = ["", "Contrato profissional " + c["contract_version"] + " (" + c["id"] + ").", "Modos permitidos: " + ", ".join(c["modes"]) + ".", "Entradas: " + "; ".join(c["inputs"]), "Método proporcional:"]
+    lines = ["", "Contrato profissional " + c["contract_version"] + " (" + c["id"] + ").", capability_summary(c), "Modos permitidos: " + ", ".join(c["modes"]) + ".", "Entradas: " + "; ".join(c["inputs"]), "Método proporcional:"]
     lines += ["- " + item for item in c["procedure"]]
     lines += ["Entregáveis: " + "; ".join(c["artifacts"]), "Conclua somente quando:"]
     lines += ["- " + item for item in c["definition_of_done"]]

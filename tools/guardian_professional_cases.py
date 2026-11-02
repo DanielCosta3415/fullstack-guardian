@@ -38,7 +38,12 @@ def oracle(kind,d):
 def _oracle(kind,d):
     if kind=='obligations':
         covered={x for t in d['tasks'] for x in t['obligations']}
-        return {'missing_obligations':sorted(set(d['requested'])-covered),'unsafe_ready_tasks':sorted(t['id'] for t in d['tasks'] if t['ready'] and any(x not in d['verified_evidence'] for x in t['evidence']))}
+        # Readiness requires at least one corroborated, non-contradicted item.
+        # any(empty) must never turn absence of evidence into acceptance.  These
+        # are fixture labels; their authenticity still needs supervisor checks.
+        verified=set(d['verified_evidence'])
+        contradicted=set(d.get('contradicted_evidence', []))
+        return {'missing_obligations':sorted(set(d['requested'])-covered),'unsafe_ready_tasks':sorted(t['id'] for t in d['tasks'] if t['ready'] and (not t['evidence'] or any(x not in verified or x in contradicted for x in t['evidence'])))}
     if kind=='cohorts':
         rates={r['cohort']:str(Decimal(r['retained'])/Decimal(r['activated'])) for r in d['cohorts']}
         return {'retention_rates':rates,'validated_interviews':len([x for x in d['interviews'] if x['observed']]),'value_validated':False}

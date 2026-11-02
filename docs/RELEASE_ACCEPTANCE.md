@@ -35,6 +35,44 @@ JSON approval, count local logs as the remote native workflow, or approve a PR a
 if an independent human. Changing release policy is an explicit operator decision;
 unavailable infrastructure alone never selects a less restrictive profile.
 
+### Requirement matrix and decision receipt
+
+`core/release-policy-matrix-v1.json` is the versioned requirement matrix for
+`inspect`, external verification and their `requirement_receipt` output. The
+verifier rejects missing, duplicated or downgraded policy rows. Each requirement
+records whether it is required, its verification method, its observed status and
+concrete evidence references. Status is one of `not_verified`,
+`verified_external`, `verified_local`, `manual` or `not_applicable`. A `manual`
+row explicitly remains **unverified by this tool**; neither a model claim nor
+the mere presence of that row satisfies it.
+
+Both profiles require independent G01 **and** G02 advisory reviews. Strict also
+requires the human PR approval and remote native workflow; those activities do
+not replace either specialist. Supply `--advisory-review G01.json
+--advisory-review G02.json` under either profile, using the native-session and
+claim binding described in [the autonomous policy](AUTONOMOUS_RELEASE_POLICY.md).
+They remain local, same-account mutable evidence even under strict. No claim of
+human authentication or stronger host isolation is inferred from that choice.
+
+Older strict invocations can still check remote workflows, human reviews and
+provenance without those two reports. Their receipt then has
+`external_checks_passed=true`, **`policy_acceptance_passed=false`**, and
+`independent_G01_G02` in `pending_verifier_checks`; the CLI exits 2. Imported
+approval JSON, incomplete/duplicate reviews, stale commit/ZIP claims or an
+unbound native final cannot satisfy the specialist gate.
+
+`policy_acceptance_passed` has the explicit scope
+`AUTOMATED_VERIFIER_REQUIREMENTS_ONLY`. It requires every external/local check
+in the selected matrix. `complete_release_acceptance_passed` additionally
+includes manual obligations and remains false while they are outstanding.
+The local preliminary smoke under strict, installation/recovery of the exact
+downloaded remote ZIP under both profiles, and the operator release decision
+are separate manual obligations. CI distribution tests cover CI-built fixtures;
+they do not prove recovery of the exact downloaded, signed release ZIP.
+Keep reviewed evidence for those obligations with the release. The verifier
+does not authenticate a manual disposition, perform the release decision,
+publish, or confer production authorization.
+
 ## Native runner provisioning
 
 The native workflow is manual and requires an authenticated Windows runner with

@@ -1,0 +1,1294 @@
+{
+  "schema_version": 1,
+  "partition": "PUBLIC_DEVELOPMENT",
+  "certification": "NOT_EVALUATED",
+  "cases": [
+    {
+      "case_id": "A00:depth:1",
+      "role_id": "A00",
+      "harness": "dependency-revocation",
+      "task": "Invalidate the transitive dependent closure after evidence revocation; preserve independent work and obligation coverage.",
+      "native_stack": "Native Codex orchestration and consumer handoffs",
+      "required_native_evidence": [
+        "Input reproduzido deve retornar unsafe_ready_tasks=[fix]; evidência verificada deve permitir lista vazia de inseguras; os dois fixtures existentes preservam seus resultados.",
+        "Caso contrafactual remove uma evidência: todo dependente perde prontidão, trabalho independente continua e nenhuma obrigação desaparece."
+      ],
+      "acceptance": [
+        "Input reproduzido deve retornar unsafe_ready_tasks=[fix]; evidência verificada deve permitir lista vazia de inseguras; os dois fixtures existentes preservam seus resultados.",
+        "Caso contrafactual remove uma evidência: todo dependente perde prontidão, trabalho independente continua e nenhuma obrigação desaparece."
+      ],
+      "handoff": "S02",
+      "audit_items": [
+        "A00-D1",
+        "A00-P1"
+      ],
+      "expected": {
+        "revoked": [
+          "build",
+          "deliver",
+          "review"
+        ],
+        "independent_ready": true
+      },
+      "faulty_implementation": "Missing transitive invalidation retains ready review/delivery tasks.",
+      "metamorphism": "Independent exercise invocation order is reversed; per-case observations and identities must remain equal. This does not reorder causally ordered events.",
+      "scope_limit": "Trusted local stdlib exercise only. Native Codex orchestration and consumer handoffs is NOT_VERIFIED until separately executed/corroborated. Neither model/agent competence nor SME/private holdout is inferred."
+    },
+    {
+      "case_id": "S01:depth:1",
+      "role_id": "S01",
+      "harness": "discovery-denominators",
+      "task": "Separate unique activated users from event count; record window/cohort, alternative hypotheses, guardrail, provenance/consent and absence of causal evidence.",
+      "native_stack": "Authorized research records/cohort analysis",
+      "required_native_evidence": [
+        "Entregar denominadores/janelas/segmentos, hipóteses concorrentes, guardrail e experimento discriminante; não inferir causalidade nem entrevistas ausentes."
+      ],
+      "acceptance": [
+        "Entregar denominadores/janelas/segmentos, hipóteses concorrentes, guardrail e experimento discriminante; não inferir causalidade nem entrevistas ausentes."
+      ],
+      "handoff": "S02",
+      "audit_items": [
+        "S01-P1"
+      ],
+      "expected": {
+        "retained": 2,
+        "activated": 3,
+        "rate": [
+          2,
+          3
+        ],
+        "causality_established": false,
+        "observed_interviews": 0,
+        "guardrail": "no unsolicited research contact"
+      },
+      "faulty_implementation": "Use event count as activated denominator.",
+      "metamorphism": "Independent exercise invocation order is reversed; per-case observations and identities must remain equal. This does not reorder causally ordered events.",
+      "scope_limit": "Trusted local stdlib exercise only. Authorized research records/cohort analysis is NOT_VERIFIED until separately executed/corroborated. Neither model/agent competence nor SME/private holdout is inferred."
+    },
+    {
+      "case_id": "S02:depth:1",
+      "role_id": "S02",
+      "harness": "temporal-requirements",
+      "task": "Evaluate the effective rule at an exact versioned temporal boundary, units/timezone and denied actor; block unresolved authority only.",
+      "native_stack": "Actual application runtime and requirements authority",
+      "required_native_evidence": [
+        "IDs estáveis ligam regra vigente, autoridade, exemplos de fronteira temporal, teste e consumidor; trabalho ambíguo fica bloqueado sem suspender leitura independente."
+      ],
+      "acceptance": [
+        "IDs estáveis ligam regra vigente, autoridade, exemplos de fronteira temporal, teste e consumidor; trabalho ambíguo fica bloqueado sem suspender leitura independente."
+      ],
+      "handoff": "S03",
+      "audit_items": [
+        "S02-P1"
+      ],
+      "expected": {
+        "rule_id": "current",
+        "at_boundary_eligible": false,
+        "actor_denied": true,
+        "unit": "minor currency unit",
+        "authority": "supplied policy v2"
+      },
+      "faulty_implementation": "Use obsolete inclusive threshold for current policy.",
+      "metamorphism": "Independent exercise invocation order is reversed; per-case observations and identities must remain equal. This does not reorder causally ordered events.",
+      "scope_limit": "Trusted local stdlib exercise only. Actual application runtime and requirements authority is NOT_VERIFIED until separately executed/corroborated. Neither model/agent competence nor SME/private holdout is inferred."
+    },
+    {
+      "case_id": "S03:depth:1",
+      "role_id": "S03",
+      "harness": "tenant-locale-cache",
+      "task": "Show tenant/locale cache trust boundaries, As-Is/To-Be alternatives and versioned ADR; prove chosen migration compatibility separately.",
+      "native_stack": "Observed application architecture, migration/rollback runtime",
+      "required_native_evidence": [
+        "As-Is/To-Be/lacunas, duas alternativas proporcionais, matriz de confiança e ADR vinculam cada requisito a teste de premissa; rollback ou forward-fix demonstrado em fixture isolada."
+      ],
+      "acceptance": [
+        "As-Is/To-Be/lacunas, duas alternativas proporcionais, matriz de confiança e ADR vinculam cada requisito a teste de premissa; rollback ou forward-fix demonstrado em fixture isolada."
+      ],
+      "handoff": "S04",
+      "audit_items": [
+        "S03-P1"
+      ],
+      "expected": {
+        "tenant": "b",
+        "locale": "ar",
+        "serialization_roundtrip": true
+      },
+      "faulty_implementation": "Share a page cache key across tenants/locales.",
+      "metamorphism": "Independent exercise invocation order is reversed; per-case observations and identities must remain equal. This does not reorder causally ordered events.",
+      "scope_limit": "Trusted local stdlib exercise only. Observed application architecture, migration/rollback runtime is NOT_VERIFIED until separately executed/corroborated. Neither model/agent competence nor SME/private holdout is inferred."
+    },
+    {
+      "case_id": "S04:depth:1",
+      "role_id": "S04",
+      "harness": "tenant-locale-cache",
+      "task": "Bind serialization/cache identity to tenant and locale; cover SSR hydration/navigation through a native protocol, not modelled DOM claims.",
+      "native_stack": "Observed frontend framework/version and real browser",
+      "required_native_evidence": [
+        "Parse do texto TOML e profile do catálogo produz exatamente o conjunto de review do contrato; mutação que remove4.13 ou10.6 deve falhar.",
+        "Versões/framework observados, contrato de serialização e chave de cache explícitos; teste de navegação/hidratação e locale documenta console, DOM e contrato preservado."
+      ],
+      "acceptance": [
+        "Parse do texto TOML e profile do catálogo produz exatamente o conjunto de review do contrato; mutação que remove4.13 ou10.6 deve falhar.",
+        "Versões/framework observados, contrato de serialização e chave de cache explícitos; teste de navegação/hidratação e locale documenta console, DOM e contrato preservado."
+      ],
+      "handoff": "S05",
+      "audit_items": [
+        "S04-D1",
+        "S04-P1"
+      ],
+      "expected": {
+        "tenant": "b",
+        "locale": "ar",
+        "serialization_roundtrip": true
+      },
+      "faulty_implementation": "Omit tenant and locale from SSR cache key.",
+      "metamorphism": "Independent exercise invocation order is reversed; per-case observations and identities must remain equal. This does not reorder causally ordered events.",
+      "scope_limit": "Trusted local stdlib exercise only. Observed frontend framework/version and real browser is NOT_VERIFIED until separately executed/corroborated. Neither model/agent competence nor SME/private holdout is inferred."
+    },
+    {
+      "case_id": "S05:depth:1",
+      "role_id": "S05",
+      "harness": "stale-ui-state",
+      "task": "Keep input/focus and pending state after timeout; ignore obsolete navigation and distinguish client state from confirmed server effect.",
+      "native_stack": "Observed form framework and real browser/API",
+      "required_native_evidence": [
+        "Teste real conta ações observáveis para Enter/click/IME, preserva input/foco após erro e rejeita resposta de tela antiga; garantia de efeito do servidor tem evidência separada."
+      ],
+      "acceptance": [
+        "Teste real conta ações observáveis para Enter/click/IME, preserva input/foco após erro e rejeita resposta de tela antiga; garantia de efeito do servidor tem evidência separada."
+      ],
+      "handoff": "S09",
+      "audit_items": [
+        "S05-P1"
+      ],
+      "expected": {
+        "status": "pending",
+        "input": "draft",
+        "effects": 1
+      },
+      "faulty_implementation": "Accept an old navigation response and clear current draft.",
+      "metamorphism": "Independent exercise invocation order is reversed; per-case observations and identities must remain equal. This does not reorder causally ordered events.",
+      "scope_limit": "Trusted local stdlib exercise only. Observed form framework and real browser/API is NOT_VERIFIED until separately executed/corroborated. Neither model/agent competence nor SME/private holdout is inferred."
+    },
+    {
+      "case_id": "S06:depth:1",
+      "role_id": "S06",
+      "harness": "focus-restoration",
+      "task": "Wrap keyboard focus, close on Escape and restore to a mounted meaningful fallback; tie behavior to explicit criterion/version and report AT unknown.",
+      "native_stack": "Real browser and assistive technology when available",
+      "required_native_evidence": [
+        "Matriz tarefa/critério/ambiente identifica foco de entrada/saída, ordem de teclado, erro associado e limitações AT; leitor real só é marcado testado com evidência da execução."
+      ],
+      "acceptance": [
+        "Matriz tarefa/critério/ambiente identifica foco de entrada/saída, ordem de teclado, erro associado e limitações AT; leitor real só é marcado testado com evidência da execução."
+      ],
+      "handoff": "S05",
+      "audit_items": [
+        "S06-P1"
+      ],
+      "expected": {
+        "tab_trapped": true,
+        "escape_closed": true,
+        "restored": "heading",
+        "restore_mounted": true
+      },
+      "faulty_implementation": "Let focus escape and restore to an unmounted trigger.",
+      "metamorphism": "Independent exercise invocation order is reversed; per-case observations and identities must remain equal. This does not reorder causally ordered events.",
+      "scope_limit": "Trusted local stdlib exercise only. Real browser and assistive technology when available is NOT_VERIFIED until separately executed/corroborated. Neither model/agent competence nor SME/private holdout is inferred."
+    },
+    {
+      "case_id": "S07:depth:1",
+      "role_id": "S07",
+      "harness": "locale-contract",
+      "task": "Keep plural/direction/fallback/timezone and locale cache coherent; measure identical before/after environments without inventing field traffic.",
+      "native_stack": "Observed bundle tooling/browser/field measurement",
+      "required_native_evidence": [
+        "Matriz de locale/fallback/cache cobre plural, expansão, RTL e fuso; medições antes/depois usam mesmos inputs/ambiente e guardrails de jornada/teclado."
+      ],
+      "acceptance": [
+        "Matriz de locale/fallback/cache cobre plural, expansão, RTL e fuso; medições antes/depois usam mesmos inputs/ambiente e guardrails de jornada/teclado."
+      ],
+      "handoff": "S06",
+      "audit_items": [
+        "S07-P1"
+      ],
+      "expected": {
+        "message": "عناصر",
+        "direction": "rtl",
+        "cache_key": [
+          "ar",
+          2,
+          "UTC+03:00"
+        ],
+        "fallback": "explicit",
+        "pseudolocale": "[éxṕàñdéḋ]"
+      },
+      "faulty_implementation": "Choose singular Arabic form for plural count.",
+      "metamorphism": "Independent exercise invocation order is reversed; per-case observations and identities must remain equal. This does not reorder causally ordered events.",
+      "scope_limit": "Trusted local stdlib exercise only. Observed bundle tooling/browser/field measurement is NOT_VERIFIED until separately executed/corroborated. Neither model/agent competence nor SME/private holdout is inferred."
+    },
+    {
+      "case_id": "S08:depth:1",
+      "role_id": "S08",
+      "harness": "durable-ledger",
+      "task": "Persist one effect/outbox per composite tenant operation, reject conflicting payloads and preserve rollback under invalid input/restart.",
+      "native_stack": "Observed application language and actual supported database",
+      "required_native_evidence": [
+        "Barreiras determinísticas em runtime observado preservam saldo/outbox e resultado recuperável em cada ponto; nenhuma entrada inválida altera estado; timeout não é tratado como rollback provado."
+      ],
+      "acceptance": [
+        "Barreiras determinísticas em runtime observado preservam saldo/outbox e resultado recuperável em cada ponto; nenhuma entrada inválida altera estado; timeout não é tratado como rollback provado."
+      ],
+      "handoff": "S09",
+      "audit_items": [
+        "S08-P1"
+      ],
+      "expected": {
+        "sum_delta": -200,
+        "effects": 2,
+        "outbox": 2,
+        "rejected": [
+          "payload-conflict"
+        ],
+        "invalid_effects": 0
+      },
+      "faulty_implementation": "Retry bypasses deduplication and duplicates ledger effect.",
+      "metamorphism": "Independent exercise invocation order is reversed; per-case observations and identities must remain equal. This does not reorder causally ordered events.",
+      "scope_limit": "Trusted local stdlib exercise only. Observed application language and actual supported database is NOT_VERIFIED until separately executed/corroborated. Neither model/agent competence nor SME/private holdout is inferred."
+    },
+    {
+      "case_id": "S09:depth:1",
+      "role_id": "S09",
+      "harness": "api-contract-and-wire",
+      "task": "Verify exact serialized signature bytes, replay age/deduplication and response compatibility independently of HTTP200.",
+      "native_stack": "Observed HTTP/protobuf provider and legacy consumer",
+      "required_native_evidence": [
+        "Consumer antigo falha no campo de tipo incompatível; fixture wire assina/verifica bytes exatos, rejeita replay inválido e preserva efeito sob retry válido; versão e limites são documentados."
+      ],
+      "acceptance": [
+        "Consumer antigo falha no campo de tipo incompatível; fixture wire assina/verifica bytes exatos, rejeita replay inválido e preserva efeito sob retry válido; versão e limites são documentados."
+      ],
+      "handoff": "S08",
+      "audit_items": [
+        "S09-P1"
+      ],
+      "expected": {
+        "wire": {
+          "effects": 1,
+          "denied": [
+            "tampered",
+            "stale"
+          ],
+          "exact_bytes_checked": true
+        },
+        "consumer": {
+          "baseline": [
+            "x",
+            0,
+            true
+          ],
+          "incompatible_wire_rejected": true,
+          "null_distinct_from_absent": true,
+          "denied_resource_effects": 0,
+          "cleanup": "fixture-owned"
+        }
+      },
+      "faulty_implementation": "Accept altered bytes or remove a required legacy response field.",
+      "metamorphism": "Independent exercise invocation order is reversed; per-case observations and identities must remain equal. This does not reorder causally ordered events.",
+      "scope_limit": "Trusted local stdlib exercise only. Observed HTTP/protobuf provider and legacy consumer is NOT_VERIFIED until separately executed/corroborated. Neither model/agent competence nor SME/private holdout is inferred."
+    },
+    {
+      "case_id": "S10:depth:1",
+      "role_id": "S10",
+      "harness": "storage-fencing",
+      "task": "Enforce fencing at durable write, retain idempotency after restart, log deterministic event order and document retention/progress assumptions.",
+      "native_stack": "Observed storage/concurrency runtime",
+      "required_native_evidence": [
+        "Barreiras reproduzem as ordens; armazenamento rejeita token antigo e segundo efeito após restart; progresso termina sob limite/hipóteses explícitos, incluindo horizonte de retenção."
+      ],
+      "acceptance": [
+        "Barreiras reproduzem as ordens; armazenamento rejeita token antigo e segundo efeito após restart; progresso termina sob limite/hipóteses explícitos, incluindo horizonte de retenção."
+      ],
+      "handoff": "S08",
+      "audit_items": [
+        "S10-P1"
+      ],
+      "expected": {
+        "accepted": [
+          "old",
+          "new"
+        ],
+        "final": "new"
+      },
+      "faulty_implementation": "Update storage without fencing predicate.",
+      "metamorphism": "Independent exercise invocation order is reversed; per-case observations and identities must remain equal. This does not reorder causally ordered events.",
+      "scope_limit": "Trusted local stdlib exercise only. Observed storage/concurrency runtime is NOT_VERIFIED until separately executed/corroborated. Neither model/agent competence nor SME/private holdout is inferred."
+    },
+    {
+      "case_id": "S11:depth:1",
+      "role_id": "S11",
+      "harness": "database-lock-retry",
+      "task": "Measure a real lock/retry path and reconcile values; record engine-specific support, budget and forward recovery without extrapolating SQLite.",
+      "native_stack": "Actual selected database engine/version/isolation",
+      "required_native_evidence": [
+        "Engine/versão/isolamento e dataset representativo registrados; ensaio mede bloqueios, reconcilia chaves/valores e demonstra retry/forward-fix; engine ausente deixa essa parte NOT_VERIFIED."
+      ],
+      "acceptance": [
+        "Engine/versão/isolamento e dataset representativo registrados; ensaio mede bloqueios, reconcilia chaves/valores e demonstra retry/forward-fix; engine ausente deixa essa parte NOT_VERIFIED."
+      ],
+      "handoff": "S08",
+      "audit_items": [
+        "S11-P1"
+      ],
+      "expected": {
+        "lock_detected": true,
+        "retry_rows": 1,
+        "engine": "SQLite"
+      },
+      "faulty_implementation": "Report lock/retry success while ignoring lock observation.",
+      "metamorphism": "Independent exercise invocation order is reversed; per-case observations and identities must remain equal. This does not reorder causally ordered events.",
+      "scope_limit": "Trusted local stdlib exercise only. Actual selected database engine/version/isolation is NOT_VERIFIED until separately executed/corroborated. Neither model/agent competence nor SME/private holdout is inferred."
+    },
+    {
+      "case_id": "S12:depth:1",
+      "role_id": "S12",
+      "harness": "restore-tombstones",
+      "task": "Restore into isolated store then reapply supplied tombstones; verify keys/values, time/key dependencies and retained policy exceptions.",
+      "native_stack": "Actual restore runtime, supplied retention/privacy policy",
+      "required_native_evidence": [
+        "Mapa fonte/réplica/exportação/backup liga política e owner; restore autorizado reaplica tombstones/exclusão conforme política e mede integridade/tempo; política ausente exige abstenção específica."
+      ],
+      "acceptance": [
+        "Mapa fonte/réplica/exportação/backup liga política e owner; restore autorizado reaplica tombstones/exclusão conforme política e mede integridade/tempo; política ausente exige abstenção específica."
+      ],
+      "handoff": "S11",
+      "audit_items": [
+        "S12-P1"
+      ],
+      "expected": {
+        "restored": [
+          [
+            "keep",
+            "ok"
+          ]
+        ],
+        "key_missing_blocks_service": true,
+        "policy": "fixture-retention-v1",
+        "rto_seconds": 12,
+        "rpo_seconds": 4
+      },
+      "faulty_implementation": "Restore deleted personal record without tombstone reconciliation.",
+      "metamorphism": "Independent exercise invocation order is reversed; per-case observations and identities must remain equal. This does not reorder causally ordered events.",
+      "scope_limit": "Trusted local stdlib exercise only. Actual restore runtime, supplied retention/privacy policy is NOT_VERIFIED until separately executed/corroborated. Neither model/agent competence nor SME/private holdout is inferred."
+    },
+    {
+      "case_id": "S13:depth:1",
+      "role_id": "S13",
+      "harness": "redirect-rebinding",
+      "task": "Revalidate each redirect and DNS resolution against connected destination; preserve protected negative control and report source path/preconditions.",
+      "native_stack": "Authorized instrumented resolver/transport runtime",
+      "required_native_evidence": [
+        "No ambiente de execução autorizado, um hop permitido conecta ao stub; redirect para loopback e troca de DNS não chegam ao stub proibido; retirar a revalidação provoca a falha esperada sem tráfego externo.",
+        "O protegido não recebe achado de bypass; o vulnerável produz exposição demonstrável e reteste; não ver o código necessário resulta em NOT_VERIFIED, não vulnerabilidade confirmada."
+      ],
+      "acceptance": [
+        "No ambiente de execução autorizado, um hop permitido conecta ao stub; redirect para loopback e troca de DNS não chegam ao stub proibido; retirar a revalidação provoca a falha esperada sem tráfego externo.",
+        "O protegido não recebe achado de bypass; o vulnerável produz exposição demonstrável e reteste; não ver o código necessário resulta em NOT_VERIFIED, não vulnerabilidade confirmada."
+      ],
+      "handoff": "S14",
+      "audit_items": [
+        "RB-S13-1",
+        "RB-S13-2"
+      ],
+      "expected": {
+        "reached": [
+          "public.test@8.8.8.8"
+        ],
+        "denied": [
+          "redirect.test",
+          "rebind.test"
+        ],
+        "external_requests": 0
+      },
+      "faulty_implementation": "Treat initial public resolution as authority for subsequent private hops.",
+      "metamorphism": "Independent exercise invocation order is reversed; per-case observations and identities must remain equal. This does not reorder causally ordered events.",
+      "scope_limit": "Trusted local stdlib exercise only. Authorized instrumented resolver/transport runtime is NOT_VERIFIED until separately executed/corroborated. Neither model/agent competence nor SME/private holdout is inferred."
+    },
+    {
+      "case_id": "S14:depth:1",
+      "role_id": "S14",
+      "harness": "key-rotation",
+      "task": "Check issuer/audience/algorithm, authenticate token bytes and bounded key refresh; missing policies block dependent privacy conclusion only.",
+      "native_stack": "Observed JWT/OIDC library/issuer configuration and clock",
+      "required_native_evidence": [
+        "Chave atual válida passa, chave desconhecida e downgrade falham, chave nova autorizada passa após refresh previsto; falha do emissor não causa aceitação de token inválido; nenhum resultado depende de flag assinatura fornecida pelo candidato.",
+        "Relatório lista destinos comprovados, destinos pendentes e retenções fornecidas sem inventar base legal; ausência de uma política bloqueia apenas a conclusão dependente, mantendo análise técnica útil."
+      ],
+      "acceptance": [
+        "Chave atual válida passa, chave desconhecida e downgrade falham, chave nova autorizada passa após refresh previsto; falha do emissor não causa aceitação de token inválido; nenhum resultado depende de flag assinatura fornecida pelo candidato.",
+        "Relatório lista destinos comprovados, destinos pendentes e retenções fornecidas sem inventar base legal; ausência de uma política bloqueia apenas a conclusão dependente, mantendo análise técnica útil."
+      ],
+      "handoff": "S08",
+      "audit_items": [
+        "RB-S14-1",
+        "RB-S14-2"
+      ],
+      "expected": {
+        "accepted": [
+          "current",
+          "next"
+        ],
+        "refreshes": 1,
+        "crypto": "HMAC-SHA256 fixture, not OIDC/JWT library qualification"
+      },
+      "faulty_implementation": "Accept downgraded algorithm after key lookup.",
+      "metamorphism": "Independent exercise invocation order is reversed; per-case observations and identities must remain equal. This does not reorder causally ordered events.",
+      "scope_limit": "Trusted local stdlib exercise only. Observed JWT/OIDC library/issuer configuration and clock is NOT_VERIFIED until separately executed/corroborated. Neither model/agent competence nor SME/private holdout is inferred."
+    },
+    {
+      "case_id": "S15:depth:1",
+      "role_id": "S15",
+      "harness": "artifact-provenance",
+      "task": "Bind signed bytes/digest/builder/origin/policy; distinguish advisory severity, reachability and mitigation with positive/negative dependency paths.",
+      "native_stack": "Available cryptographic verifier and dependency graph",
+      "required_native_evidence": [
+        "Trocar digest, origem ou identidade reprova mesmo com assinatura criptograficamente válida; o artefato correto passa; verificador indisponível deixa verificação criptográfica NOT_VERIFIED, sem simular attestation.",
+        "Mesmo advisory gera decisões distintas segundo caminho e superfície demonstrados; ausência de grafo não vira não vulnerável; mitigação exige regressão e versão/digest corrigidos."
+      ],
+      "acceptance": [
+        "Trocar digest, origem ou identidade reprova mesmo com assinatura criptograficamente válida; o artefato correto passa; verificador indisponível deixa verificação criptográfica NOT_VERIFIED, sem simular attestation.",
+        "Mesmo advisory gera decisões distintas segundo caminho e superfície demonstrados; ausência de grafo não vira não vulnerável; mitigação exige regressão e versão/digest corrigidos."
+      ],
+      "handoff": "S13",
+      "audit_items": [
+        "RB-S15-1",
+        "RB-S15-2"
+      ],
+      "expected": {
+        "accepted": [
+          "correct"
+        ],
+        "publication_authorized": false
+      },
+      "faulty_implementation": "Cryptographic signature alone authorizes wrong digest or builder.",
+      "metamorphism": "Independent exercise invocation order is reversed; per-case observations and identities must remain equal. This does not reorder causally ordered events.",
+      "scope_limit": "Trusted local stdlib exercise only. Available cryptographic verifier and dependency graph is NOT_VERIFIED until separately executed/corroborated. Neither model/agent competence nor SME/private holdout is inferred."
+    },
+    {
+      "case_id": "S16:depth:1",
+      "role_id": "S16",
+      "harness": "assertion-mutation",
+      "task": "Execute balance assertion against baseline/faulty implementation; classify invalid/equivalent/not-run mutants and preserve seed/order/first flake and quarantine obligations.",
+      "native_stack": "Project test runtime and isolated mutation fixture",
+      "required_native_evidence": [
+        "Baseline passa; double-debit falha na asserção de saldo; remover a asserção faz o mutante sobreviver; ImportError e zero testes são BLOCKED/INVALID e não ganhos de adequação.",
+        "Mesma seed/ordem reproduz falha antes e passa depois da correção de isolamento; histórico conserva todas as tentativas; caso crítico em quarentena continua bloqueando a obrigação."
+      ],
+      "acceptance": [
+        "Baseline passa; double-debit falha na asserção de saldo; remover a asserção faz o mutante sobreviver; ImportError e zero testes são BLOCKED/INVALID e não ganhos de adequação.",
+        "Mesma seed/ordem reproduz falha antes e passa depois da correção de isolamento; histórico conserva todas as tentativas; caso crítico em quarentena continua bloqueando a obrigação."
+      ],
+      "handoff": "S17",
+      "audit_items": [
+        "RB-S16-1",
+        "RB-S16-2"
+      ],
+      "expected": {
+        "baseline_pass": true,
+        "mutant_killed": true,
+        "reason": "balance invariant",
+        "critical_quarantine_blocks": true,
+        "first_failure_preserved": true
+      },
+      "faulty_implementation": "Remove the distinguishing balance assertion and count mutant as covered.",
+      "metamorphism": "Independent exercise invocation order is reversed; per-case observations and identities must remain equal. This does not reorder causally ordered events.",
+      "scope_limit": "Trusted local stdlib exercise only. Project test runtime and isolated mutation fixture is NOT_VERIFIED until separately executed/corroborated. Neither model/agent competence nor SME/private holdout is inferred."
+    },
+    {
+      "case_id": "S17:depth:1",
+      "role_id": "S17",
+      "harness": "browser-interleavings",
+      "task": "Reproduce keyboard/dialog/Escape/fallback and commit-timeout reauth/stale-navigation interleaving; preserve draft while reconciling server effect.",
+      "native_stack": "Actual browser automation, persistence observer and AT separately",
+      "required_native_evidence": [
+        "Foco fica no diálogo enquanto aberto, Escape fecha e retorna a alvo montado/fallback previsto; mutação no handler falha por foco final; AT indisponível continua NOT_VERIFIED.",
+        "Replay com mesma chave não duplica efeito; resposta obsoleta de outra navegação não altera tela; UI distingue confirmação, falha e estado pendente sem descartar entradas."
+      ],
+      "acceptance": [
+        "Foco fica no diálogo enquanto aberto, Escape fecha e retorna a alvo montado/fallback previsto; mutação no handler falha por foco final; AT indisponível continua NOT_VERIFIED.",
+        "Replay com mesma chave não duplica efeito; resposta obsoleta de outra navegação não altera tela; UI distingue confirmação, falha e estado pendente sem descartar entradas."
+      ],
+      "handoff": "S05",
+      "audit_items": [
+        "RB-S17-1",
+        "RB-S17-2"
+      ],
+      "expected": {
+        "focus": {
+          "tab_trapped": true,
+          "escape_closed": true,
+          "restored": "heading",
+          "restore_mounted": true
+        },
+        "form": {
+          "status": "pending",
+          "input": "draft",
+          "effects": 1
+        }
+      },
+      "faulty_implementation": "Restore unmounted focus and accept stale success after navigation.",
+      "metamorphism": "Independent exercise invocation order is reversed; per-case observations and identities must remain equal. This does not reorder causally ordered events.",
+      "scope_limit": "Trusted local stdlib exercise only. Actual browser automation, persistence observer and AT separately is NOT_VERIFIED until separately executed/corroborated. Neither model/agent competence nor SME/private holdout is inferred."
+    },
+    {
+      "case_id": "S18:depth:1",
+      "role_id": "S18",
+      "harness": "backend-effects-and-contract",
+      "task": "Observe persistence after retry/timeout/denial and serialization of absent/null/value using legacy client; cleanup even on failure.",
+      "native_stack": "Actual API runtime and disposable supported database",
+      "required_native_evidence": [
+        "Duas chamadas/retry deixam exatamente um débito e registro de idempotência coerente; remover proteção atômica faz falhar pelo saldo/efeito; nenhum teste é aprovado só por status 200.",
+        "Cliente legado distingue variantes conforme contrato fornecido; campo exigido novo causa regressão visível; erro de autorização não retorna objeto nem cria efeitos; cleanup é verificado mesmo em falha."
+      ],
+      "acceptance": [
+        "Duas chamadas/retry deixam exatamente um débito e registro de idempotência coerente; remover proteção atômica faz falhar pelo saldo/efeito; nenhum teste é aprovado só por status 200.",
+        "Cliente legado distingue variantes conforme contrato fornecido; campo exigido novo causa regressão visível; erro de autorização não retorna objeto nem cria efeitos; cleanup é verificado mesmo em falha."
+      ],
+      "handoff": "S08",
+      "audit_items": [
+        "RB-S18-1",
+        "RB-S18-2"
+      ],
+      "expected": {
+        "ledger": {
+          "sum_delta": -200,
+          "effects": 2,
+          "outbox": 2,
+          "rejected": [
+            "payload-conflict"
+          ],
+          "invalid_effects": 0
+        },
+        "consumer": {
+          "baseline": [
+            "x",
+            0,
+            true
+          ],
+          "incompatible_wire_rejected": true,
+          "null_distinct_from_absent": true,
+          "denied_resource_effects": 0,
+          "cleanup": "fixture-owned"
+        }
+      },
+      "faulty_implementation": "Return200 while duplicating ledger effects or dropping required field.",
+      "metamorphism": "Independent exercise invocation order is reversed; per-case observations and identities must remain equal. This does not reorder causally ordered events.",
+      "scope_limit": "Trusted local stdlib exercise only. Actual API runtime and disposable supported database is NOT_VERIFIED until separately executed/corroborated. Neither model/agent competence nor SME/private holdout is inferred."
+    },
+    {
+      "case_id": "S19:depth:1",
+      "role_id": "S19",
+      "harness": "censored-load",
+      "task": "Include offered/achieved rate, timeouts/censoring/errors and generator resource limits; compare matched intervention repeats without causal overclaim.",
+      "native_stack": "Authorized measured generator/load/profile runtime",
+      "required_native_evidence": [
+        "Experimento detecta taxa não atingida e não declara SLO por percentil só de sucessos; relatório conserva timeout/erro e limite do gerador; aborta no limiar autorizado.",
+        "Aumentar pool só sustenta hipótese quando espera cai sem deslocar gargalo; decisão liga p99 e custo unitário ao baseline e intervalo observado, sem declarar causalidade por correlação isolada."
+      ],
+      "acceptance": [
+        "Experimento detecta taxa não atingida e não declara SLO por percentil só de sucessos; relatório conserva timeout/erro e limite do gerador; aborta no limiar autorizado.",
+        "Aumentar pool só sustenta hipótese quando espera cai sem deslocar gargalo; decisão liga p99 e custo unitário ao baseline e intervalo observado, sem declarar causalidade por correlação isolada."
+      ],
+      "handoff": "S07",
+      "audit_items": [
+        "RB-S19-1",
+        "RB-S19-2"
+      ],
+      "expected": {
+        "offered": 10,
+        "achieved": 5,
+        "timeouts": 2,
+        "bad_events": 3,
+        "all_event_denominator": 5,
+        "success_only_p99": 30,
+        "slo_met": false,
+        "generator_limited": true
+      },
+      "faulty_implementation": "Infer SLO from successful samples alone and discard timeouts.",
+      "metamorphism": "Independent exercise invocation order is reversed; per-case observations and identities must remain equal. This does not reorder causally ordered events.",
+      "scope_limit": "Trusted local stdlib exercise only. Authorized measured generator/load/profile runtime is NOT_VERIFIED until separately executed/corroborated. Neither model/agent competence nor SME/private holdout is inferred."
+    },
+    {
+      "case_id": "S20:depth:1",
+      "role_id": "S20",
+      "harness": "recovery-burn",
+      "task": "Bound RTO by service usability, record recoverable origin/age for RPO; missing keys block readiness and zero traffic remains no-data.",
+      "native_stack": "Authorized actual service restore and SLO queries",
+      "required_native_evidence": [
+        "RTO abrange retomada de serviço segundo objetivo fornecido; RPO registra origem e idade do ponto recuperável; chave ausente bloqueia readiness mesmo com checksums bons; remoção de dependência quebra a verificação de serviço.",
+        "Alerta dispara para burn rápido nas janelas corretas, não trata 0/0 como saúde e separa no-data de sucesso; resultados ligam consulta e limiar à mesma revisão, sem executar pager externo."
+      ],
+      "acceptance": [
+        "RTO abrange retomada de serviço segundo objetivo fornecido; RPO registra origem e idade do ponto recuperável; chave ausente bloqueia readiness mesmo com checksums bons; remoção de dependência quebra a verificação de serviço.",
+        "Alerta dispara para burn rápido nas janelas corretas, não trata 0/0 como saúde e separa no-data de sucesso; resultados ligam consulta e limiar à mesma revisão, sem executar pager externo."
+      ],
+      "handoff": "S12",
+      "audit_items": [
+        "RB-S20-1",
+        "RB-S20-2"
+      ],
+      "expected": {
+        "rto_seconds": 12,
+        "rpo_seconds": 4,
+        "service_ready": false,
+        "burns": [
+          8.0,
+          null
+        ],
+        "no_data": "unknown",
+        "fast_burn_alert": true
+      },
+      "faulty_implementation": "Declare ready despite missing key/service recovery.",
+      "metamorphism": "Independent exercise invocation order is reversed; per-case observations and identities must remain equal. This does not reorder causally ordered events.",
+      "scope_limit": "Trusted local stdlib exercise only. Authorized actual service restore and SLO queries is NOT_VERIFIED until separately executed/corroborated. Neither model/agent competence nor SME/private holdout is inferred."
+    },
+    {
+      "case_id": "S21:depth:1",
+      "role_id": "S21",
+      "harness": "telemetry-canaries",
+      "task": "Carry producer/queue/consumer trace link while removing synthetic token/PII; enforce cardinality and observe alert sink without claiming root cause.",
+      "native_stack": "Observed propagation/query pipeline and local sink",
+      "required_native_evidence": [
+        "Caso quebrado identifica fronteira e caso correto mantém vínculo; amostragem parcial é incerteza explícita; mudança do propagador quebra correlação pelo motivo esperado sem segredos nos artefatos.",
+        "Canário não aparece no destino de logs; trace permanece correlacionável; cardinalidade acima do orçamento é detectada e alerta chega ao sink local; ausência de sink deixa entrega NOT_VERIFIED."
+      ],
+      "acceptance": [
+        "Caso quebrado identifica fronteira e caso correto mantém vínculo; amostragem parcial é incerteza explícita; mudança do propagador quebra correlação pelo motivo esperado sem segredos nos artefatos.",
+        "Canário não aparece no destino de logs; trace permanece correlacionável; cardinalidade acima do orçamento é detectada e alerta chega ao sink local; ausência de sink deixa entrega NOT_VERIFIED."
+      ],
+      "handoff": "S13",
+      "audit_items": [
+        "RB-S21-1",
+        "RB-S21-2"
+      ],
+      "expected": {
+        "canary_present": false,
+        "link_preserved": true,
+        "labels": 4,
+        "alerts_received": [
+          "cardinality budget exceeded"
+        ],
+        "sampling": "complete in this fixture"
+      },
+      "faulty_implementation": "Emit synthetic token/PII into captured telemetry.",
+      "metamorphism": "Independent exercise invocation order is reversed; per-case observations and identities must remain equal. This does not reorder causally ordered events.",
+      "scope_limit": "Trusted local stdlib exercise only. Observed propagation/query pipeline and local sink is NOT_VERIFIED until separately executed/corroborated. Neither model/agent competence nor SME/private holdout is inferred."
+    },
+    {
+      "case_id": "S22:depth:1",
+      "role_id": "S22",
+      "harness": "iac-plan",
+      "task": "Parse replacement actions/unknown sensitive values; bind plan/revision/provider/state and inspect DNS/route/policy from actual app origin without apply.",
+      "native_stack": "Real provider plan format/version, state identity and network probes",
+      "required_native_evidence": [
+        "Alterar revisão/state/provider invalida aceite anterior; delete/create de recurso stateful exige bloqueio e plano de recuperação; resultado não concede apply quando todos os checks offline passam.",
+        "DNS ok com rota bloqueada não é sucesso de conectividade; probe da origem errada não comprova o caminho de app; indisponibilidade de ferramenta não produz falha de serviço inventada."
+      ],
+      "acceptance": [
+        "Alterar revisão/state/provider invalida aceite anterior; delete/create de recurso stateful exige bloqueio e plano de recuperação; resultado não concede apply quando todos os checks offline passam.",
+        "DNS ok com rota bloqueada não é sucesso de conectividade; probe da origem errada não comprova o caminho de app; indisponibilidade de ferramenta não produz falha de serviço inventada."
+      ],
+      "handoff": "S15",
+      "audit_items": [
+        "RB-S22-1",
+        "RB-S22-2"
+      ],
+      "expected": {
+        "blocked": [
+          "db.main"
+        ],
+        "unknown_sensitive": "not emitted",
+        "apply_authorized": false,
+        "dns_ok_route_blocked": "not connected",
+        "state_changed_invalidates_acceptance": true
+      },
+      "faulty_implementation": "Ignore delete/create replacement of stateful resource.",
+      "metamorphism": "Independent exercise invocation order is reversed; per-case observations and identities must remain equal. This does not reorder causally ordered events.",
+      "scope_limit": "Trusted local stdlib exercise only. Real provider plan format/version, state identity and network probes is NOT_VERIFIED until separately executed/corroborated. Neither model/agent competence nor SME/private holdout is inferred."
+    },
+    {
+      "case_id": "S23:depth:1",
+      "role_id": "S23",
+      "harness": "promotion-binding",
+      "task": "Bind build/test/promote artifact digest/pipeline/environment; abort over budget, disallow incompatible rollback, retain forward recovery and authorization.",
+      "native_stack": "Actual CI provenance and authorized disposable service",
+      "required_native_evidence": [
+        "Troca de digest ou workflow após teste invalida gate; artifact correto mantém vínculo; fork não obtém permissão por produzir nome de workflow idêntico; publicação continua dependente de autorização externa.",
+        "Limiar excedido interrompe promoção; rollback incompatível é bloqueado e alternativa forward recovery fica explícita; health verde isolado não comprova integridade nem recuperação."
+      ],
+      "acceptance": [
+        "Troca de digest ou workflow após teste invalida gate; artifact correto mantém vínculo; fork não obtém permissão por produzir nome de workflow idêntico; publicação continua dependente de autorização externa.",
+        "Limiar excedido interrompe promoção; rollback incompatível é bloqueado e alternativa forward recovery fica explícita; health verde isolado não comprova integridade nem recuperação."
+      ],
+      "handoff": "S15",
+      "audit_items": [
+        "RB-S23-1",
+        "RB-S23-2"
+      ],
+      "expected": {
+        "old_acceptance_current": false,
+        "promotion_aborted": true,
+        "rollback_compatible": false,
+        "recovery": "forward recovery required",
+        "publication_authorized": false
+      },
+      "faulty_implementation": "Reuse acceptance after artifact digest changed.",
+      "metamorphism": "Independent exercise invocation order is reversed; per-case observations and identities must remain equal. This does not reorder causally ordered events.",
+      "scope_limit": "Trusted local stdlib exercise only. Actual CI provenance and authorized disposable service is NOT_VERIFIED until separately executed/corroborated. Neither model/agent competence nor SME/private holdout is inferred."
+    },
+    {
+      "case_id": "S24:depth:1",
+      "role_id": "S24",
+      "harness": "compatibility-boundary",
+      "task": "Characterize the correct inclusive boundary and effect order per interface; retain monthly/unknown consumers until sufficient observation and migration readiness.",
+      "native_stack": "Project caller/regression runner and consumer telemetry",
+      "required_native_evidence": [
+        "Mudança estrita/inclusiva no cenário correto falha na entrada 100; mudança de efeito/serialização é detectada pelo contrato aplicável; nenhum caso usa oráculo de outro cenário só por ambos terem limiar 100.",
+        "Consumidor mensal não é descartado por dia silencioso; consumidor desconhecido/telemetria insuficiente bloqueia retirada dependente; backfill completo com leitor legado ainda impede contract/drop."
+      ],
+      "acceptance": [
+        "Mudança estrita/inclusiva no cenário correto falha na entrada 100; mudança de efeito/serialização é detectada pelo contrato aplicável; nenhum caso usa oráculo de outro cenário só por ambos terem limiar 100.",
+        "Consumidor mensal não é descartado por dia silencioso; consumidor desconhecido/telemetria insuficiente bloqueia retirada dependente; backfill completo com leitor legado ainda impede contract/drop."
+      ],
+      "handoff": "S03",
+      "audit_items": [
+        "RB-S24-1",
+        "RB-S24-2"
+      ],
+      "expected": {
+        "values": [
+          false,
+          true,
+          true
+        ],
+        "monthly_reader_retired": false,
+        "unknown_consumer_blocks_contract": true,
+        "effects_order": [
+          "validate",
+          "commit",
+          "publish"
+        ]
+      },
+      "faulty_implementation": "Change inclusive threshold100 to strict comparison.",
+      "metamorphism": "Independent exercise invocation order is reversed; per-case observations and identities must remain equal. This does not reorder causally ordered events.",
+      "scope_limit": "Trusted local stdlib exercise only. Project caller/regression runner and consumer telemetry is NOT_VERIFIED until separately executed/corroborated. Neither model/agent competence nor SME/private holdout is inferred."
+    },
+    {
+      "case_id": "S25:depth:1",
+      "role_id": "S25",
+      "harness": "finops-sensitivity",
+      "task": "Normalize currency/horizon and low/base/high demand; enforce RTO/SLO, explain exit/retention/licensing and leave emissions unknown without methodology.",
+      "native_stack": "Authorized billing/policy/vendor data",
+      "required_native_evidence": [
+        "Com os inputs atuais, 8000 de baseline e 12000 de compromisso não viram economia; mudança do horizonte/moeda exige normalização explícita; alternativa que viola RTO/availability não é recomendada só por menor custo.",
+        "Sem fator energético/região/metodologia fornecidos, emissão fica não estimada; decisão de fornecedor explicita lock-in e plano de saída; licença pendente permanece encaminhada para revisão competente."
+      ],
+      "acceptance": [
+        "Com os inputs atuais, 8000 de baseline e 12000 de compromisso não viram economia; mudança do horizonte/moeda exige normalização explícita; alternativa que viola RTO/availability não é recomendada só por menor custo.",
+        "Sem fator energético/região/metodologia fornecidos, emissão fica não estimada; decisão de fornecedor explicita lock-in e plano de saída; licença pendente permanece encaminhada para revisão competente."
+      ],
+      "handoff": "S01",
+      "audit_items": [
+        "RB-S25-1",
+        "RB-S25-2"
+      ],
+      "expected": {
+        "net_savings": {
+          "low": -8000,
+          "base": -4000,
+          "high": 4000
+        },
+        "recommend_base": false,
+        "currency": "BRL minor units",
+        "horizon": "month",
+        "emissions": null,
+        "vendor_exit": {
+          "export": "JSON",
+          "retention": "policy required",
+          "owner": "operator"
+        }
+      },
+      "faulty_implementation": "Recommend12000 commitment against8000 baseline without horizon normalization.",
+      "metamorphism": "Independent exercise invocation order is reversed; per-case observations and identities must remain equal. This does not reorder causally ordered events.",
+      "scope_limit": "Trusted local stdlib exercise only. Authorized billing/policy/vendor data is NOT_VERIFIED until separately executed/corroborated. Neither model/agent competence nor SME/private holdout is inferred."
+    },
+    {
+      "case_id": "S26:depth:1",
+      "role_id": "S26",
+      "harness": "retrieval-revocation",
+      "task": "Keep cross-tenant/stale/revoked documents and injected tool requests out of trusted context/effects; predeclare per-family thresholds and insufficient evidence.",
+      "native_stack": "Verified isolated model/retrieval evaluation runtime",
+      "required_native_evidence": [
+        "Canário de outro tenant não chega ao modelo nem a sink externo; instrução recuperada não autoriza ferramenta; stub registra zero efeito proibido; remover o controle de autorização provoca falha observável sem rede externa.",
+        "Resultado reporta numerador/denominador, erros por família e custo/latência; citações vencidas não sustentam resposta; promoção depende de limiares e holdout independente realmente disponível, sem inventar SME ou benchmark."
+      ],
+      "acceptance": [
+        "Canário de outro tenant não chega ao modelo nem a sink externo; instrução recuperada não autoriza ferramenta; stub registra zero efeito proibido; remover o controle de autorização provoca falha observável sem rede externa.",
+        "Resultado reporta numerador/denominador, erros por família e custo/latência; citações vencidas não sustentam resposta; promoção depende de limiares e holdout independente realmente disponível, sem inventar SME ou benchmark."
+      ],
+      "handoff": "S13",
+      "audit_items": [
+        "RB-S26-1",
+        "RB-S26-2"
+      ],
+      "expected": {
+        "retrieved": [
+          "current-a"
+        ],
+        "supported_claims": [
+          "claim-current"
+        ],
+        "tool_effects": [],
+        "insufficient_support": "abstain",
+        "cache_identity": [
+          "a",
+          "corpus-v2",
+          "policy-v2"
+        ]
+      },
+      "faulty_implementation": "Retrieve all documents before subject/resource authorization.",
+      "metamorphism": "Independent exercise invocation order is reversed; per-case observations and identities must remain equal. This does not reorder causally ordered events.",
+      "scope_limit": "Trusted local stdlib exercise only. Verified isolated model/retrieval evaluation runtime is NOT_VERIFIED until separately executed/corroborated. Neither model/agent competence nor SME/private holdout is inferred."
+    },
+    {
+      "case_id": "G01:depth:1",
+      "role_id": "G01",
+      "harness": "independent-evidence",
+      "task": "Reject stale evidence, reproduce boundary bug and protected negative control without modifying source; a distinct consumer corroborates the reviewer.",
+      "native_stack": "Read-only exact-revision project verification",
+      "required_native_evidence": [
+        "Em fixture descartável com bug e controle negativo, revisão identifica pré-condições, reproduz falha no SHA exato, rejeita evidência antiga, refuta o falso positivo e não modifica fonte; consumidor distinto confere reprodução.",
+        "Parsear TOML e contrato: conjunto de IDs de revisão coincide, ou perfil declara sem ambiguidade referência integral ao contrato e lista parcial."
+      ],
+      "acceptance": [
+        "Em fixture descartável com bug e controle negativo, revisão identifica pré-condições, reproduz falha no SHA exato, rejeita evidência antiga, refuta o falso positivo e não modifica fonte; consumidor distinto confere reprodução.",
+        "Parsear TOML e contrato: conjunto de IDs de revisão coincide, ou perfil declara sem ambiguidade referência integral ao contrato e lista parcial."
+      ],
+      "handoff": "A00",
+      "audit_items": [
+        "RC-01-EVAL",
+        "RC-01-DESIGN"
+      ],
+      "expected": {
+        "stale_evidence_accepted": false,
+        "boundary_counterexample": 100,
+        "protected_control_false_positive": false,
+        "source_modified": false,
+        "consumer": "distinct reviewer still required"
+      },
+      "faulty_implementation": "Accept evidence bound to old source digest.",
+      "metamorphism": "Independent exercise invocation order is reversed; per-case observations and identities must remain equal. This does not reorder causally ordered events.",
+      "scope_limit": "Trusted local stdlib exercise only. Read-only exact-revision project verification is NOT_VERIFIED until separately executed/corroborated. Neither model/agent competence nor SME/private holdout is inferred."
+    },
+    {
+      "case_id": "G02:depth:1",
+      "role_id": "G02",
+      "harness": "release-scope",
+      "task": "Invalidate old artifact/context approval, preserve scoped preview and block production when service recovery is unknown; require real policy-specific reviews.",
+      "native_stack": "Actual bound release/restore evidence and policy verifier",
+      "required_native_evidence": [
+        "Revisor independente invalida parecer antigo, bloqueia produção pela recuperação não comprovada, mantém preview com escopo expresso e exige logs/resultados vinculados ao artefato e ambiente; sem publicar.",
+        "Teste offline por política: ausência, papel duplicado, autor igual ao implementador, SHA/digest divergente e parecer vencido falham quando G01/G02 são obrigatórios; strict documenta e testa exatamente a política escolhida."
+      ],
+      "acceptance": [
+        "Revisor independente invalida parecer antigo, bloqueia produção pela recuperação não comprovada, mantém preview com escopo expresso e exige logs/resultados vinculados ao artefato e ambiente; sem publicar.",
+        "Teste offline por política: ausência, papel duplicado, autor igual ao implementador, SHA/digest divergente e parecer vencido falham quando G01/G02 são obrigatórios; strict documenta e testa exatamente a política escolhida."
+      ],
+      "handoff": "A00",
+      "audit_items": [
+        "RC-02-EVAL",
+        "RC-02-DESIGN"
+      ],
+      "expected": {
+        "binding": {
+          "old_acceptance_current": false,
+          "promotion_aborted": true,
+          "rollback_compatible": false,
+          "recovery": "forward recovery required",
+          "publication_authorized": false
+        },
+        "preview_ready": true,
+        "production_ready": false,
+        "missing": "service recovery evidence"
+      },
+      "faulty_implementation": "Promote stale acceptance despite missing service recovery.",
+      "metamorphism": "Independent exercise invocation order is reversed; per-case observations and identities must remain equal. This does not reorder causally ordered events.",
+      "scope_limit": "Trusted local stdlib exercise only. Actual bound release/restore evidence and policy verifier is NOT_VERIFIED until separately executed/corroborated. Neither model/agent competence nor SME/private holdout is inferred."
+    },
+    {
+      "case_id": "pack:ai-systems:guardian_rag_llm_specialist:depth:1",
+      "role_id": "pack:ai-systems:guardian_rag_llm_specialist",
+      "harness": "retrieval-revocation",
+      "task": "Bind corpus/cache by tenant/policy/version; exclude expired/revoked documents, report per-sample recall/grounding/latency and abstain when unsupported.",
+      "native_stack": "Verified isolated actual retriever/model with receipt capture",
+      "required_native_evidence": [
+        "Runtime isolado registra documentos recuperados, claims/fontes e recibos de ferramenta; recall/grounding avaliados por oráculo independente, nenhuma recuperação alheia nem ferramenta indevida, abstenção nos casos sem suporte e custo/latência por amostra.",
+        "Caso privado com documento stale/revogado e cache reutilizado entre tenants falha quando recuperado; relatório calcula métricas a partir de recibos e explicita amostra/limiar sem alegar robustez universal."
+      ],
+      "acceptance": [
+        "Runtime isolado registra documentos recuperados, claims/fontes e recibos de ferramenta; recall/grounding avaliados por oráculo independente, nenhuma recuperação alheia nem ferramenta indevida, abstenção nos casos sem suporte e custo/latência por amostra.",
+        "Caso privado com documento stale/revogado e cache reutilizado entre tenants falha quando recuperado; relatório calcula métricas a partir de recibos e explicita amostra/limiar sem alegar robustez universal."
+      ],
+      "handoff": "S26",
+      "audit_items": [
+        "RC-03-EVAL",
+        "RC-03-DESIGN"
+      ],
+      "expected": {
+        "retrieved": [
+          "current-a"
+        ],
+        "supported_claims": [
+          "claim-current"
+        ],
+        "tool_effects": [],
+        "insufficient_support": "abstain",
+        "cache_identity": [
+          "a",
+          "corpus-v2",
+          "policy-v2"
+        ]
+      },
+      "faulty_implementation": "Reuse unsegregated retrieval results across tenant/revocation boundary.",
+      "metamorphism": "Independent exercise invocation order is reversed; per-case observations and identities must remain equal. This does not reorder causally ordered events.",
+      "scope_limit": "Trusted local stdlib exercise only. Verified isolated actual retriever/model with receipt capture is NOT_VERIFIED until separately executed/corroborated. Neither model/agent competence nor SME/private holdout is inferred."
+    },
+    {
+      "case_id": "pack:api-integration:guardian_api_contract_specialist:depth:1",
+      "role_id": "pack:api-integration:guardian_api_contract_specialist",
+      "harness": "api-contract-and-wire",
+      "task": "Test wire type/absent/null/enum directions, deadlines/pagination, exact signature/replay and timeout reconciliation by actual protocol version.",
+      "native_stack": "Actual provider/legacy strict and tolerant consumers",
+      "required_native_evidence": [
+        "Executar versões provider/consumer em fixture local, detectar quebra por serialização real, validar assinatura/bytes e replay, observar estado após timeout e garantir que retry obedece idempotência/reconciliação contratadas.",
+        "Matriz com consumidor estrito e tolerante produz decisões distintas justificadas; request opcional/response novo não é automaticamente tratado como quebra; deadline e paginação têm negativos."
+      ],
+      "acceptance": [
+        "Executar versões provider/consumer em fixture local, detectar quebra por serialização real, validar assinatura/bytes e replay, observar estado após timeout e garantir que retry obedece idempotência/reconciliação contratadas.",
+        "Matriz com consumidor estrito e tolerante produz decisões distintas justificadas; request opcional/response novo não é automaticamente tratado como quebra; deadline e paginação têm negativos."
+      ],
+      "handoff": "S09",
+      "audit_items": [
+        "RC-04-EVAL",
+        "RC-04-DESIGN"
+      ],
+      "expected": {
+        "wire": {
+          "effects": 1,
+          "denied": [
+            "tampered",
+            "stale"
+          ],
+          "exact_bytes_checked": true
+        },
+        "consumer": {
+          "baseline": [
+            "x",
+            0,
+            true
+          ],
+          "incompatible_wire_rejected": true,
+          "null_distinct_from_absent": true,
+          "denied_resource_effects": 0,
+          "cleanup": "fixture-owned"
+        }
+      },
+      "faulty_implementation": "Ignore wire signature tampering or break required old response field.",
+      "metamorphism": "Independent exercise invocation order is reversed; per-case observations and identities must remain equal. This does not reorder causally ordered events.",
+      "scope_limit": "Trusted local stdlib exercise only. Actual provider/legacy strict and tolerant consumers is NOT_VERIFIED until separately executed/corroborated. Neither model/agent competence nor SME/private holdout is inferred."
+    },
+    {
+      "case_id": "pack:cloud-platform:guardian_cloud_infrastructure_specialist:depth:1",
+      "role_id": "pack:cloud-platform:guardian_cloud_infrastructure_specialist",
+      "harness": "iac-plan",
+      "task": "Parse actual plan shape including create+delete and unknown/sensitive values, invalidate changed provider/state and explain DNS/route/policy layers.",
+      "native_stack": "Sanitized real IaC provider/version/plan/state-lock fixture",
+      "required_native_evidence": [
+        "Parsear formato real do plano offline, preservar state/lock, explicar destructive diff e caminho DNS/rota/política; evidências ausentes ficam NOT_VERIFIED; nenhum apply, recurso ou credencial externa.",
+        "Fixtures reais sanitizadas com create+delete, valor unknown e provider divergente não viram aprovação; plano stale é rejeitado e segredo não aparece em artefato."
+      ],
+      "acceptance": [
+        "Parsear formato real do plano offline, preservar state/lock, explicar destructive diff e caminho DNS/rota/política; evidências ausentes ficam NOT_VERIFIED; nenhum apply, recurso ou credencial externa.",
+        "Fixtures reais sanitizadas com create+delete, valor unknown e provider divergente não viram aprovação; plano stale é rejeitado e segredo não aparece em artefato."
+      ],
+      "handoff": "S22",
+      "audit_items": [
+        "RC-05-EVAL",
+        "RC-05-DESIGN"
+      ],
+      "expected": {
+        "blocked": [
+          "db.main"
+        ],
+        "unknown_sensitive": "not emitted",
+        "apply_authorized": false,
+        "dns_ok_route_blocked": "not connected",
+        "state_changed_invalidates_acceptance": true
+      },
+      "faulty_implementation": "Treat replacement delete/create as nondestructive plan.",
+      "metamorphism": "Independent exercise invocation order is reversed; per-case observations and identities must remain equal. This does not reorder causally ordered events.",
+      "scope_limit": "Trusted local stdlib exercise only. Sanitized real IaC provider/version/plan/state-lock fixture is NOT_VERIFIED until separately executed/corroborated. Neither model/agent competence nor SME/private holdout is inferred."
+    },
+    {
+      "case_id": "pack:data-engineering:guardian_data_migration_specialist:depth:1",
+      "role_id": "pack:data-engineering:guardian_data_migration_specialist",
+      "harness": "restartable-migration",
+      "task": "Resume durable watermark+tie-breaker after restart; reconcile keys/values/types/extras/deletes/concurrent update, retain readers until contract acceptance.",
+      "native_stack": "Actual migration engine/version and dataset",
+      "required_native_evidence": [
+        "Reinício não perde/duplica dados, reconcilia chaves/valores/tipos, leitores antigos funcionam na expansão, lock cabe no orçamento, restore reproduz integridade; contract bloqueado até condições comprovadas.",
+        "Crash em cada fronteira, watermark repetido e registro alterado entre leitura/escrita não ocultam perda; relatório mostra reconciliação por chave e bloqueio de contract se há drift."
+      ],
+      "acceptance": [
+        "Reinício não perde/duplica dados, reconcilia chaves/valores/tipos, leitores antigos funcionam na expansão, lock cabe no orçamento, restore reproduz integridade; contract bloqueado até condições comprovadas.",
+        "Crash em cada fronteira, watermark repetido e registro alterado entre leitura/escrita não ocultam perda; relatório mostra reconciliação por chave e bloqueio de contract se há drift."
+      ],
+      "handoff": "S11",
+      "audit_items": [
+        "RC-06-EVAL",
+        "RC-06-DESIGN"
+      ],
+      "expected": {
+        "rows": [
+          [
+            "a",
+            10
+          ],
+          [
+            "b",
+            20
+          ],
+          [
+            "c",
+            30
+          ]
+        ],
+        "contract_allowed": false,
+        "legacy_readers": 1,
+        "engine": "SQLite"
+      },
+      "faulty_implementation": "Resume by watermark alone and lose equal-watermark second key.",
+      "metamorphism": "Independent exercise invocation order is reversed; per-case observations and identities must remain equal. This does not reorder causally ordered events.",
+      "scope_limit": "Trusted local stdlib exercise only. Actual migration engine/version and dataset is NOT_VERIFIED until separately executed/corroborated. Neither model/agent competence nor SME/private holdout is inferred."
+    },
+    {
+      "case_id": "pack:dotnet:guardian_dotnet_runtime_specialist:depth:1",
+      "role_id": "pack:dotnet:guardian_dotnet_runtime_specialist",
+      "harness": "transitive-di",
+      "task": "Detect direct/transitive singleton capture, accept proper scope/factory and prove auth/cancellation semantics with401/403/200 and postcommit reconciliation.",
+      "native_stack": "Actual detected .NET SDK/host/testhost",
+      "required_native_evidence": [
+        "Build/test no SDK observado; detectar DI inválida, executar 401/403/200 e negação cross-tenant sem efeitos; comprovar propagação de token e estado transacional após cancelamento; factory/escopo por operação correto é controle negativo.",
+        "A avaliação rejeita captura direta/transitiva errada, aceita escopo/factory corretamente isolado e distingue cancelamento antes/depois de commit sem inventar rollback."
+      ],
+      "acceptance": [
+        "Build/test no SDK observado; detectar DI inválida, executar 401/403/200 e negação cross-tenant sem efeitos; comprovar propagação de token e estado transacional após cancelamento; factory/escopo por operação correto é controle negativo.",
+        "A avaliação rejeita captura direta/transitiva errada, aceita escopo/factory corretamente isolado e distingue cancelamento antes/depois de commit sem inventar rollback."
+      ],
+      "handoff": "S08",
+      "audit_items": [
+        "RC-07-EVAL",
+        "RC-07-DESIGN"
+      ],
+      "expected": {
+        "transitive_captive": true,
+        "proper_factory_captive": false,
+        "cancel_after_commit": "reconcile persisted state",
+        "dotnet_executed": false
+      },
+      "faulty_implementation": "Check only direct dependencies and miss transitive scoped capture.",
+      "metamorphism": "Independent exercise invocation order is reversed; per-case observations and identities must remain equal. This does not reorder causally ordered events.",
+      "scope_limit": "Trusted local stdlib exercise only. Actual detected .NET SDK/host/testhost is NOT_VERIFIED until separately executed/corroborated. Neither model/agent competence nor SME/private holdout is inferred."
+    },
+    {
+      "case_id": "pack:financial-systems:guardian_payment_reliability_specialist:depth:1",
+      "role_id": "pack:financial-systems:guardian_payment_reliability_specialist",
+      "harness": "durable-ledger",
+      "task": "Use tenant+operation identity, reject key/payload conflicts, reconcile provider/commit crash and TTL, partial refund/currency conservation by provider contract.",
+      "native_stack": "Actual synthetic provider/ledger runtime; no financial network",
+      "required_native_evidence": [
+        "Apenas um efeito por operação sob concorrência, conservação por moeda, estados finais reconciliados, recuperação após crash entre provider/commit, conflito da mesma chave com payload diferente recusado sem novo débito; nenhuma chamada financeira real.",
+        "Dois tenants podem usar o mesmo valor textual de chave sem colisão; mesma operação com payload divergente falha; retry após TTL e crash não geram débito silenciosamente duplicado."
+      ],
+      "acceptance": [
+        "Apenas um efeito por operação sob concorrência, conservação por moeda, estados finais reconciliados, recuperação após crash entre provider/commit, conflito da mesma chave com payload diferente recusado sem novo débito; nenhuma chamada financeira real.",
+        "Dois tenants podem usar o mesmo valor textual de chave sem colisão; mesma operação com payload divergente falha; retry após TTL e crash não geram débito silenciosamente duplicado."
+      ],
+      "handoff": "S08",
+      "audit_items": [
+        "RC-08-EVAL",
+        "RC-08-DESIGN"
+      ],
+      "expected": {
+        "sum_delta": -200,
+        "effects": 2,
+        "outbox": 2,
+        "rejected": [
+          "payload-conflict"
+        ],
+        "invalid_effects": 0
+      },
+      "faulty_implementation": "Retry bypasses composite identity and duplicates debit.",
+      "metamorphism": "Independent exercise invocation order is reversed; per-case observations and identities must remain equal. This does not reorder causally ordered events.",
+      "scope_limit": "Trusted local stdlib exercise only. Actual synthetic provider/ledger runtime; no financial network is NOT_VERIFIED until separately executed/corroborated. Neither model/agent competence nor SME/private holdout is inferred."
+    },
+    {
+      "case_id": "pack:frontend-experience:guardian_browser_accessibility_specialist:depth:1",
+      "role_id": "pack:frontend-experience:guardian_browser_accessibility_specialist",
+      "harness": "browser-interleavings",
+      "task": "Observe temporal focus/announcements on async/portal/shadow paths when present, use mounted fallback and disclose unexecuted AT/native matrix.",
+      "native_stack": "Actual browser/AT version for supplied journey and WCAG criterion",
+      "required_native_evidence": [
+        "Registrar browser/versão, sequência de teclado e foco observados, árvore acessível e anúncios quando AT disponível; restaurar destino significativo, prevenir foco perdido e reportar AT NOT_VERIFIED quando não executada.",
+        "Fixture com transição concorrente e erro repetido exige evidência temporal de foco/anúncio; associação a critério cita comportamento e versão, sem inferir conformidade total."
+      ],
+      "acceptance": [
+        "Registrar browser/versão, sequência de teclado e foco observados, árvore acessível e anúncios quando AT disponível; restaurar destino significativo, prevenir foco perdido e reportar AT NOT_VERIFIED quando não executada.",
+        "Fixture com transição concorrente e erro repetido exige evidência temporal de foco/anúncio; associação a critério cita comportamento e versão, sem inferir conformidade total."
+      ],
+      "handoff": "S05",
+      "audit_items": [
+        "RC-09-EVAL",
+        "RC-09-DESIGN"
+      ],
+      "expected": {
+        "focus": {
+          "tab_trapped": true,
+          "escape_closed": true,
+          "restored": "heading",
+          "restore_mounted": true
+        },
+        "form": {
+          "status": "pending",
+          "input": "draft",
+          "effects": 1
+        }
+      },
+      "faulty_implementation": "Lose focus on unmounted trigger or accept obsolete interaction state.",
+      "metamorphism": "Independent exercise invocation order is reversed; per-case observations and identities must remain equal. This does not reorder causally ordered events.",
+      "scope_limit": "Trusted local stdlib exercise only. Actual browser/AT version for supplied journey and WCAG criterion is NOT_VERIFIED until separately executed/corroborated. Neither model/agent competence nor SME/private holdout is inferred."
+    },
+    {
+      "case_id": "pack:quality-automation:guardian_contract_test_specialist:depth:1",
+      "role_id": "pack:quality-automation:guardian_contract_test_specialist",
+      "harness": "contract-mutation-suite",
+      "task": "Run contract-independent baseline and semantic mutants, assert body/status/effects/denial/cleanup; distinguish equivalent/invalid/notrun and first flake.",
+      "native_stack": "Actual project/provider/consumer and database test tools",
+      "required_native_evidence": [
+        "Suíte passa versão correta, falha em cada mutante semeado por razão/mensagem esperada, verifica corpo/status/efeitos/negação por recurso e rollback em engine relevante; dados isolados e limpeza comprovada.",
+        "Mudança só na implementação quebra teste; copiar fixture para espelhar implementação é rejeitado; mutante equivalente não conta como falha de cobertura sem justificativa."
+      ],
+      "acceptance": [
+        "Suíte passa versão correta, falha em cada mutante semeado por razão/mensagem esperada, verifica corpo/status/efeitos/negação por recurso e rollback em engine relevante; dados isolados e limpeza comprovada.",
+        "Mudança só na implementação quebra teste; copiar fixture para espelhar implementação é rejeitado; mutante equivalente não conta como falha de cobertura sem justificativa."
+      ],
+      "handoff": "S16",
+      "audit_items": [
+        "RC-10-EVAL",
+        "RC-10-DESIGN"
+      ],
+      "expected": {
+        "consumer": {
+          "baseline": [
+            "x",
+            0,
+            true
+          ],
+          "incompatible_wire_rejected": true,
+          "null_distinct_from_absent": true,
+          "denied_resource_effects": 0,
+          "cleanup": "fixture-owned"
+        },
+        "assertions": {
+          "baseline_pass": true,
+          "mutant_killed": true,
+          "reason": "balance invariant",
+          "critical_quarantine_blocks": true,
+          "first_failure_preserved": true
+        }
+      },
+      "faulty_implementation": "Drop required field or distinguishing assertion while reporting green suite.",
+      "metamorphism": "Independent exercise invocation order is reversed; per-case observations and identities must remain equal. This does not reorder causally ordered events.",
+      "scope_limit": "Trusted local stdlib exercise only. Actual project/provider/consumer and database test tools is NOT_VERIFIED until separately executed/corroborated. Neither model/agent competence nor SME/private holdout is inferred."
+    },
+    {
+      "case_id": "pack:security-assurance:guardian_threat_model_specialist:depth:1",
+      "role_id": "pack:security-assurance:guardian_threat_model_specialist",
+      "harness": "alternate-threat-paths",
+      "task": "Separate potential threat/reachable path/observed effect, revalidate redirects/DNS and alternative authorized cache paths; refute protected inert control.",
+      "native_stack": "Authorized inert resolver/transport/cache fixture",
+      "required_native_evidence": [
+        "Em fixture autorizada sem metadata externa, reproduzir caminho mínimo, identificar precondição/efeito e refutar payload inerte; retestar mitigação nos redirects, cache e autorização sem acessar dados reais.",
+        "Dois casos parecidos com e sem egress/cache authorization produzem conclusões diferentes; alegação de exfiltração exige efeito observado em fixture, nunca só diagrama."
+      ],
+      "acceptance": [
+        "Em fixture autorizada sem metadata externa, reproduzir caminho mínimo, identificar precondição/efeito e refutar payload inerte; retestar mitigação nos redirects, cache e autorização sem acessar dados reais.",
+        "Dois casos parecidos com e sem egress/cache authorization produzem conclusões diferentes; alegação de exfiltração exige efeito observado em fixture, nunca só diagrama."
+      ],
+      "handoff": "S13",
+      "audit_items": [
+        "RC-11-EVAL",
+        "RC-11-DESIGN"
+      ],
+      "expected": {
+        "transport": {
+          "reached": [
+            "public.test@8.8.8.8"
+          ],
+          "denied": [
+            "redirect.test",
+            "rebind.test"
+          ],
+          "external_requests": 0
+        },
+        "cache": {
+          "tenant": "b",
+          "locale": "ar",
+          "serialization_roundtrip": true
+        }
+      },
+      "faulty_implementation": "Rely on initialDNS and shared cachekey to expose forbidden destinations/data.",
+      "metamorphism": "Independent exercise invocation order is reversed; per-case observations and identities must remain equal. This does not reorder causally ordered events.",
+      "scope_limit": "Trusted local stdlib exercise only. Authorized inert resolver/transport/cache fixture is NOT_VERIFIED until separately executed/corroborated. Neither model/agent competence nor SME/private holdout is inferred."
+    },
+    {
+      "case_id": "pack:windows-tooling:guardian_windows_powershell_specialist:depth:1",
+      "role_id": "pack:windows-tooling:guardian_windows_powershell_specialist",
+      "harness": "literal-whatif",
+      "task": "Inspect all path components near mutation, prove LiteralPath/WhatIf/cancel/restore and reject junction swap; abstain if verified boundary unavailable.",
+      "native_stack": "Actual observed PowerShell/ACL/reparse-safe boundary",
+      "required_native_evidence": [
+        "Observação efetiva de alvos/ACL e diffs antes/depois demonstra literalidade, zero escrita no WhatIf, bloqueio do escape e restauração após cancelamento; nenhuma mudança global/política/elevação.",
+        "Fixture controlada troca link após validação inicial; operação não segue fora do escopo e gera evidência de bloqueio. Não apresentar inspeção anterior como garantia contra toda corrida."
+      ],
+      "acceptance": [
+        "Observação efetiva de alvos/ACL e diffs antes/depois demonstra literalidade, zero escrita no WhatIf, bloqueio do escape e restauração após cancelamento; nenhuma mudança global/política/elevação.",
+        "Fixture controlada troca link após validação inicial; operação não segue fora do escopo e gera evidência de bloqueio. Não apresentar inspeção anterior como garantia contra toda corrida."
+      ],
+      "handoff": "S15",
+      "audit_items": [
+        "RC-12-EVAL",
+        "RC-12-DESIGN"
+      ],
+      "expected": {
+        "what_if_unchanged": true,
+        "literal_name": "a;$(whoami) with space.txt",
+        "native_acl_observed": false,
+        "junction_race": "mutation blocked without verified boundary"
+      },
+      "faulty_implementation": "Write despite WhatIf; early path inspection falsely treated as permanent safe boundary.",
+      "metamorphism": "Independent exercise invocation order is reversed; per-case observations and identities must remain equal. This does not reorder causally ordered events.",
+      "scope_limit": "Trusted local stdlib exercise only. Actual observed PowerShell/ACL/reparse-safe boundary is NOT_VERIFIED until separately executed/corroborated. Neither model/agent competence nor SME/private holdout is inferred."
+    }
+  ]
+}

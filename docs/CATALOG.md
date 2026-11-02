@@ -8,45 +8,45 @@ Reviewed sources: `core/contracts-catalog-v1.json` owns identity/base instructio
 
 | ID | Role | Kind | Reviewer | Profile SHA-256 |
 |---|---|---|---|---|
-| A00 | guardian_engineering_orchestrator | core | G01 | 921d2e09f0f9a6779df2fa65fc24c223f97ac7651def1f9a1f672f031a02f732 |
-| S01 | guardian_product_discovery | core | G01 | 23fc07371774c144039fa5a6e1d53400bc4b0f2a6766c5fb681b93c0e27df9b9 |
-| S02 | guardian_requirements_engineer | core | G01 | c4d229dc5fe2891d90f2a370f638743003d046c40d64b34d8276f72e0a4b93c9 |
-| S03 | guardian_solutions_architect | core | G01 | c50bad9a6b76a5d171934790f9f1d55444d90407209da957363a5b1696a3b12d |
-| S04 | guardian_frontend_architect | core | G01 | 6857f407d92f3249ac3298b71a3e907655e767730efd53de948323972d30ceb3 |
-| S05 | guardian_frontend_engineer | core | G01 | b27195871e86fe1c9026fd051e001ace62c11b6b8144addc79c174b38ea5f6fd |
-| S06 | guardian_ux_accessibility | core | G01 | de6202f85d39c0aeb455ce1903c3eb3a27cfd8aea19cb14bb305e6d27266d802 |
-| S07 | guardian_web_performance | core | G01 | 672f4705ad8c2c7b6794481dc94cde25912995fa8328ece520e2d63118063328 |
-| S08 | guardian_backend_domain | core | G01 | 2b31da4e41977b399d599499da6cb5e878825935103f9428552c662779babda7 |
-| S09 | guardian_api_integration | core | G01 | 5c355baf5066b15971ca2453e46d6113cdc1188578affa59dcdabc1b38a7fff1 |
-| S10 | guardian_distributed_concurrency | core | G01 | de4a233f7d3f92ba0c65557279e1907a6f85550e0d3c37813924cdeb7488d375 |
-| S11 | guardian_database_transactions | core | G01 | bad111b486b78e4bac12d330128e80f27744f60fa0841127a1014ef13ddd8455 |
-| S12 | guardian_data_governance | core | G01 | 57b0d0f68f22b561586f58edeccd5c9ae7daef3389ca6ce74756d5a2ada43319 |
-| S13 | guardian_appsec | core | G01 | c0b9350d5c695044a460f47bb12f417b8167848a777da03a3682a9da71460b9d |
-| S14 | guardian_iam_privacy | core | G01 | e96bd8d23094aa6324395915870d8c95e72fbab9c4c73f407a9ad52d9970d99c |
-| S15 | guardian_cloud_supply_security | core | G01 | 9e2ba9fc2b0e223639812419951b535e3cee5d24cf8adb620a0f7062354f7a71 |
-| S16 | guardian_quality_architect | core | G01 | 195ebc2bfff9c69ef6e1a40432ad8fc395f9a4d246eba2d04f48f704f4d5d297 |
-| S17 | guardian_frontend_qa | core | G01 | 8277ac4f7f3033193f43560db015da6a5c7f37164e420532a563994112f1e090 |
-| S18 | guardian_backend_qa | core | G01 | eeaa61de25603d0de7a2af121592f4e16f0ebb4030c55138884e229e6cb25015 |
-| S19 | guardian_performance_capacity | core | G01 | b10c70a3a3d195ff7dd02d76eb4dbae4adcf43208714bb52a46c40fb68216dad |
-| S20 | guardian_sre_resilience | core | G01 | cc24e50beabc4c64c6ed00cdd1f6167ecdbb1d8558b442e3f283627510700c08 |
-| S21 | guardian_observability | core | G01 | 18b3e8f825a2899f61fa2eda56bbfa5df7e89ace7d1e77759fc5c2c389e10b19 |
-| S22 | guardian_cloud_platform | core | G01 | 9685ae6780bf4a1eca7df84a0b42b05ff1a16dba633bf88a69c1d44956f70b06 |
-| S23 | guardian_devsecops | core | G01 | 947e659b8e7440b924b0e8c85c9d4b4bd0c4bcff1963bfe092440a29fa9af993 |
-| S24 | guardian_maintainability | core | G01 | 73760a66ca076e291c8e49cc6c7949a5759cbbbf6f0b82eaf06c9eecd493e402 |
-| S25 | guardian_governance_finops | core | G01 | b49e62208a1fb6fa95b1eab043f5e81a05411ec12db640dbbfeb74d07c1b5455 |
-| S26 | guardian_ai_assurance | core | G01 | 5a4918d19502cab9d3e3f4e9f08754c6866767ce803f008ee1bb352b41f32252 |
-| G01 | guardian_independent_auditor | core | G02 | abdac11de0e5d8b1710a4c4dd7f34dcafd4b45e49e50b9a2437a4e2fcd2db1b1 |
-| G02 | guardian_release_auditor | core | G01 | ded5b175186e1a3703dd89df3542e1a695bca19d94e02215a1a343e4a3907cdd |
-| pack:ai-systems:guardian_rag_llm_specialist | guardian_rag_llm_specialist | optional | G01 | 419277779d05e25eb18c22d066514d391954e7788136a770ac7121197dd7b430 |
-| pack:api-integration:guardian_api_contract_specialist | guardian_api_contract_specialist | optional | G01 | 6a015ca7e504cf9196fc31526f0544a864253931ac07518e84b1fdfe0c0b0027 |
-| pack:cloud-platform:guardian_cloud_infrastructure_specialist | guardian_cloud_infrastructure_specialist | optional | G01 | b43c2a3f9003e77894d8c6b0bfd495ccd53cfa2a55a7a74c30988dea0ded5406 |
-| pack:data-engineering:guardian_data_migration_specialist | guardian_data_migration_specialist | optional | G01 | 9196b70a17d3cd23afee5bb048a1bf24ef65bf4d279cc72b5e6713c8c46c036c |
-| pack:dotnet:guardian_dotnet_runtime_specialist | guardian_dotnet_runtime_specialist | optional | G01 | 1978c4b36d97dfc21c5897b28cd606496c49c183f34cdbdcd470a9b849e70a6d |
-| pack:financial-systems:guardian_payment_reliability_specialist | guardian_payment_reliability_specialist | optional | G01 | 48bda262d0ee1ef67cd58e57a3151b30130dc3e8d906b3d4595fcd6789c079a6 |
-| pack:frontend-experience:guardian_browser_accessibility_specialist | guardian_browser_accessibility_specialist | optional | G01 | 5da0a7a89402be513c7cb43162f93dfbbdc3e69e68a688a3cfd31b39e3f43091 |
-| pack:quality-automation:guardian_contract_test_specialist | guardian_contract_test_specialist | optional | G01 | b7a259399ccdf234e2eb207b8edb6e77b805081c488086bb12da2fb293eb9607 |
-| pack:security-assurance:guardian_threat_model_specialist | guardian_threat_model_specialist | optional | G01 | bd987b7e68d152d7d9d1ba16a48d86295517f55270d9f939c239cbc0ff7776da |
-| pack:windows-tooling:guardian_windows_powershell_specialist | guardian_windows_powershell_specialist | optional | G01 | 1beff331f76c405409f6945329e3d1345fbde27039b01cecfb9ecd11c8994cf9 |
+| A00 | guardian_engineering_orchestrator | core | G01 | 9460b63b02288394a8d1cebefbe1a6428e7f1f165877c7be740a4748ce33a936 |
+| S01 | guardian_product_discovery | core | G01 | 5e48459a6e8085088f8ae5349d0244e5ad5e3ffc2532d6864814270b8e97e25f |
+| S02 | guardian_requirements_engineer | core | G01 | f341ed25cbcfa607687260cd28ad9811f9c6868ddab640a1b4cd3e23555293b2 |
+| S03 | guardian_solutions_architect | core | G01 | 29b5d23d8542117b1d2e352ee0ca4fd73b6c5bb98812b0b838bf60d61dd5ed86 |
+| S04 | guardian_frontend_architect | core | G01 | 787c027f1cbe9c8f7f4d0ec8c7e3662c10a207844b08c2f615a81406b414f383 |
+| S05 | guardian_frontend_engineer | core | G01 | 5b82e8f9584230f8ec7b204c47dba3b369e176fff400c88e6bfc7a309621bbcf |
+| S06 | guardian_ux_accessibility | core | G01 | 281c9a295f837412e81e71f26c045fd11890bb137a8364b54ca9398875550193 |
+| S07 | guardian_web_performance | core | G01 | 4272b21ad83f4f7daf7ff6375f276018082c123a824e7e4e422bad4c348cd66d |
+| S08 | guardian_backend_domain | core | G01 | 394c22f7d925e07218bf67301c9e6bcd6062e236c84586a072b799f9caa27e39 |
+| S09 | guardian_api_integration | core | G01 | b00b590b9b583340d4d7a65cf40ca455b500636fc6629b84dbb6767f3214a54e |
+| S10 | guardian_distributed_concurrency | core | G01 | 43e87e87c4a57f3af2e19c2518ce698875623440979e45198266512cf04b4d99 |
+| S11 | guardian_database_transactions | core | G01 | 85f58edb1173343305dfab3fcbd4d1474b0da21961e805c482ce74025f0c0a65 |
+| S12 | guardian_data_governance | core | G01 | 745f1ab8410e9983256f89ce10f120c09c077ba5f62cc055bab2360d260e61b9 |
+| S13 | guardian_appsec | core | G01 | 0417134e4d6df11ca8e0a7ef4449dd1dee8cabb19233565a52450d5e1ec9fbb1 |
+| S14 | guardian_iam_privacy | core | G01 | 9ad2972dc74015971232e27804a53489c1d5f3bb71fc288b47185abc474fceb8 |
+| S15 | guardian_cloud_supply_security | core | G01 | 7676a8458f1a9405d95e81343185a493d41281503e7c4a5f624c4fe2b41882d4 |
+| S16 | guardian_quality_architect | core | G01 | 0bff7d7b1654d078eceb1d38f276acab92216345ce6a13329b9e2051b8fa13b0 |
+| S17 | guardian_frontend_qa | core | G01 | f230ced64265c3c32fdc11e3eb3d5b3f9123d1e1b372ab11a89504bc606209a7 |
+| S18 | guardian_backend_qa | core | G01 | bd2c1cd377b051bfd1cdee5806875292d531f543617831144892cac39ee9ad3d |
+| S19 | guardian_performance_capacity | core | G01 | 40def0a961dcb71e820c95e40d0e64635c3679a15ef408716a730617f5aed0ce |
+| S20 | guardian_sre_resilience | core | G01 | 5f154f17a04857d18dd0809e59211413404c6ac9370a98b2b1cc73fa87e54de6 |
+| S21 | guardian_observability | core | G01 | 69e2a03953dd2e047f0e7e8bbf20b7b5677c928855eb65b0a3fb99ab8674b950 |
+| S22 | guardian_cloud_platform | core | G01 | db26aa2bd96fb618f8955c36f3012069b1a05c9aae82f3079ef245b823e0e37e |
+| S23 | guardian_devsecops | core | G01 | 21ecd26d6e86a5021bc271fe8db71491d7b9ee95f4a5a786c6cbd0e9f9db7097 |
+| S24 | guardian_maintainability | core | G01 | 94b21a55f75514616dccd98c05db7c072961090d38e2eb8101cf6b22fc59cb08 |
+| S25 | guardian_governance_finops | core | G01 | df57d0c6e57b98f7d8255474e06e8815239a3e10bef51854eb125749303c80f8 |
+| S26 | guardian_ai_assurance | core | G01 | dca06a3b340c8010697fb3fddde39b07109ef6d70a82d1bfc1a1b14c33df6f7a |
+| G01 | guardian_independent_auditor | core | G02 | 9050b90db7702584a864a4f06b61643972056dde94f31f35ca0a8cbc400fc414 |
+| G02 | guardian_release_auditor | core | G01 | 45f20a967f2d3a8c277504ba87f08c2b34cb8026dfb5aa2245f4a59bd731d21e |
+| pack:ai-systems:guardian_rag_llm_specialist | guardian_rag_llm_specialist | optional | G01 | 842bd72912b35f948121770ac0923bcd2fbe4f3fc781a4181d5989f3e5104e21 |
+| pack:api-integration:guardian_api_contract_specialist | guardian_api_contract_specialist | optional | G01 | c3947d4681f82248f0afaa8e54debd36871581f6f50428916641484a369a9b60 |
+| pack:cloud-platform:guardian_cloud_infrastructure_specialist | guardian_cloud_infrastructure_specialist | optional | G01 | 5622acdd7c193e15b2d7b0af99e126e754e0df5d24b283e7fdd8cd661d697825 |
+| pack:data-engineering:guardian_data_migration_specialist | guardian_data_migration_specialist | optional | G01 | 8674ff639c076e2cbca9dc9dc315f3411d50cd5fc02ea7029ee305dfb78e1ad5 |
+| pack:dotnet:guardian_dotnet_runtime_specialist | guardian_dotnet_runtime_specialist | optional | G01 | 96e02e99d6dfd8055a49753f81b0608198d60b90d42d5f1ac68a51f04e79123c |
+| pack:financial-systems:guardian_payment_reliability_specialist | guardian_payment_reliability_specialist | optional | G01 | 37b75ab69f209bfff73b98c61d59a09b2f1096f8013dfa6427532e47e81d2263 |
+| pack:frontend-experience:guardian_browser_accessibility_specialist | guardian_browser_accessibility_specialist | optional | G01 | 293d02565c2dccf25e59c2c62f4ea872aef66966442b58b62935ecf4ba324754 |
+| pack:quality-automation:guardian_contract_test_specialist | guardian_contract_test_specialist | optional | G01 | 779443cbb36a6f301e91399e72c817f16260bd0cf671dbba5b527982fea6a5c8 |
+| pack:security-assurance:guardian_threat_model_specialist | guardian_threat_model_specialist | optional | G01 | 2ab6289489c155bd0defe522b93213b33913d334ed446a9e44c554e61a4b9471 |
+| pack:windows-tooling:guardian_windows_powershell_specialist | guardian_windows_powershell_specialist | optional | G01 | 2402175e580492d8b9642a05082f9c8c74b9571e88de9c6fe372b56bfb777977 |
 
 ## Nomes profissionais oficiais (39)
 
@@ -100,45 +100,45 @@ Contracts are declarations, not certificates. All professional qualification rem
 
 | ID | Modes | Typed capabilities | Required tool needs | Contract |
 |---|---|---|---|---|
-| A00 | audit, build, remediate, explore | 0 | project_artifact_reader | 1.0.0 |
-| S01 | audit, build, remediate, explore | 8 | project_artifact_reader | 1.0.0 |
-| S02 | audit, build, remediate, explore | 17 | project_artifact_reader | 1.0.0 |
-| S03 | audit, build, remediate, explore | 29 | project_artifact_reader | 1.0.0 |
-| S04 | audit, build, remediate, explore | 33 | project_artifact_reader | 1.0.0 |
-| S05 | audit, build, remediate, explore | 13 | project_artifact_reader | 1.0.0 |
-| S06 | audit, build, remediate, explore | 6 | project_artifact_reader | 1.0.0 |
-| S07 | audit, build, remediate, explore | 2 | project_artifact_reader | 1.0.0 |
-| S08 | audit, build, remediate, explore | 3 | project_artifact_reader | 1.0.0 |
-| S09 | audit, build, remediate, explore | 2 | project_artifact_reader | 1.0.0 |
-| S10 | audit, build, remediate, explore | 26 | project_artifact_reader | 1.0.0 |
-| S11 | audit, build, remediate, explore | 9 | project_artifact_reader | 1.0.0 |
-| S12 | audit, build, remediate, explore | 13 | project_artifact_reader | 1.0.0 |
-| S13 | audit, build, remediate, explore | 12 | project_artifact_reader | 1.0.0 |
-| S14 | audit, build, remediate, explore | 11 | project_artifact_reader | 1.0.0 |
-| S15 | audit, build, remediate, explore | 13 | project_artifact_reader | 1.0.0 |
-| S16 | audit, build, remediate, explore | 20 | project_artifact_reader | 1.0.0 |
-| S17 | audit, build, remediate, explore | 5 | project_artifact_reader | 1.0.0 |
-| S18 | audit, build, remediate, explore | 5 | project_artifact_reader | 1.0.0 |
-| S19 | audit, build, remediate, explore | 5 | project_artifact_reader | 1.0.0 |
-| S20 | audit, build, remediate, explore | 8 | project_artifact_reader | 1.0.0 |
-| S21 | audit, build, remediate, explore | 3 | project_artifact_reader | 1.0.0 |
-| S22 | audit, build, remediate, explore | 3 | project_artifact_reader | 1.0.0 |
-| S23 | audit, build, remediate, explore | 3 | project_artifact_reader | 1.0.0 |
-| S24 | audit, build, remediate, explore | 8 | project_artifact_reader | 1.0.0 |
-| S25 | audit, build, remediate, explore | 6 | project_artifact_reader | 1.0.0 |
-| S26 | audit, build, remediate, explore | 1 | project_artifact_reader | 1.0.0 |
-| G01 | audit, explore | 132 | project_artifact_reader | 1.0.0 |
-| G02 | audit, explore | 0 | project_artifact_reader | 1.0.0 |
-| pack:ai-systems:guardian_rag_llm_specialist | audit, build, remediate, explore | 12 | project_artifact_reader | 1.0.0 |
-| pack:api-integration:guardian_api_contract_specialist | audit, build, remediate, explore | 11 | project_artifact_reader | 1.0.0 |
-| pack:cloud-platform:guardian_cloud_infrastructure_specialist | audit, build, remediate, explore | 9 | project_artifact_reader | 1.0.0 |
-| pack:data-engineering:guardian_data_migration_specialist | audit, build, remediate, explore | 15 | project_artifact_reader | 1.0.0 |
-| pack:dotnet:guardian_dotnet_runtime_specialist | audit, build, remediate, explore | 15 | project_artifact_reader | 1.0.0 |
-| pack:financial-systems:guardian_payment_reliability_specialist | audit, build, remediate, explore | 18 | project_artifact_reader | 1.0.0 |
-| pack:frontend-experience:guardian_browser_accessibility_specialist | audit, build, remediate, explore | 18 | project_artifact_reader | 1.0.0 |
-| pack:quality-automation:guardian_contract_test_specialist | audit, build, remediate, explore | 8 | project_artifact_reader | 1.0.0 |
-| pack:security-assurance:guardian_threat_model_specialist | audit, build, remediate, explore | 14 | project_artifact_reader | 1.0.0 |
-| pack:windows-tooling:guardian_windows_powershell_specialist | audit, build, remediate, explore | 9 | project_artifact_reader | 1.0.0 |
+| A00 | audit, build, remediate, explore | 0 | project_artifact_reader | 1.1.0 |
+| S01 | audit, build, remediate, explore | 8 | project_artifact_reader | 1.1.0 |
+| S02 | audit, build, remediate, explore | 17 | project_artifact_reader | 1.1.0 |
+| S03 | audit, build, remediate, explore | 29 | project_artifact_reader | 1.1.0 |
+| S04 | audit, build, remediate, explore | 33 | project_artifact_reader | 1.1.0 |
+| S05 | audit, build, remediate, explore | 13 | project_artifact_reader | 1.1.0 |
+| S06 | audit, build, remediate, explore | 6 | project_artifact_reader | 1.1.0 |
+| S07 | audit, build, remediate, explore | 2 | project_artifact_reader | 1.1.0 |
+| S08 | audit, build, remediate, explore | 3 | project_artifact_reader | 1.1.0 |
+| S09 | audit, build, remediate, explore | 2 | project_artifact_reader | 1.1.0 |
+| S10 | audit, build, remediate, explore | 26 | project_artifact_reader | 1.1.0 |
+| S11 | audit, build, remediate, explore | 9 | project_artifact_reader | 1.1.0 |
+| S12 | audit, build, remediate, explore | 13 | project_artifact_reader | 1.1.0 |
+| S13 | audit, build, remediate, explore | 12 | project_artifact_reader | 1.1.0 |
+| S14 | audit, build, remediate, explore | 11 | project_artifact_reader | 1.1.0 |
+| S15 | audit, build, remediate, explore | 13 | project_artifact_reader | 1.1.0 |
+| S16 | audit, build, remediate, explore | 20 | project_artifact_reader | 1.1.0 |
+| S17 | audit, build, remediate, explore | 5 | project_artifact_reader | 1.1.0 |
+| S18 | audit, build, remediate, explore | 5 | project_artifact_reader | 1.1.0 |
+| S19 | audit, build, remediate, explore | 5 | project_artifact_reader | 1.1.0 |
+| S20 | audit, build, remediate, explore | 8 | project_artifact_reader | 1.1.0 |
+| S21 | audit, build, remediate, explore | 3 | project_artifact_reader | 1.1.0 |
+| S22 | audit, build, remediate, explore | 3 | project_artifact_reader | 1.1.0 |
+| S23 | audit, build, remediate, explore | 3 | project_artifact_reader | 1.1.0 |
+| S24 | audit, build, remediate, explore | 8 | project_artifact_reader | 1.1.0 |
+| S25 | audit, build, remediate, explore | 6 | project_artifact_reader | 1.1.0 |
+| S26 | audit, build, remediate, explore | 1 | project_artifact_reader | 1.1.0 |
+| G01 | audit, explore | 132 | project_artifact_reader | 1.1.0 |
+| G02 | audit, explore | 0 | project_artifact_reader | 1.1.0 |
+| pack:ai-systems:guardian_rag_llm_specialist | audit, build, remediate, explore | 12 | project_artifact_reader | 1.1.0 |
+| pack:api-integration:guardian_api_contract_specialist | audit, build, remediate, explore | 11 | project_artifact_reader | 1.1.0 |
+| pack:cloud-platform:guardian_cloud_infrastructure_specialist | audit, build, remediate, explore | 9 | project_artifact_reader | 1.1.0 |
+| pack:data-engineering:guardian_data_migration_specialist | audit, build, remediate, explore | 15 | project_artifact_reader | 1.1.0 |
+| pack:dotnet:guardian_dotnet_runtime_specialist | audit, build, remediate, explore | 15 | project_artifact_reader | 1.1.0 |
+| pack:financial-systems:guardian_payment_reliability_specialist | audit, build, remediate, explore | 18 | project_artifact_reader | 1.1.0 |
+| pack:frontend-experience:guardian_browser_accessibility_specialist | audit, build, remediate, explore | 18 | project_artifact_reader | 1.1.0 |
+| pack:quality-automation:guardian_contract_test_specialist | audit, build, remediate, explore | 8 | project_artifact_reader | 1.1.0 |
+| pack:security-assurance:guardian_threat_model_specialist | audit, build, remediate, explore | 14 | project_artifact_reader | 1.1.0 |
+| pack:windows-tooling:guardian_windows_powershell_specialist | audit, build, remediate, explore | 9 | project_artifact_reader | 1.1.0 |
 
 Required tool needs are abstract capabilities, not native tool names, permission grants or observations. Dynamic runners are conditional on the task. Missing essential capability blocks only the dependent check; static review must label its limits.
 

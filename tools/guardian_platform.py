@@ -115,7 +115,7 @@ def create_plan(prompt: str, project: Path | None = None, mode: str = "build",
     professional_contracts={c['id']:c for c in load_contracts(root)['contracts']}
     selected = result["agents"]
     if len(selected) > max_agents:
-        raise PlatformError("Routing exceeds agent budget; human must refine scope, no silent dropping")
+        raise PlatformError("Routing exceeds agent budget; primary must refine scope within existing authorization, no silent dropping")
     waves = result["execution_waves"]
     if len(waves) > max_waves:
         raise PlatformError("Routing exceeds wave budget")
@@ -164,7 +164,11 @@ def create_plan(prompt: str, project: Path | None = None, mode: str = "build",
     if seen != {a["id"] for a in selected}:
         raise PlatformError("Selected agents missing from plan")
     risk = result["risk"]
-    needs_human = risk in ("high", "critical") or result["approval_boundaries"] != []
+    # Risk determines required review, not fresh authorization for an already
+    # permitted read. Proposed writes still require scoped supervisor grants;
+    # imported plans cannot say that the user has authorized them.
+    read_only = mode in ('audit', 'explore')
+    needs_human = not read_only and (risk in ("high", "critical") or result["approval_boundaries"] != [])
     phase = next(p for p in workflows["phases"] if p["id"] == stage)
     plan = {
         "schema_version": 1,
@@ -199,6 +203,10 @@ def create_plan(prompt: str, project: Path | None = None, mode: str = "build",
         "tasks": tasks,
         "lifecycle_exit_criteria": phase["criteria"],
         "human_authorization_required": needs_human,
+        "effect_assessment": {"domain_risk": risk, "proposed_effect": "read_only" if read_only else "scoped_local_change_proposal",
+            "independent_review_required": risk in ("high", "critical"),
+            "execution_authorization": "not_established_by_plan", "effective_permissions": "inherited_not_attested",
+            "new_sensitive_effect_requires_authorization": True},
         "approval_boundaries": result["approval_boundaries"],
         "runtime_permissions": "inherited_from_codex_session",
         "limitations": [
@@ -343,6 +351,50 @@ def validate_evidence(report: dict, plan: dict) -> dict:
     }
 
 
+def execution_readiness(plan, observation, current_context, tool_bindings, root=ROOT):
+    """Read-only execution preflight using current exposed roles and tools.
+
+    Bindings map abstract contract capabilities to actually exposed tool IDs.
+    A missing binding blocks that task instead of inventing a tool or removing
+    the obligation. This verifies dependency observations, not authorization.
+    """
+    try:
+        from .guardian_capabilities import FEATURES, require_runtime_dependencies
+        from .guardian_professional import load_contracts
+        from .guardian_catalog import catalog_document
+    except ImportError:
+        from guardian_capabilities import FEATURES, require_runtime_dependencies
+        from guardian_professional import load_contracts
+        from guardian_catalog import catalog_document
+    validate_plan(plan, root=root)
+    if not isinstance(tool_bindings, dict) or len(tool_bindings) > 256:
+        raise PlatformError('Explicit capability-to-tool bindings required')
+    for key, values in tool_bindings.items():
+        if not isinstance(key, str) or not isinstance(values, list) or not values or any(not isinstance(x, str) or not x for x in values):
+            raise PlatformError('Invalid tool binding')
+    contracts = {c['id']: c for c in load_contracts(root)['contracts']}
+    profiles = {r['name']: r['sha256'] for r in catalog_document(root)['records']}
+    tasks = []
+    for task in plan['tasks']:
+        requirements = set(task['contract']['tool_requirements']) | {t['capability'] for t in contracts[task['agent_id']]['tool_policy']['required']}
+        aliases = {'read_only_sandbox': 'filesystem_isolation', 'workspace_write_sandbox': 'filesystem_isolation',
+                   'workspace_sandbox': 'filesystem_isolation'}
+        features = {aliases.get(cap, cap) for cap in requirements if cap in FEATURES or cap in aliases} | {'spawn'}
+        tool_requirements = requirements - set(FEATURES) - set(aliases)
+        missing = sorted(cap for cap in tool_requirements if cap not in tool_bindings)
+        tools = sorted({tool for cap in tool_requirements for tool in tool_bindings.get(cap, [])})
+        result = require_runtime_dependencies(observation, current_context,
+                    roles=[task['agent_type']], tools=tools, features=sorted(features))
+        if current_context['profiles'].get(task['agent_type']) != profiles.get(task['agent_type']):
+            result['blocked_dependencies'].append('current_profile_not_observed:' + task['agent_type'])
+            result['allowed'] = False
+        tasks.append({'task': task['id'], 'dependencies_observed': result['allowed'] and not missing,
+                      'missing_tool_bindings': missing, 'blocked_dependencies': result['blocked_dependencies']})
+    return {'schema_version': 1, 'ok': all(t['dependencies_observed'] for t in tasks),
+            'tasks': tasks, 'authorization_granted': False, 'execution_performed': False,
+            'native_execution_verified': False, 'semantic_correctness_verified': False}
+
+
 def security_lint(root: Path = ROOT) -> dict:
     """Non-executing conservative static review of agent configuration only."""
     root = Path(root)
@@ -412,6 +464,9 @@ def main(argv: list[str] | None = None) -> int:
     q = sub.add_parser("verify")
     q.add_argument("--plan", required=True, type=Path)
     q.add_argument("--evidence", required=True, type=Path)
+    q = sub.add_parser('preflight', help='Observe native task dependencies without executing them')
+    for flag in ('plan', 'observation', 'context', 'tool-bindings'):
+        q.add_argument('--' + flag, required=True, type=Path)
     sub.add_parser("security-lint")
     a = p.parse_args(argv)
     try:
@@ -423,6 +478,9 @@ def main(argv: list[str] | None = None) -> int:
                 intent_contract=_read_json(a.intent_file) if a.intent_file else None)
         elif a.command == "verify":
             out = validate_evidence(_read_json(a.evidence), _read_json(a.plan))
+        elif a.command == 'preflight':
+            out = execution_readiness(_read_json(a.plan), _read_json(a.observation),
+                                     _read_json(a.context), _read_json(a.tool_bindings))
         else:
             out = security_lint()
         print(json.dumps(out, ensure_ascii=False, indent=2))

@@ -14,12 +14,12 @@ These are public data projections, not professional certification, authenticated
 policy review, live infrastructure execution, or authority to perform actions.
 """
 
-VERSION = 2
+VERSION = 3
 
 CONTRACTS = {
     'obligations': {
         'missing_obligations': 'Array of unique requested obligation strings absent from the union of every task.obligations; include tasks regardless of readiness.',
-        'unsafe_ready_tasks': 'Array of task IDs for tasks whose ready is true and at least one evidence entry is absent from verified_evidence. This checks supplied evidence labels, not the evidence authenticity.',
+        'unsafe_ready_tasks': 'Array of task IDs whose ready is true and whose evidence is empty, or contains an entry absent from verified_evidence or present in optional contradicted_evidence (default empty). Readiness requires nonempty, verified, non-contradicted evidence. Supplied labels do not establish authenticity.',
     },
     'cohorts': {
         'retention_rates': 'Object mapping each cohort label to the string form of Decimal(retained)/Decimal(activated), computed at 28 significant digits with ROUND_HALF_EVEN. Do not multiply by 100, quantize to a fixed scale, or emit JSON numbers; preserve the Decimal division string representation.',

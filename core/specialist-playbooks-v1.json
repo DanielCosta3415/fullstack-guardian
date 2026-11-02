@@ -11,9 +11,13 @@
         "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
         "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
         "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
+        "[A00-D1] Declarar política de evidência mínima para ready e avaliar ausência explícita; adicionar contraste de lista vazia, evidência desconhecida e evidência verificada.",
+        "[A00-P1] Adicionar artefato de dependências/evidências e testes de invalidação/ciclo/orçamento; aceite por G01 e pelo consumidor de cada tarefa.",
         "Nenhuma obrigação pode desaparecer na síntese; consumidor aceita handoff; bloqueios e desvios do roteador têm motivo verificável",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
-        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas.",
+        "[A00-D1] Input reproduzido deve retornar unsafe_ready_tasks=[fix]; evidência verificada deve permitir lista vazia de inseguras; os dois fixtures existentes preservam seus resultados.",
+        "[A00-P1] Caso contrafactual remove uma evidência: todo dependente perde prontidão, trabalho independente continua e nenhuma obrigação desaparece."
       ]
     },
     "S01": {
@@ -25,9 +29,11 @@
         "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
         "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
         "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
+        "[S01-P1] Pacote de descoberta com procedência e consentimento da pesquisa quando aplicável; S02 recebe decisão/problema e critérios, S25 recebe custo e restrições, sem automatizar contato com usuários.",
         "Recomendação liga decisão à evidência; desconhecidos permanecem explícitos; métrica não premia comportamento contrário ao resultado do usuário",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
-        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas.",
+        "[S01-P1] Entregar denominadores/janelas/segmentos, hipóteses concorrentes, guardrail e experimento discriminante; não inferir causalidade nem entrevistas ausentes."
       ]
     },
     "S02": {
@@ -39,9 +45,11 @@
         "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
         "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
         "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
+        "[S02-P1] Template de contrato de requisito com unidades, fuso, tolerância, ator negado e política de mudança; handoff S03/S08/S16 com exemplos executáveis e aceite explícito.",
         "Cada requisito tem owner e verificação; termos como rápido ou seguro têm contexto mensurável; ambiguidade material bloqueia apenas trabalho dependente",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
-        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas.",
+        "[S02-P1] IDs estáveis ligam regra vigente, autoridade, exemplos de fronteira temporal, teste e consumidor; trabalho ambíguo fica bloqueado sem suspender leitura independente."
       ]
     },
     "S03": {
@@ -53,9 +61,11 @@
         "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
         "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
         "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
+        "[S03-P1] Adicionar caso de migração mista com ADR e evidência de compatibilidade; S04 recebe fronteiras de apresentação, S08 invariantes e S22 evolução, sem introduzir plataforma distribuída por padrão.",
         "Alternativa escolhida cobre requisitos rastreados; dependências e recuperação são viáveis no ambiente observado; custo/complexidade são proporcionais",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
-        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas.",
+        "[S03-P1] As-Is/To-Be/lacunas, duas alternativas proporcionais, matriz de confiança e ADR vinculam cada requisito a teste de premissa; rollback ou forward-fix demonstrado em fixture isolada."
       ]
     },
     "S04": {
@@ -67,9 +77,13 @@
         "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
         "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
         "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
+        "[S04-D1] Gerar cabeçalhos de capacidades a partir do mesmo contrato/taxonomia e validar equivalência semântica das listas.",
+        "[S04-P1] Corrigir derivação das listas de capacidades e criar fixture SSR mínima por stack realmente usada; S05 recebe ownership e estados, S06 recebe foco/semântica, S17 recebe cenários de navegador.",
         "Estado duplicado e resposta fora de ordem têm política explícita; jornada e compatibilidade são preservadas; escrita exige escopo delegado separado da revisão",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
-        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas.",
+        "[S04-D1] Parse do texto TOML e profile do catálogo produz exatamente o conjunto de review do contrato; mutação que remove4.13 ou10.6 deve falhar.",
+        "[S04-P1] Versões/framework observados, contrato de serialização e chave de cache explícitos; teste de navegação/hidratação e locale documenta console, DOM e contrato preservado."
       ]
     },
     "S05": {
@@ -81,9 +95,11 @@
         "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
         "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
         "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
+        "[S05-P1] Acrescentar fixture de formulário acessível e integração controlada; S09 recebe contrato de status/erro/idempotência, S06 nomes/anúncios e S17 jornada com teclado.",
         "Comportamento solicitado é observável; regressão existente não é removida para obter verde; interação essencial funciona por teclado",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
-        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas.",
+        "[S05-P1] Teste real conta ações observáveis para Enter/click/IME, preserva input/foco após erro e rejeita resposta de tela antiga; garantia de efeito do servidor tem evidência separada."
       ]
     },
     "S06": {
@@ -95,9 +111,11 @@
         "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
         "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
         "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
+        "[S06-P1] Criar protocolos proporcionais para pesquisa/IA/design tokens e cenário de foco com trigger desmontado; S05 implementa alterações e S17 reproduz jornada; S07 aporta locale/expansão.",
         "Fluxo essencial tem resultado acessível verificável; evidência informa browser/AT/versão; pesquisa com usuários só é alegada quando ocorreu",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
-        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas.",
+        "[S06-P1] Matriz tarefa/critério/ambiente identifica foco de entrada/saída, ordem de teclado, erro associado e limitações AT; leitor real só é marcado testado com evidência da execução."
       ]
     },
     "S07": {
@@ -109,9 +127,11 @@
         "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
         "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
         "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
+        "[S07-P1] Tornar visível a competência i18n na descoberta do papel e definir handoff S05/S06: mensagens/formatos versus semântica; exercitar bundle/pseudolocale e interação sem alegar tráfego de campo.",
         "Métrica tem ambiente e amostra; ganho não quebra jornada/acessibilidade; ausência de campo não vira alegação de Core Web Vitals de produção",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
-        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas.",
+        "[S07-P1] Matriz de locale/fallback/cache cobre plural, expansão, RTL e fuso; medições antes/depois usam mesmos inputs/ambiente e guardrails de jornada/teclado."
       ]
     },
     "S08": {
@@ -123,9 +143,11 @@
         "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
         "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
         "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
+        "[S08-P1] Fixture pequena de caso de uso com armazenamento isolado e falhas injetadas; S11 recebe fronteira transacional, S10 confirmação/retry e S09 resultado/erro ao consumidor.",
         "Invariantes sobrevivem a negativos e fronteiras; efeitos parciais têm recuperação explícita; nenhuma regra de negócio migra silenciosamente para cliente",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
-        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas.",
+        "[S08-P1] Barreiras determinísticas em runtime observado preservam saldo/outbox e resultado recuperável em cada ponto; nenhuma entrada inválida altera estado; timeout não é tratado como rollback provado."
       ]
     },
     "S09": {
@@ -137,9 +159,11 @@
         "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
         "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
         "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
+        "[S09-P1] Adicionar testes de consumidor e protobuf/HTTP somente conforme stack observada; S08 recebe efeito, S10 dedupe, S14 identidade e S18 contratos/negativos.",
         "Consumidor existente permanece compatível ou migração é explícita; propagação de prazo/identidade é verificável; efeito remoto incerto não é repetido cegamente",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
-        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas.",
+        "[S09-P1] Consumer antigo falha no campo de tipo incompatível; fixture wire assina/verifica bytes exatos, rejeita replay inválido e preserva efeito sob retry válido; versão e limites são documentados."
       ]
     },
     "S10": {
@@ -151,9 +175,11 @@
         "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
         "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
         "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
+        "[S10-P1] Mini-harness determinístico com log de histórias e invariantes, sem exigir cluster; S11 aceita prova da persistência, S08 aceita efeito de domínio e S20 aceita recuperação.",
         "Duplicatas não causam efeito inválido; recuperação termina sob hipóteses declaradas; exactly-once nunca é afirmado sem fronteira e prova",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
-        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas.",
+        "[S10-P1] Barreiras reproduzem as ordens; armazenamento rejeita token antigo e segundo efeito após restart; progresso termina sob limite/hipóteses explícitos, incluindo horizonte de retenção."
       ]
     },
     "S11": {
@@ -165,9 +191,11 @@
         "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
         "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
         "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
+        "[S11-P1] Matriz de operações suportadas por engine e fixture local autorizada, sem extrapolar SQLite para outro engine; S08 recebe unidade de trabalho, S10 concorrência e S12 recuperação/linhagem.",
         "Integridade de valores/chaves e constraints é verificada; migração tem janela/custo e owner; rollback de dados não é presumido reversível",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
-        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas.",
+        "[S11-P1] Engine/versão/isolamento e dataset representativo registrados; ensaio mede bloqueios, reconcilia chaves/valores e demonstra retry/forward-fix; engine ausente deixa essa parte NOT_VERIFIED."
       ]
     },
     "S12": {
@@ -179,9 +207,11 @@
         "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
         "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
         "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
+        "[S12-P1] Acrescentar cenário de eliminação propagada e restore com políticas fornecidas; S14 aceita privacidade, S20 continuidade, S11 consistência técnica e S25 exceções de governança.",
         "Backup existente não substitui restore testado; restauração mede integridade além de contagem; prazos legais pendentes ficam não verificados",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
-        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas.",
+        "[S12-P1] Mapa fonte/réplica/exportação/backup liga política e owner; restore autorizado reaplica tombstones/exclusão conforme política e mede integridade/tempo; política ausente exige abstenção específica."
       ]
     },
     "S13": {
@@ -193,9 +223,13 @@
         "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
         "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
         "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
+        "[RB-S13-1] Acrescentar tarefa opcional de AppSec com resolver e transporte locais instrumentados, destinos sintéticos e registro por hop da decisão, endereço conectado e motivo. Entregar a S14 o fluxo de autorização e a S15 o controle de egress, cada um com fronteira explícita.",
+        "[RB-S13-2] Adicionar pares de código local com batch vulnerável e batch protegido, mesmo vocabulário, incluindo controles compensatórios válidos; exigir caminho arquivo/símbolo e teste negativo discriminante.",
         "Achado distingue evidência de suspeita; exploração é mínima e autorizada; ausência de achados não vira certificação de segurança",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
-        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas.",
+        "[RB-S13-1] No ambiente de execução autorizado, um hop permitido conecta ao stub; redirect para loopback e troca de DNS não chegam ao stub proibido; retirar a revalidação provoca a falha esperada sem tráfego externo.",
+        "[RB-S13-2] O protegido não recebe achado de bypass; o vulnerável produz exposição demonstrável e reteste; não ver o código necessário resulta em NOT_VERIFIED, não vulnerabilidade confirmada."
       ]
     },
     "S14": {
@@ -207,9 +241,13 @@
         "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
         "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
         "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
+        "[RB-S14-1] Definir matriz temporal de rotação com issuer/audience/algoritmo permitidos, relógio controlado, cache e limites de refresh no runtime detectado. Handoff a S08/S18 inclui configuração real e tokens sintéticos, nunca segredo do emissor.",
+        "[RB-S14-2] Adicionar caso data-only com políticas identificadas, sujeitos/sistemas, owner e exceções explicitamente fornecidas; separar decisão técnica de execução, questão jurídica pendente e prazo por destino. Encaminhar cópias/backup ao dono de dados em vez de resolver tudo em IAM.",
         "Negativos entre tenants são executados quando viáveis; token válido não implica autorização; alegações jurídicas exigem fonte e owner competente",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
-        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas.",
+        "[RB-S14-1] Chave atual válida passa, chave desconhecida e downgrade falham, chave nova autorizada passa após refresh previsto; falha do emissor não causa aceitação de token inválido; nenhum resultado depende de flag assinatura fornecida pelo candidato.",
+        "[RB-S14-2] Relatório lista destinos comprovados, destinos pendentes e retenções fornecidas sem inventar base legal; ausência de uma política bloqueia apenas a conclusão dependente, mantendo análise técnica útil."
       ]
     },
     "S15": {
@@ -221,9 +259,13 @@
         "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
         "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
         "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
+        "[RB-S15-1] Acrescentar manifesto de verificação com bytes/digest do artefato, identidade esperada do builder, origem, política e evidência do verificador disponível. A S23 recebe vínculo artefato-testado/promovido e a S22 recebe política de admissão.",
+        "[RB-S15-2] Criar pequeno grafo local com advisory fornecido e chamadas reais/inalcançáveis, separando severidade do advisory, alcançabilidade, superfície e mitigação; manter control positivo e negativo sem consultar produção.",
         "Assinatura é vinculada a origem/identidade esperadas; scanner ausente fica não verificado; segredo não é impresso nem copiado para evidência",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
-        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas.",
+        "[RB-S15-1] Trocar digest, origem ou identidade reprova mesmo com assinatura criptograficamente válida; o artefato correto passa; verificador indisponível deixa verificação criptográfica NOT_VERIFIED, sem simular attestation.",
+        "[RB-S15-2] Mesmo advisory gera decisões distintas segundo caminho e superfície demonstrados; ausência de grafo não vira não vulnerável; mitigação exige regressão e versão/digest corrigidos."
       ]
     },
     "S16": {
@@ -235,9 +277,13 @@
         "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
         "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
         "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
+        "[RB-S16-1] Adicionar ensaio local mínimo que registre baseline, alteração semeada, comando/exit, asserção de saldo e restauração, com revisão exata. Entregar a S17/S18 obrigação, oráculo e dados isolados, não apenas uma meta percentual.",
+        "[RB-S16-2] Introduzir cenário com seed, ordem, frequência observada e prazo de quarentena; exigir distinguir reprodução, mitigação temporária e correção. Definir que retry não apaga primeira falha nem muda gate crítico.",
         "Teste falha pelo defeito esperado e não ImportError genérico; cobertura de linhas não substitui comportamento; skips críticos bloqueiam aprovação",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
-        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas.",
+        "[RB-S16-1] Baseline passa; double-debit falha na asserção de saldo; remover a asserção faz o mutante sobreviver; ImportError e zero testes são BLOCKED/INVALID e não ganhos de adequação.",
+        "[RB-S16-2] Mesma seed/ordem reproduz falha antes e passa depois da correção de isolamento; histórico conserva todas as tentativas; caso crítico em quarentena continua bloqueando a obrigação."
       ]
     },
     "S17": {
@@ -249,9 +295,13 @@
         "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
         "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
         "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
+        "[RB-S17-1] Acrescentar tarefa de navegador local com sequência teclado→dialog→Escape→foco e fallback montado, identificando browser/versão e separando teste DOM/teclado de AT. Handoff a S06 leva componente/reprodução; a S05 leva obrigação de interação. S09 participa somente quando houver contrato de API pertinente.",
+        "[RB-S17-2] Adicionar transição de estado com commit confirmado seguido de timeout/reauth; observar uma única operação junto ao S18 e preservar formulário até reconciliação, sem inferir commit pela UI.",
         "Assertions verificam estado final além de screenshot; ambiente e limitações AT são explícitos; falha de ferramenta não parece defeito de produto",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
-        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas.",
+        "[RB-S17-1] Foco fica no diálogo enquanto aberto, Escape fecha e retorna a alvo montado/fallback previsto; mutação no handler falha por foco final; AT indisponível continua NOT_VERIFIED.",
+        "[RB-S17-2] Replay com mesma chave não duplica efeito; resposta obsoleta de outra navegação não altera tela; UI distingue confirmação, falha e estado pendente sem descartar entradas."
       ]
     },
     "S18": {
@@ -263,9 +313,13 @@
         "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
         "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
         "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
+        "[RB-S18-1] Adicionar regressão de API com barreira concorrente, timeout injetado após commit e verificação independente no banco descartável detectado. Handoff S11/S08 inclui transações, saldos e restrição usada; S14 recebe prova de negação.",
+        "[RB-S18-2] Definir pequeno contrato com campos ausente, null e valor, bytes serializados e cliente legado real/local; verificar corpo, status e persistência para positivo/negativo, com cleanup comprovável.",
         "Erro tem código e efeito esperados; cross-tenant e rollback são testados no engine relevante; dados reais de produção não são usados",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
-        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas.",
+        "[RB-S18-1] Duas chamadas/retry deixam exatamente um débito e registro de idempotência coerente; remover proteção atômica faz falhar pelo saldo/efeito; nenhum teste é aprovado só por status 200.",
+        "[RB-S18-2] Cliente legado distingue variantes conforme contrato fornecido; campo exigido novo causa regressão visível; erro de autorização não retorna objeto nem cria efeitos; cleanup é verificado mesmo em falha."
       ]
     },
     "S19": {
@@ -277,9 +331,13 @@
         "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
         "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
         "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
+        "[RB-S19-1] Acrescentar protocolo de carga com taxa oferecida/atingida, concorrência, duração, warmup, timeout, erros, amostras censuradas e recursos do gerador; usar stub local com atraso controlado. Entregar a S20 denominador SLI e a S21 sinais de fila.",
+        "[RB-S19-2] Criar série temporal pequena com pool, espera, CPU e custo por operação, mais intervenções controladas e repetição; permitir conclusão inconclusiva se variância cobre diferença.",
         "Amostra e ambiente acompanham métrica; média sintética não extrapola produção; ganho não sacrifica correção nem excede blast radius",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
-        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas.",
+        "[RB-S19-1] Experimento detecta taxa não atingida e não declara SLO por percentil só de sucessos; relatório conserva timeout/erro e limite do gerador; aborta no limiar autorizado.",
+        "[RB-S19-2] Aumentar pool só sustenta hipótese quando espera cai sem deslocar gargalo; decisão liga p99 e custo unitário ao baseline e intervalo observado, sem declarar causalidade por correlação isolada."
       ]
     },
     "S20": {
@@ -291,9 +349,13 @@
         "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
         "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
         "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
+        "[RB-S20-1] Adicionar ensaio autorizado com relógio/eventos e definição de início/fim, integridade e leitura de aplicação, além de dependências sintéticas de chave/identidade; handoff a S12/S21/S23 inclui o que faltou recuperar.",
+        "[RB-S20-2] Criar séries com denominador, duração, eventos bons/ruins e política fornecida, incluindo baixo tráfego/zero e erro rápido; exigir política explícita para ausência de dados.",
         "SLO tem janela e denominador; recovery medido atende objetivo ou explicita gap; chaos e produção exigem autorização própria",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
-        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas.",
+        "[RB-S20-1] RTO abrange retomada de serviço segundo objetivo fornecido; RPO registra origem e idade do ponto recuperável; chave ausente bloqueia readiness mesmo com checksums bons; remoção de dependência quebra a verificação de serviço.",
+        "[RB-S20-2] Alerta dispara para burn rápido nas janelas corretas, não trata 0/0 como saúde e separa no-data de sucesso; resultados ligam consulta e limiar à mesma revisão, sem executar pager externo."
       ]
     },
     "S21": {
@@ -305,9 +367,13 @@
         "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
         "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
         "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
+        "[RB-S21-1] Adicionar captura local produtor→fila→consumidor com contrato de propagação/versionamento detectado, sampling conhecido e spans/links; incluir alternativa correta. Handoff a S20 leva evidência observada e margem de tempo, não RCA categórica.",
+        "[RB-S21-2] Usar canários sintéticos de token/PII no pipeline local e gerador de labels limitado; observar ingestão, consulta e destino de alerta local com latência e orçamento fornecidos.",
         "Hipótese é sustentada ou refutada por sinais; telemetry tem owner/retention; sinal ausente é lacuna e não sucesso",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
-        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas.",
+        "[RB-S21-1] Caso quebrado identifica fronteira e caso correto mantém vínculo; amostragem parcial é incerteza explícita; mudança do propagador quebra correlação pelo motivo esperado sem segredos nos artefatos.",
+        "[RB-S21-2] Canário não aparece no destino de logs; trace permanece correlacionável; cardinalidade acima do orçamento é detectada e alerta chega ao sink local; ausência de sink deixa entrega NOT_VERIFIED."
       ]
     },
     "S22": {
@@ -319,9 +385,13 @@
         "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
         "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
         "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
+        "[RB-S22-1] Definir envelope de plan com hash, revisão, provider lock, workspace/state identity e condições de invalidação; revisão por S15/S20/S25 usa o mesmo envelope. Manter apply fora da auditoria.",
+        "[RB-S22-2] Adicionar descrição de topologia e probes locais autorizados por origem/destino, DNS esperado e caminho; exigir marcar cada camada observada e desconhecida.",
         "Nenhuma credencial ou permissão é presumida; state/lock e diffs destrutivos têm tratamento; teste offline não é deploy real",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
-        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas.",
+        "[RB-S22-1] Alterar revisão/state/provider invalida aceite anterior; delete/create de recurso stateful exige bloqueio e plano de recuperação; resultado não concede apply quando todos os checks offline passam.",
+        "[RB-S22-2] DNS ok com rota bloqueada não é sucesso de conectividade; probe da origem errada não comprova o caminho de app; indisponibilidade de ferramenta não produz falha de serviço inventada."
       ]
     },
     "S23": {
@@ -333,9 +403,13 @@
         "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
         "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
         "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
+        "[RB-S23-1] Adicionar manifesto imutável build→test→promote com digests, revisão de código/pipeline, ambiente, política e validade do aceite; handoff a G02/S15 inclui evidência ligada ao mesmo digest.",
+        "[RB-S23-2] Criar plano de ensaio local com erro/budget por janela, abort/rollback, digest anterior e regra de compatibilidade de estado fornecida; usar sink local e serviço descartável, quando disponível.",
         "Artifact testado é o promovido; fork não recebe segredo de maintainer; gate verde não concede autorização de produção",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
-        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas.",
+        "[RB-S23-1] Troca de digest ou workflow após teste invalida gate; artifact correto mantém vínculo; fork não obtém permissão por produzir nome de workflow idêntico; publicação continua dependente de autorização externa.",
+        "[RB-S23-2] Limiar excedido interrompe promoção; rollback incompatível é bloqueado e alternativa forward recovery fica explícita; health verde isolado não comprova integridade nem recuperação."
       ]
     },
     "S24": {
@@ -347,9 +421,13 @@
         "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
         "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
         "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
+        "[RB-S24-1] Acrescentar caracterização por interface com baseline executável, partições/bordas e ordem de efeitos autorizados; ligar cada regra a caso ID próprio, sem uniformizar os dois cenários distintos. Handoff a S03/S08/S16 leva callers, baseline e exclusões.",
+        "[RB-S24-2] Adicionar inventário de consumidores com frequência, última execução, retries, versão e owner; critério de retirada depende da maior janela conhecida e da qualidade da telemetria, com pendências explícitas.",
         "Caller legado não quebra sem migração explícita; feature removida tem owner e critério; refactor não acrescenta mudança funcional não solicitada",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
-        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas.",
+        "[RB-S24-1] Mudança estrita/inclusiva no cenário correto falha na entrada 100; mudança de efeito/serialização é detectada pelo contrato aplicável; nenhum caso usa oráculo de outro cenário só por ambos terem limiar 100.",
+        "[RB-S24-2] Consumidor mensal não é descartado por dia silencioso; consumidor desconhecido/telemetria insuficiente bloqueia retirada dependente; backfill completo com leitor legado ainda impede contract/drop."
       ]
     },
     "S25": {
@@ -361,9 +439,13 @@
         "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
         "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
         "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
+        "[RB-S25-1] Adicionar cenários de demanda baixa/base/alta com período/moeda, custos comprometidos e variáveis, break-even e restrições de SLO; handoff a S19/S22/G02 entrega hipóteses e sensibilidade em vez de economia pontual.",
+        "[RB-S25-2] Adicionar caso de fornecedor com exportabilidade, prazo, retenção, custo de saída e dado ambiental incompleto; exigir separar medição de estimativa e não converter custo monetário automaticamente em emissão.",
         "Números têm origem e período; economia não oculta risco/desempenho; certificação ou conformidade não é declarada sem prova",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
-        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas.",
+        "[RB-S25-1] Com os inputs atuais, 8000 de baseline e 12000 de compromisso não viram economia; mudança do horizonte/moeda exige normalização explícita; alternativa que viola RTO/availability não é recomendada só por menor custo.",
+        "[RB-S25-2] Sem fator energético/região/metodologia fornecidos, emissão fica não estimada; decisão de fornecedor explicita lock-in e plano de saída; licença pendente permanece encaminhada para revisão competente."
       ]
     },
     "S26": {
@@ -375,9 +457,13 @@
         "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
         "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
         "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
+        "[RB-S26-1] Adicionar ensaio opcional com documentos sintéticos, canários e ferramentas stub locais; registrar tentativas/bloqueios/efeitos separadamente e autorização real por sujeito/recurso. Handoff a S13/S14 leva traces sem segredos e a S16 matriz de oráculos.",
+        "[RB-S26-2] Adicionar conjunto autorizado com respostas verificáveis, evidência insuficiente e drift temporal; pré-declarar limiares por risco/família, repetições e tratamento de inconclusivo antes da execução.",
         "Holdout não é editado pelo avaliado; melhor tentativa não substitui repetição/amostra; falta de auth bloqueia avaliação live sem copiar credenciais",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
-        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas.",
+        "[RB-S26-1] Canário de outro tenant não chega ao modelo nem a sink externo; instrução recuperada não autoriza ferramenta; stub registra zero efeito proibido; remover o controle de autorização provoca falha observável sem rede externa.",
+        "[RB-S26-2] Resultado reporta numerador/denominador, erros por família e custo/latência; citações vencidas não sustentam resposta; promoção depende de limiares e holdout independente realmente disponível, sem inventar SME ou benchmark."
       ]
     },
     "G01": {
@@ -389,9 +475,13 @@
         "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
         "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
         "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
+        "[RC-01-EVAL] Adicionar avaliação dinâmica delimitada e revisão independente, preservando casos públicos como desenvolvimento; não substituir por alegação de SME.",
+        "[RC-01-DESIGN] Harmonizar a lista inline de capacidades com o contrato ou marcar explicitamente que a lista é parcial.",
         "Não revisar a própria implementação como independente; resumo de outro agente não é prova primária; ausência de evidência é NOT_VERIFIED",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
-        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas.",
+        "[RC-01-EVAL] Em fixture descartável com bug e controle negativo, revisão identifica pré-condições, reproduz falha no SHA exato, rejeita evidência antiga, refuta o falso positivo e não modifica fonte; consumidor distinto confere reprodução.",
+        "[RC-01-DESIGN] Parsear TOML e contrato: conjunto de IDs de revisão coincide, ou perfil declara sem ambiguidade referência integral ao contrato e lista parcial."
       ]
     },
     "G02": {
@@ -403,9 +493,13 @@
         "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
         "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
         "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
+        "[RC-02-EVAL] Adicionar avaliação dinâmica delimitada e revisão independente, preservando casos públicos como desenvolvimento; não substituir por alegação de SME.",
+        "[RC-02-DESIGN] Conciliar a declaração independent_G01_G02 de inspect com a política strict: ela não consome os pareceres G01/G02, enquanto operator-autonomous exige ambos. Se strict usa revisão humana como substituição intencional, documentar explicitamente a substituição e suas obrigações.",
         "Controle crítico sem evidência bloqueia; opinião não autoriza produção; artefato ou SHA alterado exige nova avaliação",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
-        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas.",
+        "[RC-02-EVAL] Revisor independente invalida parecer antigo, bloqueia produção pela recuperação não comprovada, mantém preview com escopo expresso e exige logs/resultados vinculados ao artefato e ambiente; sem publicar.",
+        "[RC-02-DESIGN] Teste offline por política: ausência, papel duplicado, autor igual ao implementador, SHA/digest divergente e parecer vencido falham quando G01/G02 são obrigatórios; strict documenta e testa exatamente a política escolhida."
       ]
     }
   },
@@ -419,9 +513,13 @@
         "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
         "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
         "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
+        "[RC-03-EVAL] Adicionar avaliação dinâmica delimitada e revisão independente, preservando casos públicos como desenvolvimento; não substituir por alegação de SME.",
+        "[RC-03-DESIGN] Fixar política temporal/de acesso do corpus, revogação e segregação de cache/índice; parametrizar denominador, rotulagem e limiares das métricas por tarefa antes da execução.",
         "Claim sem suporte é rejeitado ou marcado; tenant não recupera corpus alheio; custo e latência acompanham amostra",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
-        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas.",
+        "[RC-03-EVAL] Runtime isolado registra documentos recuperados, claims/fontes e recibos de ferramenta; recall/grounding avaliados por oráculo independente, nenhuma recuperação alheia nem ferramenta indevida, abstenção nos casos sem suporte e custo/latência por amostra.",
+        "[RC-03-DESIGN] Caso privado com documento stale/revogado e cache reutilizado entre tenants falha quando recuperado; relatório calcula métricas a partir de recibos e explicita amostra/limiar sem alegar robustez universal."
       ]
     },
     "pack:api-integration:guardian_api_contract_specialist": {
@@ -433,9 +531,13 @@
         "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
         "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
         "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
+        "[RC-04-EVAL] Adicionar avaliação dinâmica delimitada e revisão independente, preservando casos públicos como desenvolvimento; não substituir por alegação de SME.",
+        "[RC-04-DESIGN] Explicitar direção request/response e comportamento desconhecido por consumidor (enum tolerante/estrito, nullable/ausente, streaming/deadline), com fonte/versionamento do protocolo observado.",
         "Breaking change tem migração explícita; falha revela incompatibilidade real; indisponibilidade do provider fica não verificada",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
-        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas.",
+        "[RC-04-EVAL] Executar versões provider/consumer em fixture local, detectar quebra por serialização real, validar assinatura/bytes e replay, observar estado após timeout e garantir que retry obedece idempotência/reconciliação contratadas.",
+        "[RC-04-DESIGN] Matriz com consumidor estrito e tolerante produz decisões distintas justificadas; request opcional/response novo não é automaticamente tratado como quebra; deadline e paginação têm negativos."
       ]
     },
     "pack:cloud-platform:guardian_cloud_infrastructure_specialist": {
@@ -447,9 +549,13 @@
         "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
         "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
         "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
+        "[RC-05-EVAL] Adicionar avaliação dinâmica delimitada e revisão independente, preservando casos públicos como desenvolvimento; não substituir por alegação de SME.",
+        "[RC-05-DESIGN] Distinguir representação abstrata actions=[replace] de plano real e exigir formato/provider/version observados; tratar sensitive/unknown values e changed state entre plan e apply.",
         "Validação offline é identificada; state/lock preservados; apply exige autorização e escopo efetivo",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
-        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas.",
+        "[RC-05-EVAL] Parsear formato real do plano offline, preservar state/lock, explicar destructive diff e caminho DNS/rota/política; evidências ausentes ficam NOT_VERIFIED; nenhum apply, recurso ou credencial externa.",
+        "[RC-05-DESIGN] Fixtures reais sanitizadas com create+delete, valor unknown e provider divergente não viram aprovação; plano stale é rejeitado e segredo não aparece em artefato."
       ]
     },
     "pack:data-engineering:guardian_data_migration_specialist": {
@@ -461,9 +567,13 @@
         "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
         "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
         "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
+        "[RC-06-EVAL] Adicionar avaliação dinâmica delimitada e revisão independente, preservando casos públicos como desenvolvimento; não substituir por alegação de SME.",
+        "[RC-06-DESIGN] Definir fonte de verdade, unidade de checkpoint, watermark/tie-breaker e política de atualização concorrente; conciliar deletes, extras e duplicatas antes do cutover.",
         "Contagem igual não substitui integridade; consumidor legado funciona na expansão; perda ou duplicata impede cutover",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
-        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas.",
+        "[RC-06-EVAL] Reinício não perde/duplica dados, reconcilia chaves/valores/tipos, leitores antigos funcionam na expansão, lock cabe no orçamento, restore reproduz integridade; contract bloqueado até condições comprovadas.",
+        "[RC-06-DESIGN] Crash em cada fronteira, watermark repetido e registro alterado entre leitura/escrita não ocultam perda; relatório mostra reconciliação por chave e bloqueio de contract se há drift."
       ]
     },
     "pack:dotnet:guardian_dotnet_runtime_specialist": {
@@ -475,9 +585,13 @@
         "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
         "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
         "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
+        "[RC-07-EVAL] Adicionar avaliação dinâmica delimitada e revisão independente, preservando casos públicos como desenvolvimento; não substituir por alegação de SME.",
+        "[RC-07-DESIGN] Adicionar variantes transitive capture, factory correta e diferenças entre host/test host; exigir versão efetiva, DI validation e evidência de comportamento, sem impor uma ordem de middleware sem considerar o pipeline observado.",
         "Build correto não basta sem comportamento; cancellation não deixa efeito incerto sem recuperação; ausência de SDK bloqueia teste live",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
-        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas.",
+        "[RC-07-EVAL] Build/test no SDK observado; detectar DI inválida, executar 401/403/200 e negação cross-tenant sem efeitos; comprovar propagação de token e estado transacional após cancelamento; factory/escopo por operação correto é controle negativo.",
+        "[RC-07-DESIGN] A avaliação rejeita captura direta/transitiva errada, aceita escopo/factory corretamente isolado e distingue cancelamento antes/depois de commit sem inventar rollback."
       ]
     },
     "pack:financial-systems:guardian_payment_reliability_specialist": {
@@ -489,9 +603,13 @@
         "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
         "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
         "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
+        "[RC-08-EVAL] Adicionar avaliação dinâmica delimitada e revisão independente, preservando casos públicos como desenvolvimento; não substituir por alegação de SME.",
+        "[RC-08-DESIGN] Especificar identidade composta da operação e semântica de expiração/conflito da idempotency key, refunds parciais e limite do adapter por provider; critérios dependem do contrato real.",
         "Débitos/créditos se conservam por moeda; replay não duplica débito; exactly-once global não é prometido",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
-        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas.",
+        "[RC-08-EVAL] Apenas um efeito por operação sob concorrência, conservação por moeda, estados finais reconciliados, recuperação após crash entre provider/commit, conflito da mesma chave com payload diferente recusado sem novo débito; nenhuma chamada financeira real.",
+        "[RC-08-DESIGN] Dois tenants podem usar o mesmo valor textual de chave sem colisão; mesma operação com payload divergente falha; retry após TTL e crash não geram débito silenciosamente duplicado."
       ]
     },
     "pack:frontend-experience:guardian_browser_accessibility_specialist": {
@@ -503,9 +621,13 @@
         "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
         "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
         "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
+        "[RC-09-EVAL] Adicionar avaliação dinâmica delimitada e revisão independente, preservando casos públicos como desenvolvimento; não substituir por alegação de SME.",
+        "[RC-09-DESIGN] Parametrizar critério/versão WCAG e matriz browser/AT conforme jornada; cobrir portal, shadow DOM e interleaving async apenas se presentes na aplicação, sem certificação por scanner.",
         "Jornada essencial é executada; evidência declara versão/browser/AT; scanner não certifica conformidade total",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
-        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas.",
+        "[RC-09-EVAL] Registrar browser/versão, sequência de teclado e foco observados, árvore acessível e anúncios quando AT disponível; restaurar destino significativo, prevenir foco perdido e reportar AT NOT_VERIFIED quando não executada.",
+        "[RC-09-DESIGN] Fixture com transição concorrente e erro repetido exige evidência temporal de foco/anúncio; associação a critério cita comportamento e versão, sem inferir conformidade total."
       ]
     },
     "pack:quality-automation:guardian_contract_test_specialist": {
@@ -517,9 +639,13 @@
         "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
         "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
         "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
+        "[RC-10-EVAL] Adicionar avaliação dinâmica delimitada e revisão independente, preservando casos públicos como desenvolvimento; não substituir por alegação de SME.",
+        "[RC-10-DESIGN] Exigir que adequação seja medida por mutantes realmente executados e rastreados a obrigação, distinguindo equivalente, inválido e não executado; preservar contrato original e registrar flake sem apagar evidência.",
         "Teste detecta regressão real; quantidade/cobertura não substitui qualidade; fixture não reproduz cegamente a implementação",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
-        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas.",
+        "[RC-10-EVAL] Suíte passa versão correta, falha em cada mutante semeado por razão/mensagem esperada, verifica corpo/status/efeitos/negação por recurso e rollback em engine relevante; dados isolados e limpeza comprovada.",
+        "[RC-10-DESIGN] Mudança só na implementação quebra teste; copiar fixture para espelhar implementação é rejeitado; mutante equivalente não conta como falha de cobertura sem justificativa."
       ]
     },
     "pack:security-assurance:guardian_threat_model_specialist": {
@@ -531,9 +657,13 @@
         "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
         "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
         "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
+        "[RC-11-EVAL] Adicionar avaliação dinâmica delimitada e revisão independente, preservando casos públicos como desenvolvimento; não substituir por alegação de SME.",
+        "[RC-11-DESIGN] Acrescentar cadeia de pré-condições e controles em caminhos alternativos; limitar confiança no DNS inicial e diferenciar ameaça potencial, alcançabilidade observada e efeito reproduzido.",
         "Achado tem caminho e pré-condição; falso positivo é refutável; ferramenta indisponível não vira passe",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
-        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas.",
+        "[RC-11-EVAL] Em fixture autorizada sem metadata externa, reproduzir caminho mínimo, identificar precondição/efeito e refutar payload inerte; retestar mitigação nos redirects, cache e autorização sem acessar dados reais.",
+        "[RC-11-DESIGN] Dois casos parecidos com e sem egress/cache authorization produzem conclusões diferentes; alegação de exfiltração exige efeito observado em fixture, nunca só diagrama."
       ]
     },
     "pack:windows-tooling:guardian_windows_powershell_specialist": {
@@ -545,9 +675,13 @@
         "Antes de produzir artefato estruturado, reconciliar o inventário exato de obrigações e identificadores com o contrato recebido; não substituir IDs nem misturar IDs de evidência, alegação, entidade e caso.",
         "Separar estado observado, risco inferido e recomendação normativa. Um controle configurado não prova execução nem bloqueio; uma proibição recomendada não descreve automaticamente o estado atual.",
         "Fazer revisão final independente da primeira derivação: recalcular fronteiras e valores, conferir todos os campos, tipos, unidades, vocabulários e referências do esquema solicitado. Respeitar formato fechado quando fornecido; explicitar somente ambiguidades materiais ainda não especificadas, sem inventar decisões ou resultados.",
+        "[RC-12-EVAL] Adicionar avaliação dinâmica delimitada e revisão independente, preservando casos públicos como desenvolvimento; não substituir por alegação de SME.",
+        "[RC-12-DESIGN] Prever checagem de todos os componentes do caminho e validação próxima à mutação para reduzir troca de junction entre inspeção e uso; se não há fronteira suficiente, abster da mutação.",
         "Metacaracteres não viram código; alvo resolvido fica no escopo; elevação é externa e ACL não é presumida privada",
         "Artefatos e checks possuem origem reproduzível e estão vinculados à obrigação e à revisão exata.",
-        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas."
+        "O consumidor confirma adequação do handoff; limitações e obrigações pendentes não são omitidas.",
+        "[RC-12-EVAL] Observação efetiva de alvos/ACL e diffs antes/depois demonstra literalidade, zero escrita no WhatIf, bloqueio do escape e restauração após cancelamento; nenhuma mudança global/política/elevação.",
+        "[RC-12-DESIGN] Fixture controlada troca link após validação inicial; operação não segue fora do escopo e gera evidência de bloqueio. Não apresentar inspeção anterior como garantia contra toda corrida."
       ]
     }
   }
