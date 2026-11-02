@@ -99,6 +99,12 @@ The preview does not call a model. The run requires a compatible authenticated C
 
 ## Safety and operating limits
 
+The [bounded qualification campaign](docs/QUALIFICATION_CAMPAIGN.md) separates
+actual browser/service fixtures, varied native role repetitions, team failure
+checks, independent review and global rollout. Successful fixture implementations
+and valid JSON outputs are not professional certification. Each observation must
+retain its actual revision, environment, criterion coverage and limitations.
+
 The CLI backend requests Codex sandboxing but does not prove per-file/read/network or CPU/memory isolation. Restrictive contracts need verified capabilities and fail closed otherwise. Writes are sequential with postcondition enforcement and reviewed integration. Workspaces are private checkouts, not OS sandboxes. Neither a prompt nor a local hash authenticates execution or human authorization.
 
 Real grading additionally requires administrator-provisioned rootless Docker, cgroup v2 limits and an already reviewed local Python image pinned by digest. Missing prerequisites block grading; there is no unsafe host fallback. General application code is outside the pure-function oracle's supported subset. See [evaluation security](docs/EVALUATION-SAFETY.md).

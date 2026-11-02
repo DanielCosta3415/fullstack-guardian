@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><title>Guardian browser fixture</title>
+<body>
+<h1 id="heading" tabindex="-1">Guardian interaction fixture</h1>
+<button id="open">Open editor</button>
+<section id="dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle" hidden>
+  <h2 id="dialogTitle">Editor</h2><button id="close">Close editor</button>
+  <label for="dialogField">Dialog input</label><input id="dialogField">
+</section>
+<form id="form"><label for="draft">Draft</label><input id="draft" aria-describedby="error">
+<button id="submit" type="submit">Send</button></form>
+<p id="error" role="alert"></p><p id="status" role="status">idle</p>
+<button id="outside">Outside dialog</button><div id="locale"></div>
+<script src="/app.js"></script></body></html>

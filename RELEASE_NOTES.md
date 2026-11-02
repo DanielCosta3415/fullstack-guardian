@@ -1,4 +1,11 @@
-# Unreleased — audit remediation and professional role evolution
+# 2.3.0 candidate — audit remediation and bounded professional evaluation
+
+Adds opt-in trusted real-browser and local service checks, role-specific varied
+transfer cases with fresh native repetitions, and an explicit five-part
+qualification/rollout campaign. Native observation pairing now rejects explicit
+reasoning-effort overrides as well as model overrides. Scope limits distinguish
+fixture results, role performance, real AT/IME/provider observations, statistical
+uncertainty and independent review; no universal certification is inferred.
 
 Implements the November audit's twelve architectural fronts and a traceable
 sixty-seven-item role evolution ledger: canonical Git artifact seals including
