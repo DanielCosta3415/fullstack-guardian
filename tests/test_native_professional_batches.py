@@ -128,6 +128,28 @@ class ProfessionalBatchTests(unittest.TestCase):
         self.assertTrue(all(r['state']=='NOT_RUN' and r['reason']=='OBSERVED_QUOTA_STOP' for r in records[1:]))
         self.assertFalse(n.aggregate(self.selected,self.groups,records)['campaign_complete'])
 
+    def test_missing_native_parent_stops_after_first_initialization_failure(self):
+        for exit_code in (0,1):
+            with self.subTest(exit_code=exit_code),tempfile.TemporaryDirectory() as folder:
+                first=self.record(self.groups[0])
+                first.update(state='INVALID',exit_code=exit_code,native_parent_observed=False,
+                             reason='NATIVE_PARENT_NOT_OBSERVED',rows=[])
+                records,run=self.execute(folder,lambda *_:first)
+                persisted=[json.loads((Path(folder)/g['batch_id']/'result.json').read_text()) for g in self.groups]
+                self.assertEqual(persisted,records)
+            self.assertEqual(run.call_count,1)
+            self.assertEqual(records[0]['reason'],'NATIVE_PARENT_NOT_OBSERVED')
+            self.assertTrue(all(r['state']=='NOT_RUN' and r['reason']=='ESSENTIAL_EXECUTION_OR_CORROBORATION_UNAVAILABLE'
+                                for r in records[1:]))
+            self.assertFalse(n.aggregate(self.selected,self.groups,records)['campaign_complete'])
+
+    def test_missing_parent_preserves_quota_stop_reason(self):
+        first=self.record(self.groups[0])
+        first.update(state='INVALID',exit_code=1,native_parent_observed=False,quota_error_observed=True,rows=[])
+        with tempfile.TemporaryDirectory() as folder:records,run=self.execute(folder,lambda *_:first)
+        self.assertEqual(run.call_count,1)
+        self.assertTrue(all(r['reason']=='OBSERVED_QUOTA_STOP' for r in records[1:]))
+
     def test_campaign_time_budget_and_source_guard_stop_new_processes(self):
         with tempfile.TemporaryDirectory() as folder:
             with patch.object(n.time,'monotonic',side_effect=[0]+[3601]*13):records,run=self.execute(folder,lambda *_:self.fail('No parent after deadline'))

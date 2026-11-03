@@ -257,6 +257,12 @@ def execute_batches(executable,project,private,groups,session_root,timeout,guard
         if record.get('quota_error_observed'):halt='OBSERVED_QUOTA_STOP'
         if isinstance(record.get('exit_code'),str) and record['exit_code'].startswith('TIMEOUT'):halt='CAMPAIGN_TIMEOUT_STOP'
         if record.get('reason')=='BATCH_EXECUTION_OR_CORROBORATION_FAILED':halt='ESSENTIAL_EXECUTION_OR_CORROBORATION_UNAVAILABLE'
+        # A CLI that never opens a native parent cannot execute any group.
+        # Preserve its private startup diagnostics and stop instead of repeating
+        # the same initialization failure for every remaining group. An exit-0
+        # parent with incomplete children remains an observed partial batch.
+        if not record.get('native_parent_observed') and not halt:
+            halt='ESSENTIAL_EXECUTION_OR_CORROBORATION_UNAVAILABLE'
     return records
 
 
