@@ -257,7 +257,18 @@
       ],
       "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
       "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
-      "remaining_native_scope": "Versões/framework observados, contrato de serialização e chave de cache explícitos; teste de navegação/hidratação e locale documenta console, DOM e contrato preservado."
+      "remaining_native_scope": "Versões/framework observados, contrato de serialização e chave de cache explícitos; teste de navegação/hidratação e locale documenta console, DOM e contrato preservado.",
+      "qualification_campaign_subscopes": [
+        {
+          "evidence_class": "TRUSTED_REAL_STACK_FIXTURE_SUBSCOPE",
+          "documentation": "docs/BROWSER_CHECKS.md",
+          "harness_sha256": "e512309bacbebb62b712031f06b5354cb2aa5ba87426b56d117c397066210544",
+          "result": "OBSERVED_AND_INDEPENDENTLY_REEXECUTED_WITH_LIMITATIONS",
+          "scope": "Actual isolated Chrome/Playwright DOM, keyboard, focus, tenant/locale and specific faulty controls. Synthetic composition is not OS IME; AT, framework SSR and server effects remain unverified.",
+          "agent_performance_inferred": false,
+          "full_item_acceptance_inferred": false
+        }
+      ]
     },
     {
       "item_id": "S05-P1",
@@ -300,7 +311,18 @@
         "result": "OBSERVED_LOCAL_SUBSCOPE_PASSED",
         "scope": "Actual Node JSON/form state machine controls; not browser Enter/click/IME/focus/server-effect proof.",
         "reference": "docs/STACK_CHECKS.md"
-      }
+      },
+      "qualification_campaign_subscopes": [
+        {
+          "evidence_class": "TRUSTED_REAL_STACK_FIXTURE_SUBSCOPE",
+          "documentation": "docs/BROWSER_CHECKS.md",
+          "harness_sha256": "e512309bacbebb62b712031f06b5354cb2aa5ba87426b56d117c397066210544",
+          "result": "OBSERVED_AND_INDEPENDENTLY_REEXECUTED_WITH_LIMITATIONS",
+          "scope": "Actual isolated Chrome/Playwright DOM, keyboard, focus, tenant/locale and specific faulty controls. Synthetic composition is not OS IME; AT, framework SSR and server effects remain unverified.",
+          "agent_performance_inferred": false,
+          "full_item_acceptance_inferred": false
+        }
+      ]
     },
     {
       "item_id": "S06-P1",
@@ -335,7 +357,18 @@
       ],
       "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
       "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
-      "remaining_native_scope": "Matriz tarefa/critério/ambiente identifica foco de entrada/saída, ordem de teclado, erro associado e limitações AT; leitor real só é marcado testado com evidência da execução."
+      "remaining_native_scope": "Matriz tarefa/critério/ambiente identifica foco de entrada/saída, ordem de teclado, erro associado e limitações AT; leitor real só é marcado testado com evidência da execução.",
+      "qualification_campaign_subscopes": [
+        {
+          "evidence_class": "TRUSTED_REAL_STACK_FIXTURE_SUBSCOPE",
+          "documentation": "docs/BROWSER_CHECKS.md",
+          "harness_sha256": "e512309bacbebb62b712031f06b5354cb2aa5ba87426b56d117c397066210544",
+          "result": "OBSERVED_AND_INDEPENDENTLY_REEXECUTED_WITH_LIMITATIONS",
+          "scope": "Actual isolated Chrome/Playwright DOM, keyboard, focus, tenant/locale and specific faulty controls. Synthetic composition is not OS IME; AT, framework SSR and server effects remain unverified.",
+          "agent_performance_inferred": false,
+          "full_item_acceptance_inferred": false
+        }
+      ]
     },
     {
       "item_id": "S07-P1",
@@ -370,7 +403,18 @@
       ],
       "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
       "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
-      "remaining_native_scope": "Matriz de locale/fallback/cache cobre plural, expansão, RTL e fuso; medições antes/depois usam mesmos inputs/ambiente e guardrails de jornada/teclado."
+      "remaining_native_scope": "Matriz de locale/fallback/cache cobre plural, expansão, RTL e fuso; medições antes/depois usam mesmos inputs/ambiente e guardrails de jornada/teclado.",
+      "qualification_campaign_subscopes": [
+        {
+          "evidence_class": "TRUSTED_REAL_STACK_FIXTURE_SUBSCOPE",
+          "documentation": "docs/BROWSER_CHECKS.md",
+          "harness_sha256": "e512309bacbebb62b712031f06b5354cb2aa5ba87426b56d117c397066210544",
+          "result": "OBSERVED_AND_INDEPENDENTLY_REEXECUTED_WITH_LIMITATIONS",
+          "scope": "Actual isolated Chrome/Playwright DOM, keyboard, focus, tenant/locale and specific faulty controls. Synthetic composition is not OS IME; AT, framework SSR and server effects remain unverified.",
+          "agent_performance_inferred": false,
+          "full_item_acceptance_inferred": false
+        }
+      ]
     },
     {
       "item_id": "S08-P1",
@@ -405,7 +449,18 @@
       ],
       "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
       "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
-      "remaining_native_scope": "Barreiras determinísticas em runtime observado preservam saldo/outbox e resultado recuperável em cada ponto; nenhuma entrada inválida altera estado; timeout não é tratado como rollback provado."
+      "remaining_native_scope": "Barreiras determinísticas em runtime observado preservam saldo/outbox e resultado recuperável em cada ponto; nenhuma entrada inválida altera estado; timeout não é tratado como rollback provado.",
+      "qualification_campaign_subscopes": [
+        {
+          "evidence_class": "TRUSTED_REAL_STACK_FIXTURE_SUBSCOPE",
+          "documentation": "docs/SERVICE_CHECKS.md",
+          "harness_sha256": "9288021a1fc8f875eafe73d0243a63278526be23325769c50b5b568dc2990c10",
+          "result": "OBSERVED_AND_INDEPENDENTLY_REEXECUTED_WITH_LIMITATIONS",
+          "scope": "Actual SQLite transactions/fencing/migration, loopback HTTP wire/resource/destination controls and HS256 token verification. Tiny fixtures, injected resolver and supplied identity are not general provider, OS DNS, OIDC/JWKS or professional-agent acceptance.",
+          "agent_performance_inferred": false,
+          "full_item_acceptance_inferred": false
+        }
+      ]
     },
     {
       "item_id": "S09-P1",
@@ -440,7 +495,18 @@
       ],
       "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
       "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
-      "remaining_native_scope": "Consumer antigo falha no campo de tipo incompatível; fixture wire assina/verifica bytes exatos, rejeita replay inválido e preserva efeito sob retry válido; versão e limites são documentados."
+      "remaining_native_scope": "Consumer antigo falha no campo de tipo incompatível; fixture wire assina/verifica bytes exatos, rejeita replay inválido e preserva efeito sob retry válido; versão e limites são documentados.",
+      "qualification_campaign_subscopes": [
+        {
+          "evidence_class": "TRUSTED_REAL_STACK_FIXTURE_SUBSCOPE",
+          "documentation": "docs/SERVICE_CHECKS.md",
+          "harness_sha256": "9288021a1fc8f875eafe73d0243a63278526be23325769c50b5b568dc2990c10",
+          "result": "OBSERVED_AND_INDEPENDENTLY_REEXECUTED_WITH_LIMITATIONS",
+          "scope": "Actual SQLite transactions/fencing/migration, loopback HTTP wire/resource/destination controls and HS256 token verification. Tiny fixtures, injected resolver and supplied identity are not general provider, OS DNS, OIDC/JWKS or professional-agent acceptance.",
+          "agent_performance_inferred": false,
+          "full_item_acceptance_inferred": false
+        }
+      ]
     },
     {
       "item_id": "S10-P1",
@@ -475,7 +541,18 @@
       ],
       "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
       "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
-      "remaining_native_scope": "Barreiras reproduzem as ordens; armazenamento rejeita token antigo e segundo efeito após restart; progresso termina sob limite/hipóteses explícitos, incluindo horizonte de retenção."
+      "remaining_native_scope": "Barreiras reproduzem as ordens; armazenamento rejeita token antigo e segundo efeito após restart; progresso termina sob limite/hipóteses explícitos, incluindo horizonte de retenção.",
+      "qualification_campaign_subscopes": [
+        {
+          "evidence_class": "TRUSTED_REAL_STACK_FIXTURE_SUBSCOPE",
+          "documentation": "docs/SERVICE_CHECKS.md",
+          "harness_sha256": "9288021a1fc8f875eafe73d0243a63278526be23325769c50b5b568dc2990c10",
+          "result": "OBSERVED_AND_INDEPENDENTLY_REEXECUTED_WITH_LIMITATIONS",
+          "scope": "Actual SQLite transactions/fencing/migration, loopback HTTP wire/resource/destination controls and HS256 token verification. Tiny fixtures, injected resolver and supplied identity are not general provider, OS DNS, OIDC/JWKS or professional-agent acceptance.",
+          "agent_performance_inferred": false,
+          "full_item_acceptance_inferred": false
+        }
+      ]
     },
     {
       "item_id": "S11-P1",
@@ -510,7 +587,18 @@
       ],
       "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
       "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
-      "remaining_native_scope": "Engine/versão/isolamento e dataset representativo registrados; ensaio mede bloqueios, reconcilia chaves/valores e demonstra retry/forward-fix; engine ausente deixa essa parte NOT_VERIFIED."
+      "remaining_native_scope": "Engine/versão/isolamento e dataset representativo registrados; ensaio mede bloqueios, reconcilia chaves/valores e demonstra retry/forward-fix; engine ausente deixa essa parte NOT_VERIFIED.",
+      "qualification_campaign_subscopes": [
+        {
+          "evidence_class": "TRUSTED_REAL_STACK_FIXTURE_SUBSCOPE",
+          "documentation": "docs/SERVICE_CHECKS.md",
+          "harness_sha256": "9288021a1fc8f875eafe73d0243a63278526be23325769c50b5b568dc2990c10",
+          "result": "OBSERVED_AND_INDEPENDENTLY_REEXECUTED_WITH_LIMITATIONS",
+          "scope": "Actual SQLite transactions/fencing/migration, loopback HTTP wire/resource/destination controls and HS256 token verification. Tiny fixtures, injected resolver and supplied identity are not general provider, OS DNS, OIDC/JWKS or professional-agent acceptance.",
+          "agent_performance_inferred": false,
+          "full_item_acceptance_inferred": false
+        }
+      ]
     },
     {
       "item_id": "S12-P1",
@@ -580,7 +668,18 @@
       ],
       "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
       "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
-      "remaining_native_scope": "No ambiente de execução autorizado, um hop permitido conecta ao stub; redirect para loopback e troca de DNS não chegam ao stub proibido; retirar a revalidação provoca a falha esperada sem tráfego externo."
+      "remaining_native_scope": "No ambiente de execução autorizado, um hop permitido conecta ao stub; redirect para loopback e troca de DNS não chegam ao stub proibido; retirar a revalidação provoca a falha esperada sem tráfego externo.",
+      "qualification_campaign_subscopes": [
+        {
+          "evidence_class": "TRUSTED_REAL_STACK_FIXTURE_SUBSCOPE",
+          "documentation": "docs/SERVICE_CHECKS.md",
+          "harness_sha256": "9288021a1fc8f875eafe73d0243a63278526be23325769c50b5b568dc2990c10",
+          "result": "OBSERVED_AND_INDEPENDENTLY_REEXECUTED_WITH_LIMITATIONS",
+          "scope": "Actual SQLite transactions/fencing/migration, loopback HTTP wire/resource/destination controls and HS256 token verification. Tiny fixtures, injected resolver and supplied identity are not general provider, OS DNS, OIDC/JWKS or professional-agent acceptance.",
+          "agent_performance_inferred": false,
+          "full_item_acceptance_inferred": false
+        }
+      ]
     },
     {
       "item_id": "RB-S13-2",
@@ -615,7 +714,18 @@
       ],
       "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
       "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
-      "remaining_native_scope": "O protegido não recebe achado de bypass; o vulnerável produz exposição demonstrável e reteste; não ver o código necessário resulta em NOT_VERIFIED, não vulnerabilidade confirmada."
+      "remaining_native_scope": "O protegido não recebe achado de bypass; o vulnerável produz exposição demonstrável e reteste; não ver o código necessário resulta em NOT_VERIFIED, não vulnerabilidade confirmada.",
+      "qualification_campaign_subscopes": [
+        {
+          "evidence_class": "TRUSTED_REAL_STACK_FIXTURE_SUBSCOPE",
+          "documentation": "docs/SERVICE_CHECKS.md",
+          "harness_sha256": "9288021a1fc8f875eafe73d0243a63278526be23325769c50b5b568dc2990c10",
+          "result": "OBSERVED_AND_INDEPENDENTLY_REEXECUTED_WITH_LIMITATIONS",
+          "scope": "Actual SQLite transactions/fencing/migration, loopback HTTP wire/resource/destination controls and HS256 token verification. Tiny fixtures, injected resolver and supplied identity are not general provider, OS DNS, OIDC/JWKS or professional-agent acceptance.",
+          "agent_performance_inferred": false,
+          "full_item_acceptance_inferred": false
+        }
+      ]
     },
     {
       "item_id": "RB-S14-1",
@@ -650,7 +760,18 @@
       ],
       "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
       "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
-      "remaining_native_scope": "Chave atual válida passa, chave desconhecida e downgrade falham, chave nova autorizada passa após refresh previsto; falha do emissor não causa aceitação de token inválido; nenhum resultado depende de flag assinatura fornecida pelo candidato."
+      "remaining_native_scope": "Chave atual válida passa, chave desconhecida e downgrade falham, chave nova autorizada passa após refresh previsto; falha do emissor não causa aceitação de token inválido; nenhum resultado depende de flag assinatura fornecida pelo candidato.",
+      "qualification_campaign_subscopes": [
+        {
+          "evidence_class": "TRUSTED_REAL_STACK_FIXTURE_SUBSCOPE",
+          "documentation": "docs/SERVICE_CHECKS.md",
+          "harness_sha256": "9288021a1fc8f875eafe73d0243a63278526be23325769c50b5b568dc2990c10",
+          "result": "OBSERVED_AND_INDEPENDENTLY_REEXECUTED_WITH_LIMITATIONS",
+          "scope": "Actual SQLite transactions/fencing/migration, loopback HTTP wire/resource/destination controls and HS256 token verification. Tiny fixtures, injected resolver and supplied identity are not general provider, OS DNS, OIDC/JWKS or professional-agent acceptance.",
+          "agent_performance_inferred": false,
+          "full_item_acceptance_inferred": false
+        }
+      ]
     },
     {
       "item_id": "RB-S14-2",
@@ -860,7 +981,18 @@
       ],
       "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
       "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
-      "remaining_native_scope": "Foco fica no diálogo enquanto aberto, Escape fecha e retorna a alvo montado/fallback previsto; mutação no handler falha por foco final; AT indisponível continua NOT_VERIFIED."
+      "remaining_native_scope": "Foco fica no diálogo enquanto aberto, Escape fecha e retorna a alvo montado/fallback previsto; mutação no handler falha por foco final; AT indisponível continua NOT_VERIFIED.",
+      "qualification_campaign_subscopes": [
+        {
+          "evidence_class": "TRUSTED_REAL_STACK_FIXTURE_SUBSCOPE",
+          "documentation": "docs/BROWSER_CHECKS.md",
+          "harness_sha256": "e512309bacbebb62b712031f06b5354cb2aa5ba87426b56d117c397066210544",
+          "result": "OBSERVED_AND_INDEPENDENTLY_REEXECUTED_WITH_LIMITATIONS",
+          "scope": "Actual isolated Chrome/Playwright DOM, keyboard, focus, tenant/locale and specific faulty controls. Synthetic composition is not OS IME; AT, framework SSR and server effects remain unverified.",
+          "agent_performance_inferred": false,
+          "full_item_acceptance_inferred": false
+        }
+      ]
     },
     {
       "item_id": "RB-S17-2",
@@ -903,7 +1035,18 @@
         "result": "OBSERVED_LOCAL_SUBSCOPE_PASSED",
         "scope": "Draft/navigation state only; no DOM or actual HTTP reconciliation.",
         "reference": "docs/STACK_CHECKS.md"
-      }
+      },
+      "qualification_campaign_subscopes": [
+        {
+          "evidence_class": "TRUSTED_REAL_STACK_FIXTURE_SUBSCOPE",
+          "documentation": "docs/BROWSER_CHECKS.md",
+          "harness_sha256": "e512309bacbebb62b712031f06b5354cb2aa5ba87426b56d117c397066210544",
+          "result": "OBSERVED_AND_INDEPENDENTLY_REEXECUTED_WITH_LIMITATIONS",
+          "scope": "Actual isolated Chrome/Playwright DOM, keyboard, focus, tenant/locale and specific faulty controls. Synthetic composition is not OS IME; AT, framework SSR and server effects remain unverified.",
+          "agent_performance_inferred": false,
+          "full_item_acceptance_inferred": false
+        }
+      ]
     },
     {
       "item_id": "RB-S18-1",
@@ -2169,7 +2312,18 @@
       ],
       "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
       "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
-      "remaining_native_scope": "Registrar browser/versão, sequência de teclado e foco observados, árvore acessível e anúncios quando AT disponível; restaurar destino significativo, prevenir foco perdido e reportar AT NOT_VERIFIED quando não executada."
+      "remaining_native_scope": "Registrar browser/versão, sequência de teclado e foco observados, árvore acessível e anúncios quando AT disponível; restaurar destino significativo, prevenir foco perdido e reportar AT NOT_VERIFIED quando não executada.",
+      "qualification_campaign_subscopes": [
+        {
+          "evidence_class": "TRUSTED_REAL_STACK_FIXTURE_SUBSCOPE",
+          "documentation": "docs/BROWSER_CHECKS.md",
+          "harness_sha256": "e512309bacbebb62b712031f06b5354cb2aa5ba87426b56d117c397066210544",
+          "result": "OBSERVED_AND_INDEPENDENTLY_REEXECUTED_WITH_LIMITATIONS",
+          "scope": "Actual isolated Chrome/Playwright DOM, keyboard, focus, tenant/locale and specific faulty controls. Synthetic composition is not OS IME; AT, framework SSR and server effects remain unverified.",
+          "agent_performance_inferred": false,
+          "full_item_acceptance_inferred": false
+        }
+      ]
     },
     {
       "item_id": "RC-09-DESIGN",
@@ -2204,7 +2358,18 @@
       ],
       "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
       "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
-      "remaining_native_scope": "Fixture com transição concorrente e erro repetido exige evidência temporal de foco/anúncio; associação a critério cita comportamento e versão, sem inferir conformidade total."
+      "remaining_native_scope": "Fixture com transição concorrente e erro repetido exige evidência temporal de foco/anúncio; associação a critério cita comportamento e versão, sem inferir conformidade total.",
+      "qualification_campaign_subscopes": [
+        {
+          "evidence_class": "TRUSTED_REAL_STACK_FIXTURE_SUBSCOPE",
+          "documentation": "docs/BROWSER_CHECKS.md",
+          "harness_sha256": "e512309bacbebb62b712031f06b5354cb2aa5ba87426b56d117c397066210544",
+          "result": "OBSERVED_AND_INDEPENDENTLY_REEXECUTED_WITH_LIMITATIONS",
+          "scope": "Actual isolated Chrome/Playwright DOM, keyboard, focus, tenant/locale and specific faulty controls. Synthetic composition is not OS IME; AT, framework SSR and server effects remain unverified.",
+          "agent_performance_inferred": false,
+          "full_item_acceptance_inferred": false
+        }
+      ]
     },
     {
       "item_id": "RC-10-EVAL",

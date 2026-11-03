@@ -72,6 +72,28 @@ class GlobalNativeScopeTests(unittest.TestCase):
         (self.runtime/'README.md').write_text('drift')
         with self.assertRaisesRegex(ValueError,'drift'):self.verify()
 
+    def test_matching_new_minor_and_candidate_versions_preserve_exact_binding(self):
+        receipt_path=self.home/'guardian-install.json'
+        for version in ('2.3.0','2.3.1-rc.1'):
+            with self.subTest(version=version):
+                for root in (self.root,self.runtime):
+                    (root/'VERSION').write_text(version+'\n',encoding='utf8')
+                receipt=json.loads(receipt_path.read_text(encoding='utf8'))
+                receipt['version']=version
+                for entry in receipt['files']:
+                    if Path(entry['path'])==self.runtime/'VERSION':
+                        entry['hash']=hashlib.sha256((self.runtime/'VERSION').read_bytes()).hexdigest()
+                receipt_path.write_text(json.dumps(receipt),encoding='utf8')
+                self.assertEqual(self.verify()['profiles_verified'],39)
+                (self.runtime/'VERSION').write_text('2.2.0',encoding='utf8')
+                with self.assertRaisesRegex(ValueError,'version'):self.verify()
+
+    def test_matching_malformed_source_version_is_not_accepted(self):
+        for version in ('2.3','2.3.0-unreviewed','not-a-version'):
+            for root in (self.root,self.runtime):
+                (root/'VERSION').write_text(version,encoding='utf8')
+            with self.assertRaisesRegex(ValueError,'version'):self.verify()
+
     def test_optional_notice_absent_but_mandatory_source_still_required(self):
         (self.root/'NOTICE.md').unlink();(self.runtime/'NOTICE.md').unlink()
         receipt_path=self.home/'guardian-install.json';receipt=json.loads(receipt_path.read_text())

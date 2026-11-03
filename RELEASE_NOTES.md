@@ -7,6 +7,14 @@ reasoning-effort overrides as well as model overrides. Scope limits distinguish
 fixture results, role performance, real AT/IME/provider observations, statistical
 uncertainty and independent review; no universal certification is inferred.
 
+Global native preflight accepts valid exact source/installed versions beyond the
+old 2.2 prefix while retaining ownership, profile and byte checks. Transfer
+summaries use closed public error codes and keep exceptional details private.
+The legacy Windows browser adapter gates its own Node process into an exclusive
+Job Object before fixture execution, drains only that owned tree, and bounds
+cleanup of its newly created profile. ACL summary tests retain the actual single
+observation rather than requiring two time-dependent probes to be identical.
+
 Implements the November audit's twelve architectural fronts and a traceable
 sixty-seven-item role evolution ledger: canonical Git artifact seals including
 modes/base/index/patch; evidence-minimum readiness; generated typed capability

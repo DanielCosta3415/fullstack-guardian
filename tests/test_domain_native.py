@@ -4,15 +4,112 @@ Use guardian_domain_native.py for the complete acceptance record: its exit code
 is nonzero for any blocked adapter, whereas portable unittest permits skips.
 """
 from pathlib import Path
+import json
+import os
 import sqlite3
+import subprocess
+import sys
 import tempfile
 import unittest
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 from tools import guardian_domain_native as native
 
 
 class DomainNativeTests(unittest.TestCase):
+    def test_ui_job_assignment_failure_never_releases_fixture_gate(self):
+        process = Mock(); process.poll.return_value = None
+        with patch.dict(os.environ, {'NODE_OPTIONS':'--require=untrusted.js', 'NODE_PATH':'untrusted',
+                                   'NODE_V8_COVERAGE':'outside', 'NODE_COMPILE_CACHE':'outside-cache'}), \
+             patch.object(native, '_WINDOWS', True), \
+             patch.object(native.subprocess, 'CREATE_NEW_PROCESS_GROUP', 512, create=True), \
+             patch.object(native.subprocess, 'Popen', return_value=process) as launch, \
+             patch.object(native, '_BrowserJob', side_effect=PermissionError('Job assignment denied')):
+            with self.assertRaises(PermissionError): native._ui_process(['node', 'fixture.cjs'], Path('.'))
+        process.communicate.assert_not_called()
+        process.kill.assert_called_once()
+        process.wait.assert_called_once_with(timeout=5)
+        self.assertTrue(all(name not in launch.call_args.kwargs['env'] for name in
+                            ('NODE_OPTIONS', 'NODE_PATH', 'NODE_V8_COVERAGE', 'NODE_COMPILE_CACHE')))
+
+    def test_profile_cleanup_retries_only_transient_sharing_violation(self):
+        with tempfile.TemporaryDirectory() as temp:
+            work = Path(temp).resolve(); profile = work/'profile'; profile.mkdir()
+            (profile/'owned').write_text('fixture')
+            failure = PermissionError('owned file still closing'); failure.winerror = 32
+            real_remove = native.shutil.rmtree; attempts = []
+            def remove(target):
+                attempts.append(target)
+                if len(attempts) <= 2:
+                    failure.winerror = 32 if len(attempts) == 1 else 33
+                    raise failure
+                return real_remove(target)
+            with patch.object(native, '_WINDOWS', True), patch.object(native.shutil, 'rmtree', side_effect=remove), \
+                 patch.object(native.time, 'sleep'):
+                native._remove_owned_profile(profile, work)
+            self.assertEqual(len(attempts), 3)
+            self.assertFalse(profile.exists())
+
+    def test_profile_cleanup_does_not_hide_exhausted_or_unrelated_error(self):
+        with tempfile.TemporaryDirectory() as temp:
+            work = Path(temp).resolve(); profile = work/'profile'; profile.mkdir()
+            sentinel = profile/'owned'; sentinel.write_text('keep')
+            for code in (32, 5):
+                failure = PermissionError('still locked or denied'); failure.winerror = code
+                with patch.object(native, '_WINDOWS', True), \
+                     patch.object(native.shutil, 'rmtree', side_effect=failure) as remove, \
+                     patch.object(native.time, 'monotonic', side_effect=[0, 6]):
+                    with self.assertRaises(PermissionError): native._remove_owned_profile(profile, work)
+                remove.assert_called_once_with(profile)
+                self.assertEqual(sentinel.read_text(), 'keep')
+
+    def test_profile_cleanup_rejects_other_path_and_reparse_ancestor(self):
+        with tempfile.TemporaryDirectory() as temp:
+            work = Path(temp).resolve(); other = work/'outside'; other.mkdir()
+            sentinel = other/'keep'; sentinel.write_text('original')
+            with self.assertRaises(ValueError): native._remove_owned_profile(other, work)
+            profile = work/'profile'; profile.mkdir()
+            original = Path.is_symlink
+            with patch.object(Path, 'is_symlink', lambda path: path == work or original(path)), \
+                 patch.object(native.shutil, 'rmtree') as remove:
+                with self.assertRaises(ValueError): native._remove_owned_profile(profile, work)
+            remove.assert_not_called()
+            self.assertEqual(sentinel.read_text(), 'original')
+
+    @unittest.skipUnless(os.name == 'nt', 'Windows Job Object lifecycle requires Windows')
+    def test_real_ui_job_stops_descendant_after_node_exit_without_killing_other_process(self):
+        node = native.shutil.which('node')
+        if not node: self.skipTest('Node unavailable')
+        unrelated = subprocess.Popen([sys.executable, '-c', 'import time;time.sleep(30)'],
+                                     stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+                                     creationflags=subprocess.CREATE_NO_WINDOW)
+        try:
+            with tempfile.TemporaryDirectory() as temp:
+                work = Path(temp).resolve(); script = work/'owned.cjs'
+                script.write_text("const {spawn}=require('node:child_process');"
+                    "const c=spawn(process.execPath,['-e',\"process.stdout.write('ready');setInterval(()=>{},1000)\"],{detached:true,windowsHide:true,stdio:['ignore','pipe','ignore']});"
+                    "c.stdout.once('data',()=>{process.stdout.write(JSON.stringify({child:c.pid,ready:true}));c.stdout.destroy();c.unref()});", encoding='utf8')
+                completed = native._ui_process([node, str(script)], work, timeout=10)
+                self.assertEqual(completed.returncode, 0, completed.stderr)
+                self.assertTrue(json.loads(completed.stdout)['ready'])
+                child_pid = json.loads(completed.stdout)['child']
+                import ctypes
+                from ctypes import wintypes
+                kernel = ctypes.WinDLL('kernel32', use_last_error=True)
+                kernel.OpenProcess.argtypes = [wintypes.DWORD, wintypes.BOOL, wintypes.DWORD]
+                kernel.OpenProcess.restype = wintypes.HANDLE
+                kernel.WaitForSingleObject.argtypes = [wintypes.HANDLE, wintypes.DWORD]
+                kernel.CloseHandle.argtypes = [wintypes.HANDLE]
+                handle = kernel.OpenProcess(0x00100000, False, child_pid)
+                if handle:
+                    try: self.assertEqual(kernel.WaitForSingleObject(handle, 5000), 0)
+                    finally: kernel.CloseHandle(handle)
+                else: self.assertEqual(ctypes.get_last_error(), 87)
+                self.assertIsNone(unrelated.poll(), 'A different owned test process must remain alive')
+        finally:
+            if unrelated.poll() is None: unrelated.kill()
+            unrelated.wait(timeout=5)
+
     def adapter(self, domain):
         report = native.run_suite([domain])
         self.assertEqual(len(report["results"]), 1)

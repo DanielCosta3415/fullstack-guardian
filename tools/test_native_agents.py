@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Opt-in native Codex checks in an isolated project. Uses account quota only with --run."""
-import argparse, datetime, hashlib, json, os, shutil, subprocess, sys, time, tomllib
+import argparse, datetime, hashlib, json, os, re, shutil, subprocess, sys, time, tomllib
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 try:from .native_check_evidence import paired_outcomes,fixture_passed
@@ -74,8 +74,9 @@ def preflight_global(home,project,root=ROOT):
     except ImportError:from guardian_local_acceptance import safe,read_json
     home=safe(home);project=safe(project);root=safe(root);runtime=safe(home/'guardian-system')
     version=(root/'VERSION').read_text(encoding='utf8').strip()
-    if not version.startswith('2.2.') or (runtime/'VERSION').read_text(encoding='utf8').strip()!=version:
-        raise ValueError('Global Guardian version must match the 2.2 source exactly')
+    if (not re.fullmatch(r'\d+\.\d+\.\d+(?:-(?:dev|rc)\.\d+)?',version)
+            or (runtime/'VERSION').read_text(encoding='utf8').strip()!=version):
+        raise ValueError('Global Guardian version must match the valid source version exactly')
     receipt=read_json(home/'guardian-install.json')
     if not isinstance(receipt,dict) or not isinstance(receipt.get('identity'),dict) or not isinstance(receipt.get('files'),list):
         raise ValueError('Invalid global ownership receipt shape')

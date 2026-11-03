@@ -66,7 +66,9 @@ def grade_child(item,artifact,case_map):
     return graded
 
 
-def collect(session_root,parent,selected,corpus):
+def collect(session_root,parent,selected,corpus,*,diagnostics=None):
+    if diagnostics is not None and not isinstance(diagnostics,list):
+        raise ValueError('Private diagnostics sink must be a list')
     paths=list(Path(session_root).rglob('*.jsonl'))
     if len(paths)>20000: raise ValueError('Session inventory exceeds bound')
     parents=[];children=[]
@@ -110,7 +112,13 @@ def collect(session_root,parent,selected,corpus):
             row.update(state='CORROBORATED',model=child['model'],observed_effort=next(iter(efforts)) if efforts else None,cases=graded,
                        parent_model_observed=bool(parent_models),parent_effort_observed=bool(parent_efforts),
                        session_sha256=native.sha(matches[0]))
-        except (ValueError,OSError,TypeError,KeyError) as error: row['reason']=str(error)
+        except (ValueError,OSError,TypeError,KeyError) as error:
+            # Exception strings may contain a private path, session identifier or
+            # candidate-supplied key. Public summaries use closed reason codes.
+            row['reason']='SESSION_IO_ERROR' if isinstance(error,OSError) else 'INVALID_NATIVE_OBSERVATION'
+            if diagnostics is not None:
+                diagnostics.append({'task_name':item['task_name'],
+                                    'error_type':type(error).__name__,'detail':str(error)})
         rows.append(row)
     return rows,artifacts
 
@@ -223,10 +231,12 @@ def main(argv=None):
         if event.get('type')=='thread.started': parent=event.get('thread_id')
         if event.get('type')=='error' and any(x in str(event).lower() for x in ('quota','usage limit','rate limit')): quota=True
     session_root=Path(os.environ.get('CODEX_HOME',str(Path.home()/'.codex')))/'sessions'
-    rows,artifacts=collect(session_root,parent,selected,corpus) if parent else ([],{})
+    diagnostics=[]
+    rows,artifacts=collect(session_root,parent,selected,corpus,diagnostics=diagnostics) if parent else ([],{})
     unchanged=before==native.snapshot(ROOT) and revision==subprocess.run(['git','-C',str(ROOT),'rev-parse','HEAD'],check=True,capture_output=True,text=True,timeout=15).stdout.strip()
     fixture_unchanged=all((project/p).is_file() and native.sha(project/p)==digest for p,digest in protected.items())
     native.private_write(private/'artifacts.json',json.dumps(artifacts,indent=2))
+    native.private_write(private/'corroboration-errors.json',json.dumps(diagnostics,indent=2))
     result={'schema_version':1,'partition':transfer.PARTITION,'revision':revision,
             'profile_sha256':profile_hashes,'harness_sha256':native.sha(Path(__file__)),
             'generator_sha256':native.sha(Path(transfer.__file__)),'corpus_sha256':q.digest(corpus),

@@ -169,5 +169,23 @@ class TransferCaseTests(unittest.TestCase):
         self.assertTrue(result['observed_effort_drift'])
         self.assertFalse(result['all_planned_observations_passed'])
 
+    def test_public_errors_never_export_private_session_paths_or_identifiers(self):
+        from unittest.mock import patch
+        with tempfile.TemporaryDirectory() as tmp:
+            item=self.synthetic_sessions(tmp)
+            original=runner.native.read_session
+            private=[]
+            def fail_child(path):
+                if Path(path).name=='child.jsonl':
+                    raise OSError('Cannot read C:/private/FAKE-SESSION-ID.jsonl')
+                return original(path)
+            with patch.object(runner.native,'read_session',side_effect=fail_child):
+                rows,_=runner.collect(tmp,'parent',[item],self.corpus,diagnostics=private)
+            self.assertEqual(rows[0]['state'],'INVALID')
+            self.assertEqual(rows[0]['reason'],'SESSION_IO_ERROR')
+            self.assertNotIn('FAKE-SESSION-ID',json.dumps(rows))
+            self.assertNotIn('C:/private',json.dumps(rows))
+            self.assertIn('FAKE-SESSION-ID',private[0]['detail'])
+
 
 if __name__=='__main__': unittest.main()
