@@ -1,5 +1,11 @@
 # Arquitetura do Guardian: base e extensão profissional
 
+Consulte [a evolução de arquitetura e identidade](ARCHITECTURE_EVOLUTION.md) para
+o mapa consolidado dos caminhos nativo/CLI, a distinção entre os 29 papéis core e
+os dez opcionais, os limites de evidência e os controles de inventário/fingerprint
+acrescentados após a auditoria de `f20bb5a`. Este documento mantém o contexto da
+base e seus limites; a atualização não afirma uma nova release ou certificação.
+
 A extensão dev.4 mantém os limites desta base e acrescenta contratos profissionais por papel, obrigações do pedido, responsabilidades por fase e verificação de handoffs. Consulte [Professional Assurance](PROFESSIONAL_ASSURANCE.md) e [Hooks](HOOKS.md). O principal continua responsável pela interpretação semântica; classificações determinísticas, perfis e hooks não constituem uma prova de compreensão universal nem substituem permissões efetivas.
 
 ## Finalidade

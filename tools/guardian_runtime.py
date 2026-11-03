@@ -11,6 +11,7 @@ import os
 from pathlib import Path, PurePosixPath
 import re
 import signal
+import stat
 import subprocess
 
 class RuntimeError(ValueError):
@@ -88,6 +89,77 @@ def inventory(repo: Path) -> dict:
                 raise RuntimeError("Checkout snapshot budget exceeded")
             result[path] = hashlib.sha256(target.read_bytes()).hexdigest()
     return result
+
+
+def _artifact_git(repo: Path, *args: str) -> bytes:
+    """Read bounded, semantic Git data; do not hash volatile .git internals."""
+    result = subprocess.run(["git", "-c", "core.fsmonitor=false", "-C", str(repo), *args],
+                            stdin=subprocess.DEVNULL, capture_output=True, timeout=30)
+    if result.returncode:
+        raise RuntimeError("Cannot inspect artifact Git metadata: " + args[0])
+    if len(result.stdout) > 20_000_000:
+        raise RuntimeError("Artifact Git metadata budget exceeded")
+    return result.stdout
+
+
+def canonical_patch(repo: Path) -> bytes:
+    """The exact binary patch whose semantics are reviewed and integrated.
+
+    Explicit diff settings prevent cosmetic config (color, prefixes, context,
+    algorithms) from changing the representation. No external diff/textconv
+    program is invoked. Mode/type changes are part of this patch.
+    """
+    return _artifact_git(repo, "diff", "--no-ext-diff", "--no-textconv",
+                         "--no-renames", "--binary", "--full-index", "--no-color",
+                         "--src-prefix=a/", "--dst-prefix=b/", "--no-relative",
+                         "--unified=3", "--inter-hunk-context=0",
+                         "--diff-algorithm=myers", "--no-indent-heuristic",
+                         "--submodule=short", "HEAD", "--")
+
+
+def artifact_snapshot(repo: Path) -> dict:
+    """Versioned artifact seal input: bytes, file modes, base, index and diff.
+
+    inventory() remains the path->content-hash API for professional artifact
+    claims. This stronger snapshot is required for scope/supervisor acceptance;
+    a legacy content-only seal intentionally requires fresh production/review.
+    Local hashes are drift detection, never authentication or OS isolation.
+    """
+    files = inventory(repo)
+    modes = {path: stat.S_IMODE((repo / path).stat().st_mode) for path in files}
+    head = _artifact_git(repo, "rev-parse", "--verify", "HEAD").decode("ascii").strip()
+    if not re.fullmatch(r"[0-9a-f]{40}|[0-9a-f]{64}", head):
+        raise RuntimeError("Invalid artifact base revision")
+    index = {}
+    for item in _artifact_git(repo, "ls-files", "--stage", "-z").split(b"\0"):
+        if not item:
+            continue
+        meta, raw_path = item.split(b"\t", 1)
+        mode, oid, stage = meta.decode("ascii").split(" ")
+        path = relative_path(raw_path.decode("utf-8", "strict"))
+        if mode not in ("100644", "100755") or stage != "0":
+            raise RuntimeError("Unsupported artifact index type or unmerged stage")
+        if not re.fullmatch(r"[0-9a-f]{40}|[0-9a-f]{64}", oid) or path in index:
+            raise RuntimeError("Invalid artifact index entry")
+        index[path] = {"mode": mode, "oid": oid, "stage": stage}
+    return {"schema_version": 2, "files": files, "filesystem_modes": modes,
+            "git": {"head": head, "index": index,
+                    "patch_sha256": hashlib.sha256(canonical_patch(repo)).hexdigest()}}
+
+
+def artifact_scope_delta(before: dict, after: dict, allowed: list[str], *, read_only: bool) -> list[str]:
+    """Check path ownership for content AND filesystem/index mode/type changes."""
+    if before["git"]["head"] != after["git"]["head"]:
+        raise RuntimeError("Artifact base revision changed")
+    def paths(snapshot):
+        names = set(snapshot["files"]) | set(snapshot["git"]["index"])
+        return {name: {"content": snapshot["files"].get(name),
+                       "filesystem_mode": snapshot["filesystem_modes"].get(name),
+                       "index": snapshot["git"]["index"].get(name)} for name in names}
+    delta = scope_delta(paths(before), paths(after), allowed, read_only=read_only)
+    if before["git"]["patch_sha256"] != after["git"]["patch_sha256"] and not delta:
+        raise RuntimeError("Artifact patch changed without an attributable scoped path")
+    return delta
 
 
 def scope_delta(before: dict, after: dict, allowed: list[str], *, read_only: bool) -> list[str]:

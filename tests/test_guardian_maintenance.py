@@ -172,10 +172,23 @@ class MaintenanceTests(unittest.TestCase):
                 trace.append(path, 'verification', {'comment': content})
         summary = trace.public_summary(path)
         self.assertFalse(summary['raw_events_included'])
-        observed_acl = trace.privacy_acl(path)
-        self.assertEqual(summary['host_acl_verified'], observed_acl['verified'])
-        self.assertEqual(summary['acl'], observed_acl)
+        # ACLs and probe availability are observations at one instant. A second
+        # PowerShell probe may time out on a loaded Windows runner; it must not
+        # retroactively change what this public summary actually observed.
+        self.assertIs(type(summary['acl']['verified']),bool)
+        self.assertEqual(summary['host_acl_verified'],summary['acl']['verified'])
+        self.assertIn(summary['acl']['mechanism'],('windows_dacl','posix_owner_mode'))
         self.assertEqual(summary['events'], 1)
+
+    def test_public_summary_never_promotes_unavailable_acl_to_verified(self):
+        path=self.base/'events.jsonl';trace.init(path)
+        unavailable={'verified':False,'mechanism':'windows_dacl','reason':'ACL observation unavailable'}
+        with patch.object(trace,'privacy_acl',return_value=unavailable) as observe:
+            summary=trace.public_summary(path)
+        observe.assert_called_once_with(path)
+        self.assertFalse(summary['host_acl_verified'])
+        self.assertEqual(summary['acl'],unavailable)
+        self.assertFalse(summary['raw_events_included'])
 
     @unittest.skipUnless(os.name != 'nt', 'POSIX owner/mode observation required')
     def test_world_readable_posix_journal_does_not_verify_privacy(self):

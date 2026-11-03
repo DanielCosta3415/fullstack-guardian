@@ -41,3 +41,35 @@ def authorize_action(action, project, path=None, grant=None, now=None):
         if not any(candidate==Path(p).resolve() or Path(p).resolve() in candidate.parents for p in grant.paths):
             return {'allowed':False,'reason':'Path outside authorized scope'}
     return {'allowed':True,'reason':'Within existing authorization; sandbox remains authoritative'}
+
+
+def assess_action(action, project, *, domain_risk, path=None, grant=None,
+                  permission_observed=None, evidence_confidence='unknown', now=None):
+    """Separate domain consequence, actual effect, authority and evidence.
+
+    Only the trusted in-process supervisor may supply a Grant or an effective
+    permission observation. No JSON/plan input is deserialized into either.
+    Risk raises review requirements; it does not manufacture a new approval.
+    """
+    if domain_risk not in ('low', 'medium', 'high', 'critical'):
+        raise ValueError('Unknown domain risk')
+    if evidence_confidence not in ('unknown', 'partial', 'checked', 'independently_reviewed'):
+        raise ValueError('Unknown evidence confidence')
+    if permission_observed is not None and type(permission_observed) is not bool:
+        raise ValueError('Effective permission must be an actual supervisor observation')
+    authority = authorize_action(action, project, path, grant, now)
+    sensitive = action in ('external_write', 'production', 'privileged', 'install_dependency')
+    effective = permission_observed is True or (action == 'read' and permission_observed is not False)
+    blocked = []
+    if not authority['allowed']:
+        blocked.append('existing_authorization_missing')
+    if not effective:
+        blocked.append('effective_permission_unverified')
+    return {'action': action, 'domain_risk': domain_risk,
+            'effect': 'read_only' if action == 'read' else 'review' if action == 'review' else 'mutation_or_execution',
+            'existing_authorization': authority, 'effective_permission': permission_observed,
+            'evidence_confidence': evidence_confidence, 'allowed': not blocked,
+            'blocked_reasons': blocked, 'independent_review_required': domain_risk in ('high', 'critical'),
+            'new_sensitive_effect': sensitive and not authority['allowed'],
+            'new_authorization_required': not authority['allowed'],
+            'correctness_verified': False, 'sandbox_override': False}

@@ -113,7 +113,9 @@ def parent_pairs(rows):
     for call,args in calls.items():
         out=outputs.get(call,{})
         name=args.get('task_name');role=args.get('agent_type')
-        if isinstance(name,str) and isinstance(role,str) and args.get('fork_turns')=='none' and not args.get('model') and out.get('task_name')=='/root/'+name:
+        if (isinstance(name,str) and isinstance(role,str) and args.get('fork_turns')=='none'
+                and not args.get('model') and not args.get('reasoning_effort')
+                and out.get('task_name')=='/root/'+name):
             pairs.append(('/root/'+name,role))
     return pairs
 

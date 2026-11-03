@@ -253,8 +253,10 @@ def _lifecycle(mode, dest, operation='install', apply=False, adopt=False):
         if not isinstance(concurrency, int) or isinstance(concurrency, bool) or concurrency < 1:
             warnings.append('Agent concurrency is missing or invalid')
         from tools.guardian_capabilities import capability_report
+        from tools.guardian_fingerprint import fingerprint
         return {'operation': operation, 'verified_files': len(prior['files']), 'apply': False, 'warnings': warnings,
                 'client_capabilities': capability_report(),
+                'runtime_identity': fingerprint(runtime),
                 'native_loading': 'NOT_VERIFIED', 'permissions_changed': False}
     if operation in ('update', 'uninstall', 'rollback') and not prior:
         raise ValueError('No receipt; explicit install --adopt is required for identical legacy files')

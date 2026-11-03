@@ -1,6 +1,6 @@
 {
   "name": "fullstack-guardian",
-  "version": "2.2.1",
+  "version": "2.3.0",
   "description": "Guardian engineering coordination with verifiable contracts, supervised execution and preserving installation.",
   "author": {
     "name": "Daniel Lopes da Costa"

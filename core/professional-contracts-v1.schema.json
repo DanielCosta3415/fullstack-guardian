@@ -153,7 +153,7 @@
           "maxLength": 8000
         },
         "contract_version": {
-          "const": "1.0.0"
+          "const": "1.1.0"
         },
         "mission": {
           "type": "string",

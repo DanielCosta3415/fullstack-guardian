@@ -18,11 +18,154 @@ import sqlite3
 import subprocess
 import tempfile
 import threading
+import time
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
 ROOT = Path(__file__).resolve().parents[1]
 FIXTURES = ROOT / "eval" / "domain-fixtures"
 DOMAINS = ("dotnet", "api", "financial", "data", "ui", "powershell", "cloudplan", "ai")
+_WINDOWS = os.name == 'nt'
+
+
+class _BrowserJob:
+    """Windows lifetime ownership for the gated Node fixture and its descendants.
+
+    This is process cleanup, not a hostile-code security boundary. No existing
+    browser is discovered, attached or terminated. Nested jobs require Windows8+.
+    """
+    def __init__(self, process):
+        import ctypes as c
+        from ctypes import wintypes as w
+        self.c = c
+        self.kernel = k = c.WinDLL('kernel32', use_last_error=True)
+        size = c.c_size_t
+        class Basic(c.Structure):
+            _fields_ = [('user', c.c_longlong), ('job', c.c_longlong), ('flags', w.DWORD),
+                        ('minimum', size), ('maximum', size), ('active', w.DWORD),
+                        ('affinity', size), ('priority', w.DWORD), ('scheduling', w.DWORD)]
+        class IO(c.Structure):
+            _fields_ = [(name, c.c_ulonglong) for name in ('ro', 'wo', 'oo', 'rb', 'wb', 'ob')]
+        class Limits(c.Structure):
+            _fields_ = [('basic', Basic), ('io', IO), ('process_memory', size),
+                        ('job_memory', size), ('peak_process', size), ('peak_job', size)]
+        class Pids(c.Structure):
+            _fields_ = [('assigned', w.DWORD), ('listed', w.DWORD), ('pids', size * 512)]
+        self.Pids = Pids
+        k.CreateJobObjectW.argtypes = [c.c_void_p, w.LPCWSTR]; k.CreateJobObjectW.restype = w.HANDLE
+        k.SetInformationJobObject.argtypes = [w.HANDLE, c.c_int, c.c_void_p, w.DWORD]
+        k.QueryInformationJobObject.argtypes = [w.HANDLE, c.c_int, c.c_void_p, w.DWORD, c.c_void_p]
+        k.AssignProcessToJobObject.argtypes = [w.HANDLE, w.HANDLE]
+        k.OpenProcess.argtypes = [w.DWORD, w.BOOL, w.DWORD]; k.OpenProcess.restype = w.HANDLE
+        k.TerminateJobObject.argtypes = [w.HANDLE, w.UINT]
+        k.IsProcessInJob.argtypes = [w.HANDLE, w.HANDLE, c.POINTER(w.BOOL)]
+        k.WaitForSingleObject.argtypes = [w.HANDLE, w.DWORD]
+        k.CloseHandle.argtypes = [w.HANDLE]
+        self.handle = k.CreateJobObjectW(None, None)
+        if not self.handle: raise c.WinError(c.get_last_error())
+        process_handle = None
+        try:
+            limits = Limits(); limits.basic.flags = 0x2000  # KILL_ON_JOB_CLOSE, no breakaway.
+            if not k.SetInformationJobObject(self.handle, 9, c.byref(limits), c.sizeof(limits)):
+                raise c.WinError(c.get_last_error())
+            process_handle = k.OpenProcess(0x0101, False, process.pid)  # SET_QUOTA | TERMINATE
+            if not process_handle or not k.AssignProcessToJobObject(self.handle, process_handle):
+                raise c.WinError(c.get_last_error())
+        except BaseException:
+            k.CloseHandle(self.handle); self.handle = None
+            raise
+        finally:
+            if process_handle: k.CloseHandle(process_handle)
+
+    def stop(self):
+        c, k = self.c, self.kernel
+        handles = []
+        try:
+            inventory = self.Pids()
+            if not k.QueryInformationJobObject(self.handle, 3, c.byref(inventory), c.sizeof(inventory), None):
+                raise c.WinError(c.get_last_error())
+            if inventory.assigned > 512 or inventory.listed > 512:
+                raise ValueError('Browser process count exceeds cleanup bound')
+            for pid in inventory.pids[:inventory.listed]:
+                handle = k.OpenProcess(0x00101000, False, pid)  # SYNCHRONIZE | QUERY_LIMITED_INFORMATION.
+                if handle:
+                    from ctypes import wintypes
+                    owned = wintypes.BOOL()
+                    if not k.IsProcessInJob(handle, self.handle, c.byref(owned)):
+                        error = c.get_last_error()
+                        k.CloseHandle(handle); raise c.WinError(error)
+                    if owned.value: handles.append(handle)
+                    else: k.CloseHandle(handle)  # PID was reused; never wait/kill an unrelated process.
+                elif c.get_last_error() != 87: raise c.WinError(c.get_last_error())
+            if not k.TerminateJobObject(self.handle, 1): raise c.WinError(c.get_last_error())
+            deadline = time.monotonic() + 5
+            for handle in handles:
+                remaining = max(0, int((deadline-time.monotonic())*1000))
+                if k.WaitForSingleObject(handle, remaining) != 0:
+                    raise ValueError('Owned browser process did not exit within cleanup bound')
+            while True:
+                pending = self.Pids()
+                if not k.QueryInformationJobObject(self.handle, 3, c.byref(pending), c.sizeof(pending), None):
+                    raise c.WinError(c.get_last_error())
+                if pending.assigned == 0 and pending.listed == 0: break
+                if time.monotonic() >= deadline: raise ValueError('Owned browser job did not drain')
+                time.sleep(.02)
+        finally:
+            for handle in handles: k.CloseHandle(handle)
+            if self.handle:
+                # Kill-on-close also covers a descendant created during the snapshot.
+                k.CloseHandle(self.handle); self.handle = None
+
+
+def _ui_process(argv, work, timeout=45):
+    if not _WINDOWS:
+        return _process(argv, work, timeout=timeout)
+    # Node cannot require the fixture/spawn Chrome until job assignment succeeds.
+    gate = ("let token='';process.stdin.setEncoding('utf8');"
+            "process.stdin.on('data',s=>{token+=s;if(token.length>64)process.exit(2)});"
+            "process.stdin.on('end',()=>{if(token!=='GUARDIAN_UI_START\\n')process.exit(2);require(process.argv[1])});")
+    gated = [argv[0], '-e', gate, *argv[1:]]
+    env = dict(os.environ)
+    for name in ('NODE_OPTIONS', 'NODE_PATH', 'NODE_V8_COVERAGE', 'NODE_COMPILE_CACHE'):
+        env.pop(name, None)
+    process = subprocess.Popen(gated, cwd=work, env=env, stdin=subprocess.PIPE,
+                               stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                               creationflags=subprocess.CREATE_NEW_PROCESS_GROUP)
+    job = None
+    try:
+        job = _BrowserJob(process)
+        stdout, stderr = process.communicate(input=b'GUARDIAN_UI_START\n', timeout=timeout)
+        if len(stdout)+len(stderr) > 65536: raise ValueError('Reviewed fixture exceeded output bound')
+        return subprocess.CompletedProcess(argv, process.returncode, stdout, stderr)
+    finally:
+        try:
+            if job is not None: job.stop()
+        finally:
+            # Before assignment failure the gate prevents any browser spawn.
+            if process.poll() is None: process.kill()
+            process.wait(timeout=5)
+            for stream in (process.stdin, process.stdout, process.stderr):
+                if stream is not None: stream.close()
+
+
+def _remove_owned_profile(profile, work, timeout=5):
+    """Bounded file-handle teardown barrier; never ignore a final cleanup error."""
+    expected = Path(work).resolve() / 'profile'
+    target = Path(profile).absolute()
+    if target.resolve() != expected or target.name != 'profile' or target.parent.resolve() != expected.parent:
+        raise ValueError('Profile cleanup must stay in the adapter-owned work directory')
+    for part in (target, *target.parents):
+        if part.is_symlink() or (part.exists() and getattr(part.lstat(), 'st_file_attributes', 0) & 0x400):
+            raise ValueError('Profile cleanup links/reparse ancestors rejected')
+    deadline = time.monotonic()+timeout
+    while target.exists():
+        try:
+            shutil.rmtree(target)
+            return
+        except OSError as error:
+            # Windows process teardown can release profile handles after parent exit.
+            if not _WINDOWS or getattr(error, 'winerror', None) not in (32, 33) or time.monotonic() >= deadline:
+                raise
+            time.sleep(.05)
 
 
 def check(identifier, condition):
@@ -288,8 +431,14 @@ def ui_adapter(work):
     ) if path.is_file()), None) or shutil.which("chromium") or shutil.which("google-chrome")
     if not node or not browser:
         return result("ui", [], "native-browser", blocked="Node or Chrome/Edge unavailable; browser E2E NOT VERIFIED")
-    completed = _process([node, str(_fixture("ui/browser-check.cjs")), browser, str(work / "profile"),
-                          str(_fixture("ui/functional-form.html"))], work, timeout=45)
+    profile = work / 'profile'
+    if profile.exists() or profile.is_symlink():
+        raise ValueError('Browser fixture requires a new disposable profile')
+    try:
+        completed = _ui_process([node, str(_fixture("ui/browser-check.cjs")), browser, str(profile),
+                                str(_fixture("ui/functional-form.html"))], work, timeout=45)
+    finally:
+        _remove_owned_profile(profile, work)
     if completed.returncode != 0:
         return result("ui", [], "native-browser-cdp-pipe", blocked="Browser sandbox/CDP startup unavailable; no unsafe fallback")
     observed = json.loads(completed.stdout)
@@ -308,7 +457,8 @@ def run_suite(domains=DOMAINS, temp_dir=None):
         Path(temp_dir).mkdir(parents=True, exist_ok=True)
     reports = []
     with tempfile.TemporaryDirectory(prefix="gdomain-", dir=temp_dir) as temp:
-        root = Path(temp)
+        # Canonicalize only the stdlib-created root (macOS /var temp alias).
+        root = Path(temp).resolve(strict=True)
         for domain in domains:
             work = root / domain
             work.mkdir()

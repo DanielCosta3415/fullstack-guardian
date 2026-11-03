@@ -168,11 +168,11 @@ class ProfessionalCaseTests(unittest.TestCase):
         for row in external:self.assertEqual(row['expected']['decision'],'ABSTAIN_POLICY_UNAVAILABLE')
 
     def test_public_protocol_covers_every_field_before_model_evaluation(self):
-        self.assertEqual(c.PROTOCOL_VERSION,2)
+        self.assertEqual(c.PROTOCOL_VERSION,3)
         families=set()
         for row,request in zip(self.rows,c.requests()):
             families.add(row['fixture']['family'])
-            self.assertEqual(request['protocol_version'],2)
+            self.assertEqual(request['protocol_version'],3)
             self.assertEqual(set(request['output_contract']),set(row['expected']))
             self.assertTrue(all(isinstance(v,str) and len(v)>20 for v in request['output_contract'].values()))
         self.assertEqual(len(families),39)
