@@ -103,3 +103,63 @@ python -B -m unittest tests.test_transfer_cases -v
 They exercise all 39 positive and changed-output controls, cross-variant answer
 rejection, no-oracle delivery, seed/budget bounds, closed schemas, missing/duplicate
 observations, model/effort drift, and native role/parent/completion/tool restrictions.
+
+## Batched103-case professional projection campaign
+
+`test_native_professional.py` is a different evaluation from the seeded transfer
+campaign above. It keeps the existing **103 public objective projections** for
+**39 unique roles**, with unchanged case IDs, oracles and protocol3. It now executes
+one campaign as small sequential CLI-parent batches, default three roles per batch:
+
+```powershell
+python -B tools/test_native_professional.py --batch-size 3
+python -B tools/test_native_professional.py --run --batch-size 3 --timeout 7200 --out C:/authorized-workspace/new-professional-run
+```
+
+Preview makes no model calls and reports the exact groups, case counts and prompt
+UTF8 sizes. Structural budget is **39 children plus13 sequential CLI parents**,
+with at most three children active per parent. These are session/task counts,
+not a promise of39 API calls or zero cost. Batch size is bounded to1–5; the shared
+timeout applies to the whole campaign rather than being multiplied by13. No
+parent starts after an observed quota/rate-limit error, exhausted deadline, or
+unverified source/installed fixtures. The deadline is checked after the guard,
+so verification time cannot silently extend the launch budget.
+
+This addresses an observed incomplete earlier campaign: its one large parent
+exited0 after only two children/four case results and reported forwarding-budget
+and artifact-writing confusion. That incomplete run remains failed evidence;
+its successful subset is not pooled with the new campaign. Each new parent now
+receives only its small assigned inventory and must not write files. An external
+trusted Python host reads actual sessions and persists exact child outputs.
+A00 starts first only in the group that contains A00; no extra orchestrator is
+created in other groups. Global task names remain unique across all groups.
+
+Private directories `private/batch_XX/` retain each group's prompt, stdout/stderr,
+parent metadata, exact observed artifacts, validation diagnostics and immutable
+`result.json` before the next parent starts. Raw exceptions/host paths stay private;
+public results use closed reason codes. `parent_session_id_sha256` fingerprints
+the parent identifier only; `parent_record_sha256` separately hashes the actual
+native parent-session bytes. Neither constitutes remote attestation.
+
+The aggregate requires every planned group exactly once, distinct observed native
+parents, successful process exits, source/fixture checks, all39 assigned roles and
+all103 exact case IDs/results. Parent exit0 with a partial subset never passes.
+Observed parent/child model or effort differences across the entire campaign
+block completion; absent effort metadata remains unknown. Native paired-spawn,
+role, parent, completion and no-tools restrictions still apply. A failing case is
+retained and never selectively retried. Other independent groups may continue
+after an incomplete non-quota group, but the campaign stays incomplete. Quota or
+timeout stops further launches while recording every remaining group as NOT_RUN.
+
+The full-inventory `prompt(plan())` API remains available for existing callers;
+actual CLI execution uses only bounded batch prompts. A fresh campaign requires a
+new output directory and does not resume or cherry-pick old successes. Public
+data-only projection success still does not qualify the qualitative SME rubrics,
+prove real framework/provider execution, certify professional expertise, or grant
+release/production authorization.
+
+Directed regression checks, without native model calls:
+
+```powershell
+python -B -m unittest tests.test_native_professional_batches tests.test_professional_cases -v
+```
