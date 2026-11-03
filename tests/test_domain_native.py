@@ -80,7 +80,10 @@ class DomainNativeTests(unittest.TestCase):
     def test_real_ui_job_stops_descendant_after_node_exit_without_killing_other_process(self):
         node = native.shutil.which('node')
         if not node: self.skipTest('Node unavailable')
-        unrelated = subprocess.Popen([sys.executable, '-c', 'import time;time.sleep(30)'],
+        # Use the adapter's actual startup budget, not a shorter CI-only limit.
+        # The control must outlive startup plus bounded job teardown so that its
+        # natural exit cannot be confused with termination by the adapter.
+        unrelated = subprocess.Popen([sys.executable, '-c', 'import time;time.sleep(120)'],
                                      stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
                                      creationflags=subprocess.CREATE_NO_WINDOW)
         try:
@@ -89,7 +92,7 @@ class DomainNativeTests(unittest.TestCase):
                 script.write_text("const {spawn}=require('node:child_process');"
                     "const c=spawn(process.execPath,['-e',\"process.stdout.write('ready');setInterval(()=>{},1000)\"],{detached:true,windowsHide:true,stdio:['ignore','pipe','ignore']});"
                     "c.stdout.once('data',()=>{process.stdout.write(JSON.stringify({child:c.pid,ready:true}));c.stdout.destroy();c.unref()});", encoding='utf8')
-                completed = native._ui_process([node, str(script)], work, timeout=10)
+                completed = native._ui_process([node, str(script)], work, timeout=45)
                 self.assertEqual(completed.returncode, 0, completed.stderr)
                 self.assertTrue(json.loads(completed.stdout)['ready'])
                 child_pid = json.loads(completed.stdout)['child']
