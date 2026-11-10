@@ -16,10 +16,10 @@ from pathlib import Path
 
 try:
     from .guardian_executor import _load, _git, safe, ExecutionError, atomic_json, _plan_hash, _locked, Grant, authorize_action
-    from .guardian_runtime import changed_paths, inventory, PROTECTED, RuntimeError as ScopeError
+    from .guardian_runtime import changed_paths, artifact_snapshot, canonical_patch, PROTECTED, RuntimeError as ScopeError
 except ImportError:
     from guardian_executor import _load, _git, safe, ExecutionError, atomic_json, _plan_hash, _locked, Grant, authorize_action
-    from guardian_runtime import changed_paths, inventory, PROTECTED, RuntimeError as ScopeError
+    from guardian_runtime import changed_paths, artifact_snapshot, canonical_patch, PROTECTED, RuntimeError as ScopeError
 
 HASH = re.compile(r"^[0-9a-f]{64}$")
 
@@ -84,7 +84,7 @@ def inspect(home: Path, *, mode: str = "supervised") -> tuple[dict, bytes]:
         raise IntegrationError("Untracked worktree files require manual inspection/integration")
     try:
         names = changed_paths(worktree)
-        current = _plan_hash(inventory(worktree))
+        current = _plan_hash(artifact_snapshot(worktree))
     except ScopeError as exc:
         raise IntegrationError(str(exc)) from exc
     # Last serialized task seals the final checkout, including staged files and
@@ -101,7 +101,7 @@ def inspect(home: Path, *, mode: str = "supervised") -> tuple[dict, bytes]:
         if root not in safe(root / p).parents or worktree not in safe(worktree / p).parents:
             raise IntegrationError("Changed path escapes expected roots")
     _command(worktree, "diff", "--no-ext-diff", "--no-textconv", "--check", "HEAD")
-    patch = _command(worktree, "diff", "--no-ext-diff", "--no-textconv", "--no-renames", "--binary", "HEAD").stdout
+    patch = canonical_patch(worktree)
     if not patch or len(patch) > 5_000_000:
         raise IntegrationError("Patch is empty or exceeds 5 MB")
     _command(root, "apply", "--check", "--binary", "-", data=patch)
@@ -169,7 +169,7 @@ def integrate(home: Path, *, apply: bool = False, confirm_sha256: str | None = N
         })
         _command(target, "apply", "--binary", "-", data=patch)
         # Git apply does not commit. Ensure output matches the approved patch.
-        actual = _command(target, "diff", "--no-ext-diff", "--no-textconv", "--no-renames", "--binary", "HEAD").stdout
+        actual = canonical_patch(target)
         if actual != patch:
             raise IntegrationError("Applied patch differs from approved patch; stop and inspect manually")
         atomic_json(home / "integration-result.json", {

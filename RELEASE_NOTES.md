@@ -1,4 +1,38 @@
-# Unreleased — professional role presentation names
+# 2.3.0 candidate — audit remediation and bounded professional evaluation
+
+Adds opt-in trusted real-browser and local service checks, role-specific varied
+transfer cases with fresh native repetitions, and an explicit five-part
+qualification/rollout campaign. Native observation pairing now rejects explicit
+reasoning-effort overrides as well as model overrides. Scope limits distinguish
+fixture results, role performance, real AT/IME/provider observations, statistical
+uncertainty and independent review; no universal certification is inferred.
+
+Global native preflight accepts valid exact source/installed versions beyond the
+old 2.2 prefix while retaining ownership, profile and byte checks. Transfer
+summaries use closed public error codes and keep exceptional details private.
+The legacy Windows browser adapter gates its own Node process into an exclusive
+Job Object before fixture execution, drains only that owned tree, and bounds
+cleanup of its newly created profile. ACL summary tests retain the actual single
+observation rather than requiring two time-dependent probes to be identical.
+
+Implements the November audit's twelve architectural fronts and a traceable
+sixty-seven-item role evolution ledger: canonical Git artifact seals including
+modes/base/index/patch; evidence-minimum readiness; generated typed capability
+summaries; explicit strict/autonomous verification matrices; enriched versioned
+professional contracts and discriminating public controls; native handoff intake;
+risk/effect/authorization separation; expiring client/profile/tool observations;
+small-team/conflict-free-wave planning and numeric metrics; responsibility-aware
+inventory; and revision/content fingerprints. Historical installation migration
+fixtures check all 39 profiles, edited-file conflicts and exact rollback.
+
+The public development harness executes trusted local fixtures and faulty
+controls, not arbitrary candidate code. Real browser/AT, application frameworks,
+provider infrastructure, native model competence, SME qualification and private
+holdout remain separate evidence requirements. See `docs/PROFESSIONAL_DEPTH.md`,
+`docs/COORDINATION_RUNTIME.md` and `docs/audit-role-remediation.json` for exact
+scope. These source changes do not publish a release or update global installs.
+
+## Professional presentation names
 
 Standardizes Portuguese professional presentation names across the 29 core roles and ten optional specialists. Stable `guardian_*` identifiers, routing, capabilities, professional contracts, model inheritance and permissions are preserved. The canonical profiles and core titles contain the approved names; a versioned display-name map and generated catalog documentation detect naming drift. This source change does not itself publish a new versioned release or modify existing installations.
 

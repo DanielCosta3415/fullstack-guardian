@@ -1,0 +1,2602 @@
+{
+  "schema_version": 1,
+  "source_audit_revision": "f20bb5a949fc401f8dcb3bb3df3a32a3b397d89f",
+  "roles": 39,
+  "items": [
+    {
+      "item_id": "A00-D1",
+      "role_id": "A00",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [A00-D1]; dynamic tool trigger and consumer criteria",
+      "case_id": "A00:depth:1",
+      "implementation_status": "IMPLEMENTED_ORACLE_BOUNDARY_REGRESSION",
+      "native_acceptance_status": "NOT_APPLICABLE_DATA_ONLY_ORACLE",
+      "native_acceptance": "Input reproduzido deve retornar unsafe_ready_tasks=[fix]; evidência verificada deve permitir lista vazia de inseguras; os dois fixtures existentes preservam seus resultados.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py",
+        "tools/guardian_professional_cases.py",
+        "tools/guardian_professional_protocol.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "empty-evidence-ready",
+        "unknown-evidence-ready",
+        "contradicted-evidence-ready",
+        "verified-evidence-ready",
+        "old-fixture-results-preserved"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.OracleBoundaryTests",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "A00"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "VERIFIED_LOCAL_REGRESSION",
+      "remaining_native_scope": ""
+    },
+    {
+      "item_id": "A00-P1",
+      "role_id": "A00",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [A00-P1]; dynamic tool trigger and consumer criteria",
+      "case_id": "A00:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Caso contrafactual remove uma evidência: todo dependente perde prontidão, trabalho independente continua e nenhuma obrigação desaparece.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py",
+        "tools/guardian_handoff.py",
+        "tools/guardian_coordination.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "transitive-dependent-revocation",
+        "independent-task-survives",
+        "obligation-inventory-retained",
+        "cycle-rejection",
+        "budget-check-and-consumer-acceptance"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "A00"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Caso contrafactual remove uma evidência: todo dependente perde prontidão, trabalho independente continua e nenhuma obrigação desaparece.",
+      "additional_checked_scope": {
+        "check": "tests.test_native_handoff.NativeHandoffTests.test_revocation_invalidates_transitive_dependents_only",
+        "result": "OBSERVED_LOCAL_SUBSCOPE_PASSED",
+        "scope": "Transitive revocation, dependency-cycle rejection and independent work retention; bounded real distinct-producer/consumer handoff in principal evidence.",
+        "reference": "docs/COORDINATION_RUNTIME.md"
+      }
+    },
+    {
+      "item_id": "S01-P1",
+      "role_id": "S01",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [S01-P1]; dynamic tool trigger and consumer criteria",
+      "case_id": "S01:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Entregar denominadores/janelas/segmentos, hipóteses concorrentes, guardrail e experimento discriminante; não inferir causalidade nem entrevistas ausentes.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "unique-activation-denominator",
+        "cohort-window-segment",
+        "competing-hypotheses",
+        "consent-provenance",
+        "no-causal-claim-or-invented-interviews"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "S01"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Entregar denominadores/janelas/segmentos, hipóteses concorrentes, guardrail e experimento discriminante; não inferir causalidade nem entrevistas ausentes."
+    },
+    {
+      "item_id": "S02-P1",
+      "role_id": "S02",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [S02-P1]; dynamic tool trigger and consumer criteria",
+      "case_id": "S02:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "IDs estáveis ligam regra vigente, autoridade, exemplos de fronteira temporal, teste e consumidor; trabalho ambíguo fica bloqueado sem suspender leitura independente.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "effective-authority-and-stable-rule-id",
+        "unit-timezone-tolerance",
+        "exact-temporal-boundary",
+        "denied-actor",
+        "explicit-change-policy-and-consumer"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "S02"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "IDs estáveis ligam regra vigente, autoridade, exemplos de fronteira temporal, teste e consumidor; trabalho ambíguo fica bloqueado sem suspender leitura independente."
+    },
+    {
+      "item_id": "S03-P1",
+      "role_id": "S03",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [S03-P1]; dynamic tool trigger and consumer criteria",
+      "case_id": "S03:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "As-Is/To-Be/lacunas, duas alternativas proporcionais, matriz de confiança e ADR vinculam cada requisito a teste de premissa; rollback ou forward-fix demonstrado em fixture isolada.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "as-is-to-be-gap-map",
+        "two-proportional-alternatives",
+        "versioned-adr",
+        "trust-boundary-and-assumption-tests",
+        "migration-rollback-or-forward-fix"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "S03"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "As-Is/To-Be/lacunas, duas alternativas proporcionais, matriz de confiança e ADR vinculam cada requisito a teste de premissa; rollback ou forward-fix demonstrado em fixture isolada."
+    },
+    {
+      "item_id": "S04-D1",
+      "role_id": "S04",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [S04-D1]; dynamic tool trigger and consumer criteria",
+      "case_id": "S04:depth:1",
+      "implementation_status": "IMPLEMENTED_SINGLE_SOURCE_GENERATION_AND_DRIFT_CHECK",
+      "native_acceptance_status": "NOT_APPLICABLE_METADATA_DRIFT_CHECK",
+      "native_acceptance": "Parse do texto TOML e profile do catálogo produz exatamente o conjunto de review do contrato; mutação que remove4.13 ou10.6 deve falhar.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py",
+        "tools/guardian_professional.py",
+        "core/contracts-catalog-v1.json"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "exact33-review-capabilities",
+        "remove4.13-rejected",
+        "remove10.6-rejected",
+        "competing-legacy-list-rejected"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.CapabilitySourceTests",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "S04"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "VERIFIED_LOCAL_REGRESSION",
+      "remaining_native_scope": ""
+    },
+    {
+      "item_id": "S04-P1",
+      "role_id": "S04",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [S04-P1]; dynamic tool trigger and consumer criteria",
+      "case_id": "S04:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Versões/framework observados, contrato de serialização e chave de cache explícitos; teste de navegação/hidratação e locale documenta console, DOM e contrato preservado.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "observed-framework-version",
+        "serialization-contract",
+        "tenant-locale-cache-identity",
+        "native-navigation-hydration-console-dom",
+        "locale-preserves-contract"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "S04"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Versões/framework observados, contrato de serialização e chave de cache explícitos; teste de navegação/hidratação e locale documenta console, DOM e contrato preservado.",
+      "qualification_campaign_subscopes": [
+        {
+          "evidence_class": "TRUSTED_REAL_STACK_FIXTURE_SUBSCOPE",
+          "documentation": "docs/BROWSER_CHECKS.md",
+          "harness_sha256": "e512309bacbebb62b712031f06b5354cb2aa5ba87426b56d117c397066210544",
+          "result": "OBSERVED_AND_INDEPENDENTLY_REEXECUTED_WITH_LIMITATIONS",
+          "scope": "Actual isolated Chrome/Playwright DOM, keyboard, focus, tenant/locale and specific faulty controls. Synthetic composition is not OS IME; AT, framework SSR and server effects remain unverified.",
+          "agent_performance_inferred": false,
+          "full_item_acceptance_inferred": false
+        }
+      ]
+    },
+    {
+      "item_id": "S05-P1",
+      "role_id": "S05",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [S05-P1]; dynamic tool trigger and consumer criteria",
+      "case_id": "S05:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Teste real conta ações observáveis para Enter/click/IME, preserva input/foco após erro e rejeita resposta de tela antiga; garantia de efeito do servidor tem evidência separada.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py",
+        "tools/guardian_stack_checks.py",
+        "eval/stack-fixtures/node/check.cjs"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "enter-click-ime-action-count",
+        "draft-focus-preserved-after-error",
+        "stale-navigation-rejected",
+        "api-status-error-idempotency-contract",
+        "server-effect-evidence-separate"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "S05"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Teste real conta ações observáveis para Enter/click/IME, preserva input/foco após erro e rejeita resposta de tela antiga; garantia de efeito do servidor tem evidência separada.",
+      "additional_checked_scope": {
+        "check": "node",
+        "result": "OBSERVED_LOCAL_SUBSCOPE_PASSED",
+        "scope": "Actual Node JSON/form state machine controls; not browser Enter/click/IME/focus/server-effect proof.",
+        "reference": "docs/STACK_CHECKS.md"
+      },
+      "qualification_campaign_subscopes": [
+        {
+          "evidence_class": "TRUSTED_REAL_STACK_FIXTURE_SUBSCOPE",
+          "documentation": "docs/BROWSER_CHECKS.md",
+          "harness_sha256": "e512309bacbebb62b712031f06b5354cb2aa5ba87426b56d117c397066210544",
+          "result": "OBSERVED_AND_INDEPENDENTLY_REEXECUTED_WITH_LIMITATIONS",
+          "scope": "Actual isolated Chrome/Playwright DOM, keyboard, focus, tenant/locale and specific faulty controls. Synthetic composition is not OS IME; AT, framework SSR and server effects remain unverified.",
+          "agent_performance_inferred": false,
+          "full_item_acceptance_inferred": false
+        }
+      ]
+    },
+    {
+      "item_id": "S06-P1",
+      "role_id": "S06",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [S06-P1]; dynamic tool trigger and consumer criteria",
+      "case_id": "S06:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Matriz tarefa/critério/ambiente identifica foco de entrada/saída, ordem de teclado, erro associado e limitações AT; leitor real só é marcado testado com evidência da execução.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "mounted-fallback-focus-restore",
+        "tab-order-escape",
+        "criterion-and-environment-matrix",
+        "associated-error-announcement",
+        "at-execution-only-with-evidence"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "S06"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Matriz tarefa/critério/ambiente identifica foco de entrada/saída, ordem de teclado, erro associado e limitações AT; leitor real só é marcado testado com evidência da execução.",
+      "qualification_campaign_subscopes": [
+        {
+          "evidence_class": "TRUSTED_REAL_STACK_FIXTURE_SUBSCOPE",
+          "documentation": "docs/BROWSER_CHECKS.md",
+          "harness_sha256": "e512309bacbebb62b712031f06b5354cb2aa5ba87426b56d117c397066210544",
+          "result": "OBSERVED_AND_INDEPENDENTLY_REEXECUTED_WITH_LIMITATIONS",
+          "scope": "Actual isolated Chrome/Playwright DOM, keyboard, focus, tenant/locale and specific faulty controls. Synthetic composition is not OS IME; AT, framework SSR and server effects remain unverified.",
+          "agent_performance_inferred": false,
+          "full_item_acceptance_inferred": false
+        }
+      ]
+    },
+    {
+      "item_id": "S07-P1",
+      "role_id": "S07",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [S07-P1]; dynamic tool trigger and consumer criteria",
+      "case_id": "S07:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Matriz de locale/fallback/cache cobre plural, expansão, RTL e fuso; medições antes/depois usam mesmos inputs/ambiente e guardrails de jornada/teclado.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "locale-fallback-cache",
+        "plural-expansion-rtl-timezone",
+        "pseudolocale-bundle",
+        "matched-before-after-input-environment",
+        "journey-keyboard-guardrail"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "S07"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Matriz de locale/fallback/cache cobre plural, expansão, RTL e fuso; medições antes/depois usam mesmos inputs/ambiente e guardrails de jornada/teclado.",
+      "qualification_campaign_subscopes": [
+        {
+          "evidence_class": "TRUSTED_REAL_STACK_FIXTURE_SUBSCOPE",
+          "documentation": "docs/BROWSER_CHECKS.md",
+          "harness_sha256": "e512309bacbebb62b712031f06b5354cb2aa5ba87426b56d117c397066210544",
+          "result": "OBSERVED_AND_INDEPENDENTLY_REEXECUTED_WITH_LIMITATIONS",
+          "scope": "Actual isolated Chrome/Playwright DOM, keyboard, focus, tenant/locale and specific faulty controls. Synthetic composition is not OS IME; AT, framework SSR and server effects remain unverified.",
+          "agent_performance_inferred": false,
+          "full_item_acceptance_inferred": false
+        }
+      ]
+    },
+    {
+      "item_id": "S08-P1",
+      "role_id": "S08",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [S08-P1]; dynamic tool trigger and consumer criteria",
+      "case_id": "S08:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Barreiras determinísticas em runtime observado preservam saldo/outbox e resultado recuperável em cada ponto; nenhuma entrada inválida altera estado; timeout não é tratado como rollback provado.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "sqlite-ledger-outbox-and-rollback",
+        "runtime-deterministic-barrier",
+        "commit-timeout-recovery-state",
+        "invalid-input-no-mutation",
+        "domain-api-consumer-acceptance"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "S08"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Barreiras determinísticas em runtime observado preservam saldo/outbox e resultado recuperável em cada ponto; nenhuma entrada inválida altera estado; timeout não é tratado como rollback provado.",
+      "qualification_campaign_subscopes": [
+        {
+          "evidence_class": "TRUSTED_REAL_STACK_FIXTURE_SUBSCOPE",
+          "documentation": "docs/SERVICE_CHECKS.md",
+          "harness_sha256": "9288021a1fc8f875eafe73d0243a63278526be23325769c50b5b568dc2990c10",
+          "result": "OBSERVED_AND_INDEPENDENTLY_REEXECUTED_WITH_LIMITATIONS",
+          "scope": "Actual SQLite transactions/fencing/migration, loopback HTTP wire/resource/destination controls and HS256 token verification. Tiny fixtures, injected resolver and supplied identity are not general provider, OS DNS, OIDC/JWKS or professional-agent acceptance.",
+          "agent_performance_inferred": false,
+          "full_item_acceptance_inferred": false
+        }
+      ]
+    },
+    {
+      "item_id": "S09-P1",
+      "role_id": "S09",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [S09-P1]; dynamic tool trigger and consumer criteria",
+      "case_id": "S09:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Consumer antigo falha no campo de tipo incompatível; fixture wire assina/verifica bytes exatos, rejeita replay inválido e preserva efeito sob retry válido; versão e limites são documentados.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "legacy-wire-incompatible-field",
+        "signature-exact-bytes",
+        "replay-window-and-dedupe",
+        "valid-retry-preserves-effect",
+        "actual-protobuf-http-version-if-used"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "S09"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Consumer antigo falha no campo de tipo incompatível; fixture wire assina/verifica bytes exatos, rejeita replay inválido e preserva efeito sob retry válido; versão e limites são documentados.",
+      "qualification_campaign_subscopes": [
+        {
+          "evidence_class": "TRUSTED_REAL_STACK_FIXTURE_SUBSCOPE",
+          "documentation": "docs/SERVICE_CHECKS.md",
+          "harness_sha256": "9288021a1fc8f875eafe73d0243a63278526be23325769c50b5b568dc2990c10",
+          "result": "OBSERVED_AND_INDEPENDENTLY_REEXECUTED_WITH_LIMITATIONS",
+          "scope": "Actual SQLite transactions/fencing/migration, loopback HTTP wire/resource/destination controls and HS256 token verification. Tiny fixtures, injected resolver and supplied identity are not general provider, OS DNS, OIDC/JWKS or professional-agent acceptance.",
+          "agent_performance_inferred": false,
+          "full_item_acceptance_inferred": false
+        }
+      ]
+    },
+    {
+      "item_id": "S10-P1",
+      "role_id": "S10",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [S10-P1]; dynamic tool trigger and consumer criteria",
+      "case_id": "S10:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Barreiras reproduzem as ordens; armazenamento rejeita token antigo e segundo efeito após restart; progresso termina sob limite/hipóteses explícitos, incluindo horizonte de retenção.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "deterministic-history-order",
+        "storage-fencing-rejects-old-token",
+        "restart-idempotency",
+        "bounded-progress-assumptions",
+        "retention-horizon"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "S10"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Barreiras reproduzem as ordens; armazenamento rejeita token antigo e segundo efeito após restart; progresso termina sob limite/hipóteses explícitos, incluindo horizonte de retenção.",
+      "qualification_campaign_subscopes": [
+        {
+          "evidence_class": "TRUSTED_REAL_STACK_FIXTURE_SUBSCOPE",
+          "documentation": "docs/SERVICE_CHECKS.md",
+          "harness_sha256": "9288021a1fc8f875eafe73d0243a63278526be23325769c50b5b568dc2990c10",
+          "result": "OBSERVED_AND_INDEPENDENTLY_REEXECUTED_WITH_LIMITATIONS",
+          "scope": "Actual SQLite transactions/fencing/migration, loopback HTTP wire/resource/destination controls and HS256 token verification. Tiny fixtures, injected resolver and supplied identity are not general provider, OS DNS, OIDC/JWKS or professional-agent acceptance.",
+          "agent_performance_inferred": false,
+          "full_item_acceptance_inferred": false
+        }
+      ]
+    },
+    {
+      "item_id": "S11-P1",
+      "role_id": "S11",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [S11-P1]; dynamic tool trigger and consumer criteria",
+      "case_id": "S11:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Engine/versão/isolamento e dataset representativo registrados; ensaio mede bloqueios, reconcilia chaves/valores e demonstra retry/forward-fix; engine ausente deixa essa parte NOT_VERIFIED.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "observed-engine-version-isolation",
+        "actual-lock-contention-and-retry",
+        "representative-dataset",
+        "key-value-reconciliation",
+        "engine-specific-forward-fix-no-extrapolation"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "S11"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Engine/versão/isolamento e dataset representativo registrados; ensaio mede bloqueios, reconcilia chaves/valores e demonstra retry/forward-fix; engine ausente deixa essa parte NOT_VERIFIED.",
+      "qualification_campaign_subscopes": [
+        {
+          "evidence_class": "TRUSTED_REAL_STACK_FIXTURE_SUBSCOPE",
+          "documentation": "docs/SERVICE_CHECKS.md",
+          "harness_sha256": "9288021a1fc8f875eafe73d0243a63278526be23325769c50b5b568dc2990c10",
+          "result": "OBSERVED_AND_INDEPENDENTLY_REEXECUTED_WITH_LIMITATIONS",
+          "scope": "Actual SQLite transactions/fencing/migration, loopback HTTP wire/resource/destination controls and HS256 token verification. Tiny fixtures, injected resolver and supplied identity are not general provider, OS DNS, OIDC/JWKS or professional-agent acceptance.",
+          "agent_performance_inferred": false,
+          "full_item_acceptance_inferred": false
+        }
+      ]
+    },
+    {
+      "item_id": "S12-P1",
+      "role_id": "S12",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [S12-P1]; dynamic tool trigger and consumer criteria",
+      "case_id": "S12:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Mapa fonte/réplica/exportação/backup liga política e owner; restore autorizado reaplica tombstones/exclusão conforme política e mede integridade/tempo; política ausente exige abstenção específica.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "source-replica-export-backup-map",
+        "policy-owner-retention-exception",
+        "restore-reapplies-tombstones",
+        "key-integrity-timing",
+        "missing-policy-bounded-abstention"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "S12"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Mapa fonte/réplica/exportação/backup liga política e owner; restore autorizado reaplica tombstones/exclusão conforme política e mede integridade/tempo; política ausente exige abstenção específica."
+    },
+    {
+      "item_id": "RB-S13-1",
+      "role_id": "S13",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [RB-S13-1]; dynamic tool trigger and consumer criteria",
+      "case_id": "S13:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "No ambiente de execução autorizado, um hop permitido conecta ao stub; redirect para loopback e troca de DNS não chegam ao stub proibido; retirar a revalidação provoca a falha esperada sem tráfego externo.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "allowed-transport-stub-connected",
+        "redirect-loopback-blocked",
+        "dns-rebind-connected-ip-checked",
+        "revalidation-mutant-reaches-forbidden-stub",
+        "zero-external-traffic"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "S13"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "No ambiente de execução autorizado, um hop permitido conecta ao stub; redirect para loopback e troca de DNS não chegam ao stub proibido; retirar a revalidação provoca a falha esperada sem tráfego externo.",
+      "qualification_campaign_subscopes": [
+        {
+          "evidence_class": "TRUSTED_REAL_STACK_FIXTURE_SUBSCOPE",
+          "documentation": "docs/SERVICE_CHECKS.md",
+          "harness_sha256": "9288021a1fc8f875eafe73d0243a63278526be23325769c50b5b568dc2990c10",
+          "result": "OBSERVED_AND_INDEPENDENTLY_REEXECUTED_WITH_LIMITATIONS",
+          "scope": "Actual SQLite transactions/fencing/migration, loopback HTTP wire/resource/destination controls and HS256 token verification. Tiny fixtures, injected resolver and supplied identity are not general provider, OS DNS, OIDC/JWKS or professional-agent acceptance.",
+          "agent_performance_inferred": false,
+          "full_item_acceptance_inferred": false
+        }
+      ]
+    },
+    {
+      "item_id": "RB-S13-2",
+      "role_id": "S13",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [RB-S13-2]; dynamic tool trigger and consumer criteria",
+      "case_id": "S13:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "O protegido não recebe achado de bypass; o vulnerável produz exposição demonstrável e reteste; não ver o código necessário resulta em NOT_VERIFIED, não vulnerabilidade confirmada.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "protected-code-negative-control",
+        "vulnerable-path-symbol-precondition",
+        "demonstrated-fixture-effect",
+        "mitigation-retest",
+        "unread-code-not-verified"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "S13"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "O protegido não recebe achado de bypass; o vulnerável produz exposição demonstrável e reteste; não ver o código necessário resulta em NOT_VERIFIED, não vulnerabilidade confirmada.",
+      "qualification_campaign_subscopes": [
+        {
+          "evidence_class": "TRUSTED_REAL_STACK_FIXTURE_SUBSCOPE",
+          "documentation": "docs/SERVICE_CHECKS.md",
+          "harness_sha256": "9288021a1fc8f875eafe73d0243a63278526be23325769c50b5b568dc2990c10",
+          "result": "OBSERVED_AND_INDEPENDENTLY_REEXECUTED_WITH_LIMITATIONS",
+          "scope": "Actual SQLite transactions/fencing/migration, loopback HTTP wire/resource/destination controls and HS256 token verification. Tiny fixtures, injected resolver and supplied identity are not general provider, OS DNS, OIDC/JWKS or professional-agent acceptance.",
+          "agent_performance_inferred": false,
+          "full_item_acceptance_inferred": false
+        }
+      ]
+    },
+    {
+      "item_id": "RB-S14-1",
+      "role_id": "S14",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [RB-S14-1]; dynamic tool trigger and consumer criteria",
+      "case_id": "S14:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Chave atual válida passa, chave desconhecida e downgrade falham, chave nova autorizada passa após refresh previsto; falha do emissor não causa aceitação de token inválido; nenhum resultado depende de flag assinatura fornecida pelo candidato.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "valid-current-key",
+        "unknown-key-and-downgrade-rejected",
+        "bounded-new-key-refresh",
+        "issuer-failure-fail-closed",
+        "real-issuer-audience-clock-config"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "S14"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Chave atual válida passa, chave desconhecida e downgrade falham, chave nova autorizada passa após refresh previsto; falha do emissor não causa aceitação de token inválido; nenhum resultado depende de flag assinatura fornecida pelo candidato.",
+      "qualification_campaign_subscopes": [
+        {
+          "evidence_class": "TRUSTED_REAL_STACK_FIXTURE_SUBSCOPE",
+          "documentation": "docs/SERVICE_CHECKS.md",
+          "harness_sha256": "9288021a1fc8f875eafe73d0243a63278526be23325769c50b5b568dc2990c10",
+          "result": "OBSERVED_AND_INDEPENDENTLY_REEXECUTED_WITH_LIMITATIONS",
+          "scope": "Actual SQLite transactions/fencing/migration, loopback HTTP wire/resource/destination controls and HS256 token verification. Tiny fixtures, injected resolver and supplied identity are not general provider, OS DNS, OIDC/JWKS or professional-agent acceptance.",
+          "agent_performance_inferred": false,
+          "full_item_acceptance_inferred": false
+        }
+      ]
+    },
+    {
+      "item_id": "RB-S14-2",
+      "role_id": "S14",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [RB-S14-2]; dynamic tool trigger and consumer criteria",
+      "case_id": "S14:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Relatório lista destinos comprovados, destinos pendentes e retenções fornecidas sem inventar base legal; ausência de uma política bloqueia apenas a conclusão dependente, mantendo análise técnica útil.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "supplied-policy-subject-destination-owner",
+        "technical-vs-legal-question",
+        "retention-per-destination",
+        "missing-policy-blocks-only-dependent-conclusion",
+        "data-owner-backup-handoff"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "S14"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Relatório lista destinos comprovados, destinos pendentes e retenções fornecidas sem inventar base legal; ausência de uma política bloqueia apenas a conclusão dependente, mantendo análise técnica útil."
+    },
+    {
+      "item_id": "RB-S15-1",
+      "role_id": "S15",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [RB-S15-1]; dynamic tool trigger and consumer criteria",
+      "case_id": "S15:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Trocar digest, origem ou identidade reprova mesmo com assinatura criptograficamente válida; o artefato correto passa; verificador indisponível deixa verificação criptográfica NOT_VERIFIED, sem simular attestation.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "cryptographic-signature-bytes",
+        "digest-builder-origin-policy-binding",
+        "wrong-validly-signed-identity-rejected",
+        "tested-promoted-artifact-same",
+        "missing-verifier-not-verified"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "S15"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Trocar digest, origem ou identidade reprova mesmo com assinatura criptograficamente válida; o artefato correto passa; verificador indisponível deixa verificação criptográfica NOT_VERIFIED, sem simular attestation."
+    },
+    {
+      "item_id": "RB-S15-2",
+      "role_id": "S15",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [RB-S15-2]; dynamic tool trigger and consumer criteria",
+      "case_id": "S15:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Mesmo advisory gera decisões distintas segundo caminho e superfície demonstrados; ausência de grafo não vira não vulnerável; mitigação exige regressão e versão/digest corrigidos.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "supplied-advisory-severity",
+        "reachable-vs-unreachable-callgraph",
+        "surface-and-compensating-control",
+        "fixed-version-digest-regression",
+        "missing-graph-not-safe"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "S15"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Mesmo advisory gera decisões distintas segundo caminho e superfície demonstrados; ausência de grafo não vira não vulnerável; mitigação exige regressão e versão/digest corrigidos."
+    },
+    {
+      "item_id": "RB-S16-1",
+      "role_id": "S16",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [RB-S16-1]; dynamic tool trigger and consumer criteria",
+      "case_id": "S16:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Baseline passa; double-debit falha na asserção de saldo; remover a asserção faz o mutante sobreviver; ImportError e zero testes são BLOCKED/INVALID e não ganhos de adequação.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "executed-baseline-assertion",
+        "executed-double-debit-mutant",
+        "removed-assertion-survivor",
+        "invalid-import-or-zero-tests-not-killed",
+        "exact-revision-cleanup"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "S16"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Baseline passa; double-debit falha na asserção de saldo; remover a asserção faz o mutante sobreviver; ImportError e zero testes são BLOCKED/INVALID e não ganhos de adequação."
+    },
+    {
+      "item_id": "RB-S16-2",
+      "role_id": "S16",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [RB-S16-2]; dynamic tool trigger and consumer criteria",
+      "case_id": "S16:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Mesma seed/ordem reproduz falha antes e passa depois da correção de isolamento; histórico conserva todas as tentativas; caso crítico em quarentena continua bloqueando a obrigação.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "seed-and-order-reproduction",
+        "all-attempts-preserved",
+        "isolation-fix-vs-temporary-mitigation",
+        "critical-quarantine-blocks",
+        "expiry-owner"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "S16"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Mesma seed/ordem reproduz falha antes e passa depois da correção de isolamento; histórico conserva todas as tentativas; caso crítico em quarentena continua bloqueando a obrigação."
+    },
+    {
+      "item_id": "RB-S17-1",
+      "role_id": "S17",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [RB-S17-1]; dynamic tool trigger and consumer criteria",
+      "case_id": "S17:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Foco fica no diálogo enquanto aberto, Escape fecha e retorna a alvo montado/fallback previsto; mutação no handler falha por foco final; AT indisponível continua NOT_VERIFIED.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "native-keyboard-dialog-escape-focus",
+        "mounted-fallback-restored",
+        "focus-handler-mutant",
+        "observed-browser-version",
+        "at-not-verified-without-run"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "S17"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Foco fica no diálogo enquanto aberto, Escape fecha e retorna a alvo montado/fallback previsto; mutação no handler falha por foco final; AT indisponível continua NOT_VERIFIED.",
+      "qualification_campaign_subscopes": [
+        {
+          "evidence_class": "TRUSTED_REAL_STACK_FIXTURE_SUBSCOPE",
+          "documentation": "docs/BROWSER_CHECKS.md",
+          "harness_sha256": "e512309bacbebb62b712031f06b5354cb2aa5ba87426b56d117c397066210544",
+          "result": "OBSERVED_AND_INDEPENDENTLY_REEXECUTED_WITH_LIMITATIONS",
+          "scope": "Actual isolated Chrome/Playwright DOM, keyboard, focus, tenant/locale and specific faulty controls. Synthetic composition is not OS IME; AT, framework SSR and server effects remain unverified.",
+          "agent_performance_inferred": false,
+          "full_item_acceptance_inferred": false
+        }
+      ]
+    },
+    {
+      "item_id": "RB-S17-2",
+      "role_id": "S17",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [RB-S17-2]; dynamic tool trigger and consumer criteria",
+      "case_id": "S17:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Replay com mesma chave não duplica efeito; resposta obsoleta de outra navegação não altera tela; UI distingue confirmação, falha e estado pendente sem descartar entradas.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py",
+        "tools/guardian_stack_checks.py",
+        "eval/stack-fixtures/node/check.cjs"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "commit-timeout-reauth-state",
+        "same-key-replay-no-duplicate",
+        "stale-navigation-ignored",
+        "form-preserved-pending-reconciliation",
+        "independent-persistence-observer"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "S17"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Replay com mesma chave não duplica efeito; resposta obsoleta de outra navegação não altera tela; UI distingue confirmação, falha e estado pendente sem descartar entradas.",
+      "additional_checked_scope": {
+        "check": "node",
+        "result": "OBSERVED_LOCAL_SUBSCOPE_PASSED",
+        "scope": "Draft/navigation state only; no DOM or actual HTTP reconciliation.",
+        "reference": "docs/STACK_CHECKS.md"
+      },
+      "qualification_campaign_subscopes": [
+        {
+          "evidence_class": "TRUSTED_REAL_STACK_FIXTURE_SUBSCOPE",
+          "documentation": "docs/BROWSER_CHECKS.md",
+          "harness_sha256": "e512309bacbebb62b712031f06b5354cb2aa5ba87426b56d117c397066210544",
+          "result": "OBSERVED_AND_INDEPENDENTLY_REEXECUTED_WITH_LIMITATIONS",
+          "scope": "Actual isolated Chrome/Playwright DOM, keyboard, focus, tenant/locale and specific faulty controls. Synthetic composition is not OS IME; AT, framework SSR and server effects remain unverified.",
+          "agent_performance_inferred": false,
+          "full_item_acceptance_inferred": false
+        }
+      ]
+    },
+    {
+      "item_id": "RB-S18-1",
+      "role_id": "S18",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [RB-S18-1]; dynamic tool trigger and consumer criteria",
+      "case_id": "S18:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Duas chamadas/retry deixam exatamente um débito e registro de idempotência coerente; remover proteção atômica faz falhar pelo saldo/efeito; nenhum teste é aprovado só por status 200.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "concurrent-barrier-api-commit-timeout",
+        "exactly-one-debit-and-idempotency-row",
+        "atomic-protection-mutant",
+        "denied-actor-no-effects",
+        "status200-not-enough"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "S18"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Duas chamadas/retry deixam exatamente um débito e registro de idempotência coerente; remover proteção atômica faz falhar pelo saldo/efeito; nenhum teste é aprovado só por status 200."
+    },
+    {
+      "item_id": "RB-S18-2",
+      "role_id": "S18",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [RB-S18-2]; dynamic tool trigger and consumer criteria",
+      "case_id": "S18:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Cliente legado distingue variantes conforme contrato fornecido; campo exigido novo causa regressão visível; erro de autorização não retorna objeto nem cria efeitos; cleanup é verificado mesmo em falha.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py",
+        "tools/guardian_stack_checks.py",
+        "eval/stack-fixtures/node/check.cjs"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "actual-wire-missing-null-value",
+        "legacy-client-contract",
+        "required-new-request-field-breaks",
+        "body-status-persistence-positive-negative",
+        "cleanup-on-failure"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "S18"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Cliente legado distingue variantes conforme contrato fornecido; campo exigido novo causa regressão visível; erro de autorização não retorna objeto nem cria efeitos; cleanup é verificado mesmo em falha.",
+      "additional_checked_scope": {
+        "check": "node",
+        "result": "OBSERVED_LOCAL_SUBSCOPE_PASSED",
+        "scope": "Actual absent/null and enum serialization consumer controls; not actual HTTP+database integration.",
+        "reference": "docs/STACK_CHECKS.md"
+      }
+    },
+    {
+      "item_id": "RB-S19-1",
+      "role_id": "S19",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [RB-S19-1]; dynamic tool trigger and consumer criteria",
+      "case_id": "S19:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Experimento detecta taxa não atingida e não declara SLO por percentil só de sucessos; relatório conserva timeout/erro e limite do gerador; aborta no limiar autorizado.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "offered-vs-achieved-rate",
+        "duration-warmup-concurrency",
+        "timeout-errors-censoring-denominator",
+        "generator-limits",
+        "authorized-abort-threshold"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "S19"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Experimento detecta taxa não atingida e não declara SLO por percentil só de sucessos; relatório conserva timeout/erro e limite do gerador; aborta no limiar autorizado."
+    },
+    {
+      "item_id": "RB-S19-2",
+      "role_id": "S19",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [RB-S19-2]; dynamic tool trigger and consumer criteria",
+      "case_id": "S19:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Aumentar pool só sustenta hipótese quando espera cai sem deslocar gargalo; decisão liga p99 e custo unitário ao baseline e intervalo observado, sem declarar causalidade por correlação isolada.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "pool-wait-cpu-cost-timeseries",
+        "matched-baseline-intervention",
+        "repetition-observed-variance",
+        "no-causality-from-correlation",
+        "p99-and-unit-cost-guardrail"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "S19"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Aumentar pool só sustenta hipótese quando espera cai sem deslocar gargalo; decisão liga p99 e custo unitário ao baseline e intervalo observado, sem declarar causalidade por correlação isolada."
+    },
+    {
+      "item_id": "RB-S20-1",
+      "role_id": "S20",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [RB-S20-1]; dynamic tool trigger and consumer criteria",
+      "case_id": "S20:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "RTO abrange retomada de serviço segundo objetivo fornecido; RPO registra origem e idade do ponto recuperável; chave ausente bloqueia readiness mesmo com checksums bons; remoção de dependência quebra a verificação de serviço.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "service-use-RTO-origin-end",
+        "recoverable-source-age-RPO",
+        "key-identity-dependencies",
+        "integrity-and-application-read",
+        "removed-dependency-breaks-readiness"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "S20"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "RTO abrange retomada de serviço segundo objetivo fornecido; RPO registra origem e idade do ponto recuperável; chave ausente bloqueia readiness mesmo com checksums bons; remoção de dependência quebra a verificação de serviço."
+    },
+    {
+      "item_id": "RB-S20-2",
+      "role_id": "S20",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [RB-S20-2]; dynamic tool trigger and consumer criteria",
+      "case_id": "S20:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Alerta dispara para burn rápido nas janelas corretas, não trata 0/0 como saúde e separa no-data de sucesso; resultados ligam consulta e limiar à mesma revisão, sem executar pager externo.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "SLI-same-denominator-window",
+        "fast-burn-correct-window",
+        "zero-traffic-no-data",
+        "policy-query-threshold-revision",
+        "no-external-pager"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "S20"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Alerta dispara para burn rápido nas janelas corretas, não trata 0/0 como saúde e separa no-data de sucesso; resultados ligam consulta e limiar à mesma revisão, sem executar pager externo."
+    },
+    {
+      "item_id": "RB-S21-1",
+      "role_id": "S21",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [RB-S21-1]; dynamic tool trigger and consumer criteria",
+      "case_id": "S21:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Caso quebrado identifica fronteira e caso correto mantém vínculo; amostragem parcial é incerteza explícita; mudança do propagador quebra correlação pelo motivo esperado sem segredos nos artefatos.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "producer-queue-consumer-propagation",
+        "broken-boundary-and-correct-control",
+        "observed-version-sampling",
+        "trace-link-preserved",
+        "uncertainty-not-categorical-root-cause"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "S21"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Caso quebrado identifica fronteira e caso correto mantém vínculo; amostragem parcial é incerteza explícita; mudança do propagador quebra correlação pelo motivo esperado sem segredos nos artefatos."
+    },
+    {
+      "item_id": "RB-S21-2",
+      "role_id": "S21",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [RB-S21-2]; dynamic tool trigger and consumer criteria",
+      "case_id": "S21:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Canário não aparece no destino de logs; trace permanece correlacionável; cardinalidade acima do orçamento é detectada e alerta chega ao sink local; ausência de sink deixa entrega NOT_VERIFIED.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "synthetic-secret-PII-canary-removed",
+        "correlation-preserved",
+        "label-cardinality-budget",
+        "local-alert-sink-delivery-latency",
+        "missing-sink-not-verified"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "S21"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Canário não aparece no destino de logs; trace permanece correlacionável; cardinalidade acima do orçamento é detectada e alerta chega ao sink local; ausência de sink deixa entrega NOT_VERIFIED."
+    },
+    {
+      "item_id": "RB-S22-1",
+      "role_id": "S22",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [RB-S22-1]; dynamic tool trigger and consumer criteria",
+      "case_id": "S22:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Alterar revisão/state/provider invalida aceite anterior; delete/create de recurso stateful exige bloqueio e plano de recuperação; resultado não concede apply quando todos os checks offline passam.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "plan-hash-revision-provider-lock",
+        "workspace-state-identity",
+        "changed-context-invalidates-acceptance",
+        "stateful-delete-create-blocked",
+        "no-apply-authority"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "S22"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Alterar revisão/state/provider invalida aceite anterior; delete/create de recurso stateful exige bloqueio e plano de recuperação; resultado não concede apply quando todos os checks offline passam."
+    },
+    {
+      "item_id": "RB-S22-2",
+      "role_id": "S22",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [RB-S22-2]; dynamic tool trigger and consumer criteria",
+      "case_id": "S22:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "DNS ok com rota bloqueada não é sucesso de conectividade; probe da origem errada não comprova o caminho de app; indisponibilidade de ferramenta não produz falha de serviço inventada.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "topology-origin-destination-path",
+        "DNS-route-policy-layers",
+        "correct-app-origin-probe",
+        "missing-tool-not-service-failure",
+        "unknown-layers-explicit"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "S22"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "DNS ok com rota bloqueada não é sucesso de conectividade; probe da origem errada não comprova o caminho de app; indisponibilidade de ferramenta não produz falha de serviço inventada."
+    },
+    {
+      "item_id": "RB-S23-1",
+      "role_id": "S23",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [RB-S23-1]; dynamic tool trigger and consumer criteria",
+      "case_id": "S23:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Troca de digest ou workflow após teste invalida gate; artifact correto mantém vínculo; fork não obtém permissão por produzir nome de workflow idêntico; publicação continua dependente de autorização externa.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "immutable-build-test-promote-digests",
+        "code-pipeline-environment-policy-binding",
+        "workflow-digest-drift-invalidates",
+        "fork-identity-no-trust",
+        "external-publication-authorization"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "S23"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Troca de digest ou workflow após teste invalida gate; artifact correto mantém vínculo; fork não obtém permissão por produzir nome de workflow idêntico; publicação continua dependente de autorização externa."
+    },
+    {
+      "item_id": "RB-S23-2",
+      "role_id": "S23",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [RB-S23-2]; dynamic tool trigger and consumer criteria",
+      "case_id": "S23:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Limiar excedido interrompe promoção; rollback incompatível é bloqueado e alternativa forward recovery fica explícita; health verde isolado não comprova integridade nem recuperação.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "window-error-budget-abort",
+        "prior-artifact-digest",
+        "state-compatibility-before-rollback",
+        "forward-recovery-alternative",
+        "green-health-not-integrity"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "S23"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Limiar excedido interrompe promoção; rollback incompatível é bloqueado e alternativa forward recovery fica explícita; health verde isolado não comprova integridade nem recuperação."
+    },
+    {
+      "item_id": "RB-S24-1",
+      "role_id": "S24",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [RB-S24-1]; dynamic tool trigger and consumer criteria",
+      "case_id": "S24:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Mudança estrita/inclusiva no cenário correto falha na entrada 100; mudança de efeito/serialização é detectada pelo contrato aplicável; nenhum caso usa oráculo de outro cenário só por ambos terem limiar 100.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "interface-specific-baseline-and-oracle",
+        "inclusive100-boundary-mutant",
+        "effect-order-and-serialization",
+        "case-identity-not-threshold-keyword",
+        "caller-baseline-exclusions"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "S24"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Mudança estrita/inclusiva no cenário correto falha na entrada 100; mudança de efeito/serialização é detectada pelo contrato aplicável; nenhum caso usa oráculo de outro cenário só por ambos terem limiar 100."
+    },
+    {
+      "item_id": "RB-S24-2",
+      "role_id": "S24",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [RB-S24-2]; dynamic tool trigger and consumer criteria",
+      "case_id": "S24:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Consumidor mensal não é descartado por dia silencioso; consumidor desconhecido/telemetria insuficiente bloqueia retirada dependente; backfill completo com leitor legado ainda impede contract/drop.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "consumer-frequency-last-seen-version-owner",
+        "monthly-window-preserved",
+        "retry-and-telemetry-quality",
+        "unknown-consumer-blocks-removal",
+        "backfill-plus-legacy-reader-blocks-contract"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "S24"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Consumidor mensal não é descartado por dia silencioso; consumidor desconhecido/telemetria insuficiente bloqueia retirada dependente; backfill completo com leitor legado ainda impede contract/drop."
+    },
+    {
+      "item_id": "RB-S25-1",
+      "role_id": "S25",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [RB-S25-1]; dynamic tool trigger and consumer criteria",
+      "case_id": "S25:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Com os inputs atuais, 8000 de baseline e 12000 de compromisso não viram economia; mudança do horizonte/moeda exige normalização explícita; alternativa que viola RTO/availability não é recomendada só por menor custo.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "low-base-high-demand",
+        "currency-horizon-normalization",
+        "commitment-vs-variable-break-even",
+        "8000-vs12000-no-savings",
+        "RTO-availability-constraints"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "S25"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Com os inputs atuais, 8000 de baseline e 12000 de compromisso não viram economia; mudança do horizonte/moeda exige normalização explícita; alternativa que viola RTO/availability não é recomendada só por menor custo."
+    },
+    {
+      "item_id": "RB-S25-2",
+      "role_id": "S25",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [RB-S25-2]; dynamic tool trigger and consumer criteria",
+      "case_id": "S25:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Sem fator energético/região/metodologia fornecidos, emissão fica não estimada; decisão de fornecedor explicita lock-in e plano de saída; licença pendente permanece encaminhada para revisão competente.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "vendor-export-retention-exit-cost",
+        "measured-vs-estimated",
+        "energy-region-methodology-required",
+        "no-money-to-emissions-conversion",
+        "license-review-pending"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "S25"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Sem fator energético/região/metodologia fornecidos, emissão fica não estimada; decisão de fornecedor explicita lock-in e plano de saída; licença pendente permanece encaminhada para revisão competente."
+    },
+    {
+      "item_id": "RB-S26-1",
+      "role_id": "S26",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [RB-S26-1]; dynamic tool trigger and consumer criteria",
+      "case_id": "S26:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Canário de outro tenant não chega ao modelo nem a sink externo; instrução recuperada não autoriza ferramenta; stub registra zero efeito proibido; remover o controle de autorização provoca falha observável sem rede externa.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "synthetic-cross-tenant-canary",
+        "retrieval-authorizes-no-tool",
+        "forbidden-stub-zero-effects",
+        "authorization-mutant",
+        "attempt-block-effect-receipts"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "S26"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Canário de outro tenant não chega ao modelo nem a sink externo; instrução recuperada não autoriza ferramenta; stub registra zero efeito proibido; remover o controle de autorização provoca falha observável sem rede externa."
+    },
+    {
+      "item_id": "RB-S26-2",
+      "role_id": "S26",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [RB-S26-2]; dynamic tool trigger and consumer criteria",
+      "case_id": "S26:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Resultado reporta numerador/denominador, erros por família e custo/latência; citações vencidas não sustentam resposta; promoção depende de limiares e holdout independente realmente disponível, sem inventar SME ou benchmark.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "verified-answer-insufficient-temporal-drift",
+        "predeclared-per-risk-family-threshold",
+        "repetition-inconclusive",
+        "numerator-denominator-error-latency-cost",
+        "independent-holdout-only-if-available"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "S26"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Resultado reporta numerador/denominador, erros por família e custo/latência; citações vencidas não sustentam resposta; promoção depende de limiares e holdout independente realmente disponível, sem inventar SME ou benchmark."
+    },
+    {
+      "item_id": "RC-01-EVAL",
+      "role_id": "G01",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [RC-01-EVAL]; dynamic tool trigger and consumer criteria",
+      "case_id": "G01:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Em fixture descartável com bug e controle negativo, revisão identifica pré-condições, reproduz falha no SHA exato, rejeita evidência antiga, refuta o falso positivo e não modifica fonte; consumidor distinto confere reprodução.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "exact-source-hash",
+        "bug-reproduction-and-preconditions",
+        "protected-negative-control",
+        "old-evidence-rejected",
+        "read-only-distinct-consumer"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "G01"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Em fixture descartável com bug e controle negativo, revisão identifica pré-condições, reproduz falha no SHA exato, rejeita evidência antiga, refuta o falso positivo e não modifica fonte; consumidor distinto confere reprodução."
+    },
+    {
+      "item_id": "RC-01-DESIGN",
+      "role_id": "G01",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [RC-01-DESIGN]; dynamic tool trigger and consumer criteria",
+      "case_id": "G01:depth:1",
+      "implementation_status": "IMPLEMENTED_SINGLE_SOURCE_GENERATION_AND_DRIFT_CHECK",
+      "native_acceptance_status": "NOT_APPLICABLE_METADATA_DRIFT_CHECK",
+      "native_acceptance": "Parsear TOML e contrato: conjunto de IDs de revisão coincide, ou perfil declara sem ambiguidade referência integral ao contrato e lista parcial.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py",
+        "tools/guardian_professional.py",
+        "core/contracts-catalog-v1.json"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "exact132-review-capabilities",
+        "single-complete-typed-source",
+        "profile-catalog-contract-equivalence"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.CapabilitySourceTests",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "G01"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "VERIFIED_LOCAL_REGRESSION",
+      "remaining_native_scope": ""
+    },
+    {
+      "item_id": "RC-02-EVAL",
+      "role_id": "G02",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [RC-02-EVAL]; dynamic tool trigger and consumer criteria",
+      "case_id": "G02:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Revisor independente invalida parecer antigo, bloqueia produção pela recuperação não comprovada, mantém preview com escopo expresso e exige logs/resultados vinculados ao artefato e ambiente; sem publicar.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "stale-approval-invalidated",
+        "production-blocked-without-service-recovery",
+        "preview-scope-preserved",
+        "artifact-environment-receipts",
+        "no-publication"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "G02"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Revisor independente invalida parecer antigo, bloqueia produção pela recuperação não comprovada, mantém preview com escopo expresso e exige logs/resultados vinculados ao artefato e ambiente; sem publicar."
+    },
+    {
+      "item_id": "RC-02-DESIGN",
+      "role_id": "G02",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [RC-02-DESIGN]; dynamic tool trigger and consumer criteria",
+      "case_id": "G02:depth:1",
+      "implementation_status": "IMPLEMENTED_POLICY_MATRIX_AND_G01_G02_VERIFICATION",
+      "native_acceptance_status": "NOT_APPLICABLE_OFFLINE_POLICY_VERIFIER",
+      "native_acceptance": "Teste offline por política: ausência, papel duplicado, autor igual ao implementador, SHA/digest divergente e parecer vencido falham quando G01/G02 são obrigatórios; strict documenta e testa exatamente a política escolhida.",
+      "implementation_files": [
+        "tools/guardian_release_gate.py",
+        "core/release-policy-matrix-v1.json",
+        "docs/RELEASE_ACCEPTANCE.md",
+        "tests/test_release_policy_matrix.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "strict-and-autonomous-policy-matrix",
+        "missing-G01-G02-rejected",
+        "duplicate-same-author-drifted-expired-review-rejected",
+        "human-strict-separate",
+        "machine-readable-receipt-no-silent-rule-removal"
+      ],
+      "local_test": "tests.test_release_policy_matrix.PolicyMatrixTests",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "G02"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "VERIFIED_LOCAL_REGRESSION",
+      "remaining_native_scope": ""
+    },
+    {
+      "item_id": "RC-03-EVAL",
+      "role_id": "pack:ai-systems:guardian_rag_llm_specialist",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [RC-03-EVAL]; dynamic tool trigger and consumer criteria",
+      "case_id": "pack:ai-systems:guardian_rag_llm_specialist:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Runtime isolado registra documentos recuperados, claims/fontes e recibos de ferramenta; recall/grounding avaliados por oráculo independente, nenhuma recuperação alheia nem ferramenta indevida, abstenção nos casos sem suporte e custo/latência por amostra.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "actual-isolated-retrieval-model-receipts",
+        "claim-source-grounding-recall",
+        "cross-tenant-exclusion",
+        "insufficient-support-abstention",
+        "sample-cost-latency"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "pack:ai-systems:guardian_rag_llm_specialist"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Runtime isolado registra documentos recuperados, claims/fontes e recibos de ferramenta; recall/grounding avaliados por oráculo independente, nenhuma recuperação alheia nem ferramenta indevida, abstenção nos casos sem suporte e custo/latência por amostra."
+    },
+    {
+      "item_id": "RC-03-DESIGN",
+      "role_id": "pack:ai-systems:guardian_rag_llm_specialist",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [RC-03-DESIGN]; dynamic tool trigger and consumer criteria",
+      "case_id": "pack:ai-systems:guardian_rag_llm_specialist:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Caso privado com documento stale/revogado e cache reutilizado entre tenants falha quando recuperado; relatório calcula métricas a partir de recibos e explicita amostra/limiar sem alegar robustez universal.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "temporal-access-corpus-policy",
+        "revocation-index-cache-segregation",
+        "stale-revoked-cross-tenant-negative",
+        "metric-denominator-label-threshold",
+        "not-universal-certification"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "pack:ai-systems:guardian_rag_llm_specialist"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Caso privado com documento stale/revogado e cache reutilizado entre tenants falha quando recuperado; relatório calcula métricas a partir de recibos e explicita amostra/limiar sem alegar robustez universal."
+    },
+    {
+      "item_id": "RC-04-EVAL",
+      "role_id": "pack:api-integration:guardian_api_contract_specialist",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [RC-04-EVAL]; dynamic tool trigger and consumer criteria",
+      "case_id": "pack:api-integration:guardian_api_contract_specialist:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Executar versões provider/consumer em fixture local, detectar quebra por serialização real, validar assinatura/bytes e replay, observar estado após timeout e garantir que retry obedece idempotência/reconciliação contratadas.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py",
+        "tools/guardian_stack_checks.py",
+        "eval/stack-fixtures/node/check.cjs"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "actual-provider-consumer-wire",
+        "exact-signature-replay",
+        "persisted-state-after-timeout",
+        "idempotent-retry-reconciliation",
+        "protocol-version"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "pack:api-integration:guardian_api_contract_specialist"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Executar versões provider/consumer em fixture local, detectar quebra por serialização real, validar assinatura/bytes e replay, observar estado após timeout e garantir que retry obedece idempotência/reconciliação contratadas.",
+      "additional_checked_scope": {
+        "check": "node",
+        "result": "OBSERVED_LOCAL_SUBSCOPE_PASSED",
+        "scope": "Actual JavaScript serialization controls; provider HTTP/protobuf/replay/deadlines remain separate.",
+        "reference": "docs/STACK_CHECKS.md"
+      }
+    },
+    {
+      "item_id": "RC-04-DESIGN",
+      "role_id": "pack:api-integration:guardian_api_contract_specialist",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [RC-04-DESIGN]; dynamic tool trigger and consumer criteria",
+      "case_id": "pack:api-integration:guardian_api_contract_specialist:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Matriz com consumidor estrito e tolerante produz decisões distintas justificadas; request opcional/response novo não é automaticamente tratado como quebra; deadline e paginação têm negativos.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py",
+        "tools/guardian_stack_checks.py",
+        "eval/stack-fixtures/node/check.cjs"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "request-response-direction",
+        "strict-vs-tolerant-enum",
+        "missing-null-value",
+        "optional-field-not-automatic-break",
+        "streaming-deadline-pagination-negative"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "pack:api-integration:guardian_api_contract_specialist"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Matriz com consumidor estrito e tolerante produz decisões distintas justificadas; request opcional/response novo não é automaticamente tratado como quebra; deadline e paginação têm negativos.",
+      "additional_checked_scope": {
+        "check": "node",
+        "result": "OBSERVED_LOCAL_SUBSCOPE_PASSED",
+        "scope": "Strict/tolerant enum and absent/null consumers execute; not all protocol dimensions.",
+        "reference": "docs/STACK_CHECKS.md"
+      }
+    },
+    {
+      "item_id": "RC-05-EVAL",
+      "role_id": "pack:cloud-platform:guardian_cloud_infrastructure_specialist",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [RC-05-EVAL]; dynamic tool trigger and consumer criteria",
+      "case_id": "pack:cloud-platform:guardian_cloud_infrastructure_specialist:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Parsear formato real do plano offline, preservar state/lock, explicar destructive diff e caminho DNS/rota/política; evidências ausentes ficam NOT_VERIFIED; nenhum apply, recurso ou credencial externa.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "real-format-plan-parse",
+        "state-lock-preserved",
+        "destructive-diff",
+        "DNS-route-policy-path",
+        "no-apply-resource-credentials"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "pack:cloud-platform:guardian_cloud_infrastructure_specialist"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Parsear formato real do plano offline, preservar state/lock, explicar destructive diff e caminho DNS/rota/política; evidências ausentes ficam NOT_VERIFIED; nenhum apply, recurso ou credencial externa."
+    },
+    {
+      "item_id": "RC-05-DESIGN",
+      "role_id": "pack:cloud-platform:guardian_cloud_infrastructure_specialist",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [RC-05-DESIGN]; dynamic tool trigger and consumer criteria",
+      "case_id": "pack:cloud-platform:guardian_cloud_infrastructure_specialist:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Fixtures reais sanitizadas com create+delete, valor unknown e provider divergente não viram aprovação; plano stale é rejeitado e segredo não aparece em artefato.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "observed-provider-version-format",
+        "create-delete-replacement",
+        "sensitive-unknown-values-redacted",
+        "changed-state-provider-invalidates",
+        "stale-plan-rejected"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "pack:cloud-platform:guardian_cloud_infrastructure_specialist"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Fixtures reais sanitizadas com create+delete, valor unknown e provider divergente não viram aprovação; plano stale é rejeitado e segredo não aparece em artefato."
+    },
+    {
+      "item_id": "RC-06-EVAL",
+      "role_id": "pack:data-engineering:guardian_data_migration_specialist",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [RC-06-EVAL]; dynamic tool trigger and consumer criteria",
+      "case_id": "pack:data-engineering:guardian_data_migration_specialist:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Reinício não perde/duplica dados, reconcilia chaves/valores/tipos, leitores antigos funcionam na expansão, lock cabe no orçamento, restore reproduz integridade; contract bloqueado até condições comprovadas.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "restart-no-loss-duplication",
+        "key-value-type-reconciliation",
+        "legacy-reader-expansion",
+        "lock-budget",
+        "restore-integrity-contract-block"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "pack:data-engineering:guardian_data_migration_specialist"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Reinício não perde/duplica dados, reconcilia chaves/valores/tipos, leitores antigos funcionam na expansão, lock cabe no orçamento, restore reproduz integridade; contract bloqueado até condições comprovadas."
+    },
+    {
+      "item_id": "RC-06-DESIGN",
+      "role_id": "pack:data-engineering:guardian_data_migration_specialist",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [RC-06-DESIGN]; dynamic tool trigger and consumer criteria",
+      "case_id": "pack:data-engineering:guardian_data_migration_specialist:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Crash em cada fronteira, watermark repetido e registro alterado entre leitura/escrita não ocultam perda; relatório mostra reconciliação por chave e bloqueio de contract se há drift.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "source-of-truth-and-checkpoint-unit",
+        "watermark-tie-breaker",
+        "concurrent-update-policy",
+        "deletes-extras-duplicates",
+        "crash-each-boundary"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "pack:data-engineering:guardian_data_migration_specialist"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Crash em cada fronteira, watermark repetido e registro alterado entre leitura/escrita não ocultam perda; relatório mostra reconciliação por chave e bloqueio de contract se há drift."
+    },
+    {
+      "item_id": "RC-07-EVAL",
+      "role_id": "pack:dotnet:guardian_dotnet_runtime_specialist",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [RC-07-EVAL]; dynamic tool trigger and consumer criteria",
+      "case_id": "pack:dotnet:guardian_dotnet_runtime_specialist:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Build/test no SDK observado; detectar DI inválida, executar 401/403/200 e negação cross-tenant sem efeitos; comprovar propagação de token e estado transacional após cancelamento; factory/escopo por operação correto é controle negativo.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py",
+        "tools/guardian_stack_checks.py",
+        "eval/stack-fixtures/dotnet/Program.cs"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "actual-SDK-build-test",
+        "DI-invalid-and-proper-factory-control",
+        "401-403-200-cross-tenant",
+        "cancellation-token-propagation",
+        "postcommit-state-reconciliation"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "pack:dotnet:guardian_dotnet_runtime_specialist"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Build/test no SDK observado; detectar DI inválida, executar 401/403/200 e negação cross-tenant sem efeitos; comprovar propagação de token e estado transacional após cancelamento; factory/escopo por operação correto é controle negativo.",
+      "additional_checked_scope": {
+        "check": "dotnet",
+        "result": "OBSERVED_LOCAL_SUBSCOPE_PASSED",
+        "scope": "Actual DI container+scope disposal and cancellation state in .NET8 fixture; no real ASP.NET authorization/database.",
+        "reference": "docs/STACK_CHECKS.md"
+      }
+    },
+    {
+      "item_id": "RC-07-DESIGN",
+      "role_id": "pack:dotnet:guardian_dotnet_runtime_specialist",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [RC-07-DESIGN]; dynamic tool trigger and consumer criteria",
+      "case_id": "pack:dotnet:guardian_dotnet_runtime_specialist:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "A avaliação rejeita captura direta/transitiva errada, aceita escopo/factory corretamente isolado e distingue cancelamento antes/depois de commit sem inventar rollback.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py",
+        "tools/guardian_stack_checks.py",
+        "eval/stack-fixtures/dotnet/Program.cs"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "transitive-capture",
+        "correct-factory-scope",
+        "host-vs-testhost-observed-version",
+        "contextual-middleware-order",
+        "cancellation-before-after-commit"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "pack:dotnet:guardian_dotnet_runtime_specialist"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "A avaliação rejeita captura direta/transitiva errada, aceita escopo/factory corretamente isolado e distingue cancelamento antes/depois de commit sem inventar rollback.",
+      "additional_checked_scope": {
+        "check": "dotnet",
+        "result": "OBSERVED_LOCAL_SUBSCOPE_PASSED",
+        "scope": "Transitive capture, scope factory and pre/post-commit in-memory cancellation controls execute.",
+        "reference": "docs/STACK_CHECKS.md"
+      }
+    },
+    {
+      "item_id": "RC-08-EVAL",
+      "role_id": "pack:financial-systems:guardian_payment_reliability_specialist",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [RC-08-EVAL]; dynamic tool trigger and consumer criteria",
+      "case_id": "pack:financial-systems:guardian_payment_reliability_specialist:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Apenas um efeito por operação sob concorrência, conservação por moeda, estados finais reconciliados, recuperação após crash entre provider/commit, conflito da mesma chave com payload diferente recusado sem novo débito; nenhuma chamada financeira real.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "concurrent-one-effect",
+        "currency-conservation",
+        "provider-commit-crash-recovery",
+        "payload-conflict-no-new-debit",
+        "no-real-payment-call"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "pack:financial-systems:guardian_payment_reliability_specialist"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Apenas um efeito por operação sob concorrência, conservação por moeda, estados finais reconciliados, recuperação após crash entre provider/commit, conflito da mesma chave com payload diferente recusado sem novo débito; nenhuma chamada financeira real."
+    },
+    {
+      "item_id": "RC-08-DESIGN",
+      "role_id": "pack:financial-systems:guardian_payment_reliability_specialist",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [RC-08-DESIGN]; dynamic tool trigger and consumer criteria",
+      "case_id": "pack:financial-systems:guardian_payment_reliability_specialist:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Dois tenants podem usar o mesmo valor textual de chave sem colisão; mesma operação com payload divergente falha; retry após TTL e crash não geram débito silenciosamente duplicado.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "tenant-operation-composite-key",
+        "conflict-and-expiry-semantics",
+        "partial-refund",
+        "provider-adapter-limit",
+        "retry-after-TTL-no-silent-duplicate"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "pack:financial-systems:guardian_payment_reliability_specialist"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Dois tenants podem usar o mesmo valor textual de chave sem colisão; mesma operação com payload divergente falha; retry após TTL e crash não geram débito silenciosamente duplicado."
+    },
+    {
+      "item_id": "RC-09-EVAL",
+      "role_id": "pack:frontend-experience:guardian_browser_accessibility_specialist",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [RC-09-EVAL]; dynamic tool trigger and consumer criteria",
+      "case_id": "pack:frontend-experience:guardian_browser_accessibility_specialist:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Registrar browser/versão, sequência de teclado e foco observados, árvore acessível e anúncios quando AT disponível; restaurar destino significativo, prevenir foco perdido e reportar AT NOT_VERIFIED quando não executada.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "observed-browser-version-keyboard-focus",
+        "accessibility-tree-and-announcements-if-AT",
+        "mounted-meaningful-fallback",
+        "focus-not-lost",
+        "AT-unknown-if-not-run"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "pack:frontend-experience:guardian_browser_accessibility_specialist"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Registrar browser/versão, sequência de teclado e foco observados, árvore acessível e anúncios quando AT disponível; restaurar destino significativo, prevenir foco perdido e reportar AT NOT_VERIFIED quando não executada.",
+      "qualification_campaign_subscopes": [
+        {
+          "evidence_class": "TRUSTED_REAL_STACK_FIXTURE_SUBSCOPE",
+          "documentation": "docs/BROWSER_CHECKS.md",
+          "harness_sha256": "e512309bacbebb62b712031f06b5354cb2aa5ba87426b56d117c397066210544",
+          "result": "OBSERVED_AND_INDEPENDENTLY_REEXECUTED_WITH_LIMITATIONS",
+          "scope": "Actual isolated Chrome/Playwright DOM, keyboard, focus, tenant/locale and specific faulty controls. Synthetic composition is not OS IME; AT, framework SSR and server effects remain unverified.",
+          "agent_performance_inferred": false,
+          "full_item_acceptance_inferred": false
+        }
+      ]
+    },
+    {
+      "item_id": "RC-09-DESIGN",
+      "role_id": "pack:frontend-experience:guardian_browser_accessibility_specialist",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [RC-09-DESIGN]; dynamic tool trigger and consumer criteria",
+      "case_id": "pack:frontend-experience:guardian_browser_accessibility_specialist:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Fixture com transição concorrente e erro repetido exige evidência temporal de foco/anúncio; associação a critério cita comportamento e versão, sem inferir conformidade total.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "WCAG-version-journey-matrix",
+        "portal-shadow-async-if-present",
+        "temporal-focus-and-repeated-error-announcement",
+        "behavior-linked-criterion",
+        "no-scanner-total-compliance"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "pack:frontend-experience:guardian_browser_accessibility_specialist"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Fixture com transição concorrente e erro repetido exige evidência temporal de foco/anúncio; associação a critério cita comportamento e versão, sem inferir conformidade total.",
+      "qualification_campaign_subscopes": [
+        {
+          "evidence_class": "TRUSTED_REAL_STACK_FIXTURE_SUBSCOPE",
+          "documentation": "docs/BROWSER_CHECKS.md",
+          "harness_sha256": "e512309bacbebb62b712031f06b5354cb2aa5ba87426b56d117c397066210544",
+          "result": "OBSERVED_AND_INDEPENDENTLY_REEXECUTED_WITH_LIMITATIONS",
+          "scope": "Actual isolated Chrome/Playwright DOM, keyboard, focus, tenant/locale and specific faulty controls. Synthetic composition is not OS IME; AT, framework SSR and server effects remain unverified.",
+          "agent_performance_inferred": false,
+          "full_item_acceptance_inferred": false
+        }
+      ]
+    },
+    {
+      "item_id": "RC-10-EVAL",
+      "role_id": "pack:quality-automation:guardian_contract_test_specialist",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [RC-10-EVAL]; dynamic tool trigger and consumer criteria",
+      "case_id": "pack:quality-automation:guardian_contract_test_specialist:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Suíte passa versão correta, falha em cada mutante semeado por razão/mensagem esperada, verifica corpo/status/efeitos/negação por recurso e rollback em engine relevante; dados isolados e limpeza comprovada.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "baseline-correct-provider",
+        "executed-semantic-mutant-specific-reason",
+        "body-status-effects-resource-denial",
+        "actual-engine-rollback",
+        "isolated-cleanup"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "pack:quality-automation:guardian_contract_test_specialist"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Suíte passa versão correta, falha em cada mutante semeado por razão/mensagem esperada, verifica corpo/status/efeitos/negação por recurso e rollback em engine relevante; dados isolados e limpeza comprovada."
+    },
+    {
+      "item_id": "RC-10-DESIGN",
+      "role_id": "pack:quality-automation:guardian_contract_test_specialist",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [RC-10-DESIGN]; dynamic tool trigger and consumer criteria",
+      "case_id": "pack:quality-automation:guardian_contract_test_specialist:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Mudança só na implementação quebra teste; copiar fixture para espelhar implementação é rejeitado; mutante equivalente não conta como falha de cobertura sem justificativa.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "contract-independent-implementation-mutants",
+        "equivalent-invalid-notrun-classification",
+        "trace-mutant-to-obligation",
+        "preserve-first-flake",
+        "fixture-copy-not-oracle-change"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "pack:quality-automation:guardian_contract_test_specialist"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Mudança só na implementação quebra teste; copiar fixture para espelhar implementação é rejeitado; mutante equivalente não conta como falha de cobertura sem justificativa."
+    },
+    {
+      "item_id": "RC-11-EVAL",
+      "role_id": "pack:security-assurance:guardian_threat_model_specialist",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [RC-11-EVAL]; dynamic tool trigger and consumer criteria",
+      "case_id": "pack:security-assurance:guardian_threat_model_specialist:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Em fixture autorizada sem metadata externa, reproduzir caminho mínimo, identificar precondição/efeito e refutar payload inerte; retestar mitigação nos redirects, cache e autorização sem acessar dados reais.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "minimal-local-reachable-path",
+        "precondition-observed-effect",
+        "inert-protected-negative",
+        "redirect-cache-auth-mitigation-retest",
+        "no-real-exfiltration"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "pack:security-assurance:guardian_threat_model_specialist"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Em fixture autorizada sem metadata externa, reproduzir caminho mínimo, identificar precondição/efeito e refutar payload inerte; retestar mitigação nos redirects, cache e autorização sem acessar dados reais."
+    },
+    {
+      "item_id": "RC-11-DESIGN",
+      "role_id": "pack:security-assurance:guardian_threat_model_specialist",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [RC-11-DESIGN]; dynamic tool trigger and consumer criteria",
+      "case_id": "pack:security-assurance:guardian_threat_model_specialist:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Dois casos parecidos com e sem egress/cache authorization produzem conclusões diferentes; alegação de exfiltração exige efeito observado em fixture, nunca só diagrama.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "alternative-path-precondition-chain",
+        "initialDNS-insufficient",
+        "egress-cache-auth-contrast",
+        "potential-vs-reachable-vs-reproduced",
+        "exfiltration-needs-observed-effect"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "pack:security-assurance:guardian_threat_model_specialist"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Dois casos parecidos com e sem egress/cache authorization produzem conclusões diferentes; alegação de exfiltração exige efeito observado em fixture, nunca só diagrama."
+    },
+    {
+      "item_id": "RC-12-EVAL",
+      "role_id": "pack:windows-tooling:guardian_windows_powershell_specialist",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [RC-12-EVAL]; dynamic tool trigger and consumer criteria",
+      "case_id": "pack:windows-tooling:guardian_windows_powershell_specialist:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Observação efetiva de alvos/ACL e diffs antes/depois demonstra literalidade, zero escrita no WhatIf, bloqueio do escape e restauração após cancelamento; nenhuma mudança global/política/elevação.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py",
+        "tools/guardian_stack_checks.py",
+        "eval/stack-fixtures/powershell/Check-Stack.ps1"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "observed-native-ACL-reparse-targets",
+        "literal-path-metacharacters",
+        "actual-WhatIf-zero-writes",
+        "escape-blocked",
+        "cancel-restore-no-global-elevation"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "pack:windows-tooling:guardian_windows_powershell_specialist"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Observação efetiva de alvos/ACL e diffs antes/depois demonstra literalidade, zero escrita no WhatIf, bloqueio do escape e restauração após cancelamento; nenhuma mudança global/política/elevação.",
+      "additional_checked_scope": {
+        "check": "powershell",
+        "result": "OBSERVED_LOCAL_SUBSCOPE_PASSED",
+        "scope": "Actual literal filename, WhatIf/cancellation and junction ancestor fixture; no general ACL/race attestation.",
+        "reference": "docs/STACK_CHECKS.md"
+      }
+    },
+    {
+      "item_id": "RC-12-DESIGN",
+      "role_id": "pack:windows-tooling:guardian_windows_powershell_specialist",
+      "source_audit_sha256": "f86a9e381a4e763506f900c76850dc21ed308828e14a0ff27d8a0a58aa2902a6",
+      "contract_change": "core/professional-contracts-v1.json: procedure and definition_of_done [RC-12-DESIGN]; dynamic tool trigger and consumer criteria",
+      "case_id": "pack:windows-tooling:guardian_windows_powershell_specialist:depth:1",
+      "implementation_status": "IMPLEMENTED_CONTRACT_AND_RUNNABLE_DEVELOPMENT_PROTOCOL",
+      "native_acceptance_status": "NOT_VERIFIED",
+      "native_acceptance": "Fixture controlada troca link após validação inicial; operação não segue fora do escopo e gera evidência de bloqueio. Não apresentar inspeção anterior como garantia contra toda corrida.",
+      "implementation_files": [
+        "tools/guardian_professional_depth.py",
+        "eval/professional-depth/catalog.json",
+        "tests/test_professional_audit_improvements.py",
+        "tools/guardian_stack_checks.py",
+        "eval/stack-fixtures/powershell/Check-Stack.ps1"
+      ],
+      "qualification": "NOT_EVALUATED",
+      "specific_checks": [
+        "all-path-components-revalidated-near-mutation",
+        "controlled-junction-swap-blocked",
+        "verified-boundary-or-abstain",
+        "no-out-of-scope-effect",
+        "no-universal-TOCTOU-guarantee"
+      ],
+      "local_test": "tests.test_professional_audit_improvements.ProfessionalDepthTests.test_all_39_roles_execute_positive_faulty_and_order_controls",
+      "protocol_command": [
+        "python",
+        "-B",
+        "tools/guardian_professional_depth.py",
+        "template",
+        "--role",
+        "pack:windows-tooling:guardian_windows_powershell_specialist"
+      ],
+      "native_protocol_status": "IMPLEMENTED_NOT_EXECUTED_NATIVE",
+      "exact_acceptance_status": "PARTIAL_LOCAL_SUBSCOPE_NATIVE_REMAINDER_NOT_VERIFIED",
+      "remaining_native_scope": "Fixture controlada troca link após validação inicial; operação não segue fora do escopo e gera evidência de bloqueio. Não apresentar inspeção anterior como garantia contra toda corrida.",
+      "additional_checked_scope": {
+        "check": "powershell",
+        "result": "OBSERVED_LOCAL_SUBSCOPE_PASSED",
+        "scope": "All-path-component reparse ancestor check rejects dedicated junction fixture; not proof against arbitrary hostile concurrent races.",
+        "reference": "docs/STACK_CHECKS.md"
+      }
+    }
+  ],
+  "qualification_policy": "Contract/checker implementation is distinct from native stack validation and professional qualification."
+}

@@ -15,10 +15,10 @@ import threading
 
 try:
     from .guardian_policy import authorize_action
-    from .guardian_runtime import inventory, terminate_tree
+    from .guardian_runtime import inventory, artifact_snapshot, terminate_tree
 except ImportError:
     from guardian_policy import authorize_action
-    from guardian_runtime import inventory, terminate_tree
+    from guardian_runtime import inventory, artifact_snapshot, terminate_tree
 
 
 class WorkflowError(ValueError):
@@ -48,7 +48,7 @@ def _context(home):
         slot = ex.safe(Path(record['worktree']))
         if slot != home / 'worktree' and slot != home / 'audit-worktrees' / ident:
             raise WorkflowError('Unexpected task checkout')
-        current[ident] = ex._plan_hash(inventory(slot))
+        current[ident] = ex._plan_hash(artifact_snapshot(slot))
     # Sequential tasks share one checkout: only the final serialized artifact
     # describes it. Parallel audit tasks each seal their own private checkout.
     last = max(state['tasks'], key=lambda k: state['tasks'][k].get('started_at_ns', 0))
@@ -240,7 +240,7 @@ def check(home, *, approved_checks, grant, timeout=120, max_output_bytes=65536):
             ident=task['id']
             commands=approved_checks[ident]
             cwd = ex.safe(Path(state['tasks'][ident]['worktree']))
-            before = inventory(cwd)
+            before = artifact_snapshot(cwd)
             for index, argv in enumerate(commands):
                 if not authorize_action('local_check',state['project'],cwd,grant)['allowed']:
                     raise WorkflowError('Check grant expired')
@@ -249,7 +249,7 @@ def check(home, *, approved_checks, grant, timeout=120, max_output_bytes=65536):
                 code = _run(argv,cwd,log,timeout,max_output_bytes)
                 record['checks'].append({'task_id':ident,'argv_sha256':_digest(argv),'exit_code':code,
                     'log':relative,'output_sha256':hashlib.sha256(log.read_bytes()).hexdigest()})
-                if code != 0 or inventory(cwd) != before:
+                if code != 0 or artifact_snapshot(cwd) != before:
                     raise WorkflowError('Check failed or changed checkout; fresh production required')
         _context(home)
         record['state']='checked'

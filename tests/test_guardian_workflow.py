@@ -1,6 +1,7 @@
 """Real local supervisor checks/integration; mock only model CLI, no quota/network."""
 import json
 import hashlib
+import os
 import subprocess
 import sys
 import tempfile
@@ -76,6 +77,63 @@ class WorkflowTests(unittest.TestCase):
         (self.home/'results'/(ident+'.professional.json')).unlink()
         with self.assertRaisesRegex(WorkflowError,'Missing valid professional'):
             verify(self.home)
+
+    def test_mode_drift_after_verify_invalidates_workflow_and_integration(self):
+        from tools.guardian_runtime import inventory
+        self.reviewed(); verify(self.home)
+        original_report=integrate(self.home)
+        slot=self.home/'worktree'; original_content=inventory(slot)
+        git(slot,'config','core.filemode','false')
+        git(slot,'update-index','--chmod=+x','value.txt')
+        self.assertEqual(original_content,inventory(slot))
+        with self.assertRaisesRegex(WorkflowError,'Artifact changed'):
+            inspect(self.home)
+        with self.assertRaisesRegex(WorkflowError,'Artifact changed'):
+            integrate(self.home)
+        with self.assertRaises(WorkflowError):
+            integrate(self.home,apply=True,confirm_sha256=original_report['patch_sha256'])
+        self.assertEqual((self.repo/'value.txt').read_text(),'before\n')
+
+    def test_wrong_patch_confirmation_rejected_for_untouched_verified_artifact(self):
+        self.reviewed(); verify(self.home)
+        with self.assertRaisesRegex(IntegrationError,'confirmation'):
+            integrate(self.home,apply=True,confirm_sha256='0'*64)
+        self.assertEqual(inspect(self.home)['state'],'verified')
+
+    def test_legacy_content_only_artifact_seal_cannot_be_upgraded_silently(self):
+        from tools.guardian_runtime import inventory
+        from tools.guardian_executor import _plan_hash, atomic_json
+        path=self.home/'state.json'; state=json.loads(path.read_text())
+        last=max(state['tasks'].values(),key=lambda item:item['started_at_ns'])
+        last['artifact_sha256']=_plan_hash(inventory(self.home/'worktree'))
+        last.pop('artifact_schema_version',None)
+        atomic_json(path,state)
+        with self.assertRaisesRegex(WorkflowError,'Artifact changed after production'):
+            self.checked()
+        with self.assertRaisesRegex(IntegrationError,'Worktree changed after'):
+            integrate(self.home,mode='manual')
+        self.assertFalse((self.home/'workflow.json').exists())
+
+    @unittest.skipIf(os.name == 'nt', 'POSIX executable filesystem mode required')
+    def test_posix_filesystem_mode_drift_invalidates_verified_workflow(self):
+        self.reviewed(); verify(self.home)
+        slot=self.home/'worktree'
+        git(slot,'config','core.filemode','false')
+        (slot/'value.txt').chmod(0o755)
+        with self.assertRaisesRegex(WorkflowError,'Artifact changed'):
+            inspect(self.home)
+        with self.assertRaises(WorkflowError):
+            integrate(self.home)
+
+    def test_mode_drift_during_supervisor_check_blocks_workflow(self):
+        def mutate(argv,cwd,log,timeout,max_bytes):
+            log.parent.mkdir(parents=True,exist_ok=True); log.write_text('mock check')
+            git(cwd,'config','core.filemode','false')
+            git(cwd,'update-index','--chmod=+x','value.txt')
+            return 0
+        with patch('tools.guardian_workflow._run',side_effect=mutate),self.assertRaisesRegex(WorkflowError,'changed checkout'):
+            self.checked()
+        self.assertEqual(json.loads((self.home/'workflow.json').read_text())['state'],'blocked')
 
     def test_tampered_professional_artifact_hash_cannot_be_verified(self):
         self.reviewed();ident=self.plan['tasks'][0]['id'];path=self.home/'results'/(ident+'.professional.json')

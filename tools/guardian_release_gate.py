@@ -7,7 +7,85 @@ import argparse,hashlib,json,re,subprocess,io,zipfile
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 
-def inspect(root=ROOT, *, stable_record=None):
+# Minimum policy obligations are also pinned in code. A malformed/edited table
+# cannot silently remove a gate or select a less restrictive verification class.
+_POLICY_BASELINES = {
+    'unit_and_adversarial_tests': ('external', 'external'),
+    'installed_distribution_tests': ('external', 'external'),
+    'native_core_and_promoted_optional_acceptance': ('external', 'local'),
+    'local_native_preliminary_smoke': ('manual', 'not_applicable'),
+    'isolated_grader_acceptance': ('external', 'external'),
+    'independent_G01_G02': ('local', 'local'),
+    'independent_human_pr_review': ('external', 'not_applicable'),
+    'signed_build_provenance': ('external', 'external'),
+    'remote_asset_install_and_recovery': ('manual', 'manual'),
+    'operator_release_decision': ('manual', 'manual'),
+}
+
+
+def policy_matrix(root=ROOT):
+    """Read the closed policy catalog, rejecting omissions and downgrades."""
+    try:from .guardian_local_acceptance import read_json
+    except ImportError:from guardian_local_acceptance import read_json
+    path=Path(root)/'core/release-policy-matrix-v1.json'
+    matrix=read_json(path,100_000)
+    if (not isinstance(matrix,dict) or set(matrix)!={'schema_version','policies','notice','requirements'}
+            or type(matrix.get('schema_version')) is not int or matrix['schema_version']!=1
+            or matrix.get('policies')!=['strict','operator-autonomous']
+            or not isinstance(matrix.get('notice'),str) or not matrix['notice'].strip()
+            or not isinstance(matrix.get('requirements'),list)):
+        raise ValueError('Invalid release policy matrix')
+    seen=set()
+    for row in matrix['requirements']:
+        if (not isinstance(row,dict) or set(row)!={'id','description','strict','operator-autonomous'}
+                or not isinstance(row.get('id'),str) or row['id'] not in _POLICY_BASELINES or row['id'] in seen
+                or not isinstance(row.get('description'),str) or not row['description'].strip()
+                or (row.get('strict'),row.get('operator-autonomous'))!=_POLICY_BASELINES[row['id']]):
+            raise ValueError('Release policy matrix omission, duplicate or downgrade')
+        seen.add(row['id'])
+    if seen!=set(_POLICY_BASELINES):raise ValueError('Release policy matrix missing required gates')
+    return matrix
+
+
+def policy_receipt(policy='strict',observed=None):
+    """Separate required evidence from checks actually performed by this tool.
+
+    Only internal verifier results populate ``observed``. This report is not an
+    imported approval, an execution command, or authorization to publish.
+    """
+    matrix=policy_matrix()
+    if policy not in matrix['policies']:raise ValueError('Unknown release policy; no implicit downgrade')
+    observed={} if observed is None else observed
+    if not isinstance(observed,dict) or set(observed)-set(_POLICY_BASELINES):
+        raise ValueError('Unknown observed release requirement')
+    requirements=[]
+    for row in matrix['requirements']:
+        method=row[policy]
+        checked=row['id'] in observed
+        if checked and method not in ('local','external'):
+            raise ValueError('Manual or excluded requirement cannot be automatically verified')
+        evidence=observed.get(row['id'])
+        if checked and (not isinstance(evidence,dict) or not evidence):
+            raise ValueError('Checked requirement needs concrete evidence references')
+        status=('verified_'+method if checked else
+                'not_applicable' if method=='not_applicable' else
+                'manual' if method=='manual' else 'not_verified')
+        requirements.append({'id':row['id'],'description':row['description'],
+                             'required':method!='not_applicable','verification_method':method,
+                             'status':status,'verified':checked,'evidence':evidence})
+    pending=[r['id'] for r in requirements if r['required'] and not r['verified']]
+    automatic_pending=[r['id'] for r in requirements
+                       if r['required'] and r['verification_method'] in ('local','external') and not r['verified']]
+    return {'schema_version':1,'policy':policy,
+            'matrix_sha256':hashlib.sha256(json.dumps(matrix,sort_keys=True,separators=(',',':')).encode('utf8')).hexdigest(),
+            'requirements':requirements,'pending_required':pending,'pending_verifier_checks':automatic_pending,
+            'verifier_policy_checks_passed':not automatic_pending,
+            'complete_release_acceptance_passed':not pending,
+            'manual_dispositions_authenticated':False,
+            'notice':matrix['notice']}
+
+
+def inspect(root=ROOT, *, stable_record=None, policy='strict'):
     root=Path(root);version=(root/'VERSION').read_text().strip()
     if not re.fullmatch(r'\d+\.\d+\.\d+(?:-(?:dev|rc)\.\d+)?',version):raise ValueError('Invalid version')
     for file in ('plugin.json','.codex-plugin/plugin.json'):
@@ -15,9 +93,11 @@ def inspect(root=ROOT, *, stable_record=None):
     preview='-' in version
     if stable_record is not None:
         raise ValueError('Stable promotion cannot be authorized by an imported JSON/model claim; use verified external gates')
+    receipt=policy_receipt(policy)
     return {'version':version,'artifact_preparation_allowed':True,'preview':preview,'stable_promotion_allowed':False,
             'publication_authorized':False,'evidence_authenticated':False,
-            'requirements':['unit_and_adversarial_tests','installed_distribution_tests','native_core_and_promoted_optional_acceptance','independent_G01_G02','signed_build_provenance','remote_asset_install_and_recovery'],
+            'policy':policy,'requirements':[r['id'] for r in receipt['requirements'] if r['required']],
+            'requirement_receipt':receipt,
             'notice':'Preparation is not stable release authorization. External evidence is not inferred from this configuration.'}
 
 
@@ -96,9 +176,9 @@ def verify_external(repo,revision,artifact,ci_run,native_run,grader_run,pr_numbe
     Network access is explicit at the CLI. Hash-linked local JSON and a model's
     READY response cannot replace the remote evidence required here.
     """
-    if policy not in ('strict','operator-autonomous'):raise ValueError('Unknown release policy; no implicit downgrade')
+    receipt=policy_receipt(policy)
     trusted_reviewers=sorted(_trusted_logins(trusted_reviewers))
-    if policy=='strict' and (local_native is not None or native_sessions or advisory_reviews):
+    if policy=='strict' and (local_native is not None or native_sessions):
         raise ValueError('Local substitutes require explicit operator-autonomous policy')
     if not isinstance(repo,str) or not isinstance(revision,str) or not re.fullmatch(r'[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+',repo) or not re.fullmatch(r'[0-9a-f]{40}',revision):
         raise ValueError('Invalid repository/revision')
@@ -146,40 +226,73 @@ def verify_external(repo,revision,artifact,ci_run,native_run,grader_run,pr_numbe
             if len(batch)<100:break
         else:raise ValueError('Review inventory exceeds bounded pagination')
         _verify_human_reviews(reviews,author,revision,trusted_reviewers)
+        if advisory_reviews:
+            # Both policies require the distinct specialist reviews. Strict adds
+            # human and remote-native evidence; neither replaces G01/G02.
+            try:from .guardian_local_acceptance import verify_local_reviews
+            except ImportError:from guardian_local_acceptance import verify_local_reviews
+            local_reviews=verify_local_reviews(advisory_reviews,revision,digest)
     command=['gh','attestation','verify',str(artifact),'--repo',repo,'--source-digest',revision,
              '--signer-workflow',repo+'/.github/workflows/release.yml','--format','json']
     verified=subprocess.run(command,capture_output=True,text=True,timeout=90)
     if verified.returncode or not json.loads(verified.stdout):raise ValueError('Signed artifact provenance did not verify')
     if hashlib.sha256(artifact.read_bytes()).hexdigest()!=digest:raise ValueError('Artifact changed during verification')
     if policy=='operator-autonomous':check_source(source_root,revision)
+    observed={
+        'unit_and_adversarial_tests':{'ci_run':ci_run,'revision':revision},
+        'installed_distribution_tests':{'ci_run':ci_run,'revision':revision,
+                                        'boundary':'CI installed-runtime lifecycle; not remote ZIP recovery'},
+        'native_core_and_promoted_optional_acceptance':
+            {'native_run':native_run,'revision':revision} if policy=='strict' else
+            {'revision':revision,'evidence_class':native.get('evidence_class'),
+             'session_sha256':native.get('session_sha256')},
+        'isolated_grader_acceptance':{'grader_run':grader_run,'revision':revision},
+        'signed_build_provenance':{'revision':revision,'artifact_sha256':digest,
+                                   'signer_workflow':repo+'/.github/workflows/release.yml'},
+    }
+    if policy=='strict':observed['independent_human_pr_review']={'pr_number':pr_number,'revision':revision}
+    if local_reviews is not None:
+        observed['independent_G01_G02']={'revision':revision,'artifact_sha256':digest,'review':local_reviews}
+    receipt=policy_receipt(policy,observed)
     return {'external_checks_passed':True,'revision':revision,'artifact_sha256':digest,'policy':policy,
-            'policy_acceptance_passed':True,'human_review_recorded_by_github':policy=='strict',
+            'policy_acceptance_passed':receipt['verifier_policy_checks_passed'],
+            'policy_acceptance_scope':'AUTOMATED_VERIFIER_REQUIREMENTS_ONLY',
+            'complete_release_acceptance_passed':receipt['complete_release_acceptance_passed'],
+            'requirement_receipt':receipt,
+            'human_review_recorded_by_github':policy=='strict',
             'remote_native_test_performed':policy=='strict','local_native_acceptance':native if policy=='operator-autonomous' else None,
             'advisory_reviews':local_reviews,'operator_policy_exclusions':['human_pr_approval','dedicated_remote_native_execution'] if policy=='operator-autonomous' else [],
-            'local_evidence_trust':'LOCAL_OPERATOR_OBSERVED_MUTABLE_HOST_RECORDS' if policy=='operator-autonomous' else None,
+            'local_evidence_trust':'LOCAL_OPERATOR_OBSERVED_MUTABLE_HOST_RECORDS' if local_reviews is not None or policy=='operator-autonomous' else None,
             'provenance_verified':True,'publication_authorized':False,
-            'notice':'Evidence gates passed; publication still requires the operator action authorized for this release. No claim of exhaustive correctness.'}
+            'notice':'External gates passed. Check pending_verifier_checks and manual obligations separately; this receipt never authorizes publication or certifies exhaustive correctness.'}
 
 
-if __name__=='__main__':
+def main(argv=None):
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--verify-external',action='store_true',help='Explicit read-only network verification; never publishes')
     parser.add_argument('--policy',choices=('strict','operator-autonomous'),default='strict',help='Explicit operator release profile; strict remains the default')
     parser.add_argument('--local-native',type=Path,help='Existing complete local native harness evidence directory')
     parser.add_argument('--native-session',type=Path,action='append',default=[],help='Explicit raw child session record; repeat exactly 39 times')
-    parser.add_argument('--advisory-review',type=Path,action='append',default=[],help='Pinned G01 or G02 AI advisory review; repeat twice')
+    parser.add_argument('--advisory-review',type=Path,action='append',default=[],help='Pinned G01 or G02 AI advisory review; repeat twice under either policy')
     parser.add_argument('--source-root',type=Path,default=ROOT,help='Clean source checkout pinned to the requested revision')
     parser.add_argument('--trusted-reviewer',action='append',default=[],metavar='LOGIN',
                         help='Explicit trusted human GitHub reviewer; repeatable, grants no repository access')
     parser.add_argument('--repo');parser.add_argument('--revision');parser.add_argument('--artifact',type=Path)
     for name in ('ci-run','native-run','grader-run','pr-number'):parser.add_argument('--'+name,type=int)
-    args=parser.parse_args()
+    args=parser.parse_args(argv)
     try:
         if args.verify_external:
             result=verify_external(args.repo,args.revision,args.artifact,args.ci_run,args.native_run,args.grader_run,args.pr_number,trusted_reviewers=args.trusted_reviewer,
                                    policy=args.policy,local_native=args.local_native,native_sessions=args.native_session,
                                    advisory_reviews=args.advisory_review,source_root=args.source_root)
-        else:result=inspect()
+        else:result=inspect(policy=args.policy)
     except (ValueError,OSError,subprocess.SubprocessError) as exc:
         parser.exit(2,'Guardian release gate rejected: '+str(exc)+'\n')
     print(json.dumps(result,indent=2))
+    if args.verify_external and not result['policy_acceptance_passed']:
+        parser.exit(2,'Guardian release gate incomplete: required verifier evidence remains NOT VERIFIED.\n')
+    return 0
+
+
+if __name__=='__main__':
+    raise SystemExit(main())

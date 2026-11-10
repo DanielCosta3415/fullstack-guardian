@@ -26,15 +26,28 @@ def inspect_project(path):
     if not root.is_dir():raise ValueError('Diretório de projeto inválido')
     names=[]; truncated=False
     for base,dirs,files in os.walk(root,followlinks=False):
-        dirs[:]=[d for d in sorted(dirs) if d not in IGNORE and not is_link_or_reparse(Path(base)/d)]
+        dirs[:]=[d for d in sorted(dirs) if d not in IGNORE and d != '.guardian-state' and not is_link_or_reparse(Path(base)/d)]
         for file in sorted(files):
             if len(names)>=8000:truncated=True;break
             p=Path(base)/file
             if is_link_or_reparse(p) or re.search(r'(^\.env|secret|credential|private.?key|\.pem$|\.pfx$|\.key$)',file,re.I):continue
             names.append(norm(p.relative_to(root).as_posix()))
         if truncated:break
-    files={n.rsplit('/',1)[-1] for n in names}
-    def has(*tokens):return any(any(token in n for token in tokens) for n in names)
+    # Repository responsibilities are distinct from product-stack evidence.
+    # A .NET fixture used to test a Python scanner is not a .NET product.
+    def responsibility(name):
+        parts=name.split('/')
+        if parts[0]=='work':return 'generated'
+        if any(p in ('fixtures','fixture','testdata','__fixtures__') or p.endswith('-fixtures') for p in parts[:-1]):return 'fixtures'
+        if any(p in ('examples','example','samples','sample','demos','demo') for p in parts[:-1]):return 'examples'
+        if any(p in ('generated','__generated__') for p in parts[:-1]) or parts[-1].endswith(('.generated.py','.generated.ts','.g.cs')):return 'generated'
+        if any(p in ('tests','test','__tests__','specs') for p in parts[:-1]) or parts[-1].startswith('test_') or re.search(r'\.(?:test|spec)\.[^.]+$',parts[-1]):return 'tests'
+        if parts[0] in ('docs','documentation'):return 'documentation'
+        return 'product'
+    categories=Counter(responsibility(n) for n in names)
+    product=[n for n in names if responsibility(n)=='product']
+    files={n.rsplit('/',1)[-1] for n in product}
+    def has(*tokens):return any(any(token in n for token in tokens) for n in product)
     def exact(*tokens):return any(t in files for t in tokens)
     candidates=[
      (has('.csproj','.sln') or exact('global.json'),'.NET / C#','backend'),
@@ -42,7 +55,7 @@ def inspect_project(path):
      (has('.tsx','.jsx') or exact('vite.config.ts','next.config.js'),'JSX/React compatible','frontend'),
      (has('.razor','.cshtml'),'Razor / ASP.NET UI','frontend'),
      (exact('angular.json'),'Angular','frontend'),(has('.vue'),'Vue','frontend'),
-     (exact('pyproject.toml','requirements.txt'),'Python','backend'),
+     (exact('pyproject.toml','requirements.txt') or any(n.endswith('.py') for n in product),'Python','backend'),
      (exact('pom.xml','build.gradle'),'JVM','backend'),(exact('go.mod'),'Go','backend'),
      (exact('docker-compose.yml','compose.yaml','compose.yml'),'Container compose','container'),
      (exact('dockerfile') or has('/dockerfile'),'Docker','container'),
@@ -51,13 +64,16 @@ def inspect_project(path):
      (has('openapi','swagger'),'API contracts','api'),
      (has('migration','migrations','postgres','mongo','sqlite','dbcontext'),'Data markers','data'),
      (has('k8s/','kubernetes/','helm/','chart.yaml','rabbitmq','kafka','servicebus'),'Distributed markers','distributed'),
-     (has('.spec.ts','.test.ts','/tests/','test_'),'Test artifacts','tests')]
+     (bool(categories['tests'] or categories['fixtures']),'Test artifacts','tests')]
     tech=[lab for yes,lab,tag in candidates if yes]
     tags={tag for yes,lab,tag in candidates if yes}
     score=int('api' in tags)+int('data' in tags)+2*int('distributed' in tags)+int('cloud' in tags)+int({'backend','frontend'}<=tags)+int(len({'ci','cloud','container','distributed'}&tags)>=3)
     level='simple' if score<=1 else 'intermediate' if score<=4 else 'robust'
     return {'project':str(root),'files_scanned':len(names),'truncated':truncated,'technologies':tech,'tags':sorted(tags),
-        'architecture_as_is_heuristic':{'level':level,'score':score,'confidence':'low','warning':'Inferência por nomes de arquivos, não é uma auditoria real.'},
+        'architecture_as_is_heuristic':{'level':level,'score':score,'confidence':'low','warning':'Inferência por nomes de arquivos, não é uma auditoria real.',
+            'inventory_responsibilities':{key:categories[key] for key in ('product','tests','fixtures','examples','generated','documentation')},
+            'stack_signal_scope':'product filenames only; tests, fixtures, examples, generated and documentation excluded',
+            'excluded_stack_signals':sorted({Path(n).suffix for n in names if responsibility(n)!='product' and Path(n).suffix in ('.py','.csproj','.sln','.tsx','.jsx','.vue','.razor','.tf')})},
         'criticality':'unknown','architecture_to_be':'requires requirements and runtime evidence',
         'unknowns':['demanda/carga','impacto de falhas','RTO/RPO/SLO','regulação','ambiente real','ameaças','orçamento e equipe']}
 

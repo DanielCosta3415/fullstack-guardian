@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "classification": "PUBLIC_TRUSTED_SERVICE_FIXTURES",
+  "account_balance": 100,
+  "committed_debit": 30,
+  "cancelled_debit": 20,
+  "timeout_after_commit_debit": 5,
+  "migration_rows": [[1, 10], [2, 20], [3, 30]],
+  "wire_key": "public-local-fixture-key-not-a-secret",
+  "token_keys": {"current": "public-current-fixture-key", "next": "public-next-fixture-key"},
+  "token_now": 2000000000
+}

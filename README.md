@@ -4,7 +4,13 @@
 
 Normal prompts are coordinated by the primary Codex thread. It selects the smallest useful team, checks task risk and uses independent review when required. Simple tasks can be completed directly. Profiles, repository content and generated plans never grant permissions.
 
-The 39 roles have consistent Portuguese professional presentation names, such as **Orquestrador de Engenharia**, **Engenheiro de Requisitos** and **Auditor Independente**. See the [official professional names](docs/CATALOG.md#nomes-profissionais-oficiais-39). Technical `guardian_*` identifiers, routing, professional contracts, model inheritance and permissions are unchanged. Catalog generation checks the labels against all canonical profiles; existing installations receive them through the normal reviewed update and optional-pack update procedures.
+The current source includes [audit remediation and professional depth](docs/PROFESSIONAL_DEPTH.md),
+[evidence-bound coordination adapters](docs/COORDINATION_RUNTIME.md), and
+[revision/content fingerprints](docs/ARCHITECTURE_EVOLUTION.md). These Unreleased
+changes have their own implementation/test evidence; the version label above does
+not mean they are already published or applied to an existing global installation.
+
+The 39 roles have consistent Portuguese professional presentation names, such as **Orquestrador de Engenharia**, **Engenheiro de Requisitos** and **Auditor Independente**. See the [official professional names](docs/CATALOG.md#nomes-profissionais-oficiais-39). Display-name standardization preserves technical `guardian_*` identities, model inheritance and permissions. The subsequent Unreleased audit work evolves professional contracts to 1.1.0 with separate evidence. Catalog generation checks the labels against all canonical profiles; existing installations receive changes through the normal reviewed update and optional-pack update procedures.
 
 For sustained work, the continuation skill records bounded project-local checkpoints and verifies source/evidence drift when the user returns with “Continue”. It does not monitor accounts, change models to evade limits or wake the chat. The professional evaluation layer contains 103 executable public artifact-analysis subscopes across all 39 roles; these objective tasks do not certify complete professional competence or private holdout performance.
 
@@ -92,6 +98,12 @@ python tools/test_native_agents.py --run --all --include-packs --out NEW_EVIDENC
 The preview does not call a model. The run requires a compatible authenticated Codex and applicable permission review. Recorded role, parent, completion and checks validate controlled cases, not all 132 capabilities. Do not publish raw session logs.
 
 ## Safety and operating limits
+
+The [bounded qualification campaign](docs/QUALIFICATION_CAMPAIGN.md) separates
+actual browser/service fixtures, varied native role repetitions, team failure
+checks, independent review and global rollout. Successful fixture implementations
+and valid JSON outputs are not professional certification. Each observation must
+retain its actual revision, environment, criterion coverage and limitations.
 
 The CLI backend requests Codex sandboxing but does not prove per-file/read/network or CPU/memory isolation. Restrictive contracts need verified capabilities and fail closed otherwise. Writes are sequential with postcondition enforcement and reviewed integration. Workspaces are private checkouts, not OS sandboxes. Neither a prompt nor a local hash authenticates execution or human authorization.
 

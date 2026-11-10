@@ -103,8 +103,12 @@ The 103 open professional designs, evaluator-controlled holdout, live A/B and
 Desktop-specific UI paths retain their own evidence and limitations. This policy
 neither turns design-only cases into executed tests nor enables global hooks.
 
-`policy_acceptance_passed=true` means this chosen evidence profile passed at the
-recorded revision/ZIP. `publication_authorized` remains false because this
+`policy_acceptance_passed=true` means the automated requirements of this chosen
+evidence profile passed at the recorded revision/ZIP. The receipt explicitly
+records `policy_acceptance_scope=AUTOMATED_VERIFIER_REQUIREMENTS_ONLY`;
+`complete_release_acceptance_passed` stays false while required manual recovery,
+installation or operator decision obligations remain unresolved. The canonical
+matrix is `core/release-policy-matrix-v1.json`. `publication_authorized` remains false because this
 read-only tool is not the operator's publication action. Stable version labels
 alone never authorize promotion. Preserve the gate report and package acceptance
 records with the release so recipients can inspect the exact assurance scope.

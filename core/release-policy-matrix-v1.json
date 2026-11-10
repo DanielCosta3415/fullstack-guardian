@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "policies": ["strict", "operator-autonomous"],
+  "notice": "Requirements describe evidence, not permissions. Manual obligations remain unverified by this read-only verifier; a receipt never authorizes publication.",
+  "requirements": [
+    {"id": "unit_and_adversarial_tests", "description": "Exact-revision full CI matrix", "strict": "external", "operator-autonomous": "external"},
+    {"id": "installed_distribution_tests", "description": "Installed-runtime and distribution lifecycle checks in exact-revision CI", "strict": "external", "operator-autonomous": "external"},
+    {"id": "native_core_and_promoted_optional_acceptance", "description": "Complete 39-role native acceptance with protected fixtures", "strict": "external", "operator-autonomous": "local"},
+    {"id": "local_native_preliminary_smoke", "description": "Local 39-role smoke preceding strict remote acceptance; separately reviewed operator evidence", "strict": "manual", "operator-autonomous": "not_applicable"},
+    {"id": "isolated_grader_acceptance", "description": "Executed exact-revision isolated grader, without skips", "strict": "external", "operator-autonomous": "external"},
+    {"id": "independent_G01_G02", "description": "Distinct pinned native G01/G02 AI advisory reviews, never substituted by human review", "strict": "local", "operator-autonomous": "local"},
+    {"id": "independent_human_pr_review", "description": "Current authorized independent human GitHub review", "strict": "external", "operator-autonomous": "not_applicable"},
+    {"id": "signed_build_provenance", "description": "Exact ZIP, revision and release workflow attestation", "strict": "external", "operator-autonomous": "external"},
+    {"id": "remote_asset_install_and_recovery", "description": "Exact downloaded package install/update/rollback/uninstall and customization preservation", "strict": "manual", "operator-autonomous": "manual"},
+    {"id": "operator_release_decision", "description": "Separate explicitly authorized operator release decision; never performed by verifier", "strict": "manual", "operator-autonomous": "manual"}
+  ]
+}

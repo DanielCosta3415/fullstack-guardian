@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "fullstack-guardian",
-  "version": "2.2.1",
+  "version": "2.3.0",
   "description": "Guardian engineering coordination with verifiable contracts, supervised execution and preserving installation.",
   "author": {
     "name": "Daniel Lopes da Costa"
@@ -14,7 +14,7 @@
       "onboardingSkill": "./skills/setup/SKILL.md",
       "interface": {
         "displayName": "Full-Stack Guardian",
-        "shortDescription": "Guardian 2.2: engenharia supervisionada",
+        "shortDescription": "Guardian 2.3: engenharia supervisionada",
         "longDescription": "29 papéis centrais, 21 skills, dez packs opcionais e verificações explícitas de capacidades, evidências e permissões.",
         "developerName": "Daniel Lopes da Costa",
         "category": "Developer Tools",

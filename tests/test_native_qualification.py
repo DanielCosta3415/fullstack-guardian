@@ -65,6 +65,21 @@ class NativeQualificationTests(unittest.TestCase):
         self.assertFalse(any('bypass' in part for part in command))
         self.assertLess(sum(len(part) for part in command),1024)
 
+    def test_corroboration_rejects_explicit_model_or_effort_override(self):
+        base={'task_name':'bounded_trial','agent_type':'guardian_backend_domain','fork_turns':'none'}
+        def events(args):
+            return [{'type':'response_item','payload':{'type':'function_call',
+                     'name':'spawn_agent','namespace':'collaboration','call_id':'spawn-test',
+                     'arguments':json.dumps(args)}},
+                    {'type':'response_item','payload':{'type':'function_call_output',
+                     'call_id':'spawn-test','output':json.dumps({'task_name':'/root/bounded_trial'})}}]
+        expected=[('/root/bounded_trial','guardian_backend_domain')]
+        self.assertEqual(n.parent_pairs(events(base)),expected)
+        for override in ({'model':'another-model'}, {'reasoning_effort':'low'},
+                         {'reasoning_effort':'high'}, {'fork_turns':'all'}):
+            with self.subTest(override=override):
+                self.assertEqual(n.parent_pairs(events(dict(base,**override))),[])
+
     def test_schema_has_fields_and_non_answer_enum_alternatives(self):
         for case in self.corpus['cases']:
             if case['oracle']['kind']!='structured_exact':continue
